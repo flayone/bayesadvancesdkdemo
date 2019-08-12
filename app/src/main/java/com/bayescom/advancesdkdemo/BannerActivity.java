@@ -1,0 +1,64 @@
+package com.bayescom.advancesdkdemo;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.RelativeLayout;
+
+import com.bayesadvance.AdvanceBanner;
+import com.bayesadvance.AdvanceBannerListener;
+
+public class BannerActivity extends AppCompatActivity implements AdvanceBannerListener {
+    private String TAG="DEMO BANNER";
+    private AdvanceBanner advanceBanner;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_banner);
+        RelativeLayout rl = findViewById(R.id.banner_layout);
+        advanceBanner = new AdvanceBanner(this,rl,"i232","12121");
+        advanceBanner.setSuggestHeight(100);
+        advanceBanner.setSuggestWidth(640);
+        advanceBanner.setRefreshInterval(60);
+        advanceBanner.setAdListener(this);
+        advanceBanner.loadAd();
+
+
+    }
+
+    @Override
+    public void onAdShow() {
+        Log.d(TAG,"SHOW");
+
+    }
+
+    @Override
+    public void onAdFailed() {
+
+        Log.d(TAG,"Failed");
+
+    }
+
+    @Override
+    public void onAdClicked() {
+        Log.d(TAG,"Clicked");
+
+    }
+
+    @Override
+    public void onDislike() {
+        RelativeLayout rl = findViewById(R.id.banner_layout);
+        rl.removeAllViews();
+
+
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        advanceBanner.destroy();
+
+    }
+}
