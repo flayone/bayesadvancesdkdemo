@@ -21,4 +21,8 @@ public class MainActivity extends AppCompatActivity {
     {
         startActivity(new Intent(this,SplashActivity.class));
     }
+    public void onNativeExpress(View view)
+    {
+       startActivity(new Intent(this,NativeExpressActivity.class));
+    }
 }

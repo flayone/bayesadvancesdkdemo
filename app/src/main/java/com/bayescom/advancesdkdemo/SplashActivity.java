@@ -45,6 +45,7 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
         TextView skipView = findViewById(R.id.skip_view);
 
         advanceSplash = new AdvanceSplash(this,"1212","1212",adContainer,skipView);
+        advanceSplash.setSkipText("%ds |跳过");
         advanceSplash.setAdListener(this);
 //        if (!needLogo) {
 //            findViewById(R.id.app_logo).setVisibility(View.GONE);

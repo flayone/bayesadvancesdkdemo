@@ -21,10 +21,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-
+        <activity android:name=".NativeExpressActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             ></activity>
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".BannerActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

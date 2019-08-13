@@ -24,5 +24,12 @@
             android:layout_height="wrap_content"
             android:onClick="onSplash"
             android:text="开屏" />
+
+        <Button
+            android:id="@+id/native_express_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onNativeExpress"
+            android:text="模板信息流" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
