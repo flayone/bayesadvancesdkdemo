@@ -31,5 +31,12 @@
             android:layout_height="wrap_content"
             android:onClick="onNativeExpress"
             android:text="模板信息流" />
+
+        <Button
+            android:id="@+id/rewardvideo_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onRewardVideo"
+            android:text="激励视频" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

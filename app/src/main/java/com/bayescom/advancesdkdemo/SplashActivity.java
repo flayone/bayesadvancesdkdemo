@@ -13,22 +13,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bayesadvance.AdvanceSplash;
 import com.bayesadvance.AdvanceSplashListener;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SplashActivity extends AppCompatActivity implements AdvanceSplashListener {
-    private boolean canJump=false;
+    private boolean canJump = false;
     private AdvanceSplash advanceSplash;
     private Handler handler = new Handler(Looper.getMainLooper());
     /**
@@ -36,7 +33,7 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
      * 给出的延时逻辑是从拉取广告开始算开屏最少持续多久，仅供参考，开发者可自定义延时逻辑，如果开发者采用demo
      * 中给出的延时逻辑，也建议开发者考虑自定义minSplashTimeWhenNoAD的值（单位ms）
      **/
-    private int minSplashTimeWhenNoAD = 2000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +41,10 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
         FrameLayout adContainer = findViewById(R.id.splash_container);
         TextView skipView = findViewById(R.id.skip_view);
 
-        advanceSplash = new AdvanceSplash(this,"1212","1212",adContainer,skipView);
-        advanceSplash.setSkipText("%ds |跳过");
-        advanceSplash.setAdListener(this);
-//        if (!needLogo) {
-//            findViewById(R.id.app_logo).setVisibility(View.GONE);
-//        }
+        advanceSplash = new AdvanceSplash(this, "1212", "1212", adContainer, skipView);
+        advanceSplash.setSkipText("%ds |跳过")
+                .setCsjAcceptedSize(1080, 1920)//设置穿山甲广告图片偏好尺寸(如果介入穿山甲的话
+                .setAdListener(this);
         // 如果targetSDKVersion >= 23，就要申请好权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
         if (Build.VERSION.SDK_INT >= 23) {
             checkAndRequestPermission();
@@ -61,20 +56,16 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
 
     @Override
     public void onAdShow() {
-        Log.d("DEMO","Splash ad show");
+        Log.d("DEMO", "Splash ad show");
     }
 
     @Override
     public void onAdFailed() {
-        Log.d("DEMO","Splash ad failed");
-//        long alreadyDelayMills = System.currentTimeMillis() - fetchSplashADTime;//从拉广告开始到onNoAD已经消耗了多少时间
-//        long shouldDelayMills = alreadyDelayMills > minSplashTimeWhenNoAD ? 0 : minSplashTimeWhenNoAD
-//                - alreadyDelayMills;//为防止加载广告失败后立刻跳离开屏可能造成的视觉上类似于"闪退"的情况，根据设置的minSplashTimeWhenNoAD
-        // 计算出还需要延时多久
+        Log.d("DEMO", "Splash ad failed");
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                    SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 SplashActivity.this.finish();
             }
         }, 500);
@@ -83,24 +74,23 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
 
     @Override
     public void onAdClicked() {
-        Log.d("DEMO","Splash ad clicked");
+        Log.d("DEMO", "Splash ad clicked");
 
     }
 
     @Override
     public void onAdClose() {
-        Log.d("DEMO","Splash ad closed");
+        Log.d("DEMO", "Splash ad closed");
         next();
     }
 
     /**
-     *
      * ----------非常重要----------
-     *
+     * <p>
      * Android6.0以上的权限适配简单示例：
-     *
+     * <p>
      * 如果targetSDKVersion >= 23，那么必须要申请到所需要的权限，再调用广点通SDK，否则广点通SDK不会工作。
-     *
+     * <p>
      * Demo代码里是一个基本的权限申请示例，请开发者根据自己的场景合理地编写这部分代码来实现权限申请。
      * 注意：下面的`checkSelfPermission`和`requestPermissions`方法都是在Android6.0的SDK中增加的API，如果您的App还没有适配到Android6.0以上，则不需要调用这些方法，直接调用广点通SDK即可。
      */
@@ -162,7 +152,7 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
      */
     private void next() {
         if (canJump) {
-                this.startActivity(new Intent(this, MainActivity.class));
+            this.startActivity(new Intent(this, MainActivity.class));
             this.finish();
         } else {
             canJump = true;
@@ -190,7 +180,9 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
         handler.removeCallbacksAndMessages(null);
     }
 
-    /** 开屏页一定要禁止用户对返回按钮的控制，否则将可能导致用户手动退出了App而广告无法正常曝光和计费 */
+    /**
+     * 开屏页一定要禁止用户对返回按钮的控制，否则将可能导致用户手动退出了App而广告无法正常曝光和计费
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME) {

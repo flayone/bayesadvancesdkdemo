@@ -12,7 +12,9 @@ import com.bayesadvance.AdvanceNativeExpressAdItem;
 import com.bayesadvance.AdvanceNativeExpressListener;
 import com.bayesadvance.csj.CsjNativeExpressAdItem;
 import com.bayesadvance.gdt.GdtNativeAdExpressAdItem;
+import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
+import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
 import com.bytedance.sdk.openadsdk.TTNativeExpressAd;
 import com.qq.e.ads.nativ.NativeExpressADView;
 import com.qq.e.ads.nativ.NativeExpressMediaListener;
@@ -67,19 +69,31 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         if (null == list && list.isEmpty()) {
             return;
         } else {
-            AdvanceNativeExpressAdItem advanceNativeExpressAdItem = list.get(0);
-            if (advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_GDT)) {
-                renderGdtExpressAd(advanceNativeExpressAdItem);
-            } else if (advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_CSJ)) {
-                renderCsjExpressAd(advanceNativeExpressAdItem);
+            for(AdvanceNativeExpressAdItem advanceNativeExpressAdItem :list) {
+
+                if (advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_GDT)) {
+                    GdtNativeAdExpressAdItem gdtNativeAdExpressAdItem = (GdtNativeAdExpressAdItem) advanceNativeExpressAdItem;
+                    if(gdtNativeAdExpressAdItem.getBoundData().getAdPatternType()==AdPatternType.NATIVE_VIDEO)
+                    {
+                        renderGdtExpressAd(gdtNativeAdExpressAdItem);
+                        break;
+                    }
+                } else if (advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_CSJ)) {
+                    CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem)  advanceNativeExpressAdItem;
+                    if(csjNativeExpressAdItem.getImageMode()==TTAdConstant.IMAGE_MODE_VIDEO)
+                    {
+                        renderCsjExpressAd(csjNativeExpressAdItem);
+                        break;
+
+                    }
+                }
             }
 
         }
 
     }
 
-    public void renderGdtExpressAd(AdvanceNativeExpressAdItem advanceNativeExpressAdItem) {
-        GdtNativeAdExpressAdItem gdtNativeAdExpressAdItem = (GdtNativeAdExpressAdItem) advanceNativeExpressAdItem;
+    public void renderGdtExpressAd(GdtNativeAdExpressAdItem gdtNativeAdExpressAdItem) {
         container.removeAllViews();
         container.setVisibility(View.VISIBLE);
         if (gdtNativeAdExpressAdItem.getBoundData().getAdPatternType() == AdPatternType.NATIVE_VIDEO) {
@@ -137,8 +151,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
 
     }
 
-    public void renderCsjExpressAd(AdvanceNativeExpressAdItem advanceNativeExpressAdItem) {
-        CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
+    public void renderCsjExpressAd(CsjNativeExpressAdItem csjNativeExpressAdItem) {
         csjNativeExpressAdItem.setExpressInteractionListener(new TTNativeExpressAd.ExpressAdInteractionListener() {
             @Override
             public void onAdClicked(View view, int type) {
@@ -173,6 +186,40 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
 
             }
         });
+        if(csjNativeExpressAdItem.getInteractionType()==TTAdConstant.INTERACTION_TYPE_DOWNLOAD)
+        {
+            csjNativeExpressAdItem.setDownloadListener(new TTAppDownloadListener() {
+                @Override
+                public void onIdle() {
+
+                }
+
+                @Override
+                public void onDownloadActive(long l, long l1, String s, String s1) {
+
+                }
+
+                @Override
+                public void onDownloadPaused(long l, long l1, String s, String s1) {
+
+                }
+
+                @Override
+                public void onDownloadFailed(long l, long l1, String s, String s1) {
+
+                }
+
+                @Override
+                public void onDownloadFinished(long l, String s, String s1) {
+
+                }
+
+                @Override
+                public void onInstalled(String s, String s1) {
+
+                }
+            });
+        }
         csjNativeExpressAdItem.render();
 
     }

@@ -25,4 +25,8 @@ public class MainActivity extends AppCompatActivity {
     {
        startActivity(new Intent(this,NativeExpressActivity.class));
     }
+    public void onRewardVideo(View view)
+    {
+        startActivity(new Intent(this,RewardVideoActivity.class));
+    }
 }
