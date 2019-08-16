@@ -26,11 +26,18 @@
             android:text="开屏" />
 
         <Button
+            android:id="@+id/native_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onNative"
+            android:text="自渲染原生" />
+
+        <Button
             android:id="@+id/native_express_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onNativeExpress"
-            android:text="模板信息流" />
+            android:text="原生模板" />
 
         <Button
             android:id="@+id/rewardvideo_button"

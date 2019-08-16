@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
+import android.os.Message;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,15 +23,13 @@ import com.bayesadvance.AdvanceSplashListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SplashActivity extends AppCompatActivity implements AdvanceSplashListener {
-    private boolean canJump = false;
+public class SplashActivity extends AppCompatActivity implements AdvanceSplashListener,WeakHandler.IHandler {
     private AdvanceSplash advanceSplash;
-    private Handler handler = new Handler(Looper.getMainLooper());
-    /**
-     * 为防止无广告时造成视觉上类似于"闪退"的情况，设定无广告时页面跳转根据需要延迟一定时间，demo
-     * 给出的延时逻辑是从拉取广告开始算开屏最少持续多久，仅供参考，开发者可自定义延时逻辑，如果开发者采用demo
-     * 中给出的延时逻辑，也建议开发者考虑自定义minSplashTimeWhenNoAD的值（单位ms）
-     **/
+    private final WeakHandler mHandler = new WeakHandler(this);
+    private static final int AD_TIME_OUT = 500;
+    private static final int MSG_GO_MAIN = 1;
+    private boolean canJump=false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +39,7 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
         TextView skipView = findViewById(R.id.skip_view);
 
         advanceSplash = new AdvanceSplash(this, "1212", "1212", adContainer, skipView);
-        advanceSplash.setSkipText("%ds |跳过")
+        advanceSplash.setSkipText("%d s|跳过")
                 .setCsjAcceptedSize(1080, 1920)//设置穿山甲广告图片偏好尺寸(如果介入穿山甲的话
                 .setAdListener(this);
         // 如果targetSDKVersion >= 23，就要申请好权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
@@ -57,31 +54,31 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
     @Override
     public void onAdShow() {
         Log.d("DEMO", "Splash ad show");
+        Toast.makeText(this,"广告展示成功",3).show();
     }
 
     @Override
     public void onAdFailed() {
         Log.d("DEMO", "Splash ad failed");
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                SplashActivity.this.finish();
-            }
-        }, 500);
+        Toast.makeText(this,"广告加载失败",3).show();
+        goToMainActivity();
+
 
     }
 
     @Override
     public void onAdClicked() {
         Log.d("DEMO", "Splash ad clicked");
+        Toast.makeText(this,"广告点击",3).show();
 
     }
 
     @Override
     public void onAdClose() {
         Log.d("DEMO", "Splash ad closed");
-        next();
+        Toast.makeText(this,"广告关闭",3).show();
+
+        mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN,500);
     }
 
     /**
@@ -150,10 +147,14 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
      * 设置一个变量来控制当前开屏页面是否可以跳转，当开屏广告为普链类广告时，点击会打开一个广告落地页，此时开发者还不能打开自己的App主页。当从广告落地页返回以后，
      * 才可以跳转到开发者自己的App主页；当开屏广告是App类广告时只会下载App。
      */
+
+    /**
+     * 设置一个变量来控制当前开屏页面是否可以跳转，当开屏广告为普链类广告时，点击会打开一个广告落地页，此时开发者还不能打开自己的App主页。当从广告落地页返回以后，
+     * 才可以跳转到开发者自己的App主页；当开屏广告是App类广告时只会下载App。
+     */
     private void next() {
         if (canJump) {
-            this.startActivity(new Intent(this, MainActivity.class));
-            this.finish();
+            goToMainActivity();
         } else {
             canJump = true;
         }
@@ -174,10 +175,11 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
         canJump = true;
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        handler.removeCallbacksAndMessages(null);
+        mHandler.removeCallbacksAndMessages(null);
     }
 
     /**
@@ -189,5 +191,20 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+    /**
+     * 跳转到主页面
+     */
+    private void goToMainActivity() {
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        this.finish();
+    }
+    @Override
+    public void handleMsg(Message msg) {
+        if (msg.what == MSG_GO_MAIN) {
+            next();
+        }
     }
 }

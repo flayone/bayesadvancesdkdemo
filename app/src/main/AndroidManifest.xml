@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RewardVideoActivity"></activity>
+        <activity android:name=".NativeActivity"></activity>
+        <activity android:name=".RewardVideoActivity" />
         <activity
             android:name=".NativeExpressActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
