@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.bayesadvance.AdvanceNativeListener;
 import com.bayesadvance.bayes.BayesNativeAdData;
 import com.bayesadvance.csj.CsjNativeAdData;
 import com.bayesadvance.gdt.GdtNativeAdData;
+import com.bayescom.sdk.BayesVideoView;
 import com.bytedance.sdk.openadsdk.DownloadStatusController;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
@@ -54,6 +56,7 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
     private static final int MSG_VIDEO_START = 1;
     private FrameLayout advanceNativeAdContainer;
     private static final String TAG = NativeActivity.class.getSimpleName();
+    private TTAppDownloadListener ttAppDownloadListener;
 
 
     private AdvanceNative advanceNative;
@@ -71,6 +74,7 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
 
 
     private void initAd(final AdvanceNativeAdData advanceNativeAdData) {
+        mAQuery = new AQuery(findViewById(R.id.advance_native_ad_container));
         if (advanceNativeAdData.getSdkTag().equals(AdvanceConfig.SDK_TAG_GDT)) {
             final GdtNativeAdData ad = (GdtNativeAdData) advanceNativeAdData;
             renderGdtAdUi(ad);
@@ -101,10 +105,8 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
         super.onResume();
         if (advanceNativeAdData != null) {
             // 必须要在Actiivty.onResume()时通知到广告数据，以便重置广告恢复状态
-            if (advanceNativeAdData.getSdkTag().equals(AdvanceConfig.SDK_TAG_GDT)) {
-                ((GdtNativeAdData) advanceNativeAdData).resume();
+            advanceNativeAdData.resume();
             }
-        }
     }
 
     private void renderGdtAdUi(final GdtNativeAdData ad) {
@@ -113,7 +115,6 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
         final Button mDownloadButton = adView.findViewById(R.id.btn_download);
         ImageView mImagePoster = adView.findViewById(R.id.img_poster);
         NativeAdContainer mNativeContainer = adView.findViewById(R.id.native_ad_container);
-        mAQuery = new AQuery(findViewById(R.id.advance_native_ad_container));
 
         List<View> clickableViews = new ArrayList<>();
         clickableViews.add(mDownloadButton);
@@ -246,7 +247,6 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
 
     private void renderCsjAdUi(CsjNativeAdData ad) {
         int patternType = ad.getImageMode();
-        mAQuery = new AQuery(findViewById(R.id.advance_native_ad_container));
         ImageView mSmallImage = null;
         ImageView mLargeImage = null;
         ImageView mGroupImage1 = null;
@@ -407,9 +407,9 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                     mStopButton.setVisibility(View.VISIBLE);
                 }
                 mRemoveButton.setVisibility(View.VISIBLE);
-                bindDownloadListener(mCreativeButton, mRemoveButton, ad);
+                bindCsjDownloadListener(mCreativeButton, mStopButton, ad);
                 //绑定下载状态控制器
-                bindDownLoadStatusController(mStopButton, mRemoveButton, ad);
+                bindCsjDownLoadStatusController(mStopButton, mRemoveButton, ad);
                 break;
             case TTAdConstant.INTERACTION_TYPE_DIAL:
                 mCreativeButton.setVisibility(View.VISIBLE);
@@ -440,8 +440,8 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
     }
 
 
-    private void bindDownLoadStatusController(final Button mStopButton,
-                                              final Button mRemoveButton, final CsjNativeAdData ad) {
+    private void bindCsjDownLoadStatusController(final Button mStopButton,
+                                                 final Button mRemoveButton, final CsjNativeAdData ad) {
         final DownloadStatusController controller = ad.getDownloadStatusController();
         if (mStopButton != null) {
             mStopButton.setOnClickListener(new View.OnClickListener() {
@@ -466,15 +466,15 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
         });
     }
 
-    private void bindDownloadListener(final Button adCreativeButton,
-                                      final Button mStopButton, CsjNativeAdData ad) {
-        TTAppDownloadListener downloadListener = new TTAppDownloadListener() {
+    private void bindCsjDownloadListener(final Button mCreativeButton,
+                                         final Button mStopButton, CsjNativeAdData ad) {
+         ttAppDownloadListener = new TTAppDownloadListener() {
             @Override
             public void onIdle() {
                 if (!isValid()) {
                     return;
                 }
-                adCreativeButton.setText("开始下载");
+                mCreativeButton.setText("开始下载");
                 if (mStopButton != null) {
                     mStopButton.setText("开始下载");
                 }
@@ -487,11 +487,12 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                     return;
                 }
                 if (totalBytes <= 0L) {
-                    adCreativeButton.setText("下载中 percent: 0");
+                    mCreativeButton.setText("下载中 percent: 0");
                 } else {
-                    adCreativeButton.setText("下载中 percent: " + (currBytes * 100 / totalBytes));
+                    mCreativeButton.setText("下载中 percent: " + (currBytes * 100 / totalBytes));
                 }
-                if (mStopButton != null) {
+                if(mStopButton!=null)
+                {
                     mStopButton.setText("下载中");
                 }
             }
@@ -503,11 +504,12 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                     return;
                 }
                 if (totalBytes <= 0L) {
-                    adCreativeButton.setText("下载暂停 percent: 0");
+                    mCreativeButton.setText("下载暂停 percent: 0");
                 } else {
-                    adCreativeButton.setText("下载暂停 percent: " + (currBytes * 100 / totalBytes));
+                    mCreativeButton.setText("下载暂停 percent: " + (currBytes * 100 / totalBytes));
                 }
-                if (mStopButton != null) {
+                if(mStopButton!=null)
+                {
                     mStopButton.setText("下载暂停");
                 }
             }
@@ -517,8 +519,11 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                 if (!isValid()) {
                     return;
                 }
-                adCreativeButton.setText("重新下载");
-                if (mStopButton != null) {
+                if (mCreativeButton != null) {
+                    mCreativeButton.setText("重新下载");
+                }
+                if(mStopButton!=null)
+                {
                     mStopButton.setText("重新下载");
                 }
             }
@@ -528,8 +533,11 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                 if (!isValid()) {
                     return;
                 }
-                adCreativeButton.setText("点击打开");
-                if (mStopButton != null) {
+                if (mCreativeButton != null) {
+                    mCreativeButton.setText("点击打开");
+                }
+                if(mStopButton!=null)
+                {
                     mStopButton.setText("点击打开");
                 }
             }
@@ -539,40 +547,67 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                 if (!isValid()) {
                     return;
                 }
-                adCreativeButton.setText("点击安装");
-                if (mStopButton != null) {
+                if (mCreativeButton != null) {
+                    mCreativeButton.setText("点击安装");
+                }
+                if(mStopButton!=null)
+                {
                     mStopButton.setText("点击安装");
                 }
             }
 
             @SuppressWarnings("BooleanMethodIsAlwaysInverted")
             private boolean isValid() {
-//                return mTTAppDownloadListenerMap.get(adViewHolder) == this;
-                return true;
+                return ttAppDownloadListener == this;
             }
         };
         //一个ViewHolder对应一个downloadListener, isValid判断当前ViewHolder绑定的listener是不是自己
-        ad.setDownloadListener(downloadListener); // 注册下载监听器
+        ad.setDownloadListener(ttAppDownloadListener); // 注册下载监听器
 //        mTTAppDownloadListenerMap.put(adViewHolder, downloadListener);
     }
 
     private void renderBayesAdUi(BayesNativeAdData ad) {
-//        mAQuery.id(R.id.img_logo).image(ad.getIcon());
-////        mAQuery.id(R.id.img_poster).image(ad.getImage());
-//        mAQuery.id(R.id.text_title).text(ad.getTitle());
-//        mAQuery.id(R.id.text_desc).text(ad.getDescription());
-//        mMediaView.removeAllViews();
-//        BayesVideoView videoView = ad.getBayesVideoView();
-//        mMediaView.addView(videoView);
-//        ad.playVideo();
-//        Button button = findViewById(R.id.btn_download);
-//        button.setText("下载");
-//
-//        mImagePoster.setVisibility(View.GONE);
-//        mMediaView.setVisibility(View.VISIBLE);
-//
-//        ad.bindView(mContainer);
+        LayoutInflater.from(this).inflate(R.layout.bayes_item_ad_unified, advanceNativeAdContainer, true);
+        //首先需要绑定广告容器
+        Button button = advanceNativeAdContainer.findViewById(R.id.btn_download);
+        List<View> clickableViews = new ArrayList<>();
+        clickableViews.add(button);
+        ad.bindView(advanceNativeAdContainer,clickableViews);
+        mAQuery.id(R.id.img_logo).image(ad.getIcon());
+        mAQuery.id(R.id.text_title).text(ad.getTitle());
+        mAQuery.id(R.id.text_desc).text(ad.getDescription());
+        if (ad.getIsVideo()) {
+            ad.muteVideo();
+            BayesVideoView videoView = ad.getBayesVideoView();
+            RelativeLayout bayesMediaView = advanceNativeAdContainer.findViewById(R.id.bayes_media_view);
+            bayesMediaView.removeAllViews();
+            bayesMediaView.addView(videoView);
+            mAQuery.id(R.id.img_poster).visibility(View.GONE);
+            ad.playVideo();
 
+        }
+        if (!ad.getIsVideo() && ad.getImageList() != null && ad.getImageList().size() == 1) {
+            //单图
+            mAQuery.id(R.id.img_poster).image(ad.getImageList().get(0));
+
+        } else if (ad.getImageList() != null && ad.getImageList().size() >= 3) {
+            //组图
+            mAQuery.id(R.id.text_title).visibility(View.GONE);
+            mAQuery.id(R.id.text_desc).visibility(View.GONE);
+            mAQuery.id(R.id.native_3img_title).text(ad.getTitle());
+            mAQuery.id(R.id.native_3img_desc).text(ad.getDescription());
+            mAQuery.id(R.id.img_1).image(ad.getImageList().get(0));
+            mAQuery.id(R.id.img_2).image(ad.getImageList().get(1));
+            mAQuery.id(R.id.img_3).image(ad.getImageList().get(2));
+        }
+        if (ad.isAppAd()) {
+            button.setText("下载");
+        } else {
+            button.setText("浏览");
+        }
+        mAQuery.id(R.id.text_adsource).text("广告");
+        //上报展示曝光,请在真实曝光的时候上报
+        ad.reportAdShow();
     }
 
 
@@ -581,9 +616,7 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
         super.onDestroy();
         if (advanceNativeAdData != null) {
             // 必须要在Actiivty.destroy()时通知到广告数据，以便释放内存
-            if (advanceNativeAdData.getSdkTag().equals(AdvanceConfig.SDK_TAG_GDT)) {
-                ((GdtNativeAdData) advanceNativeAdData).destroy();
-            }
+            advanceNativeAdData.destroy();
         }
     }
 
@@ -621,27 +654,27 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
     @Override
     public void onAdShow() {
         Log.d("DEMO", "Ad Show");
-        Toast.makeText(this, "广告展示", 3).show();
+        Toast.makeText(this, "广告展示", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onAdFailed() {
         Log.d("DEMO", "Ad Failed");
-        Toast.makeText(this, "广告失败", 3).show();
+        Toast.makeText(this, "广告失败", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onAdClicked() {
         Log.d("DEMO", "Ad Clicked");
-        Toast.makeText(this, "广告点击", 3).show();
+        Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAdLoaded(List<AdvanceNativeAdData> list) {
         if (list != null && list.size() > 0) {
-            Toast.makeText(this, "广告加载成功", 3).show();
+            Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
             Message msg = Message.obtain();
             msg.what = MSG_INIT_AD;
             advanceNativeAdData = list.get(0);
