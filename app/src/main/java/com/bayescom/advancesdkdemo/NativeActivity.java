@@ -592,10 +592,6 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
 
         } else if (ad.getImageList() != null && ad.getImageList().size() >= 3) {
             //组图
-            mAQuery.id(R.id.text_title).visibility(View.GONE);
-            mAQuery.id(R.id.text_desc).visibility(View.GONE);
-            mAQuery.id(R.id.native_3img_title).text(ad.getTitle());
-            mAQuery.id(R.id.native_3img_desc).text(ad.getDescription());
             mAQuery.id(R.id.img_1).image(ad.getImageList().get(0));
             mAQuery.id(R.id.img_2).image(ad.getImageList().get(1));
             mAQuery.id(R.id.img_3).image(ad.getImageList().get(2));

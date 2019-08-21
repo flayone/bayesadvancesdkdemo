@@ -37,4 +37,8 @@ public class MainActivity extends AppCompatActivity {
     {
         startActivity(new Intent(this,NativeExpressRecyclerViewActivity.class));
     }
+    public void onNativeRecyclerView(View view)
+    {
+       startActivity(new Intent(this,NativeRecyclerViewActivity.class));
+    }
 }

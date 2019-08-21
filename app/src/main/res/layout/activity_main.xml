@@ -33,6 +33,13 @@
             android:text="自渲染原生" />
 
         <Button
+            android:id="@+id/native_recycler_view_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onNativeRecyclerView"
+            android:text="自渲染原生RecyclerView" />
+
+        <Button
             android:id="@+id/native_express_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
