@@ -33,8 +33,10 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         setContentView(R.layout.activity_native_express);
         container = findViewById(R.id.native_express_container);
         advanceNativeExpress = new AdvanceNativeExpress(this, "121212", "121212");
-        advanceNativeExpress.setHeight(300);
-        advanceNativeExpress.setWidth(600);
+        advanceNativeExpress.setExpressViewAcceptedSize(600,300)
+                .setCsjImageAcceptedSize(640,320)
+                .setGdtAutoHeight(true)
+                .setGdtFullWidth(true);
         advanceNativeExpress.setAdListener(this);
         advanceNativeExpress.loadAd();
     }
@@ -58,7 +60,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
     }
 
     @Override
-    public void onAdClose() {
+    public void onAdClose(View view) {
 
         Log.d("DEMO", "CLOSED");
     }

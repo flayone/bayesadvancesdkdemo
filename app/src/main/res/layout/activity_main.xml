@@ -38,6 +38,12 @@
             android:layout_height="wrap_content"
             android:onClick="onNativeExpress"
             android:text="原生模板" />
+        <Button
+            android:id="@+id/native_express_recycler_view_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onNativeExpressRecyclerView"
+            android:text="原生模板RecyclerView" />
 
         <Button
             android:id="@+id/rewardvideo_button"
