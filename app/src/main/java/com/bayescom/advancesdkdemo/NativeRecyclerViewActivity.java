@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -419,41 +418,24 @@ public class NativeRecyclerViewActivity extends Activity
                     //如果初始化ttAdManager.createAdNative(getApplicationContext())没有传入activity 则需要在此传activity，否则影响使用Dislike逻辑
                     ad.setActivityForDownloadApp(NativeRecyclerViewActivity.this);
                     holder.csjCreativeButton.setVisibility(View.VISIBLE);
-                    if (holder.csjStopButton != null) {
-                       holder.csjStopButton.setVisibility(View.VISIBLE);
-                    }
-                    holder.csjRemoveButton.setVisibility(View.VISIBLE);
                     //绑定下载状态监听器
-                    bindCsjDownloadListener( holder.csjCreativeButton,holder.csjStopButton,holder, ad);
-                    //绑定下载状态控制器
-                    bindCsjDownLoadStatusController(holder.csjStopButton,holder.csjRemoveButton, ad);
+                    bindCsjDownloadListener( holder.csjCreativeButton,holder, ad);
+                    //绑定下载状态控制器（测试用途)
+//                    bindCsjDownLoadStatusController(holder.csjStopButton,holder.csjRemoveButton, ad);
                     break;
                 case TTAdConstant.INTERACTION_TYPE_DIAL:
                     holder.csjCreativeButton.setVisibility(View.VISIBLE);
                      holder.csjCreativeButton.setText("立即拨打");
-                    if (  holder.csjStopButton != null) {
-                       holder.csjStopButton.setVisibility(View.GONE);
-                    }
-                    holder.csjRemoveButton.setVisibility(View.GONE);
                     break;
                 case TTAdConstant.INTERACTION_TYPE_LANDING_PAGE:
                 case TTAdConstant.INTERACTION_TYPE_BROWSER:
 //                    adCreativeButton.setVisibility(View.GONE);
                    holder.csjCreativeButton.setVisibility(View.VISIBLE);
                    holder.csjCreativeButton.setText("查看详情");
-                    if (holder.csjStopButton != null) {
-                       holder.csjStopButton.setVisibility(View.GONE);
-                    }
-                   holder.csjRemoveButton.setVisibility(View.GONE);
                     break;
                 default:
                    holder.csjCreativeButton.setVisibility(View.GONE);
-                    if (holder.csjStopButton != null) {
-                      holder.csjStopButton.setVisibility(View.GONE);
-                    }
-                   holder.csjRemoveButton.setVisibility(View.GONE);
             }
-
 
 
 
@@ -533,7 +515,7 @@ public class NativeRecyclerViewActivity extends Activity
 
         }
         private void bindCsjDownloadListener(final Button mCreativeButton,
-                                             final Button mStopButton, final CustomHolder holder, CsjNativeAdData ad) {
+                                               final CustomHolder holder, CsjNativeAdData ad) {
            TTAppDownloadListener  ttAppDownloadListener = new TTAppDownloadListener() {
                 @Override
                 public void onIdle() {
@@ -541,9 +523,6 @@ public class NativeRecyclerViewActivity extends Activity
                         return;
                     }
                     mCreativeButton.setText("开始下载");
-                    if (mStopButton != null) {
-                        mStopButton.setText("开始下载");
-                    }
                 }
 
                 @SuppressLint("SetTextI18n")
@@ -556,10 +535,6 @@ public class NativeRecyclerViewActivity extends Activity
                         mCreativeButton.setText("下载中:0%");
                     } else {
                         mCreativeButton.setText("下载中:" + (currBytes * 100 / totalBytes)+"%");
-                    }
-                    if(mStopButton!=null)
-                    {
-                        mStopButton.setText("下载中");
                     }
                 }
 
@@ -574,10 +549,6 @@ public class NativeRecyclerViewActivity extends Activity
                     } else {
                         mCreativeButton.setText("下载暂停:" + (currBytes * 100 / totalBytes)+"%");
                     }
-                    if(mStopButton!=null)
-                    {
-                        mStopButton.setText("下载暂停");
-                    }
                 }
 
                 @Override
@@ -587,10 +558,6 @@ public class NativeRecyclerViewActivity extends Activity
                     }
                     if (mCreativeButton != null) {
                         mCreativeButton.setText("重新下载");
-                    }
-                    if(mStopButton!=null)
-                    {
-                        mStopButton.setText("重新下载");
                     }
                 }
 
@@ -602,10 +569,6 @@ public class NativeRecyclerViewActivity extends Activity
                     if (mCreativeButton != null) {
                         mCreativeButton.setText("点击打开");
                     }
-                    if(mStopButton!=null)
-                    {
-                        mStopButton.setText("点击打开");
-                    }
                 }
 
                 @Override
@@ -615,10 +578,6 @@ public class NativeRecyclerViewActivity extends Activity
                     }
                     if (mCreativeButton != null) {
                         mCreativeButton.setText("点击安装");
-                    }
-                    if(mStopButton!=null)
-                    {
-                        mStopButton.setText("点击安装");
                     }
                 }
 
@@ -630,31 +589,6 @@ public class NativeRecyclerViewActivity extends Activity
             //一个ViewHolder对应一个downloadListener, isValid判断当前ViewHolder绑定的listener是不是自己
             ad.setDownloadListener(ttAppDownloadListener); // 注册下载监听器
             mTTAppDownloadListenerMap.put(holder, ttAppDownloadListener);
-        }
-        private void bindCsjDownLoadStatusController(final Button mStopButton,
-                                                     final Button mRemoveButton, final CsjNativeAdData ad) {
-            final DownloadStatusController controller = ad.getDownloadStatusController();
-            if (mStopButton != null) {
-                mStopButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (controller != null) {
-                            controller.changeDownloadStatus();
-                            Log.d(TAG, "改变下载状态");
-                        }
-                    }
-                });
-            }
-
-            mRemoveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (controller != null) {
-                        controller.cancelDownload();
-                        Log.d(TAG, "取消下载");
-                    }
-                }
-            });
         }
 
         private void setGdtAdListener(final CustomHolder holder, final GdtNativeAdData ad) {

@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -48,8 +50,6 @@ import java.util.List;
 public class NativeActivity extends Activity implements AdvanceNativeListener {
 
     private AQuery mAQuery;
-    //    private Button mDownloadButton;
-//    private RelativeLayout mADInfoContainer;
     private AdvanceNativeAdData advanceNativeAdData;
     private H mHandler = new H();
     private static final int MSG_INIT_AD = 0;
@@ -247,57 +247,72 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
 
     private void renderCsjAdUi(CsjNativeAdData ad) {
         int patternType = ad.getImageMode();
-        ImageView mSmallImage = null;
-        ImageView mLargeImage = null;
-        ImageView mGroupImage1 = null;
-        ImageView mGroupImage2 = null;
-        ImageView mGroupImage3 = null;
-        ImageView mVerticalImage = null;
-        FrameLayout videoView = null;
+        LayoutInflater.from(this).inflate(R.layout.csj_item_ad_unified,advanceNativeAdContainer,true);
+        ImageView mSmallImage = advanceNativeAdContainer.findViewById(R.id.iv_listitem_image_small);
+        ImageView mLargeImage = advanceNativeAdContainer.findViewById(R.id.iv_listitem_image);
+        ViewGroup mImageGroupLayout = advanceNativeAdContainer.findViewById(R.id.layout_image_group);
+        ImageView mGroupImage1= advanceNativeAdContainer.findViewById(R.id.iv_listitem_image1);
+        ImageView mGroupImage2 = advanceNativeAdContainer.findViewById(R.id.iv_listitem_image2);
+        ImageView mGroupImage3 = advanceNativeAdContainer.findViewById(R.id.iv_listitem_image3);
+        ImageView mVerticalImage = advanceNativeAdContainer.findViewById(R.id.iv_listitem_image_vertical);
+        FrameLayout mVideoView = advanceNativeAdContainer.findViewById(R.id.iv_listitem_video);
 
         if (patternType == TTAdConstant.IMAGE_MODE_SMALL_IMG) {
-           LayoutInflater.from(this).inflate(R.layout.csj_item_ad_small_pic, advanceNativeAdContainer, true);
-            mSmallImage = (ImageView) advanceNativeAdContainer.findViewById(R.id.iv_listitem_image);
+            mSmallImage.setVisibility(View.VISIBLE);
+            mLargeImage.setVisibility(View.GONE);
+            mImageGroupLayout.setVisibility(View.GONE);
+            mVerticalImage.setVisibility(View.GONE);
+            mVideoView.setVisibility(View.GONE);
+
             if (ad.getImageList() != null && !ad.getImageList().isEmpty()) {
                 TTImage image = ad.getImageList().get(0);
                 if (image != null && image.isValid()) {
-                    mAQuery.id(mSmallImage).image(image.getImageUrl(), false, true);
+                    mAQuery.id(R.id.iv_listitem_image_small).image(image.getImageUrl(), false, true);
                 }
             }
         } else if (patternType == TTAdConstant.IMAGE_MODE_LARGE_IMG) {
-            LayoutInflater.from(this).inflate(R.layout.csj_item_ad_large_pic, advanceNativeAdContainer, true);
-            mLargeImage = (ImageView) advanceNativeAdContainer.findViewById(R.id.iv_listitem_image);
+            mSmallImage.setVisibility(View.GONE);
+            mLargeImage.setVisibility(View.VISIBLE);
+            mImageGroupLayout.setVisibility(View.GONE);
+            mVerticalImage.setVisibility(View.GONE);
+            mVideoView.setVisibility(View.GONE);
+
             if (ad.getImageList() != null && !ad.getImageList().isEmpty()) {
                 TTImage image = ad.getImageList().get(0);
                 if (image != null && image.isValid()) {
-                    mAQuery.id(mLargeImage).image(image.getImageUrl(), false, true);
+                    mAQuery.id(R.id.iv_listitem_image).image(image.getImageUrl(), false, true);
                 }
             }
 
         } else if (patternType == TTAdConstant.IMAGE_MODE_GROUP_IMG) {
-            LayoutInflater.from(this).inflate(R.layout.csj_item_ad_group_pic, advanceNativeAdContainer, true);
-            mGroupImage1 = (ImageView) advanceNativeAdContainer.findViewById(R.id.iv_listitem_image1);
-            mGroupImage2 = (ImageView) advanceNativeAdContainer.findViewById(R.id.iv_listitem_image2);
-            mGroupImage3 = (ImageView) advanceNativeAdContainer.findViewById(R.id.iv_listitem_image3);
+
+            mSmallImage.setVisibility(View.GONE);
+            mLargeImage.setVisibility(View.GONE);
+            mImageGroupLayout.setVisibility(View.VISIBLE);
+            mVerticalImage.setVisibility(View.GONE);
+            mVideoView.setVisibility(View.GONE);
             if (ad.getImageList() != null && ad.getImageList().size() >= 3) {
                 TTImage image1 = ad.getImageList().get(0);
                 TTImage image2 = ad.getImageList().get(1);
                 TTImage image3 = ad.getImageList().get(2);
                 if (image1 != null && image1.isValid()) {
-                    mAQuery.id(mGroupImage1).image(image1.getImageUrl(), false, false);
+                    mAQuery.id(R.id.iv_listitem_image1).image(image1.getImageUrl(), false, false);
                 }
                 if (image2 != null && image2.isValid()) {
-                    mAQuery.id(mGroupImage2).image(image2.getImageUrl(), false, false);
+                    mAQuery.id(R.id.iv_listitem_image2).image(image2.getImageUrl(), false, false);
                 }
                 if (image3 != null && image3.isValid()) {
-                    mAQuery.id(mGroupImage3).image(image3.getImageUrl(), false, false);
+                    mAQuery.id(R.id.iv_listitem_image3).image(image3.getImageUrl(), false, false);
                 }
             }
 
 
         } else if (patternType == TTAdConstant.IMAGE_MODE_VIDEO) {
-            LayoutInflater.from(this).inflate(R.layout.csj_item_ad_large_video, advanceNativeAdContainer, true);
-            videoView = (FrameLayout) advanceNativeAdContainer.findViewById(R.id.iv_listitem_video);
+            mSmallImage.setVisibility(View.GONE);
+            mLargeImage.setVisibility(View.GONE);
+            mImageGroupLayout.setVisibility(View.GONE);
+            mVerticalImage.setVisibility(View.GONE);
+            mVideoView.setVisibility(View.VISIBLE);
             //视频广告设置播放状态回调（可选）
             ad.setVideoAdListener(new TTFeedAd.VideoAdListener() {
                 @Override
@@ -325,40 +340,41 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
 
                 }
             });
-            if (videoView != null) {
+            if (mVideoView != null) {
                 //获取视频播放view,该view SDK内部渲染，在媒体平台可配置视频是否自动播放等设置。
                 View video = ad.getAdView();
                 if (video != null) {
                     if (video.getParent() == null) {
-                        videoView.removeAllViews();
-                        videoView.addView(video);
+                        mVideoView.removeAllViews();
+                        mVideoView.addView(video);
                     }
                 }
             }
 
         } else if (patternType == TTAdConstant.IMAGE_MODE_VERTICAL_IMG) {
-            LayoutInflater.from(this).inflate(R.layout.csj_item_ad_vertical_pic, advanceNativeAdContainer, true);
-            mVerticalImage = (ImageView) advanceNativeAdContainer.findViewById(R.id.iv_listitem_image);
+            mSmallImage.setVisibility(View.GONE);
+            mLargeImage.setVisibility(View.GONE);
+            mImageGroupLayout.setVisibility(View.GONE);
+            mVerticalImage.setVisibility(View.VISIBLE);
+            mVideoView.setVisibility(View.GONE);
             if (ad.getImageList() != null && !ad.getImageList().isEmpty()) {
                 TTImage image = ad.getImageList().get(0);
                 if (image != null && image.isValid()) {
-                    mAQuery.id(mVerticalImage).image(image.getImageUrl(), false, true);
+                    mAQuery.id(R.id.iv_listitem_image_vertical).image(image.getImageUrl(), false, true);
                 }
             }
-
-
         }
         TextView mTitle = (TextView) advanceNativeAdContainer.findViewById(R.id.tv_listitem_ad_title);
         TextView mSource = (TextView) advanceNativeAdContainer.findViewById(R.id.tv_listitem_ad_source);
         TextView mDescription = (TextView) advanceNativeAdContainer.findViewById(R.id.tv_listitem_ad_desc);
         ImageView mIcon = (ImageView) advanceNativeAdContainer.findViewById(R.id.iv_listitem_icon);
         Button mCreativeButton = (Button) advanceNativeAdContainer.findViewById(R.id.btn_listitem_creative);
-        Button mStopButton = (Button) advanceNativeAdContainer.findViewById(R.id.btn_listitem_stop);
-        Button mRemoveButton = (Button) advanceNativeAdContainer.findViewById(R.id.btn_listitem_remove);
+//        Button mStopButton = (Button) advanceNativeAdContainer.findViewById(R.id.btn_listitem_stop);
+//        Button mRemoveButton = (Button) advanceNativeAdContainer.findViewById(R.id.btn_listitem_remove);
         //绑定广告数据
         mTitle.setText(ad.getTitle()); //title为广告的简单信息提示
         mDescription.setText(ad.getDescription()); //description为广告的较长的说明
-        mSource.setText(ad.getSource() == null ? "广告来源" : ad.getSource());
+        mSource.setText(TextUtils.isEmpty(ad.getSource()) ? "广告" : ad.getSource());
         TTImage icon = ad.getIcon();
         if (icon != null && icon.isValid()) {
             mAQuery.id(mIcon).image(icon.getImageUrl(), false, true);
@@ -403,71 +419,53 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                 //如果初始化ttAdManager.createAdNative(getApplicationContext())没有传入activity 则需要在此传activity，否则影响使用Dislike逻辑
                 ad.setActivityForDownloadApp(this);
                 mCreativeButton.setVisibility(View.VISIBLE);
-                if (mStopButton != null) {
-                    mStopButton.setVisibility(View.VISIBLE);
-                }
-                mRemoveButton.setVisibility(View.VISIBLE);
-                bindCsjDownloadListener(mCreativeButton, mStopButton, ad);
+                bindCsjDownloadListener(mCreativeButton, ad);
                 //绑定下载状态控制器
-                bindCsjDownLoadStatusController(mStopButton, mRemoveButton, ad);
+                bindCsjDownLoadStatusController( ad);
                 break;
             case TTAdConstant.INTERACTION_TYPE_DIAL:
                 mCreativeButton.setVisibility(View.VISIBLE);
                 mCreativeButton.setText("立即拨打");
-                if (mStopButton != null) {
-                    mStopButton.setVisibility(View.GONE);
-                }
-                mRemoveButton.setVisibility(View.GONE);
                 break;
             case TTAdConstant.INTERACTION_TYPE_LANDING_PAGE:
             case TTAdConstant.INTERACTION_TYPE_BROWSER:
 //                    adCreativeButton.setVisibility(View.GONE);
                 mCreativeButton.setVisibility(View.VISIBLE);
                 mCreativeButton.setText("查看详情");
-                if (mStopButton != null) {
-                    mStopButton.setVisibility(View.GONE);
-                }
-                mRemoveButton.setVisibility(View.GONE);
                 break;
             default:
                 mCreativeButton.setVisibility(View.GONE);
-                if (mStopButton != null) {
-                    mStopButton.setVisibility(View.GONE);
-                }
-                mRemoveButton.setVisibility(View.GONE);
         }
 
     }
 
 
-    private void bindCsjDownLoadStatusController(final Button mStopButton,
-                                                 final Button mRemoveButton, final CsjNativeAdData ad) {
-        final DownloadStatusController controller = ad.getDownloadStatusController();
-        if (mStopButton != null) {
-            mStopButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (controller != null) {
-                        controller.changeDownloadStatus();
-                        Log.d(TAG, "改变下载状态");
-                    }
-                }
-            });
-        }
+    private void bindCsjDownLoadStatusController(final CsjNativeAdData ad) {
+//        final DownloadStatusController controller = ad.getDownloadStatusController();
+//        if (mStopButton != null) {
+//            mStopButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (controller != null) {
+//                        controller.changeDownloadStatus();
+//                        Log.d(TAG, "改变下载状态");
+//                    }
+//                }
+//            });
+//        }
 
-        mRemoveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (controller != null) {
-                    controller.cancelDownload();
-                    Log.d(TAG, "取消下载");
-                }
-            }
-        });
+//        mRemoveButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (controller != null) {
+//                    controller.cancelDownload();
+//                    Log.d(TAG, "取消下载");
+//                }
+//            }
+//        });
     }
 
-    private void bindCsjDownloadListener(final Button mCreativeButton,
-                                         final Button mStopButton, CsjNativeAdData ad) {
+    private void bindCsjDownloadListener(final Button mCreativeButton, CsjNativeAdData ad) {
          ttAppDownloadListener = new TTAppDownloadListener() {
             @Override
             public void onIdle() {
@@ -475,9 +473,6 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                     return;
                 }
                 mCreativeButton.setText("开始下载");
-                if (mStopButton != null) {
-                    mStopButton.setText("开始下载");
-                }
             }
 
             @SuppressLint("SetTextI18n")
@@ -487,13 +482,9 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                     return;
                 }
                 if (totalBytes <= 0L) {
-                    mCreativeButton.setText("下载中 percent: 0");
+                    mCreativeButton.setText("下载中:0%");
                 } else {
-                    mCreativeButton.setText("下载中 percent: " + (currBytes * 100 / totalBytes));
-                }
-                if(mStopButton!=null)
-                {
-                    mStopButton.setText("下载中");
+                    mCreativeButton.setText("下载中:" + (currBytes * 100 / totalBytes)+"%");
                 }
             }
 
@@ -504,13 +495,9 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                     return;
                 }
                 if (totalBytes <= 0L) {
-                    mCreativeButton.setText("下载暂停 percent: 0");
+                    mCreativeButton.setText("下载暂停:0%");
                 } else {
-                    mCreativeButton.setText("下载暂停 percent: " + (currBytes * 100 / totalBytes));
-                }
-                if(mStopButton!=null)
-                {
-                    mStopButton.setText("下载暂停");
+                    mCreativeButton.setText("下载暂停:" + (currBytes * 100 / totalBytes)+"%");
                 }
             }
 
@@ -522,10 +509,6 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                 if (mCreativeButton != null) {
                     mCreativeButton.setText("重新下载");
                 }
-                if(mStopButton!=null)
-                {
-                    mStopButton.setText("重新下载");
-                }
             }
 
             @Override
@@ -536,10 +519,6 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                 if (mCreativeButton != null) {
                     mCreativeButton.setText("点击打开");
                 }
-                if(mStopButton!=null)
-                {
-                    mStopButton.setText("点击打开");
-                }
             }
 
             @Override
@@ -549,10 +528,6 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
                 }
                 if (mCreativeButton != null) {
                     mCreativeButton.setText("点击安装");
-                }
-                if(mStopButton!=null)
-                {
-                    mStopButton.setText("点击安装");
                 }
             }
 

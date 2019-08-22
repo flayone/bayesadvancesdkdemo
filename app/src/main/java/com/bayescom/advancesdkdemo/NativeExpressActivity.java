@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.bayesadvance.AdvanceConfig;
 import com.bayesadvance.AdvanceNativeExpress;
@@ -35,6 +36,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         advanceNativeExpress = new AdvanceNativeExpress(this, "121212", "121212");
         advanceNativeExpress.setExpressViewAcceptedSize(600,300)
                 .setCsjImageAcceptedSize(640,320)
+                .setGdtMaxVideoDuration(60)
                 .setGdtAutoHeight(true)
                 .setGdtFullWidth(true);
         advanceNativeExpress.setAdListener(this);
@@ -43,18 +45,21 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
 
     @Override
     public void onAdShow() {
+        Toast.makeText(this,"广告展示",Toast.LENGTH_SHORT).show();
 
         Log.d("DEMO", "SHOW");
     }
 
     @Override
     public void onAdFailed() {
+        Toast.makeText(this,"广告失败",Toast.LENGTH_SHORT).show();
         Log.d("DEMO", "FAILED");
 
     }
 
     @Override
     public void onAdClicked() {
+        Toast.makeText(this,"广告点击",Toast.LENGTH_SHORT).show();
         Log.d("DEMO", "CLICKED");
 
     }
@@ -62,34 +67,26 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
     @Override
     public void onAdClose(View view) {
 
+        Toast.makeText(this,"广告关闭",Toast.LENGTH_SHORT).show();
         Log.d("DEMO", "CLOSED");
     }
 
     @Override
     public void onAdLoaded(List<AdvanceNativeExpressAdItem> list) {
+        Toast.makeText(this,"广告加载成功",Toast.LENGTH_SHORT).show();
         Log.d("DEMO", "LOADED");
         if (null == list && list.isEmpty()) {
             return;
         } else {
-            for(AdvanceNativeExpressAdItem advanceNativeExpressAdItem :list) {
-
+            AdvanceNativeExpressAdItem advanceNativeExpressAdItem = list.get(0);
                 if (advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_GDT)) {
                     GdtNativeAdExpressAdItem gdtNativeAdExpressAdItem = (GdtNativeAdExpressAdItem) advanceNativeExpressAdItem;
-                    if(gdtNativeAdExpressAdItem.getBoundData().getAdPatternType()==AdPatternType.NATIVE_VIDEO)
-                    {
                         renderGdtExpressAd(gdtNativeAdExpressAdItem);
-                        break;
-                    }
                 } else if (advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_CSJ)) {
                     CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem)  advanceNativeExpressAdItem;
-                    if(csjNativeExpressAdItem.getImageMode()==TTAdConstant.IMAGE_MODE_VIDEO)
-                    {
                         renderCsjExpressAd(csjNativeExpressAdItem);
-                        break;
 
-                    }
                 }
-            }
 
         }
 
