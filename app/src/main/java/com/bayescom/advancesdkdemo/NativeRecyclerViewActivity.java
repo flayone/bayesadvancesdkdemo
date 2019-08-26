@@ -33,7 +33,6 @@ import com.bayesadvance.bayes.BayesNativeAdData;
 import com.bayesadvance.csj.CsjNativeAdData;
 import com.bayesadvance.gdt.GdtNativeAdData;
 import com.bayescom.sdk.BayesVideoView;
-import com.bytedance.sdk.openadsdk.DownloadStatusController;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
 import com.bytedance.sdk.openadsdk.TTFeedAd;
@@ -383,6 +382,11 @@ public class NativeRecyclerViewActivity extends Activity
                 csjAQ.id(R.id.iv_listitem_icon).image(icon.getImageUrl(), false, true);
 
             }
+            Bitmap logoBitmap = ad.getAdLogo();
+            if(logoBitmap!=null)
+            {
+                csjAQ.id(R.id.tv_listitem_ad_logo).image(logoBitmap);
+            }
             List<View> clickViewList = new ArrayList<>();
             clickViewList.add(holder.csjContainer);
             //触发创意广告的view（点击下载或拨打电话）
@@ -480,6 +484,7 @@ public class NativeRecyclerViewActivity extends Activity
                     {
                         holder.bayesVideoViewContainer.removeAllViews();
                         holder.bayesVideoViewContainer.addView(videoView);
+                        ad.muteVideo();
                         ad.playVideo();
                     }else
                     {
@@ -706,6 +711,7 @@ public class NativeRecyclerViewActivity extends Activity
         public TextView csjDescription;
         public ImageView csjIcon;
         public Button csjCreativeButton;
+        public ImageView csjLogo;
         public Button csjStopButton;
         public Button csjRemoveButton;
         public ViewGroup csjImageGroupContainer;
@@ -754,6 +760,7 @@ public class NativeRecyclerViewActivity extends Activity
                     csjDescription =itemView.findViewById(R.id.tv_listitem_ad_desc);
                     csjIcon = itemView.findViewById(R.id.iv_listitem_icon);
                     csjCreativeButton = itemView.findViewById(R.id.btn_listitem_creative);
+                    csjLogo = itemView.findViewById(R.id.tv_listitem_ad_logo);
                     csjStopButton =itemView.findViewById(R.id.btn_listitem_stop);
                     csjRemoveButton =itemView.findViewById(R.id.btn_listitem_remove);
                     csjImageGroupContainer =itemView.findViewById(R.id.layout_image_group);

@@ -380,6 +380,11 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
             mAQuery.id(mIcon).image(icon.getImageUrl(), false, true);
 
         }
+        Bitmap logoBitMap = ad.getAdLogo();
+        if(logoBitMap!=null)
+        {
+            mAQuery.id(R.id.tv_listitem_ad_logo).image(logoBitMap);
+        }
         //设置dislike弹窗，这里展示自定义的dialog
 //        bindDislikeCustom(adViewHolder.mDislike, ad);
 
@@ -554,7 +559,7 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
         if (ad.getIsVideo()) {
             ad.muteVideo();
             BayesVideoView videoView = ad.getBayesVideoView();
-            RelativeLayout bayesMediaView = advanceNativeAdContainer.findViewById(R.id.bayes_media_view);
+            FrameLayout bayesMediaView = advanceNativeAdContainer.findViewById(R.id.bayes_media_view);
             bayesMediaView.removeAllViews();
             bayesMediaView.addView(videoView);
             mAQuery.id(R.id.img_poster).visibility(View.GONE);
@@ -646,6 +651,7 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
     public void onAdLoaded(List<AdvanceNativeAdData> list) {
         if (list != null && list.size() > 0) {
             Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
+            //发送给主线程
             Message msg = Message.obtain();
             msg.what = MSG_INIT_AD;
             advanceNativeAdData = list.get(0);

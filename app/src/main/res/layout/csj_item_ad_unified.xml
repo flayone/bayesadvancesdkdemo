@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/native_ad_container"
     android:layout_width="match_parent"
@@ -89,19 +90,22 @@
             android:id="@+id/iv_listitem_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop" />
+            android:scaleType="fitXY"
+            />
 
         <ImageView
             android:id="@+id/iv_listitem_image_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop" />
+            android:scaleType="fitXY"
+            />
 
         <ImageView
             android:id="@+id/iv_listitem_image_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop" />
+            android:scaleType="fitXY"
+            />
 
         <LinearLayout
             android:id="@+id/layout_image_group"
@@ -117,7 +121,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitXY"
+                />
 
             <ImageView
                 android:id="@+id/iv_listitem_image2"
@@ -125,7 +130,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitXY"
+                />
 
             <ImageView
                 android:id="@+id/iv_listitem_image3"
@@ -133,7 +139,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitXY"
+                />
         </LinearLayout>
 
         <FrameLayout
@@ -143,7 +150,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="fitXY"
+            />
 
     </FrameLayout>
 
@@ -152,6 +160,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ad_content_layout">
+
+        <ImageView
+            android:id="@+id/tv_listitem_ad_logo"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@drawable/tt_ad_logo_small" />
 
         <TextView
             android:id="@+id/tv_listitem_ad_source"
