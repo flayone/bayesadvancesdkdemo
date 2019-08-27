@@ -66,7 +66,7 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native);
         advanceNativeAdContainer = (FrameLayout) findViewById(R.id.advance_native_ad_container);
-        advanceNative = new AdvanceNative(this, "12112", "23121");
+        advanceNative = new AdvanceNative(this, Constants.mediaId,Constants.nativeAdspotId);
         advanceNative.setAdListener(this);
         advanceNative.loadAd();
 

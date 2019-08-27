@@ -22,8 +22,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".NativeRecyclerActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        >
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
         <activity android:name=".NativeExpressRecyclerViewActivity" />
         <activity android:name=".NativeRecyclerViewActivity" />
         <activity android:name=".NativeActivity" />
@@ -47,9 +51,7 @@
             android:name="com.tencent.rdm.uuid"
             android:value="2f045d33-de20-423a-86d3-d32d7f3ee8ae" />
 
-        <uses-library
-            android:name="org.apache.http.legacy"
-            android:required="false" /> <!-- targetSDKVersion >= 24时才需要添加这个provider。provider的authorities属性的值为${applicationId}.fileprovider，请开发者根据自己的${applicationId}来设置这个值，例如本例中applicationId为"com.qq.e.union.demo"。 -->
+        <!-- targetSDKVersion >= 24时才需要添加这个provider。provider的authorities属性的值为${applicationId}.fileprovider，请开发者根据自己的${applicationId}来设置这个值，例如本例中applicationId为"com.qq.e.union.demo"。 -->
         <!-- <provider -->
         <!-- android:name="android.support.v4.content.FileProvider" -->
         <!-- android:authorities="com.qq.e.union.demo.fileprovider" -->

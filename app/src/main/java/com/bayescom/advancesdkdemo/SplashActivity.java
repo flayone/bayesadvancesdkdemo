@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
         FrameLayout adContainer = findViewById(R.id.splash_container);
         TextView skipView = findViewById(R.id.skip_view);
 
-        advanceSplash = new AdvanceSplash(this, "1212", "1212", adContainer, skipView);
+        advanceSplash = new AdvanceSplash(this, Constants.mediaId, Constants.splashAdspotId, adContainer, skipView);
         advanceSplash.setSkipText("%d s|跳过")
                 .setCsjAcceptedSize(1080, 1920)//设置穿山甲广告图片偏好尺寸(如果介入穿山甲的话
                 .setAdListener(this);

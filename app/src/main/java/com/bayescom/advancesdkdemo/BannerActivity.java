@@ -18,7 +18,7 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banner);
         RelativeLayout rl = findViewById(R.id.banner_layout);
-        advanceBanner = new AdvanceBanner(this,rl,"i232","12121");
+        advanceBanner = new AdvanceBanner(this,rl,Constants.mediaId,Constants.bannerAdspotId);
         advanceBanner.setCsjAcceptedSize(640,100)
                      .setRefreshInterval(60)
                      .setAdListener(this);

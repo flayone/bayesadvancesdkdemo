@@ -79,7 +79,7 @@ public class NativeRecyclerViewActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native_recycler_view);
         initView();
-        mAdManager = new AdvanceNative(this, "122121", "121212");
+        mAdManager = new AdvanceNative(this, Constants.mediaId, Constants.nativeAdspotId);
         mAdManager.setAdListener(this);
         mAdManager.setGdtMaxVideoDuration(60);
         mAdManager.loadAd();
