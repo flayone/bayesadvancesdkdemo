@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.bayesadvance.AdvanceBanner;
 import com.bayesadvance.AdvanceBannerListener;
+import com.bayesadvance.AdvanceConfig;
+import com.bayesadvance.model.SdkSupplier;
 
 public class BannerActivity extends AppCompatActivity implements AdvanceBannerListener {
     private String TAG="DEMO BANNER";
@@ -22,6 +24,7 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
         advanceBanner.setCsjAcceptedSize(640,100)
                      .setRefreshInterval(60)
                      .setAdListener(this);
+        advanceBanner.setDefaultSdkSupplier(new SdkSupplier("100171","10000396","e1d0d3aaf95d3f1980367e75bc41141d",AdvanceConfig.SDK_TAG_BAYES));
         advanceBanner.loadAd();
 
 

@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +29,6 @@ import com.bayesadvance.bayes.BayesNativeAdData;
 import com.bayesadvance.csj.CsjNativeAdData;
 import com.bayesadvance.gdt.GdtNativeAdData;
 import com.bayescom.sdk.BayesVideoView;
-import com.bytedance.sdk.openadsdk.DownloadStatusController;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
 import com.bytedance.sdk.openadsdk.TTFeedAd;
