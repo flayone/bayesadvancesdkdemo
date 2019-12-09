@@ -18,6 +18,7 @@ import com.bayesadvance.AdvanceNativeExpressAdItem;
 import com.bayesadvance.AdvanceNativeExpressListener;
 import com.bayesadvance.csj.CsjNativeExpressAdItem;
 import com.bayesadvance.gdt.GdtNativeAdExpressAdItem;
+import com.bayesadvance.model.SdkSupplier;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
 import com.bytedance.sdk.openadsdk.TTNativeExpressAd;
 import com.qq.e.ads.nativ.NativeExpressADView;
@@ -93,6 +94,8 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                 .setGdtAutoHeight(true)
                 .setCsjImageAcceptedSize(640, 320)
                 .setAdListener(this);
+        //设置打底SDK参数
+        mADManager.setDefaultSdkSupplier(new SdkSupplier("12121x","1212xxxx",null,AdvanceConfig.SDK_TAG_GDT));
         mADManager.loadAd();
     }
     //AdvanceSDK回调接口

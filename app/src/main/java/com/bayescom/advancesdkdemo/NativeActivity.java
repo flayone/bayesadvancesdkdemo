@@ -28,6 +28,7 @@ import com.bayesadvance.AdvanceNativeListener;
 import com.bayesadvance.bayes.BayesNativeAdData;
 import com.bayesadvance.csj.CsjNativeAdData;
 import com.bayesadvance.gdt.GdtNativeAdData;
+import com.bayesadvance.model.SdkSupplier;
 import com.bayescom.sdk.BayesVideoView;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
@@ -66,6 +67,10 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
         advanceNativeAdContainer = (FrameLayout) findViewById(R.id.advance_native_ad_container);
         advanceNative = new AdvanceNative(this, Constants.mediaId,Constants.nativeAdspotId);
         advanceNative.setAdListener(this);
+        //设置是否缓存策略
+        advanceNative.setUseCache(true);
+        //设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)
+        advanceNative.setDefaultSdkSupplier(new SdkSupplier("12121x","1212xxxx","xxyyyxxyy",AdvanceConfig.SDK_TAG_BAYES));
         advanceNative.loadAd();
 
     }
@@ -133,7 +138,7 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
             clickableViews.add(mImagePoster);
             clickableViews.add(adView.findViewById(R.id.img_logo));
 
-        } else if (patternType == AdPatternType.NATIVE_3IMAGE) {
+        } else if (patternType == AdPatternType.NATIVE_3IMAGE&&ad.getImgUrls().size()>3) {
             mAQuery.id(R.id.img_1).image(ad.getImgUrls().get(0), false, true);
             mAQuery.id(R.id.img_2).image(ad.getImgUrls().get(1), false, true);
             mAQuery.id(R.id.img_3).image(ad.getImgUrls().get(2), false, true);

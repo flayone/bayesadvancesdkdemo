@@ -2,28 +2,33 @@ package com.bayescom.advancesdkdemo;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bayesadvance.AdvanceConfig;
 import com.bayesadvance.AdvanceSplash;
 import com.bayesadvance.AdvanceSplashListener;
+import com.bayesadvance.model.SdkSupplier;
+import com.bumptech.glide.Glide;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SplashActivity extends AppCompatActivity implements AdvanceSplashListener,WeakHandler.IHandler {
+public class SplashActivity extends Activity implements AdvanceSplashListener,WeakHandler.IHandler {
     private AdvanceSplash advanceSplash;
     private final WeakHandler mHandler = new WeakHandler(this);
     private static final int AD_TIME_OUT = 500;
@@ -39,9 +44,21 @@ public class SplashActivity extends AppCompatActivity implements AdvanceSplashLi
         TextView skipView = findViewById(R.id.skip_view);
 
         advanceSplash = new AdvanceSplash(this, Constants.mediaId, Constants.splashAdspotId, adContainer, skipView);
+        //Android10 适配OAID
+        advanceSplash.setOaid("");
+        ImageView logoView = new ImageView(this);
+        Glide.with(this).load(R.mipmap.yourlogo).into(logoView);
+        //设置开屏底部logo
+        advanceSplash.setBayesLogoView(logoView);
+        //设置是否使用缓存策略
+        advanceSplash.setUseCache(true);
         advanceSplash.setSkipText("%d s|跳过")
-                .setCsjAcceptedSize(1080, 1920)//设置穿山甲广告图片偏好尺寸(如果介入穿山甲的话
+                .setCsjAcceptedSize(1080, 1920)//设置穿山甲广告图片偏好尺寸(如果接入穿山甲的话
                 .setAdListener(this);
+        //开屏位置推荐开启缓存设置
+        advanceSplash.setUseCache(true);
+        //设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)
+        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("12121x","1212xxxx","xxyyyxxyy",AdvanceConfig.SDK_TAG_BAYES));
         // 如果targetSDKVersion >= 23，就要申请好权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
         if (Build.VERSION.SDK_INT >= 23) {
             checkAndRequestPermission();

@@ -11,15 +11,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/app_logo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:contentDescription="logo"
-            android:scaleType="fitXY"
-            android:src="@drawable/splash_logo" />
+        <!--<ImageView-->
+            <!--android:id="@+id/app_logo"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:contentDescription="logo"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:src="@drawable/splash_logo" />-->
 
         <!-- 2.预设开屏图片区域： -->
         <!-- 开发者可以把自家App设计开屏图片摆放在这里，本示例中放置了一张静态图片。!-->
@@ -39,7 +39,7 @@
             android:id="@+id/splash_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/app_logo"/>
+            />
 
         <TextView
             android:id="@+id/skip_view"

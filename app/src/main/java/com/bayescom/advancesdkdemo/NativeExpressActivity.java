@@ -13,6 +13,7 @@ import com.bayesadvance.AdvanceNativeExpressAdItem;
 import com.bayesadvance.AdvanceNativeExpressListener;
 import com.bayesadvance.csj.CsjNativeExpressAdItem;
 import com.bayesadvance.gdt.GdtNativeAdExpressAdItem;
+import com.bayesadvance.model.SdkSupplier;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
@@ -40,6 +41,9 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
                 .setGdtAutoHeight(true)
                 .setGdtFullWidth(true);
         advanceNativeExpress.setAdListener(this);
+        //可以设置是否采用缓存
+        advanceNativeExpress.setUseCache(true);
+        advanceNativeExpress.setDefaultSdkSupplier(new SdkSupplier("12121x","1212xxxx",null,AdvanceConfig.SDK_TAG_GDT));
         advanceNativeExpress.loadAd();
     }
 

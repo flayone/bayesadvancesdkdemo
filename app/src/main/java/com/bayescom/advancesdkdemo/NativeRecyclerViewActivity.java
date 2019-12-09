@@ -32,6 +32,7 @@ import com.bayesadvance.AdvanceNativeListener;
 import com.bayesadvance.bayes.BayesNativeAdData;
 import com.bayesadvance.csj.CsjNativeAdData;
 import com.bayesadvance.gdt.GdtNativeAdData;
+import com.bayesadvance.model.SdkSupplier;
 import com.bayescom.sdk.BayesVideoView;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
@@ -82,6 +83,8 @@ public class NativeRecyclerViewActivity extends Activity
         mAdManager = new AdvanceNative(this, Constants.mediaId, Constants.nativeAdspotId);
         mAdManager.setAdListener(this);
         mAdManager.setGdtMaxVideoDuration(60);
+        //设置打底SDK参数
+        mAdManager.setDefaultSdkSupplier(new SdkSupplier("xxx","yyy",null,AdvanceConfig.SDK_TAG_GDT));
         mAdManager.loadAd();
     }
 

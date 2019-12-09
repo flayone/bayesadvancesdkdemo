@@ -24,6 +24,9 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
         advanceBanner.setCsjAcceptedSize(640,100)
                      .setRefreshInterval(60)
                      .setAdListener(this);
+        //设置是否使用缓存
+        advanceBanner.setUseCache(true);
+        //设置打底SDK参数
         advanceBanner.setDefaultSdkSupplier(new SdkSupplier("100171","10000396","e1d0d3aaf95d3f1980367e75bc41141d",AdvanceConfig.SDK_TAG_BAYES));
         advanceBanner.loadAd();
 
