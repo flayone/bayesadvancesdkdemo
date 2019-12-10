@@ -58,7 +58,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
         //开屏位置推荐开启缓存设置
         advanceSplash.setUseCache(true);
         //设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)
-        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("12121x","1212xxxx","xxyyyxxyy",AdvanceConfig.SDK_TAG_BAYES));
+        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("12121x","1212xxxx",null,AdvanceConfig.SDK_TAG_GDT));
         // 如果targetSDKVersion >= 23，就要申请好权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
         if (Build.VERSION.SDK_INT >= 23) {
             checkAndRequestPermission();
