@@ -30,7 +30,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
         advanceRewardVideo.setCsjRewardName("金币");
         advanceRewardVideo.setOrientation(AdvanceRewardVideo.ORIENTATION_HORIZONTAL);
         advanceRewardVideo.setCsjUserId("user123");
-        advanceRewardVideo.setCsjRewardAmount(3);
+        advanceRewardVideo.setCsjRewardAmount(Toast.LENGTH_SHORT);
         advanceRewardVideo.setDefaultSdkSupplier(new SdkSupplier("xxx","yyy",null,AdvanceConfig.SDK_TAG_GDT));
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(this);
@@ -131,7 +131,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
         }else
         {
-            Toast.makeText(this,"广告未加载",3).show();
+            Toast.makeText(this,"广告未加载",Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -139,21 +139,21 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     @Override
     public void onAdShow() {
         Log.d("DEMO","SHOW");
-        Toast.makeText(this,"广告展示",3).show();
+        Toast.makeText(this,"广告展示",Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onAdFailed() {
         Log.d("DEMO","FAILED");
-        Toast.makeText(this,"广告加载失败",3).show();
+        Toast.makeText(this,"广告加载失败",Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onAdClicked() {
         Log.d("DEMO","CLICKED");
-        Toast.makeText(this,"广告点击",3).show();
+        Toast.makeText(this,"广告点击",Toast.LENGTH_SHORT).show();
 
     }
 
@@ -161,7 +161,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     public void onAdLoaded(AdvanceRewardVideoItem advanceRewardVideoItem) {
         Log.d("DEMO","LOADED");
         this.advanceRewardVideoItem= advanceRewardVideoItem;
-        Toast.makeText(this,"广告加载成功",3).show();
+        Toast.makeText(this,"广告加载成功",Toast.LENGTH_SHORT).show();
 
 
     }
@@ -170,14 +170,14 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     public void onVideoCached() {
         Log.d("DEMO","CACHED");
         isReady=true;
-        Toast.makeText(this,"广告缓存成功",3).show();
+        Toast.makeText(this,"广告缓存成功",Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onVideoComplete() {
         Log.d("DEMO","VIDEO COMPLETE");
-        Toast.makeText(this,"视频播发完毕",3).show();
+        Toast.makeText(this,"视频播发完毕",Toast.LENGTH_SHORT).show();
 
     }
 
@@ -185,13 +185,13 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     public void onAdClose() {
         Log.d("DEMO","AD CLOSE");
 
-        Toast.makeText(this,"广告关闭",3).show();
+        Toast.makeText(this,"广告关闭",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAdReward() {
         Log.d("DEMO","AD REWARD");
-        Toast.makeText(this,"激励发放",3).show();
+        Toast.makeText(this,"激励发放",Toast.LENGTH_SHORT).show();
 
     }
 

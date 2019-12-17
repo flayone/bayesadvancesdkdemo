@@ -29,7 +29,6 @@ import com.bayesadvance.bayes.BayesNativeAdData;
 import com.bayesadvance.csj.CsjNativeAdData;
 import com.bayesadvance.gdt.GdtNativeAdData;
 import com.bayesadvance.model.SdkSupplier;
-import com.bayescom.sdk.BayesVideoView;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
 import com.bytedance.sdk.openadsdk.TTFeedAd;
@@ -551,42 +550,7 @@ public class NativeActivity extends Activity implements AdvanceNativeListener {
 
     private void renderBayesAdUi(BayesNativeAdData ad) {
         LayoutInflater.from(this).inflate(R.layout.bayes_item_ad_unified, advanceNativeAdContainer, true);
-        //首先需要绑定广告容器
-        Button button = advanceNativeAdContainer.findViewById(R.id.btn_download);
-        List<View> clickableViews = new ArrayList<>();
-        clickableViews.add(button);
-        ad.bindView(advanceNativeAdContainer,clickableViews);
-        mAQuery.id(R.id.img_logo).image(ad.getIcon());
-        mAQuery.id(R.id.text_title).text(ad.getTitle());
-        mAQuery.id(R.id.text_desc).text(ad.getDescription());
-        if (ad.getIsVideo()) {
-            ad.muteVideo();
-            BayesVideoView videoView = ad.getBayesVideoView();
-            FrameLayout bayesMediaView = advanceNativeAdContainer.findViewById(R.id.bayes_media_view);
-            bayesMediaView.removeAllViews();
-            bayesMediaView.addView(videoView);
-            mAQuery.id(R.id.img_poster).visibility(View.GONE);
-            ad.playVideo();
 
-        }
-        if (!ad.getIsVideo() && ad.getImageList() != null && ad.getImageList().size() == 1) {
-            //单图
-            mAQuery.id(R.id.img_poster).image(ad.getImageList().get(0));
-
-        } else if (ad.getImageList() != null && ad.getImageList().size() >= 3) {
-            //组图
-            mAQuery.id(R.id.img_1).image(ad.getImageList().get(0));
-            mAQuery.id(R.id.img_2).image(ad.getImageList().get(1));
-            mAQuery.id(R.id.img_3).image(ad.getImageList().get(2));
-        }
-        if (ad.isAppAd()) {
-            button.setText("下载");
-        } else {
-            button.setText("浏览");
-        }
-        mAQuery.id(R.id.text_adsource).text("广告");
-        //上报展示曝光,请在真实曝光的时候上报
-        ad.reportAdShow();
     }
 
 

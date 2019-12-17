@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.bayescom.advancesdkdemo">
     <!-- 必须要有的权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -71,23 +72,14 @@
             android:name="com.qq.e.ads.LandscapeADActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:screenOrientation="landscape" />
-        <activity
-            android:name="com.bayescom.sdk.BayesActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
-
-        <service android:name="com.bayescom.sdk.BayesDownloadService" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true">
-
-            <!-- 元数据 -->
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path" />
-        </provider>
+            android:grantUriPermissions="true"
+            tools:node="merge"
+            tools:replace="android:name,android:authorities" />
         <provider
             android:name="com.bytedance.sdk.openadsdk.TTFileProvider"
             android:authorities="${applicationId}.TTFileProvider"

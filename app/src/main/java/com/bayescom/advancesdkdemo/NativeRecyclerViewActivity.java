@@ -33,7 +33,6 @@ import com.bayesadvance.bayes.BayesNativeAdData;
 import com.bayesadvance.csj.CsjNativeAdData;
 import com.bayesadvance.gdt.GdtNativeAdData;
 import com.bayesadvance.model.SdkSupplier;
-import com.bayescom.sdk.BayesVideoView;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
 import com.bytedance.sdk.openadsdk.TTFeedAd;
@@ -456,67 +455,7 @@ public class NativeRecyclerViewActivity extends Activity
             //需要先绑定广告容器视图和可点击View,一般为按钮，需要在容器内部，不可以是广告容器本身
             List<View> clickableViews = new ArrayList<>();
             clickableViews.add(holder.bayesDownloadButton);
-            ad.bindView(holder.bayesContainer,clickableViews);
-            holder.bayesTitle.setText(ad.getTitle());
-            holder.bayesDescription.setText(ad.getDescription());
-            String adSource= ad.getAdSource();
-            if(TextUtils.isEmpty(adSource))
-            {
-                holder.bayesSource.setText("广告");
 
-            }else{
-                holder.bayesSource.setText(ad.getAdSource());
-            }
-            bayesAQ.id(R.id.img_logo).image(ad.getIcon(),false,true);
-            if(ad.isAppAd())
-            {
-                holder.bayesDownloadButton.setText("下载");
-            }else
-            {
-                holder.bayesDownloadButton.setText("浏览");
-            }
-            if(ad.getIsVideo())
-            {
-                holder.bayesVideoViewContainer.setVisibility(View.VISIBLE);
-                holder.bayesImageGroupContainer.setVisibility(View.GONE);
-                holder.bayesImageLarge.setVisibility(View.GONE);
-                BayesVideoView videoView = ad.getBayesVideoView();
-                if(videoView!=null)
-                {
-                    if(holder.bayesVideoViewContainer !=null&&videoView.getParent()==null)
-                    {
-                        holder.bayesVideoViewContainer.removeAllViews();
-                        holder.bayesVideoViewContainer.addView(videoView);
-                        ad.muteVideo();
-                        ad.playVideo();
-                    }else
-                    {
-                        ad.resumeVideo();
-
-                    }
-
-                }
-
-            }else if(ad.getImageList()!=null&&ad.getImageList().size()==1)
-            {
-                //单图大图
-                holder.bayesVideoViewContainer.setVisibility(View.GONE);
-                holder.bayesImageGroupContainer.setVisibility(View.GONE);
-                holder.bayesImageLarge.setVisibility(View.VISIBLE);
-                bayesAQ.id(R.id.img_poster).image(ad.getImageList().get(0),false,true);
-
-            }else if(ad.getImageList()!=null&&ad.getImageList().size()>=3)
-            {
-                //小图组图
-                holder.bayesVideoViewContainer.setVisibility(View.GONE);
-                holder.bayesImageGroupContainer.setVisibility(View.VISIBLE);
-                holder.bayesImageLarge.setVisibility(View.GONE);
-                bayesAQ.id(R.id.img_1).image(ad.getImageList().get(0),false,true);
-                bayesAQ.id(R.id.img_2).image(ad.getImageList().get(1),false,true);
-                bayesAQ.id(R.id.img_3).image(ad.getImageList().get(2),false,true);
-            }
-            //发送展示上报
-            ad.reportAdShow();
 
 
 

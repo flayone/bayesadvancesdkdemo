@@ -44,12 +44,12 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
         TextView skipView = findViewById(R.id.skip_view);
 
         advanceSplash = new AdvanceSplash(this, Constants.mediaId, Constants.splashAdspotId, adContainer, skipView);
-        //Android10 适配OAID
-        advanceSplash.setOaid("");
+        //Android10 适配OA
+        AdvanceConfig.getInstance().setOaid("");
         ImageView logoView = new ImageView(this);
-        Glide.with(this).load(R.mipmap.yourlogo).into(logoView);
         //设置开屏底部logo
-        advanceSplash.setBayesLogoView(logoView);
+        advanceSplash.setBayesLogoImage(this.getResources().getDrawable(R.mipmap.yourlogo));
+        advanceSplash.setBayesHolderImage(this.getResources().getDrawable(R.mipmap.backlogo));
         //设置是否使用缓存策略
         advanceSplash.setUseCache(true);
         advanceSplash.setSkipText("%d s|跳过")
@@ -71,13 +71,13 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
     @Override
     public void onAdShow() {
         Log.d("DEMO", "Splash ad show");
-        Toast.makeText(this,"广告展示成功",3).show();
+        Toast.makeText(this,"广告展示成功",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAdFailed() {
         Log.d("DEMO", "Splash ad failed");
-        Toast.makeText(this,"广告加载失败",3).show();
+        Toast.makeText(this,"广告加载失败",Toast.LENGTH_SHORT).show();
         goToMainActivity();
 
 
@@ -86,14 +86,14 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
     @Override
     public void onAdClicked() {
         Log.d("DEMO", "Splash ad clicked");
-        Toast.makeText(this,"广告点击",3).show();
+        Toast.makeText(this,"广告点击",Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onAdClose() {
         Log.d("DEMO", "Splash ad closed");
-        Toast.makeText(this,"广告关闭",3).show();
+        Toast.makeText(this,"广告关闭",Toast.LENGTH_SHORT).show();
 
         mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN,500);
     }
