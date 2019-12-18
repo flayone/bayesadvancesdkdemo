@@ -11,9 +11,11 @@ import com.bayesadvance.AdvanceConfig;
 import com.bayesadvance.AdvanceNativeExpress;
 import com.bayesadvance.AdvanceNativeExpressAdItem;
 import com.bayesadvance.AdvanceNativeExpressListener;
+import com.bayesadvance.bayes.BayesNativeExpressAdItem;
 import com.bayesadvance.csj.CsjNativeExpressAdItem;
 import com.bayesadvance.gdt.GdtNativeAdExpressAdItem;
 import com.bayesadvance.model.SdkSupplier;
+import com.bayescom.sdk.util.ADError;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
@@ -90,6 +92,11 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
                     CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem)  advanceNativeExpressAdItem;
                         renderCsjExpressAd(csjNativeExpressAdItem);
 
+                }else if(advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_BAYES))
+                {
+                    BayesNativeExpressAdItem bayesNativeExpressAdItem = (BayesNativeExpressAdItem) advanceNativeExpressAdItem;
+                    renderBayesExpressAd(bayesNativeExpressAdItem);
+
                 }
 
         }
@@ -151,6 +158,54 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         container.addView(gdtNativeAdExpressAdItem.getNativeExpressADView());
         gdtNativeAdExpressAdItem.render();
 
+
+    }
+    public void renderBayesExpressAd(BayesNativeExpressAdItem bayesNativeExpressAdItem)
+    {
+        container.removeAllViews();
+        container.setVisibility(View.VISIBLE);
+        if(bayesNativeExpressAdItem.getAdPatternType()== com.bayescom.sdk.core.config.AdPatternType.NATIVE_1VIDEO_1ICON_2TEXT
+        ||bayesNativeExpressAdItem.getAdPatternType()==com.bayescom.sdk.core.config.AdPatternType.NATIVE_VIDEO_2TEXT)
+        {
+            bayesNativeExpressAdItem.setMediaListener(new com.bayescom.sdk.core.nativ.NativeExpressMediaListener() {
+                @Override
+                public void onVideoInit(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+
+                }
+
+                @Override
+                public void onVideoLoading(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+
+                }
+
+                @Override
+                public void onVideoReady(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView, long l) {
+
+                }
+
+                @Override
+                public void onVideoStart(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+
+                }
+
+                @Override
+                public void onVideoPause(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+
+                }
+
+                @Override
+                public void onVideoComplete(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+
+                }
+
+                @Override
+                public void onVideoError(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView, ADError adError) {
+
+                }
+            });
+            container.addView(bayesNativeExpressAdItem.getNativeExpressADView());
+            bayesNativeExpressAdItem.render();
+        }
 
     }
 
