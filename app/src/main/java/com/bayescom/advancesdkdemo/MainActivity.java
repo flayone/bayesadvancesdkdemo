@@ -13,9 +13,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //设置SDK配置
-        AdvanceConfig.getInstance().setAppName("测试app");
-        AdvanceConfig.getInstance().setDebug(true);
     }
     public void onBanner(View view)
     {
