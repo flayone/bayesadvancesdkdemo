@@ -16,9 +16,11 @@ import com.bayesadvance.AdvanceConfig;
 import com.bayesadvance.AdvanceNativeExpress;
 import com.bayesadvance.AdvanceNativeExpressAdItem;
 import com.bayesadvance.AdvanceNativeExpressListener;
+import com.bayesadvance.bayes.BayesNativeExpressAdItem;
 import com.bayesadvance.csj.CsjNativeExpressAdItem;
 import com.bayesadvance.gdt.GdtNativeAdExpressAdItem;
 import com.bayesadvance.model.SdkSupplier;
+import com.bayescom.sdk.util.ADError;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
 import com.bytedance.sdk.openadsdk.TTNativeExpressAd;
 import com.qq.e.ads.nativ.NativeExpressADView;
@@ -95,13 +97,13 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                 .setCsjImageAcceptedSize(640, 320)
                 .setAdListener(this);
         //设置打底SDK参数
-        mADManager.setDefaultSdkSupplier(new SdkSupplier("12121x","1212xxxx",null,AdvanceConfig.SDK_TAG_GDT));
+        mADManager.setDefaultSdkSupplier(new SdkSupplier("12121x", "1212xxxx", null, AdvanceConfig.SDK_TAG_GDT));
         mADManager.loadAd();
     }
     //AdvanceSDK回调接口
 
     @Override
-    public void onAdShow() {
+    public void onAdShow(View view) {
         Toast.makeText(this, "广告展示", Toast.LENGTH_SHORT).show();
 
     }
@@ -109,11 +111,26 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     @Override
     public void onAdFailed() {
         Toast.makeText(this, "广告失败", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAdRenderFailed(View view) {
+        Toast.makeText(this, "广告渲染失败", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "onADRenderFail: " + view.toString());
+        if (mAdapter != null) {
+            int removedPosition = mAdViewPositionMap.get(view);
+            mAdapter.removeADView(removedPosition);
+        }
+        mAdViewPositionMap.remove(view);
+    }
+
+    @Override
+    public void onAdRenderSuccess(View view) {
 
     }
 
     @Override
-    public void onAdClicked() {
+    public void onAdClicked(View view) {
 
         Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
     }
@@ -126,6 +143,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
             int removedPosition = mAdViewPositionMap.get(view);
             mAdapter.removeADView(removedPosition);
         }
+        mAdViewPositionMap.remove(view);
 
     }
 
@@ -140,8 +158,96 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                 if (AdvanceConfig.SDK_TAG_GDT.equals(item.getSdkTag())) {
                     GdtNativeAdExpressAdItem gdtNativeAdExpressAdItem = (GdtNativeAdExpressAdItem) item;
                     if (gdtNativeAdExpressAdItem.getBoundData().getAdPatternType() == AdPatternType.NATIVE_VIDEO) {
-                        gdtNativeAdExpressAdItem.setMediaListener(mediaListener);
+                        gdtNativeAdExpressAdItem.setMediaListener(new NativeExpressMediaListener() {
+                            @Override
+                            public void onVideoInit(NativeExpressADView nativeExpressADView) {
+
+                            }
+
+                            @Override
+                            public void onVideoLoading(NativeExpressADView nativeExpressADView) {
+
+                            }
+
+                            @Override
+                            public void onVideoReady(NativeExpressADView nativeExpressADView, long l) {
+
+                            }
+
+                            @Override
+                            public void onVideoStart(NativeExpressADView nativeExpressADView) {
+
+                            }
+
+                            @Override
+                            public void onVideoPause(NativeExpressADView nativeExpressADView) {
+
+                            }
+
+                            @Override
+                            public void onVideoComplete(NativeExpressADView nativeExpressADView) {
+
+                            }
+
+                            @Override
+                            public void onVideoError(NativeExpressADView nativeExpressADView, AdError adError) {
+
+                            }
+
+                            @Override
+                            public void onVideoPageOpen(NativeExpressADView nativeExpressADView) {
+
+                            }
+
+                            @Override
+                            public void onVideoPageClose(NativeExpressADView nativeExpressADView) {
+
+                            }
+                        });
                     }
+                }
+                if (AdvanceConfig.SDK_TAG_BAYES.equals((item.getSdkTag()))) {
+                    BayesNativeExpressAdItem bayesNativeExpressAdItem = (BayesNativeExpressAdItem) item;
+                    if (bayesNativeExpressAdItem.getAdPatternType() == com.bayescom.sdk.core.config.AdPatternType.NATIVE_VIDEO_2TEXT ||
+                            bayesNativeExpressAdItem.getAdPatternType() == com.bayescom.sdk.core.config.AdPatternType.NATIVE_1VIDEO_1ICON_2TEXT) {
+                        bayesNativeExpressAdItem.setMediaListener(new com.bayescom.sdk.core.nativ.NativeExpressMediaListener() {
+                            @Override
+                            public void onVideoInit(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+
+                            }
+
+                            @Override
+                            public void onVideoLoading(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+
+                            }
+
+                            @Override
+                            public void onVideoReady(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView, long l) {
+
+                            }
+
+                            @Override
+                            public void onVideoStart(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+
+                            }
+
+                            @Override
+                            public void onVideoPause(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+
+                            }
+
+                            @Override
+                            public void onVideoComplete(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+
+                            }
+
+                            @Override
+                            public void onVideoError(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView, ADError adError) {
+
+                            }
+                        });
+                    }
+
                 } else if (AdvanceConfig.SDK_TAG_CSJ.equals(item.getSdkTag())) {
 
                     CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) item;
@@ -171,7 +277,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                     csjNativeExpressAdItem.setDislikeCallback(this, new TTAdDislike.DislikeInteractionCallback() {
                         @Override
                         public void onSelected(int i, String s) {
-                            Toast.makeText(NativeExpressRecyclerViewActivity.this,s,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(NativeExpressRecyclerViewActivity.this, s, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -272,6 +378,24 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
                     customViewHolder.container.addView(adView);
                     adView.render(); // 调用render方法后sdk才会开始展示广告
+                } else if (AdvanceConfig.SDK_TAG_BAYES.equals(advanceNativeExpressAdItem.getSdkTag())) {
+                    BayesNativeExpressAdItem bayesNativeExpressAdItem = (BayesNativeExpressAdItem) advanceNativeExpressAdItem;
+                    com.bayescom.sdk.core.nativ.NativeExpressADView adView = bayesNativeExpressAdItem.getNativeExpressADView();
+                    if (customViewHolder.container.getChildCount() > 0
+                            && customViewHolder.container.getChildAt(0) == adView) {
+                        return;
+                    }
+
+                    if (customViewHolder.container.getChildCount() > 0) {
+                        customViewHolder.container.removeAllViews();
+                    }
+                    if (adView.getParent() != null) {
+                        ((ViewGroup) adView.getParent()).removeView(adView);
+                    }
+
+                    customViewHolder.container.addView(adView);
+                    adView.render(); // 调用render方法后sdk才会开始展示广告
+
                 } else if (AdvanceConfig.SDK_TAG_CSJ.equals(advanceNativeExpressAdItem.getSdkTag())) {
                     //穿山甲渲染方式
                     CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
@@ -345,56 +469,5 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
         return null;
     }
 
-    private NativeExpressMediaListener mediaListener = new NativeExpressMediaListener() {
-        @Override
-        public void onVideoInit(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoInit: "
-                    + getVideoInfo(nativeExpressADView.getBoundData().getProperty(AdData.VideoPlayer.class)));
-        }
 
-        @Override
-        public void onVideoLoading(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoLoading: "
-                    + getVideoInfo(nativeExpressADView.getBoundData().getProperty(AdData.VideoPlayer.class)));
-        }
-
-        @Override
-        public void onVideoReady(NativeExpressADView nativeExpressADView, long l) {
-            Log.i(TAG, "onVideoReady: "
-                    + getVideoInfo(nativeExpressADView.getBoundData().getProperty(AdData.VideoPlayer.class)));
-        }
-
-        @Override
-        public void onVideoStart(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoStart: "
-                    + getVideoInfo(nativeExpressADView.getBoundData().getProperty(AdData.VideoPlayer.class)));
-        }
-
-        @Override
-        public void onVideoPause(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoPause: "
-                    + getVideoInfo(nativeExpressADView.getBoundData().getProperty(AdData.VideoPlayer.class)));
-        }
-
-        @Override
-        public void onVideoComplete(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoComplete: "
-                    + getVideoInfo(nativeExpressADView.getBoundData().getProperty(AdData.VideoPlayer.class)));
-        }
-
-        @Override
-        public void onVideoError(NativeExpressADView nativeExpressADView, AdError adError) {
-            Log.i(TAG, "onVideoError");
-        }
-
-        @Override
-        public void onVideoPageOpen(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoPageOpen");
-        }
-
-        @Override
-        public void onVideoPageClose(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoPageClose");
-        }
-    };
 }

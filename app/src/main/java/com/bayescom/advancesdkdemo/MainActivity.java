@@ -43,4 +43,8 @@ public class MainActivity extends AppCompatActivity {
     {
        startActivity(new Intent(this,NativeRecyclerViewActivity.class));
     }
+    public void onInterstitial(View view)
+    {
+        startActivity(new Intent(this,InterstitialActivity.class));
+    }
 }

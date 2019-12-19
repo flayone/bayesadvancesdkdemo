@@ -50,7 +50,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
     }
 
     @Override
-    public void onAdShow() {
+    public void onAdShow(View view) {
         Toast.makeText(this,"广告展示",Toast.LENGTH_SHORT).show();
 
         Log.d("DEMO", "SHOW");
@@ -64,7 +64,19 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
     }
 
     @Override
-    public void onAdClicked() {
+    public void onAdRenderFailed(View view) {
+
+        Toast.makeText(this,"广告渲染失败",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAdRenderSuccess(View view) {
+        Toast.makeText(this,"广告渲染成功",Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onAdClicked(View view) {
         Toast.makeText(this,"广告点击",Toast.LENGTH_SHORT).show();
         Log.d("DEMO", "CLICKED");
 
@@ -203,9 +215,9 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
 
                 }
             });
-            container.addView(bayesNativeExpressAdItem.getNativeExpressADView());
-            bayesNativeExpressAdItem.render();
         }
+        container.addView(bayesNativeExpressAdItem.getNativeExpressADView());
+        bayesNativeExpressAdItem.render();
 
     }
 

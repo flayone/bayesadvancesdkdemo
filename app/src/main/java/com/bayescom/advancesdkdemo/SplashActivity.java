@@ -48,8 +48,8 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
         AdvanceConfig.getInstance().setOaid("");
         ImageView logoView = new ImageView(this);
         //设置开屏底部logo
-        advanceSplash.setBayesLogoImage(this.getResources().getDrawable(R.mipmap.yourlogo));
-        advanceSplash.setBayesHolderImage(this.getResources().getDrawable(R.mipmap.backlogo));
+        advanceSplash.setBayesLogoImage(this.getResources().getDrawable(R.mipmap.logo));
+        advanceSplash.setBayesHolderImage(this.getResources().getDrawable(R.mipmap.by_background));
         //设置是否使用缓存策略
         advanceSplash.setUseCache(true);
         advanceSplash.setSkipText("%d s|跳过")

@@ -26,18 +26,25 @@
             android:text="开屏" />
 
         <Button
-            android:id="@+id/native_button"
+            android:id="@+id/interstitial_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onNative"
-            android:text="自渲染原生" />
+            android:onClick="onInterstitial"
+            android:text="插屏" />
 
-        <Button
-            android:id="@+id/native_recycler_view_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onNativeRecyclerView"
-            android:text="自渲染原生RecyclerView" />
+        <!--<Button-->
+            <!--android:id="@+id/native_button"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="onNative"-->
+            <!--android:text="自渲染原生" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/native_recycler_view_button"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="onNativeRecyclerView"-->
+            <!--android:text="自渲染原生RecyclerView" />-->
 
         <Button
             android:id="@+id/native_express_button"
