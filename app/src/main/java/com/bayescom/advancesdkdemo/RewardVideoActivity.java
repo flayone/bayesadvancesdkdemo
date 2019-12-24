@@ -31,7 +31,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
         advanceRewardVideo.setOrientation(AdvanceRewardVideo.ORIENTATION_HORIZONTAL);
         advanceRewardVideo.setCsjUserId("user123");
         advanceRewardVideo.setCsjRewardAmount(Toast.LENGTH_SHORT);
-        advanceRewardVideo.setDefaultSdkSupplier(new SdkSupplier("xxx","yyy",null,AdvanceConfig.SDK_TAG_GDT));
+        advanceRewardVideo.setDefaultSdkSupplier(new SdkSupplier("1101152570","2090845242931421",null,AdvanceConfig.SDK_TAG_GDT));
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(this);
 

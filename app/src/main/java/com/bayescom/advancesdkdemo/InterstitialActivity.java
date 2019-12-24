@@ -6,8 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bayesadvance.AdvanceConfig;
 import com.bayesadvance.AdvanceInterstitial;
 import com.bayesadvance.AdvanceInterstitialListener;
+import com.bayesadvance.model.SdkSupplier;
 
 public class InterstitialActivity extends AppCompatActivity implements AdvanceInterstitialListener {
     private AdvanceInterstitial advanceInterstitial;
@@ -20,6 +22,8 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
         setContentView(R.layout.activity_interstitial);
         button =(Button) findViewById(R.id.interstitial_load_button);
         advanceInterstitial = new AdvanceInterstitial(this,"10018","200041");
+        advanceInterstitial.setDefaultSdkSupplier(new SdkSupplier("100171","10000398",
+                "e1d0d3aaf95d3f1980367e75bc41141d", AdvanceConfig.SDK_TAG_BAYES));
         advanceInterstitial.setAdListener(this);
 
     }
@@ -68,5 +72,13 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
     public void onAdClicked() {
 
         Toast.makeText(this,"广告点击",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        advanceInterstitial.destroy();
+
     }
 }

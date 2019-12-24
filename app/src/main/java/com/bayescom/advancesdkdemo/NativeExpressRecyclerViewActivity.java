@@ -97,7 +97,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                 .setCsjImageAcceptedSize(640, 320)
                 .setAdListener(this);
         //设置打底SDK参数
-        mADManager.setDefaultSdkSupplier(new SdkSupplier("12121x", "1212xxxx", null, AdvanceConfig.SDK_TAG_GDT));
+        mADManager.setDefaultSdkSupplier(new SdkSupplier("1101152570","2000629911207832",null,AdvanceConfig.SDK_TAG_GDT));
         mADManager.loadAd();
     }
     //AdvanceSDK回调接口
@@ -394,7 +394,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                     }
 
                     customViewHolder.container.addView(adView);
-                    adView.render(); // 调用render方法后sdk才会开始展示广告
+                    adView.render();
 
                 } else if (AdvanceConfig.SDK_TAG_CSJ.equals(advanceNativeExpressAdItem.getSdkTag())) {
                     //穿山甲渲染方式
@@ -442,32 +442,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
         }
     }
 
-    private String getAdInfo(NativeExpressADView nativeExpressADView) {
-        AdData adData = nativeExpressADView.getBoundData();
-        if (adData != null) {
-            StringBuilder infoBuilder = new StringBuilder();
-            infoBuilder.append("title:").append(adData.getTitle()).append(",")
-                    .append("desc:").append(adData.getDesc()).append(",")
-                    .append("patternType:").append(adData.getAdPatternType());
-            if (adData.getAdPatternType() == AdPatternType.NATIVE_VIDEO) {
-                infoBuilder.append(", video info: ")
-                        .append(getVideoInfo(adData.getProperty(AdData.VideoPlayer.class)));
-            }
-            return infoBuilder.toString();
-        }
-        return null;
-    }
 
-    private String getVideoInfo(AdData.VideoPlayer videoPlayer) {
-        if (videoPlayer != null) {
-            StringBuilder videoBuilder = new StringBuilder();
-            videoBuilder.append("state:").append(videoPlayer.getVideoState()).append(",")
-                    .append("duration:").append(videoPlayer.getDuration()).append(",")
-                    .append("position:").append(videoPlayer.getCurrentPosition());
-            return videoBuilder.toString();
-        }
-        return null;
-    }
 
 
 }
