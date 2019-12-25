@@ -30,7 +30,6 @@ import java.util.List;
 public class SplashActivity extends Activity implements AdvanceSplashListener,WeakHandler.IHandler {
     private AdvanceSplash advanceSplash;
     private final WeakHandler mHandler = new WeakHandler(this);
-    private static final int AD_TIME_OUT = 500;
     private static final int MSG_GO_MAIN = 1;
     private boolean canJump=false;
 
@@ -105,7 +104,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
      * 如果targetSDKVersion >= 23，那么必须要申请到所需要的权限，再调用广点通SDK，否则广点通SDK不会工作。
      * <p>
      * Demo代码里是一个基本的权限申请示例，请开发者根据自己的场景合理地编写这部分代码来实现权限申请。
-     * 注意：下面的`checkSelfPermission`和`requestPermissions`方法都是在Android6.0的SDK中增加的API，如果您的App还没有适配到Android6.0以上，则不需要调用这些方法，直接调用广点通SDK即可。
+     * 注意：下面的`checkSelfPermission`和`requestPermissions`方法都是在Android6.0的SDK中增加的API，如果您的App还没有适配到Android6.0以上，则不需要调用这些方法，直接调用即可。
      */
     @TargetApi(Build.VERSION_CODES.M)
     private void checkAndRequestPermission() {
@@ -158,11 +157,6 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
             finish();
         }
     }
-
-    /**
-     * 设置一个变量来控制当前开屏页面是否可以跳转，当开屏广告为普链类广告时，点击会打开一个广告落地页，此时开发者还不能打开自己的App主页。当从广告落地页返回以后，
-     * 才可以跳转到开发者自己的App主页；当开屏广告是App类广告时只会下载App。
-     */
 
     /**
      * 设置一个变量来控制当前开屏页面是否可以跳转，当开屏广告为普链类广告时，点击会打开一个广告落地页，此时开发者还不能打开自己的App主页。当从广告落地页返回以后，
