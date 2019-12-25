@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.bayesadvance.AdvanceConfig;
+import com.advance.AdvanceConfig;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,18 +31,11 @@ public class MainActivity extends AppCompatActivity {
     {
         startActivity(new Intent(this,RewardVideoActivity.class));
     }
-    public void onNative(View view)
-    {
-        startActivity(new Intent(this,NativeActivity.class));
-    }
     public void onNativeExpressRecyclerView(View view)
     {
         startActivity(new Intent(this,NativeExpressRecyclerViewActivity.class));
     }
-    public void onNativeRecyclerView(View view)
-    {
-       startActivity(new Intent(this,NativeRecyclerViewActivity.class));
-    }
+
     public void onInterstitial(View view)
     {
         startActivity(new Intent(this,InterstitialActivity.class));

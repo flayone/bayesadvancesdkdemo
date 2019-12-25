@@ -32,8 +32,6 @@
             android:required="false" />
 
         <activity android:name=".NativeExpressRecyclerViewActivity" />
-        <activity android:name=".NativeRecyclerViewActivity" />
-        <activity android:name=".NativeActivity" />
         <activity android:name=".RewardVideoActivity" />
         <activity
             android:name=".NativeExpressActivity"

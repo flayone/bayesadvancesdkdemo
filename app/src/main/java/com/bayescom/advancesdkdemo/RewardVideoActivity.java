@@ -6,13 +6,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.bayesadvance.AdvanceConfig;
-import com.bayesadvance.AdvanceRewardVideo;
-import com.bayesadvance.AdvanceRewardVideoItem;
-import com.bayesadvance.AdvanceRewardVideoListener;
-import com.bayesadvance.csj.CsjRewardVideoAdItem;
-import com.bayesadvance.gdt.GdtRewardVideoAdItem;
-import com.bayesadvance.model.SdkSupplier;
+import com.advance.AdvanceConfig;
+import com.advance.AdvanceRewardVideo;
+import com.advance.AdvanceRewardVideoItem;
+import com.advance.AdvanceRewardVideoListener;
+import com.advance.csj.CsjRewardVideoAdItem;
+import com.advance.gdt.GdtRewardVideoAdItem;
+import com.advance.model.SdkSupplier;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
 import com.bytedance.sdk.openadsdk.TTRewardVideoAd;
 

@@ -2,7 +2,7 @@ package com.bayescom.advancesdkdemo;
 
 import android.app.Application;
 
-import com.bayesadvance.AdvanceConfig;
+import com.advance.AdvanceConfig;
 
 public class MyApplication extends Application {
     @Override

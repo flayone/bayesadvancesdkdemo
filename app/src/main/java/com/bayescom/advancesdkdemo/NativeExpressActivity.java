@@ -7,15 +7,15 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.bayesadvance.AdvanceConfig;
-import com.bayesadvance.AdvanceNativeExpress;
-import com.bayesadvance.AdvanceNativeExpressAdItem;
-import com.bayesadvance.AdvanceNativeExpressListener;
-import com.bayesadvance.bayes.BayesNativeExpressAdItem;
-import com.bayesadvance.csj.CsjNativeExpressAdItem;
-import com.bayesadvance.gdt.GdtNativeAdExpressAdItem;
-import com.bayesadvance.model.SdkSupplier;
-import com.bayescom.sdk.util.ADError;
+import com.advance.AdvanceConfig;
+import com.advance.AdvanceNativeExpress;
+import com.advance.AdvanceNativeExpressAdItem;
+import com.advance.AdvanceNativeExpressListener;
+import com.advance.mercury.MercuryNativeExpressAdItem;
+import com.advance.csj.CsjNativeExpressAdItem;
+import com.advance.gdt.GdtNativeAdExpressAdItem;
+import com.advance.model.SdkSupplier;
+import com.mercury.sdk.util.ADError;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
@@ -104,10 +104,10 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
                     CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem)  advanceNativeExpressAdItem;
                         renderCsjExpressAd(csjNativeExpressAdItem);
 
-                }else if(advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_BAYES))
+                }else if(advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_MERCURY))
                 {
-                    BayesNativeExpressAdItem bayesNativeExpressAdItem = (BayesNativeExpressAdItem) advanceNativeExpressAdItem;
-                    renderBayesExpressAd(bayesNativeExpressAdItem);
+                    MercuryNativeExpressAdItem bayesNativeExpressAdItem = (MercuryNativeExpressAdItem) advanceNativeExpressAdItem;
+                    renderMercuryExpressAd(bayesNativeExpressAdItem);
 
                 }
 
@@ -172,46 +172,46 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
 
 
     }
-    public void renderBayesExpressAd(BayesNativeExpressAdItem bayesNativeExpressAdItem)
+    public void renderMercuryExpressAd(MercuryNativeExpressAdItem bayesNativeExpressAdItem)
     {
         container.removeAllViews();
         container.setVisibility(View.VISIBLE);
-        if(bayesNativeExpressAdItem.getAdPatternType()== com.bayescom.sdk.core.config.AdPatternType.NATIVE_1VIDEO_1ICON_2TEXT
-        ||bayesNativeExpressAdItem.getAdPatternType()==com.bayescom.sdk.core.config.AdPatternType.NATIVE_VIDEO_2TEXT)
+        if(bayesNativeExpressAdItem.getAdPatternType()== com.mercury.sdk.core.config.AdPatternType.NATIVE_1VIDEO_1ICON_2TEXT
+        ||bayesNativeExpressAdItem.getAdPatternType()==com.mercury.sdk.core.config.AdPatternType.NATIVE_VIDEO_2TEXT)
         {
-            bayesNativeExpressAdItem.setMediaListener(new com.bayescom.sdk.core.nativ.NativeExpressMediaListener() {
+            bayesNativeExpressAdItem.setMediaListener(new com.mercury.sdk.core.nativ.NativeExpressMediaListener() {
                 @Override
-                public void onVideoInit(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+                public void onVideoInit(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
 
                 }
 
                 @Override
-                public void onVideoLoading(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+                public void onVideoLoading(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
 
                 }
 
                 @Override
-                public void onVideoReady(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView, long l) {
+                public void onVideoReady(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView, long l) {
 
                 }
 
                 @Override
-                public void onVideoStart(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+                public void onVideoStart(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
 
                 }
 
                 @Override
-                public void onVideoPause(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+                public void onVideoPause(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
 
                 }
 
                 @Override
-                public void onVideoComplete(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
+                public void onVideoComplete(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
 
                 }
 
                 @Override
-                public void onVideoError(com.bayescom.sdk.core.nativ.NativeExpressADView nativeExpressADView, ADError adError) {
+                public void onVideoError(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView, ADError adError) {
 
                 }
             });

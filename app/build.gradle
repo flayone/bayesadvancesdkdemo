@@ -32,11 +32,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation(name: 'advancelib-debug', ext: 'aar')
+    implementation(name: 'advancelib-release', ext: 'aar')
     implementation(name: 'open_ad_sdk', ext: 'aar')
     implementation(name: 'GDTSDK.union.4.80.950', ext: 'aar')
     implementation(name: 'android-gif-drawable-1.2.6', ext: 'aar')
-    implementation(name: 'bayessdk-debug', ext: 'aar')
+    implementation(name: 'bayessdk-release', ext: 'aar')
 //
     implementation 'com.android.support:support-v4:28.0.0'
     implementation("com.github.bumptech.glide:glide:4.8.0") {
