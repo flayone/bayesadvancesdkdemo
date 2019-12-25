@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.bayescom.advancesdkdemo">
+    package="com.advance.advancesdkdemo">
     <!-- 必须要有的权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.advance.advancesdkdemo.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,23 +24,23 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".InterstitialActivity">
+            android:name="com.advance.advancesdkdemo.InterstitialActivity">
         </activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".NativeExpressRecyclerViewActivity" />
-        <activity android:name=".RewardVideoActivity" />
+        <activity android:name="com.advance.advancesdkdemo.NativeExpressRecyclerViewActivity" />
+        <activity android:name="com.advance.advancesdkdemo.RewardVideoActivity" />
         <activity
-            android:name=".NativeExpressActivity"
+            android:name="com.advance.advancesdkdemo.NativeExpressActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.advance.advancesdkdemo.SplashActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-        <activity android:name=".BannerActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.advance.advancesdkdemo.BannerActivity" />
+        <activity android:name="com.advance.advancesdkdemo.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
