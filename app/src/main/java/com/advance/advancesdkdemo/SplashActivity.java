@@ -56,7 +56,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
         //开屏位置推荐开启缓存设置
         advanceSplash.setUseCache(true);
         //设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)
-        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("5041059","841059441",null,AdvanceConfig.SDK_TAG_CSJ));
+        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("5001121","801121648",null,AdvanceConfig.SDK_TAG_CSJ));
         // 如果targetSDKVersion >= 23，就要申请好权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
         if (Build.VERSION.SDK_INT >= 23) {
             checkAndRequestPermission();
@@ -93,7 +93,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
         Log.d("DEMO", "Splash ad closed");
         Toast.makeText(this,"广告关闭",Toast.LENGTH_SHORT).show();
 
-        mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN,500);
+        mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN,100);
     }
 
     /**
@@ -117,9 +117,6 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
             lackedPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
 
-        if (!(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-            lackedPermission.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
 
         // 权限都已经有了，那么直接调用SDK
         if (lackedPermission.size() == 0) {
