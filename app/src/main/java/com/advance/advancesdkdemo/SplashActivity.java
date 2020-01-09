@@ -203,9 +203,9 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
      * 跳转到主页面
      */
     private void goToMainActivity() {
-        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
+//        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        startActivity(intent);
         this.finish();
     }
     @Override
