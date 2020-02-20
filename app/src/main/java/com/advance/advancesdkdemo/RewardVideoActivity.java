@@ -12,6 +12,7 @@ import com.advance.AdvanceRewardVideoItem;
 import com.advance.AdvanceRewardVideoListener;
 import com.advance.csj.CsjRewardVideoAdItem;
 import com.advance.gdt.GdtRewardVideoAdItem;
+import com.advance.mercury.MercuryRewardVideoAdItem;
 import com.advance.model.SdkSupplier;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
 import com.bytedance.sdk.openadsdk.TTRewardVideoAd;
@@ -19,43 +20,41 @@ import com.bytedance.sdk.openadsdk.TTRewardVideoAd;
 public class RewardVideoActivity extends AppCompatActivity implements AdvanceRewardVideoListener {
     private AdvanceRewardVideo advanceRewardVideo;
     private AdvanceRewardVideoItem advanceRewardVideoItem;
-    private boolean isReady=false;
+    private boolean isReady = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward_video);
-        advanceRewardVideo = new AdvanceRewardVideo(this,Constants.mediaId,Constants.rewardAdspotId);
+        advanceRewardVideo = new AdvanceRewardVideo(this, Constants.mediaId, Constants.rewardAdspotId);
         //设置穿山甲相关参数(如果有的话)
-        advanceRewardVideo.setCsjImageAcceptedSize(1080,1920);
+        advanceRewardVideo.setCsjImageAcceptedSize(1080, 1920);
         advanceRewardVideo.setCsjRewardName("金币");
         advanceRewardVideo.setOrientation(AdvanceRewardVideo.ORIENTATION_HORIZONTAL);
         advanceRewardVideo.setCsjUserId("user123");
         advanceRewardVideo.setCsjRewardAmount(Toast.LENGTH_SHORT);
-        advanceRewardVideo.setDefaultSdkSupplier(new SdkSupplier("1101152570","2090845242931421",null,AdvanceConfig.SDK_TAG_GDT));
+        advanceRewardVideo.setDefaultSdkSupplier(new SdkSupplier("1101152570", "2090845242931421", null, AdvanceConfig.SDK_TAG_GDT));
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(this);
 
     }
-    public void onLoad(View view)
-    {
-        isReady=false;
+
+    public void onLoad(View view) {
+        isReady = false;
         advanceRewardVideo.loadAd();
 
     }
-    public void onShow(View view)
-    {
-        if(isReady)
-        {
-            if(AdvanceConfig.SDK_TAG_GDT.equals(advanceRewardVideoItem.getSdkTag()))
-            {
+
+    public void onShow(View view) {
+        if (isReady) {
+            if (AdvanceConfig.SDK_TAG_GDT.equals(advanceRewardVideoItem.getSdkTag())) {
                 GdtRewardVideoAdItem gdtRewardVideoAdItem = (GdtRewardVideoAdItem) advanceRewardVideoItem;
 
                 gdtRewardVideoAdItem.showAD();
 
-            }else if(AdvanceConfig.SDK_TAG_CSJ.equals(advanceRewardVideoItem.getSdkTag()))
-            {
+            } else if (AdvanceConfig.SDK_TAG_CSJ.equals(advanceRewardVideoItem.getSdkTag())) {
                 //穿山甲SDK特定设置
-                CsjRewardVideoAdItem csjRewardVideoAdItem = (CsjRewardVideoAdItem)  advanceRewardVideoItem;
+                CsjRewardVideoAdItem csjRewardVideoAdItem = (CsjRewardVideoAdItem) advanceRewardVideoItem;
                 //设置穿山甲SDK监听器（必须），可以监听穿山甲sdk特定回调,通用的回调同时会回调通用监听器
                 csjRewardVideoAdItem.setRewardAdInteractionListener(new TTRewardVideoAd.RewardAdInteractionListener() {
                     @Override
@@ -127,71 +126,73 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
                     }
                 });
                 csjRewardVideoAdItem.showRewardVideoAd(this);
+            } else if (AdvanceConfig.SDK_TAG_MERCURY.equals(advanceRewardVideoItem.getSdkTag())) {
+                MercuryRewardVideoAdItem videoItem = (MercuryRewardVideoAdItem) advanceRewardVideoItem;
+                videoItem.showAD();
             }
 
-        }else
-        {
-            Toast.makeText(this,"广告未加载",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "广告未加载", Toast.LENGTH_SHORT).show();
         }
 
     }
 
     @Override
     public void onAdShow() {
-        Log.d("DEMO","SHOW");
-        Toast.makeText(this,"广告展示",Toast.LENGTH_SHORT).show();
+        Log.d("DEMO", "SHOW");
+        Toast.makeText(this, "广告展示", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onAdFailed() {
-        Log.d("DEMO","FAILED");
-        Toast.makeText(this,"广告加载失败",Toast.LENGTH_SHORT).show();
+        Log.d("DEMO", "FAILED");
+        Toast.makeText(this, "广告加载失败", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onAdClicked() {
-        Log.d("DEMO","CLICKED");
-        Toast.makeText(this,"广告点击",Toast.LENGTH_SHORT).show();
+        Log.d("DEMO", "CLICKED");
+        Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onAdLoaded(AdvanceRewardVideoItem advanceRewardVideoItem) {
-        Log.d("DEMO","LOADED");
-        this.advanceRewardVideoItem= advanceRewardVideoItem;
-        Toast.makeText(this,"广告加载成功",Toast.LENGTH_SHORT).show();
+        Log.d("DEMO", "LOADED");
+        this.advanceRewardVideoItem = advanceRewardVideoItem;
+        Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
 
 
     }
 
     @Override
     public void onVideoCached() {
-        Log.d("DEMO","CACHED");
-        isReady=true;
-        Toast.makeText(this,"广告缓存成功",Toast.LENGTH_SHORT).show();
+        Log.d("DEMO", "CACHED");
+        isReady = true;
+        Toast.makeText(this, "广告缓存成功", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onVideoComplete() {
-        Log.d("DEMO","VIDEO COMPLETE");
-        Toast.makeText(this,"视频播发完毕",Toast.LENGTH_SHORT).show();
+        Log.d("DEMO", "VIDEO COMPLETE");
+        Toast.makeText(this, "视频播发完毕", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onAdClose() {
-        Log.d("DEMO","AD CLOSE");
+        Log.d("DEMO", "AD CLOSE");
 
-        Toast.makeText(this,"广告关闭",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "广告关闭", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAdReward() {
-        Log.d("DEMO","AD REWARD");
-        Toast.makeText(this,"激励发放",Toast.LENGTH_SHORT).show();
+        Log.d("DEMO", "AD REWARD");
+        Toast.makeText(this, "激励发放", Toast.LENGTH_SHORT).show();
 
     }
 
