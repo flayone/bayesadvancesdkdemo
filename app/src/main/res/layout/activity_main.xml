@@ -33,18 +33,18 @@
             android:text="插屏" />
 
         <!--<Button-->
-            <!--android:id="@+id/native_button"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:onClick="onNative"-->
-            <!--android:text="自渲染原生" />-->
+        <!--android:id="@+id/native_button"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="onNative"-->
+        <!--android:text="自渲染原生" />-->
 
         <!--<Button-->
-            <!--android:id="@+id/native_recycler_view_button"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:onClick="onNativeRecyclerView"-->
-            <!--android:text="自渲染原生RecyclerView" />-->
+        <!--android:id="@+id/native_recycler_view_button"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="onNativeRecyclerView"-->
+        <!--android:text="自渲染原生RecyclerView" />-->
 
         <Button
             android:id="@+id/native_express_button"
@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:onClick="onNativeExpress"
             android:text="原生模板" />
+
         <Button
             android:id="@+id/native_express_recycler_view_button"
             android:layout_width="match_parent"
@@ -65,5 +66,13 @@
             android:layout_height="wrap_content"
             android:onClick="onRewardVideo"
             android:text="激励视频" />
+
+        <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="1" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

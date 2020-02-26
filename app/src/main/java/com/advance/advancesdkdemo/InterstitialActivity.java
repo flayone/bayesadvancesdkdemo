@@ -17,7 +17,9 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interstitial);
-        advanceInterstitial = new AdvanceInterstitial(this, "10018", "200041");
+        advanceInterstitial = new AdvanceInterstitial(this, Constants.mediaId, Constants.interstitialAdspotId);
+        //期望模板广告view的size,单位dp。高度为0代表自适应
+        advanceInterstitial.setCsjExpressViewAcceptedSize(300,300);
         advanceInterstitial.setDefaultSdkSupplier(new SdkSupplier("100171", "10000398",
                 "e1d0d3aaf95d3f1980367e75bc41141d", AdvanceConfig.SDK_TAG_MERCURY));
         advanceInterstitial.setAdListener(this);

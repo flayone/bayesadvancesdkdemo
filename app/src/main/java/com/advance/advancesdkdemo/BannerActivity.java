@@ -21,7 +21,7 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
         setContentView(R.layout.activity_banner);
         RelativeLayout rl = findViewById(R.id.banner_layout);
         advanceBanner = new AdvanceBanner(this,rl,Constants.mediaId,Constants.bannerAdspotId);
-        advanceBanner.setCsjAcceptedSize(640,100)
+        advanceBanner.setCsjExpressViewAcceptedSize(640,100)//设置个性化模板广告的尺寸属性，期望模板广告view的size
                      .setRefreshInterval(60)
                      .setAdListener(this);
         //设置是否使用缓存
