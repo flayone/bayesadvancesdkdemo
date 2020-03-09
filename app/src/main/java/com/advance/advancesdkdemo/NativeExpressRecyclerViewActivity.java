@@ -169,6 +169,11 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                             }
 
                             @Override
+                            public void onVideoCached(NativeExpressADView nativeExpressADView) {
+
+                            }
+
+                            @Override
                             public void onVideoReady(NativeExpressADView nativeExpressADView, long l) {
 
                             }

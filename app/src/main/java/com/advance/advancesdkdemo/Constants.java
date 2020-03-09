@@ -22,4 +22,12 @@ public class Constants {
 //    public static final String interstitialAdspotId = "200061";
 
 
+    // 测试广点通广告用例
+//    public static final String mediaId = "10043";
+//
+//    public static final String splashAdspotId = "200063";
+//    public static final String bannerAdspotId = "200066";
+//    public static final String nativeExpressAdspotId = "200064";
+//    public static final String rewardAdspotId = "200067";
+//    public static final String interstitialAdspotId = "200065";
 }

@@ -107,8 +107,8 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
                 renderCsjExpressAd(csjNativeExpressAdItem);
 
             } else if (advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_MERCURY)) {
-                MercuryNativeExpressAdItem bayesNativeExpressAdItem = (MercuryNativeExpressAdItem) advanceNativeExpressAdItem;
-                renderMercuryExpressAd(bayesNativeExpressAdItem);
+                MercuryNativeExpressAdItem mercuryNativeExpressAdItem = (MercuryNativeExpressAdItem) advanceNativeExpressAdItem;
+                renderMercuryExpressAd(mercuryNativeExpressAdItem);
 
             }
 
@@ -128,6 +128,11 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
 
                 @Override
                 public void onVideoLoading(NativeExpressADView nativeExpressADView) {
+
+                }
+
+                @Override
+                public void onVideoCached(NativeExpressADView nativeExpressADView) {
 
                 }
 
@@ -174,12 +179,12 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
 
     }
 
-    public void renderMercuryExpressAd(MercuryNativeExpressAdItem bayesNativeExpressAdItem) {
+    public void renderMercuryExpressAd(MercuryNativeExpressAdItem mercuryNativeExpressAdItem) {
         container.removeAllViews();
         container.setVisibility(View.VISIBLE);
-        if (bayesNativeExpressAdItem.getAdPatternType() == com.mercury.sdk.core.config.AdPatternType.NATIVE_1VIDEO_1ICON_2TEXT
-                || bayesNativeExpressAdItem.getAdPatternType() == com.mercury.sdk.core.config.AdPatternType.NATIVE_VIDEO_2TEXT) {
-            bayesNativeExpressAdItem.setMediaListener(new com.mercury.sdk.core.nativ.NativeExpressMediaListener() {
+        if (mercuryNativeExpressAdItem.getAdPatternType() == com.mercury.sdk.core.config.AdPatternType.NATIVE_1VIDEO_1ICON_2TEXT
+                || mercuryNativeExpressAdItem.getAdPatternType() == com.mercury.sdk.core.config.AdPatternType.NATIVE_VIDEO_2TEXT) {
+            mercuryNativeExpressAdItem.setMediaListener(new com.mercury.sdk.core.nativ.NativeExpressMediaListener() {
                 @Override
                 public void onVideoInit(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
 
@@ -216,10 +221,10 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
                 }
             });
         }
-        container.addView(bayesNativeExpressAdItem.getNativeExpressADView());
+        container.addView(mercuryNativeExpressAdItem.getNativeExpressADView());
         //设置广告的尺寸，默认宽为全屏，高度自适应，高宽可指定固定的值，单位为dp。
-        bayesNativeExpressAdItem.setAdSize(new ADSize(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        bayesNativeExpressAdItem.render();
+        mercuryNativeExpressAdItem.setAdSize(new ADSize(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        mercuryNativeExpressAdItem.render();
 
     }
 

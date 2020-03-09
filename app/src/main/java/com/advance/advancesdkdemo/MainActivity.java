@@ -1,11 +1,12 @@
 package com.advance.advancesdkdemo;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.advance.AdvanceConfig;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.mercury.sdk.core.config.AdConfigManager;
 import com.qq.e.comm.managers.status.SDKStatus;
@@ -20,9 +21,11 @@ public class MainActivity extends AppCompatActivity {
         String csjV = TTAdSdk.getAdManager().getSDKVersion();
         String merV = AdConfigManager.getInstance().getSDKVersion();
         String gdtV = SDKStatus.getSDKVersion();
+        String av = AdvanceConfig.AdvanceSdkVersion;
 
         TextView tv = findViewById(R.id.tv_version);
-        tv.setText("Mercury SDK 版本号： " + merV + "\n" +
+        tv.setText("聚合 SDK 版本号： " + av + "\n" +
+                "Mercury SDK 版本号： " + merV + "\n" +
                 "穿山甲 SDK 版本号： " + csjV + "\n" +
                 "广点通 SDK 版本号： " + gdtV + "\n"
         );
