@@ -38,7 +38,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native_express);
         container = findViewById(R.id.native_express_container);
-        advanceNativeExpress = new AdvanceNativeExpress(this, Constants.mediaId, Constants.nativeExpressAdspotId);
+        advanceNativeExpress = new AdvanceNativeExpress(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getNativeExpressAdspotId());
         advanceNativeExpress.setExpressViewAcceptedSize(600, 300)
                 .setCsjImageAcceptedSize(640, 320)
                 .setGdtMaxVideoDuration(60)

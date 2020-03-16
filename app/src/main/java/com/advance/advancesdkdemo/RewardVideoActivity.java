@@ -26,7 +26,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward_video);
-        advanceRewardVideo = new AdvanceRewardVideo(this, Constants.mediaId, Constants.rewardAdspotId);
+        advanceRewardVideo = new AdvanceRewardVideo(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getRewardAdspotId());
         //设置穿山甲相关参数(如果有的话)
         advanceRewardVideo.setCsjImageAcceptedSize(1080, 1920);
         advanceRewardVideo.setCsjRewardName("金币");
@@ -178,7 +178,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     @Override
     public void onVideoComplete() {
         Log.d("DEMO", "VIDEO COMPLETE");
-        Toast.makeText(this, "视频播发完毕", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "视频播放完毕", Toast.LENGTH_SHORT).show();
 
     }
 

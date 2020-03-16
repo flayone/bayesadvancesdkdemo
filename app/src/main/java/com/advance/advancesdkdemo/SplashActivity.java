@@ -41,7 +41,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
         FrameLayout adContainer = findViewById(R.id.splash_container);
         TextView skipView = findViewById(R.id.skip_view);
 
-        advanceSplash = new AdvanceSplash(this, Constants.mediaId, Constants.splashAdspotId, adContainer, skipView);
+        advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
         //Android10 适配OA
         AdvanceConfig.getInstance().setOaid("");
         ImageView logoView = new ImageView(this);
@@ -88,11 +88,26 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
 
     }
 
-    @Override
-    public void onAdClose() {
-        Log.d("DEMO", "Splash ad closed");
-        Toast.makeText(this,"广告关闭",Toast.LENGTH_SHORT).show();
+//    @Override
+//    public void onAdClose() {
+//        Log.d("DEMO", "Splash ad closed");
+////        Toast.makeText(this,"广告关闭",Toast.LENGTH_SHORT).show();
+//
+//        mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN,100);
+//    }
 
+    @Override
+    public void onAdSkip() {
+
+        Log.d("DEMO", "Splash ad kip");
+        Toast.makeText(this,"跳过广告",Toast.LENGTH_SHORT).show();
+        mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN,100);
+    }
+
+    @Override
+    public void onAdTimeOver() {
+        Log.d("DEMO", "Splash ad timeOver");
+        Toast.makeText(this,"倒计时结束，关闭广告",Toast.LENGTH_SHORT).show();
         mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN,100);
     }
 
