@@ -23,13 +23,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="选择SDK平台：" />
+                android:text="手动切换SDK(非立即生效)：" />
 
             <Spinner
                 android:id="@+id/sp_sdk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:entries="@array/sdk_platform"/>
+                android:entries="@array/sdk_platform" />
         </LinearLayout>
 
 
@@ -96,6 +96,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:padding="10dp"
-            android:text="1" />
+            android:text="" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -44,16 +44,13 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
         advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
         //Android10 适配OA
         AdvanceConfig.getInstance().setOaid("");
-        ImageView logoView = new ImageView(this);
         //设置开屏底部logo
         advanceSplash.setLogoImage(this.getResources().getDrawable(R.mipmap.logo));
         advanceSplash.setHolderImage(this.getResources().getDrawable(R.mipmap.background));
-        //设置是否使用缓存策略
-        advanceSplash.setUseCache(true);
         advanceSplash.setSkipText("%d s|跳过")
                 .setCsjAcceptedSize(1080, 1920)//设置穿山甲广告图片偏好尺寸(如果接入穿山甲的话
                 .setAdListener(this);
-        //开屏位置推荐开启缓存设置
+        //设置是否使用缓存策略 ，开屏位置推荐开启缓存设置
         advanceSplash.setUseCache(true);
         //设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)
         advanceSplash.setDefaultSdkSupplier(new SdkSupplier("5001121","801121648",null,AdvanceConfig.SDK_TAG_CSJ));

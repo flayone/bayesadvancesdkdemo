@@ -47,12 +47,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
     public void onShow(View view) {
         if (isReady) {
-            if (AdvanceConfig.SDK_TAG_GDT.equals(advanceRewardVideoItem.getSdkTag())) {
-                GdtRewardVideoAdItem gdtRewardVideoAdItem = (GdtRewardVideoAdItem) advanceRewardVideoItem;
-
-                gdtRewardVideoAdItem.showAD();
-
-            } else if (AdvanceConfig.SDK_TAG_CSJ.equals(advanceRewardVideoItem.getSdkTag())) {
+            if (AdvanceConfig.SDK_TAG_CSJ.equals(advanceRewardVideoItem.getSdkTag())) {
                 //穿山甲SDK特定设置
                 CsjRewardVideoAdItem csjRewardVideoAdItem = (CsjRewardVideoAdItem) advanceRewardVideoItem;
                 //设置穿山甲SDK监听器（必须），可以监听穿山甲sdk特定回调,通用的回调同时会回调通用监听器
@@ -125,11 +120,8 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
                     }
                 });
-                csjRewardVideoAdItem.showRewardVideoAd(this);
-            } else if (AdvanceConfig.SDK_TAG_MERCURY.equals(advanceRewardVideoItem.getSdkTag())) {
-                MercuryRewardVideoAdItem videoItem = (MercuryRewardVideoAdItem) advanceRewardVideoItem;
-                videoItem.showAD();
             }
+            advanceRewardVideoItem.showAD();
 
         } else {
             Toast.makeText(this, "广告未加载", Toast.LENGTH_SHORT).show();
