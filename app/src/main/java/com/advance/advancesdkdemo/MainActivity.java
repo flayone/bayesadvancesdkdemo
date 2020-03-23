@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
                         ADManager.getInstance().setNativeExpressAdspotId(Constants.Mercury.nativeExpressAdspotId);
                         ADManager.getInstance().setRewardAdspotId(Constants.Mercury.rewardAdspotId);
                         ADManager.getInstance().setSplashAdspotId(Constants.Mercury.splashAdspotId);
+                        ADManager.getInstance().setFullScreenVideoAdspotId("");
+
                         break;
                     case 1: //穿山甲
                         ADManager.getInstance().setMediaId(Constants.Csj.mediaId);
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         ADManager.getInstance().setNativeExpressAdspotId(Constants.Csj.nativeExpressAdspotId);
                         ADManager.getInstance().setRewardAdspotId(Constants.Csj.rewardAdspotId);
                         ADManager.getInstance().setSplashAdspotId(Constants.Csj.splashAdspotId);
+                        ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Csj.fullScreenVideoAdspotId);
                         break;
                     case 2: //广点通
                         ADManager.getInstance().setMediaId(Constants.Gdt.mediaId);
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                         ADManager.getInstance().setNativeExpressAdspotId(Constants.Gdt.nativeExpressAdspotId);
                         ADManager.getInstance().setRewardAdspotId(Constants.Gdt.rewardAdspotId);
                         ADManager.getInstance().setSplashAdspotId(Constants.Gdt.splashAdspotId);
+                        ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Gdt.fullScreenVideoAdspotId);
                         break;
                 }
             }

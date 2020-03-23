@@ -23,6 +23,7 @@ public class Constants {
         public static final String nativeExpressAdspotId = "200051";
         public static final String rewardAdspotId = "200060";
         public static final String interstitialAdspotId = "200061";
+        public static final String fullScreenVideoAdspotId = "200077";
     }
 
     static class Gdt {
@@ -34,5 +35,6 @@ public class Constants {
         public static final String nativeExpressAdspotId = "200064";
         public static final String rewardAdspotId = "200067";
         public static final String interstitialAdspotId = "200065";
+        public static final String fullScreenVideoAdspotId = "200078";
     }
 }
