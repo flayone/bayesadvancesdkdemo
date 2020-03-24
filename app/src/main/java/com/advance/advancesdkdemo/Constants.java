@@ -10,6 +10,7 @@ public class Constants {
         public static final String rewardAdspotId = "200009";
         public static final String interstitialAdspotId = "200041";
         public static final String nativeAdspotId = "200007";
+        public static final String fullScreenVideoAdspotId = "";
 
     }
 

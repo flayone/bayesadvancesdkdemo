@@ -36,22 +36,26 @@ public class MainActivity extends AppCompatActivity {
         );
         sdks = findViewById(R.id.sp_sdk);
         sdks.setSelection(0);
+        /**
+         *  注意：手动切换对于setUseCache(true); 的广告位，并不会立即生效，因为可能存在缓存的策略，会优先使用缓存，故第二次请求时切换才会生效。
+         */
         sdks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                LogUtil.AdvanceLog("demo SDK选择 : " + position);
+                String sdkName = "";
                 switch (position) {
                     case 0: //Mercury
+                        sdkName = "Mercury";
                         ADManager.getInstance().setMediaId(Constants.Mercury.mediaId);
                         ADManager.getInstance().setBannerAdspotId(Constants.Mercury.bannerAdspotId);
                         ADManager.getInstance().setInterstitialAdspotId(Constants.Mercury.interstitialAdspotId);
                         ADManager.getInstance().setNativeExpressAdspotId(Constants.Mercury.nativeExpressAdspotId);
                         ADManager.getInstance().setRewardAdspotId(Constants.Mercury.rewardAdspotId);
                         ADManager.getInstance().setSplashAdspotId(Constants.Mercury.splashAdspotId);
-                        ADManager.getInstance().setFullScreenVideoAdspotId("");
-
+                        ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Mercury.fullScreenVideoAdspotId);
                         break;
                     case 1: //穿山甲
+                        sdkName = "穿山甲";
                         ADManager.getInstance().setMediaId(Constants.Csj.mediaId);
                         ADManager.getInstance().setBannerAdspotId(Constants.Csj.bannerAdspotId);
                         ADManager.getInstance().setInterstitialAdspotId(Constants.Csj.interstitialAdspotId);
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                         ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Csj.fullScreenVideoAdspotId);
                         break;
                     case 2: //广点通
+                        sdkName = "广点通";
                         ADManager.getInstance().setMediaId(Constants.Gdt.mediaId);
                         ADManager.getInstance().setBannerAdspotId(Constants.Gdt.bannerAdspotId);
                         ADManager.getInstance().setInterstitialAdspotId(Constants.Gdt.interstitialAdspotId);
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Gdt.fullScreenVideoAdspotId);
                         break;
                 }
+                LogUtil.AdvanceLog("sdk Demo 选择：" + sdkName);
             }
 
             @Override
@@ -101,5 +107,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onInterstitial(View view) {
         startActivity(new Intent(this, InterstitialActivity.class));
+    }
+
+    public void onFullVideo(View view) {
+        startActivity(new Intent(this, FullScreenVideoActivity.class));
     }
 }

@@ -120,6 +120,7 @@
             android:name="com.baidu.mobads.AppActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".FullScreenVideoActivity" />
 
         <!--        百度 百青藤sdk 相关设置 end   -->
 
