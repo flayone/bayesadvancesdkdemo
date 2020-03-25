@@ -35,7 +35,7 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
         advanceFullScreenVideo.setDefaultSdkSupplier(new SdkSupplier("5001121", "901121375", null, AdvanceConfig.SDK_TAG_CSJ));
 //        设置广点通视频播放策略
         advanceFullScreenVideo.setGdtVideoOption(new VideoOption.Builder().setAutoPlayMuted(false)
-                .setAutoPlayPolicy(VideoOption.AutoPlayPolicy.ALWAYS)
+                .setAutoPlayPolicy(VideoOption.AutoPlayPolicy.NEVER)
                 .build());
 //        设置广点通媒体状态监听
         advanceFullScreenVideo.setGdtMediaListener(new UnifiedInterstitialMediaListener() {
@@ -71,7 +71,7 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
 
             @Override
             public void onVideoComplete() {
-                Log.d(TAG, "onVideoComplete");
+                Log.d(TAG, "MediaListener onVideoComplete");
 
             }
 
