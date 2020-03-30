@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 "广点通 SDK 版本号： " + gdtV + "\n"
         );
         sdks = findViewById(R.id.sp_sdk);
-        sdks.setSelection(0);
+        sdks.setSelection(2);
         /**
          *  注意：手动切换对于setUseCache(true); 的广告位，并不会立即生效，因为可能存在缓存的策略，会优先使用缓存，故第二次请求时切换才会生效。
          */
