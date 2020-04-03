@@ -32,7 +32,7 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
 
         advanceFullScreenVideo = new AdvanceFullScreenVideo(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getFullScreenVideoAdspotId());
         advanceFullScreenVideo.setAdListener(this);
-        advanceFullScreenVideo.setDefaultSdkSupplier(new SdkSupplier("5001121", "901121375", null, AdvanceConfig.SDK_TAG_CSJ));
+        advanceFullScreenVideo.setDefaultSdkSupplier(new SdkSupplier("5051624", "945065337", null, AdvanceConfig.SDK_TAG_CSJ));
 //        设置广点通视频播放策略
         advanceFullScreenVideo.setGdtVideoOption(new VideoOption.Builder().setAutoPlayMuted(false)
                 .setAutoPlayPolicy(VideoOption.AutoPlayPolicy.NEVER)

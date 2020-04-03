@@ -7,14 +7,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Message;
 import android.provider.Settings;
-//import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,15 +21,16 @@ import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
 import com.advance.model.SdkSupplier;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class SplashActivity extends Activity implements AdvanceSplashListener,WeakHandler.IHandler {
+//import android.support.v7.app.AppCompatActivity;
+
+public class SplashActivity extends Activity implements AdvanceSplashListener, WeakHandler.IHandler {
     private AdvanceSplash advanceSplash;
     private final WeakHandler mHandler = new WeakHandler(this);
     private static final int MSG_GO_MAIN = 1;
-    private boolean canJump=false;
+    private boolean canJump = false;
 
 
     @Override
@@ -53,7 +52,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
         //设置是否使用缓存策略 ，开屏位置推荐开启缓存设置
         advanceSplash.setUseCache(true);
         //设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)
-        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("5001121","801121648",null,AdvanceConfig.SDK_TAG_CSJ));
+        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("5051624", "887301946", null, AdvanceConfig.SDK_TAG_CSJ));
         // 如果targetSDKVersion >= 23，就要申请好权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
         if (Build.VERSION.SDK_INT >= 23) {
             checkAndRequestPermission();
@@ -66,13 +65,13 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
     @Override
     public void onAdShow() {
         Log.d("DEMO", "Splash ad show");
-        Toast.makeText(this,"广告展示成功",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "广告展示成功", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAdFailed() {
         Log.d("DEMO", "Splash ad failed");
-        Toast.makeText(this,"广告加载失败",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "广告加载失败", Toast.LENGTH_SHORT).show();
         goToMainActivity();
 
 
@@ -81,7 +80,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
     @Override
     public void onAdClicked() {
         Log.d("DEMO", "Splash ad clicked");
-        Toast.makeText(this,"广告点击",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -97,15 +96,28 @@ public class SplashActivity extends Activity implements AdvanceSplashListener,We
     public void onAdSkip() {
 
         Log.d("DEMO", "Splash ad kip");
-        Toast.makeText(this,"跳过广告",Toast.LENGTH_SHORT).show();
-        mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN,100);
+        Toast.makeText(this, "跳过广告", Toast.LENGTH_SHORT).show();
+        mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN, 100);
     }
 
     @Override
     public void onAdTimeOver() {
         Log.d("DEMO", "Splash ad timeOver");
-        Toast.makeText(this,"倒计时结束，关闭广告",Toast.LENGTH_SHORT).show();
-        mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN,100);
+        Toast.makeText(this, "倒计时结束，关闭广告", Toast.LENGTH_SHORT).show();
+        mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN, 100);
+    }
+
+    @Override
+    public void onSdkSelected(String id) {
+        //id = "0" 代表打底广告 ，"1" 代表mercury策略 ，"2" 代表广点通策略， "3" 代表穿山甲策略
+        Log.d("DEMO", "Splash ad onSdkSelected " + id);
+        Toast.makeText(this, "策略选中，选中SDK id = " + id, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAdLoaded() {
+        Log.d("DEMO", "Splash ad onAdLoaded");
+        Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
     }
 
     /**
