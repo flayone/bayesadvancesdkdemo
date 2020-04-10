@@ -70,6 +70,8 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:screenOrientation="landscape" />
         <activity android:name=".FullScreenVideoActivity" />
+        <activity android:name=".custom.nativ.NativeCustomizeActivity" />
+        <activity android:name=".custom.banner.BannerCustomizeActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

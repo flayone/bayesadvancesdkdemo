@@ -12,7 +12,7 @@ public class MyApplication extends Application {
 
         //聚合SDK初始化，请在bugly等sdk初始化之前
         AdvanceConfig.getInstance()
-                .setOaid("")//请设置该字段，以免Android10手机下无填充
+                .setOaid("test")//请设置该字段，以免Android10手机下无填充
                 .setDebug(true)//设置debug模式
                 .setNeedPermissionCheck(true)//设置是否在请求穿山甲sdk广告前校验权限，防止无权限不返回广告，默认为false不去校验。
                 //设置各个sdk的媒体id，目前后台也可以配置，后续会去掉后台的配置入口，统一在这里设置。
@@ -20,10 +20,10 @@ public class MyApplication extends Application {
 //                .setGdtMediaId("你在广点通后台申请的的MediaId")
 //                .setMercuryMediaId("你在Mercury后台申请的的MediaId")
 //                .setMercuryMediaKey("你在Mercury后台申请的的MediaKey")
-                .setCsjAppId("5051624")
-                .setGdtMediaId("1101152570")
-                .setMercuryMediaId("100171")
-                .setMercuryMediaKey("e1d0d3aaf95d3f1980367e75bc41141d")
+//                .setCsjAppId("5051624")
+//                .setGdtMediaId("1101152570")
+//                .setMercuryMediaId("100171")
+//                .setMercuryMediaKey("e1d0d3aaf95d3f1980367e75bc41141d")
                 .initSDKs(this);
 
 

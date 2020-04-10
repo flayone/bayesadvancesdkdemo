@@ -40,7 +40,8 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         FrameLayout adContainer = findViewById(R.id.splash_container);
         TextView skipView = findViewById(R.id.skip_view);
 
-        advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
+//        advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
+        advanceSplash = new AdvanceSplash(this, "", ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
         //Android10 适配OA
         AdvanceConfig.getInstance().setOaid("");
         //设置开屏底部logo
@@ -49,7 +50,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         advanceSplash.setSkipText("%d s|跳过")
                 .setCsjAcceptedSize(1080, 1920)//设置穿山甲广告图片偏好尺寸(如果接入穿山甲的话
                 .setAdListener(this);
-        //设置是否使用缓存策略 ，开屏位置推荐开启缓存设置
+        //设置是否将获取到的SDK选择策略进行缓存，开屏位置推荐开启缓存设置
         advanceSplash.setUseCache(true);
         //设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)
         advanceSplash.setDefaultSdkSupplier(new SdkSupplier("5051624", "887301946", null, AdvanceConfig.SDK_TAG_CSJ));
