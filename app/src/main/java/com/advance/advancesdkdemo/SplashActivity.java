@@ -40,10 +40,8 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         FrameLayout adContainer = findViewById(R.id.splash_container);
         TextView skipView = findViewById(R.id.skip_view);
 
-//        advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
-        advanceSplash = new AdvanceSplash(this, "", ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
-        //Android10 适配OA
-        AdvanceConfig.getInstance().setOaid("");
+        advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
+//        advanceSplash = new AdvanceSplash(this, "", ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
         //设置开屏底部logo
         advanceSplash.setLogoImage(this.getResources().getDrawable(R.mipmap.logo));
         advanceSplash.setHolderImage(this.getResources().getDrawable(R.mipmap.background));

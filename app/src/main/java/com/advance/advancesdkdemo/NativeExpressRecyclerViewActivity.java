@@ -96,7 +96,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                 .setCsjImageAcceptedSize(640, 320)
                 .setAdListener(this);
         //设置打底SDK参数
-        mADManager.setDefaultSdkSupplier(new SdkSupplier("1101152570","2000629911207832",null,AdvanceConfig.SDK_TAG_GDT));
+        mADManager.setDefaultSdkSupplier(new SdkSupplier("1101152570", "2000629911207832", null, AdvanceConfig.SDK_TAG_GDT));
         mADManager.loadAd();
     }
     //AdvanceSDK回调接口
@@ -445,8 +445,6 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
             }
         }
     }
-
-
 
 
 }

@@ -52,7 +52,7 @@ public class MyNativeCustomizeAd extends AdvanceBaseAdspot {
                     initGdtNat();
                 } else if (AdvanceConfig.SDK_TAG_CSJ.equals(currentSdkSupplier.sdkTag)) {
                     initCsjNat();
-                } else if ("其他渠道tag".equals(currentSdkSupplier.sdkTag)) {
+                } else if ("baidu".equals(currentSdkSupplier.sdkTag)) { //百度渠道
                     //进行其他渠道广告位的初始化创建、比如百度SDK，inmobi等等
                 }
             }
