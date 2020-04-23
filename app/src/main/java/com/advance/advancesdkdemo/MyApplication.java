@@ -54,6 +54,10 @@ public class MyApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        JLibrary.InitEntry(base);
+        try {
+            JLibrary.InitEntry(base);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

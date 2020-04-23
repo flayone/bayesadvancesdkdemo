@@ -47,7 +47,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         advanceNativeExpress.setAdListener(this);
         //可以设置是否采用缓存
         advanceNativeExpress.setUseCache(true);
-        advanceNativeExpress.setDefaultSdkSupplier(new SdkSupplier("1101152570", "2000629911207832", null, AdvanceConfig.SDK_TAG_GDT));
+        advanceNativeExpress.setDefaultSdkSupplier(new SdkSupplier("101010", "10002984", "562e84af6904499c5941dec115babaa9", AdvanceConfig.SDK_TAG_MERCURY));
         advanceNativeExpress.loadAd();
     }
 

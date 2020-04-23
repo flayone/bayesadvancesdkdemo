@@ -5,10 +5,10 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.bun.miitmdid.core.ErrorCode;
-import com.bun.miitmdid.core.IIdentifierListener;
 import com.bun.miitmdid.core.MdidSdk;
 import com.bun.miitmdid.core.MdidSdkHelper;
-import com.bun.miitmdid.supplier.IdSupplier;
+import com.bun.supplier.IIdentifierListener;
+import com.bun.supplier.IdSupplier;
 
 /**
  * Created by zheng on 2019/8/22.
@@ -85,7 +85,6 @@ public class MiitHelper implements IIdentifierListener {
         builder.append("VAID: ").append(vaid).append("\n");
         builder.append("AAID: ").append(aaid).append("\n");
         String idstext = builder.toString();
-        _supplier.shutDown();
         //将oaid 赋值给mercury sdk
         if (oaid != null && !"".equals(oaid)) {
             Log.d("MiitHelper", "oaid == " + oaid);

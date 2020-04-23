@@ -24,7 +24,7 @@ public class NativeCustomizeActivity extends Activity implements MyNativeCustomi
         setContentView(R.layout.activity_ad_container);
         fl = findViewById(R.id.fl_ad);
 
-        //创建自己的自渲染广告位，第二个参数为倍联的媒体id，第三个参数为倍联的广告位id
+        //创建自己的自渲染广告位，第二个参数为媒体id，第三个参数为广告位id
         nativeCustomizeAd = new MyNativeCustomizeAd(this, "后台获取的媒体id", "后台获取的广告位id");
         //必须：设置广告载体
         nativeCustomizeAd.setAdContainer(fl);
