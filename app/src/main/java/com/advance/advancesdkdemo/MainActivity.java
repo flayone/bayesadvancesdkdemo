@@ -12,6 +12,7 @@ import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.custom.banner.BannerCustomizeActivity;
 import com.advance.advancesdkdemo.custom.nativ.NativeCustomizeActivity;
 import com.advance.utils.LogUtil;
+import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.mercury.sdk.core.config.AdConfigManager;
 import com.qq.e.comm.managers.status.SDKStatus;
@@ -65,6 +66,17 @@ public class MainActivity extends AppCompatActivity {
                         ADManager.getInstance().setRewardAdspotId(Constants.Csj.rewardAdspotId);
                         ADManager.getInstance().setSplashAdspotId(Constants.Csj.splashAdspotId);
                         ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Csj.fullScreenVideoAdspotId);
+
+                        //设置穿山甲允许直接下载的网络状态集合，可以在调用广告之前的任何时间来设置
+                        int[] directDownloadNetworkType;
+                        boolean csjDownloadForWifi = true;
+                        if (csjDownloadForWifi) {//可以根据自己需求来设置状态值
+                            directDownloadNetworkType = new int[]{TTAdConstant.NETWORK_STATE_WIFI};
+                        } else {
+                            directDownloadNetworkType = new int[]{TTAdConstant.NETWORK_STATE_4G};
+                        }
+                        AdvanceConfig.getInstance().setCsjDirectDownloadNetworkType(directDownloadNetworkType);
+
                         break;
                     case 2: //广点通
                         sdkName = "广点通";

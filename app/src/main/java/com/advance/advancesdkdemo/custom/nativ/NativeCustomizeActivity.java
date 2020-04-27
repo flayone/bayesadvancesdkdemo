@@ -24,15 +24,17 @@ public class NativeCustomizeActivity extends Activity implements MyNativeCustomi
         setContentView(R.layout.activity_ad_container);
         fl = findViewById(R.id.fl_ad);
 
-        //创建自己的自渲染广告位，第二个参数为媒体id，第三个参数为广告位id
+        //创建自己的自渲染广告位
         nativeCustomizeAd = new MyNativeCustomizeAd(this, "后台获取的媒体id", "后台获取的广告位id");
         //必须：设置广告载体
         nativeCustomizeAd.setAdContainer(fl);
-//       非必须： 添加自定义的listener
+        //建议开启：设置是否开启策略缓存模式
+        nativeCustomizeAd.enableStrategyCache(true);
+//       非必须： 添加自定义的核心事件回调listener
         nativeCustomizeAd.setListener(this);
 //        必须：设置打底广告，app第一次打开时，会先走这里设置的打底广告，下面有各个平台的打底广告可以做测试用。
-//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("1101152570", "4090398440079274", null, AdvanceConfig.SDK_TAG_GDT));
-        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("100171", "10002805", "e1d0d3aaf95d3f1980367e75bc41141d", AdvanceConfig.SDK_TAG_MERCURY));
+        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("1101152570", "4090398440079274", null, AdvanceConfig.SDK_TAG_GDT));
+//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("100171", "10002805", "e1d0d3aaf95d3f1980367e75bc41141d", AdvanceConfig.SDK_TAG_MERCURY));
 //        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("100171", "10002806",  "e1d0d3aaf95d3f1980367e75bc41141d", AdvanceConfig.SDK_TAG_MERCURY));
 //        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("5001121", "901121737", null, AdvanceConfig.SDK_TAG_CSJ));
 //        请求广告

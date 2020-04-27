@@ -42,6 +42,20 @@
                 android:background="#000" />
 
             <include layout="@layout/include_nc_material" />
+            <TextView
+                android:id="@+id/tv_ad_source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text=""
+                android:visibility="gone"
+                android:layout_gravity="end|bottom"
+                android:textSize="10sp"
+                android:background="@color/transGrayBg"/>
+
         </FrameLayout>
 
         <include layout="@layout/include_nc_creative_btn_layout" />

@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.advance.AdvanceConfig;
 import com.bun.miitmdid.core.JLibrary;
-import com.bytedance.sdk.openadsdk.TTAdConstant;
 
 public class MyApplication extends Application {
     @Override
@@ -23,22 +22,11 @@ public class MyApplication extends Application {
 //                .setGdtMediaId("你在广点通后台申请的的MediaId")
 //                .setMercuryMediaId("你在Mercury后台申请的的MediaId")
 //                .setMercuryMediaKey("你在Mercury后台申请的的MediaKey")
-//                .setCsjAppId("5051624")
-//                .setGdtMediaId("1101152570")
-//                .setMercuryMediaId("100171")
-//                .setMercuryMediaKey("e1d0d3aaf95d3f1980367e75bc41141d")
+                .setCsjAppId("5051624")
+                .setGdtMediaId("1101152570")
+                .setMercuryMediaId("100171")
+                .setMercuryMediaKey("e1d0d3aaf95d3f1980367e75bc41141d")
                 .initSDKs(this);
-
-
-        //设置穿山甲允许直接下载的网络状态集合，可以在调用广告之前的任何时间来设置
-        int[] directDownloadNetworkType;
-        boolean csjDownloadForWifi = true;
-        if (csjDownloadForWifi) {//可以根据自己需求来设置状态值
-            directDownloadNetworkType = new int[]{TTAdConstant.NETWORK_STATE_WIFI};
-        } else {
-            directDownloadNetworkType = new int[]{TTAdConstant.NETWORK_STATE_4G};
-        }
-        AdvanceConfig.getInstance().setCsjDirectDownloadNetworkType(directDownloadNetworkType);
 
         //获取oaid，Android10 中手机唯一标识
         new MiitHelper(new MiitHelper.OaidUpdater() {

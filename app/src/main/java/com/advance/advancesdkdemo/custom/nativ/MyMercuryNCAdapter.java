@@ -97,6 +97,7 @@ public class MyMercuryNCAdapter implements NativeADListener {
         TextView mTitle;
         TextView mDescription;
         TextView mSource;
+        TextView mAdSource;
 
         ImageView mGroupImage1;
         ImageView mGroupImage2;
@@ -129,6 +130,7 @@ public class MyMercuryNCAdapter implements NativeADListener {
             mTitle = adView.findViewById(R.id.tv_nc_ad_title);
             mDescription = adView.findViewById(R.id.tv_nc_ad_desc);
             mSource = adView.findViewById(R.id.tv_nc_ad_source);
+            mAdSource = adView.findViewById(R.id.tv_ad_source);
 
             mGroupContainer = adView.findViewById(R.id.native_3img);
             mGroupImage1 = adView.findViewById(R.id.img_1);
@@ -145,7 +147,7 @@ public class MyMercuryNCAdapter implements NativeADListener {
             try {
                 FrameLayout adContainer = myNativeCustomizeAd.getAdContainer();
                 if (adContainer == null) {
-                    Log.e("GdtNativeAdData", "需要先调用setAdContainer 设置广告位载体");
+                    Log.e(TAG, "需要先调用setAdContainer 设置广告位载体");
                     return;
                 }
                 adContainer.removeAllViews();
@@ -267,8 +269,16 @@ public class MyMercuryNCAdapter implements NativeADListener {
 
 
         private void renderAdUi(final NativeADData ad) {
-            //广点通不包含source字段
+            //不包含source字段
             mSource.setVisibility(View.GONE);
+
+            String source = ad.getADSource();
+            if (!"".equals(source)) {
+                mAdSource.setText(source);
+            } else {
+                mAdSource.setText("广告");
+            }
+            mAdSource.setVisibility(View.VISIBLE);
 
             mTitle.setText(ad.getTitle());
             mDescription.setText(ad.getDesc());
