@@ -13,6 +13,7 @@ import com.advance.AdvanceRewardVideoListener;
 import com.advance.csj.CsjRewardVideoAdItem;
 import com.advance.gdt.GdtRewardVideoAdItem;
 import com.advance.mercury.MercuryRewardVideoAdItem;
+import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
 import com.bytedance.sdk.openadsdk.TTRewardVideoAd;
@@ -26,14 +27,17 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward_video);
-        advanceRewardVideo = new AdvanceRewardVideo(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getRewardAdspotId());
-        //设置穿山甲相关参数(如果有的话)
+        advanceRewardVideo = new AdvanceRewardVideo(this, ADManager.getInstance().getRewardAdspotId());
+        //可选：设置穿山甲相关参数(如果有的话)
         advanceRewardVideo.setCsjImageAcceptedSize(1080, 1920);
         advanceRewardVideo.setCsjRewardName("金币");
         advanceRewardVideo.setOrientation(AdvanceRewardVideo.ORIENTATION_HORIZONTAL);
         advanceRewardVideo.setCsjUserId("user123");
         advanceRewardVideo.setCsjRewardAmount(Toast.LENGTH_SHORT);
-        advanceRewardVideo.setDefaultSdkSupplier(new SdkSupplier("1101152570", "2090845242931421", null, AdvanceConfig.SDK_TAG_GDT));
+        //推荐：设置是否采用策略缓存
+        advanceRewardVideo.enableStrategyCache(true);
+        //必须：设置打底广告
+        advanceRewardVideo.setDefaultSdkSupplier(new SdkSupplier("2090845242931421", AdvanceSupplierID.GDT));
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(this);
 
@@ -47,13 +51,8 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
     public void onShow(View view) {
         if (isReady) {
-            if (AdvanceConfig.SDK_TAG_GDT.equals(advanceRewardVideoItem.getSdkTag())) {
-                GdtRewardVideoAdItem gdtRewardVideoAdItem = (GdtRewardVideoAdItem) advanceRewardVideoItem;
-
-                gdtRewardVideoAdItem.showAD();
-
-            } else if (AdvanceConfig.SDK_TAG_CSJ.equals(advanceRewardVideoItem.getSdkTag())) {
-                //穿山甲SDK特定设置
+            //穿山甲SDK特定设置
+            if (AdvanceConfig.SDK_ID_CSJ.equals(advanceRewardVideoItem.getSdkId())) {
                 CsjRewardVideoAdItem csjRewardVideoAdItem = (CsjRewardVideoAdItem) advanceRewardVideoItem;
                 //设置穿山甲SDK监听器（必须），可以监听穿山甲sdk特定回调,通用的回调同时会回调通用监听器
                 csjRewardVideoAdItem.setRewardAdInteractionListener(new TTRewardVideoAd.RewardAdInteractionListener() {
@@ -125,12 +124,9 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
                     }
                 });
-                csjRewardVideoAdItem.showRewardVideoAd(this);
-            } else if (AdvanceConfig.SDK_TAG_MERCURY.equals(advanceRewardVideoItem.getSdkTag())) {
-                MercuryRewardVideoAdItem videoItem = (MercuryRewardVideoAdItem) advanceRewardVideoItem;
-                videoItem.showAD();
             }
-
+            //展示广告
+            advanceRewardVideoItem.showAd();
         } else {
             Toast.makeText(this, "广告未加载", Toast.LENGTH_SHORT).show();
         }

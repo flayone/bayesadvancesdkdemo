@@ -262,8 +262,8 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
         }
 
         @Override
-        public String getSDKTag() {
-            return AdvanceConfig.SDK_TAG_GDT;
+        public String getSupplierId() {
+            return AdvanceConfig.SDK_ID_GDT;
         }
 
         private VideoOption getVideoOption() {

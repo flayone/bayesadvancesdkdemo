@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
                 switch (position) {
                     case 0: //Mercury
                         sdkName = "Mercury";
-                        ADManager.getInstance().setMediaId(Constants.Mercury.mediaId);
                         ADManager.getInstance().setBannerAdspotId(Constants.Mercury.bannerAdspotId);
                         ADManager.getInstance().setInterstitialAdspotId(Constants.Mercury.interstitialAdspotId);
                         ADManager.getInstance().setNativeExpressAdspotId(Constants.Mercury.nativeExpressAdspotId);
@@ -59,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 1: //穿山甲
                         sdkName = "穿山甲";
-                        ADManager.getInstance().setMediaId(Constants.Csj.mediaId);
                         ADManager.getInstance().setBannerAdspotId(Constants.Csj.bannerAdspotId);
                         ADManager.getInstance().setInterstitialAdspotId(Constants.Csj.interstitialAdspotId);
                         ADManager.getInstance().setNativeExpressAdspotId(Constants.Csj.nativeExpressAdspotId);
@@ -80,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 2: //广点通
                         sdkName = "广点通";
-                        ADManager.getInstance().setMediaId(Constants.Gdt.mediaId);
                         ADManager.getInstance().setBannerAdspotId(Constants.Gdt.bannerAdspotId);
                         ADManager.getInstance().setInterstitialAdspotId(Constants.Gdt.interstitialAdspotId);
                         ADManager.getInstance().setNativeExpressAdspotId(Constants.Gdt.nativeExpressAdspotId);

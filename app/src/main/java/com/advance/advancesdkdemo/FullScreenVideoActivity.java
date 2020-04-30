@@ -12,6 +12,7 @@ import com.advance.AdvanceFullScreenItem;
 import com.advance.AdvanceFullScreenVideo;
 import com.advance.AdvanceFullScreenVideoListener;
 import com.advance.csj.CsjFullScreenVideoItem;
+import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
 import com.qq.e.ads.cfg.VideoOption;
@@ -30,14 +31,16 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen_video);
 
-        advanceFullScreenVideo = new AdvanceFullScreenVideo(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getFullScreenVideoAdspotId());
+        advanceFullScreenVideo = new AdvanceFullScreenVideo(this, ADManager.getInstance().getFullScreenVideoAdspotId());
+        //推荐：核心事件监听回调
         advanceFullScreenVideo.setAdListener(this);
-        advanceFullScreenVideo.setDefaultSdkSupplier(new SdkSupplier("5051624", "945065337", null, AdvanceConfig.SDK_TAG_CSJ));
-//        设置广点通视频播放策略
+        //必须：设置打底SDK参数
+        advanceFullScreenVideo.setDefaultSdkSupplier(new SdkSupplier("945065337", AdvanceSupplierID.CSJ));
+        //可选： 设置广点通视频播放策略
         advanceFullScreenVideo.setGdtVideoOption(new VideoOption.Builder().setAutoPlayMuted(false)
                 .setAutoPlayPolicy(VideoOption.AutoPlayPolicy.NEVER)
                 .build());
-//        设置广点通媒体状态监听
+        //可选： 设置广点通媒体状态监听
         advanceFullScreenVideo.setGdtMediaListener(new UnifiedInterstitialMediaListener() {
             @Override
             public void onVideoInit() {
@@ -102,7 +105,7 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
 
     public void showFull(View view) {
         if (isReady && advanceFullScreenItem != null) {
-            if (AdvanceConfig.SDK_TAG_CSJ.equals(advanceFullScreenItem.getSdkTag())) {
+            if (AdvanceConfig.SDK_ID_CSJ.equals(advanceFullScreenItem.getSdkId())) {
                 CsjFullScreenVideoItem csj = (CsjFullScreenVideoItem) advanceFullScreenItem;
                 csj.setDownloadListener(new TTAppDownloadListener() {
                     @Override
@@ -150,8 +153,8 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
     public void onAdLoaded(AdvanceFullScreenItem advanceFullScreenItem) {
         Log.d(TAG, "onAdLoaded");
 
-        //广点通 onVideoCached 方法不触发，所以在获取广告后就可以去做展示
-        if (AdvanceConfig.SDK_TAG_GDT.equals(advanceFullScreenItem.getSdkTag())) isReady = true;
+        //广点通 onVideoCached 方法在show以后才会触发，所以在获取广告后就可以去做展示
+        if (AdvanceConfig.SDK_ID_GDT.equals(advanceFullScreenItem.getSdkId())) isReady = true;
         this.advanceFullScreenItem = advanceFullScreenItem;
         Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
 

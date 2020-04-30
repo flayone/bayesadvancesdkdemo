@@ -10,27 +10,29 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.advance.AdvanceConfig;
 import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
+import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//import android.support.v7.app.AppCompatActivity;
 
 public class SplashActivity extends Activity implements AdvanceSplashListener, WeakHandler.IHandler {
     private AdvanceSplash advanceSplash;
     private final WeakHandler mHandler = new WeakHandler(this);
     private static final int MSG_GO_MAIN = 1;
     private boolean canJump = false;
+    private String sdkId;
 
 
     @Override
@@ -39,19 +41,27 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         setContentView(R.layout.activity_splash);
         FrameLayout adContainer = findViewById(R.id.splash_container);
         TextView skipView = findViewById(R.id.skip_view);
+        View skipCT = findViewById(R.id.splash_skip_container);
 
-        advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
-//        advanceSplash = new AdvanceSplash(this, "", ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
-        //设置开屏底部logo
+        //开屏初始化；adContainer为广告容器，skipView不需要自定义可以为null
+        advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
+        //可选：设置mercury开屏底部logo
         advanceSplash.setLogoImage(this.getResources().getDrawable(R.mipmap.logo));
+        //可选：设置mercury开屏加载时占位图
         advanceSplash.setHolderImage(this.getResources().getDrawable(R.mipmap.background));
+        //可选：设置跳过字体，穿山甲广告尺寸，核心事件回调
         advanceSplash.setSkipText("%d s|跳过")
-                .setCsjAcceptedSize(1080, 1920)//设置穿山甲广告图片偏好尺寸(如果接入穿山甲的话
-                .setAdListener(this);
-        //设置是否将获取到的SDK选择策略进行缓存，开屏位置推荐开启缓存设置
-        advanceSplash.setUseCache(true);
-        //设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)
-        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("5051624", "887301946", null, AdvanceConfig.SDK_TAG_CSJ));
+                .setCsjAcceptedSize(1080, 1920);//设置穿山甲广告图片偏好尺寸(如果接入穿山甲的话
+        //可选：设置广点通的跳过载体，传入一个默认可见view给广点通进行可见检查机制
+        advanceSplash.setGdtSkipContainer(skipCT);
+        //可选：设置广点通的广告点击后是否以onAdSkip(跳过事件)来回调，适合跳过和倒计时结束处理逻辑不同时设置，处理逻辑相同请忽略。true 点击广点通广告关闭后回调onAdSkip，false 回调 onAdTimeOver；默认为false。
+        advanceSplash.setGdtClickAsSkip(true);
+        //推荐：设置开屏核心回调事件的监听器。
+        advanceSplash.setAdListener(this);
+        //强烈推荐：设置是否将获取到的SDK选择策略进行缓存，有助于缩短开屏广告加载时间
+        advanceSplash.enableStrategyCache(true);
+        //必须：设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)
+        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("887301946", AdvanceSupplierID.CSJ));
         // 如果targetSDKVersion >= 23，就要申请好权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
         if (Build.VERSION.SDK_INT >= 23) {
             checkAndRequestPermission();
@@ -108,7 +118,8 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
 
     @Override
     public void onSdkSelected(String id) {
-        //id = "0" 代表打底广告 ，"1" 代表mercury策略 ，"2" 代表广点通策略， "3" 代表穿山甲策略
+        // "1" 代表mercury策略 ，"2" 代表广点通策略， "3" 代表穿山甲策略
+        sdkId = id;
         Log.d("DEMO", "Splash ad onSdkSelected " + id);
         Toast.makeText(this, "策略选中，选中SDK id = " + id, Toast.LENGTH_SHORT).show();
     }
@@ -193,7 +204,12 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
     @Override
     protected void onPause() {
         super.onPause();
-        canJump = false;
+        // 穿山甲处理逻辑,h5类型的广告，跳转后返回不会回调onAdTimeOver或者onAdTimeOver，会导致无法跳转首页，需要在这里额外处理跳转逻辑
+        if (TextUtils.equals(sdkId, "3")) {
+            canJump = true;
+        } else {
+            canJump = false;
+        }
     }
 
     @Override
@@ -222,6 +238,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         }
         return super.onKeyDown(keyCode, event);
     }
+
     /**
      * 跳转到主页面
      */
@@ -231,6 +248,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
 //        startActivity(intent);
         this.finish();
     }
+
     @Override
     public void handleMsg(Message msg) {
         if (msg.what == MSG_GO_MAIN) {

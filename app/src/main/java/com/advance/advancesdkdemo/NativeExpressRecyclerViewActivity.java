@@ -19,6 +19,7 @@ import com.advance.AdvanceNativeExpressListener;
 import com.advance.mercury.MercuryNativeExpressAdItem;
 import com.advance.csj.CsjNativeExpressAdItem;
 import com.advance.gdt.GdtNativeAdExpressAdItem;
+import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 import com.mercury.sdk.util.ADError;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
@@ -45,22 +46,20 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     public static int ITEMS_PER_AD = 10;     // 每间隔10个条目插入一条广告
 
     private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLinearLayoutManager;
     private CustomAdapter mAdapter;
-    private List<NormalItem> mNormalDataList = new ArrayList<NormalItem>();
+    private List<NormalItem> mNormalDataList = new ArrayList<>();
     private AdvanceNativeExpress mADManager;
     private List<AdvanceNativeExpressAdItem> mAdItemList;
-    private HashMap<View, Integer> mAdViewPositionMap = new HashMap<View, Integer>();
+    private HashMap<View, Integer> mAdViewPositionMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_native_express_recycler_view);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         initData();
     }
 
@@ -89,14 +88,18 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
      *
      */
     private void initAdvanceNativeExpressAD() {
-        mADManager = new AdvanceNativeExpress(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getNativeExpressAdspotId());
+        mADManager = new AdvanceNativeExpress(this, ADManager.getInstance().getNativeExpressAdspotId());
+        //可选：设置定制化参数
         mADManager.setExpressViewAcceptedSize(600, 250)
                 .setGdtFullWidth(true)
                 .setGdtAutoHeight(true)
-                .setCsjImageAcceptedSize(640, 320)
-                .setAdListener(this);
-        //设置打底SDK参数
-        mADManager.setDefaultSdkSupplier(new SdkSupplier("1101152570", "2000629911207832", null, AdvanceConfig.SDK_TAG_GDT));
+                .setCsjImageAcceptedSize(640, 320);
+        //推荐：核心事件监听回调
+        mADManager.setAdListener(this);
+        //推荐：设置是否采用策略缓存
+        mADManager.enableStrategyCache(true);
+        //必须：设置打底SDK参数
+        mADManager.setDefaultSdkSupplier(new SdkSupplier("10002678", AdvanceSupplierID.MERCURY));
         mADManager.loadAd();
     }
     //AdvanceSDK回调接口
@@ -154,7 +157,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
             int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
             if (position < mNormalDataList.size()) {
                 AdvanceNativeExpressAdItem item = mAdItemList.get(i);
-                if (AdvanceConfig.SDK_TAG_GDT.equals(item.getSdkTag())) {
+                if (AdvanceConfig.SDK_ID_GDT.equals(item.getSdkId())) {
                     GdtNativeAdExpressAdItem gdtNativeAdExpressAdItem = (GdtNativeAdExpressAdItem) item;
                     if (gdtNativeAdExpressAdItem.getBoundData().getAdPatternType() == AdPatternType.NATIVE_VIDEO) {
                         gdtNativeAdExpressAdItem.setMediaListener(new NativeExpressMediaListener() {
@@ -210,7 +213,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                         });
                     }
                 }
-                if (AdvanceConfig.SDK_TAG_MERCURY.equals((item.getSdkTag()))) {
+                if (AdvanceConfig.SDK_ID_MERCURY.equals((item.getSdkId()))) {
                     MercuryNativeExpressAdItem mercuryNativeExpressAdItem = (MercuryNativeExpressAdItem) item;
                     if (mercuryNativeExpressAdItem.getAdPatternType() == com.mercury.sdk.core.config.AdPatternType.NATIVE_VIDEO_2TEXT ||
                             mercuryNativeExpressAdItem.getAdPatternType() == com.mercury.sdk.core.config.AdPatternType.NATIVE_1VIDEO_1ICON_2TEXT) {
@@ -252,7 +255,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                         });
                     }
 
-                } else if (AdvanceConfig.SDK_TAG_CSJ.equals(item.getSdkTag())) {
+                } else if (AdvanceConfig.SDK_ID_CSJ.equals(item.getSdkId())) {
 
                     CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) item;
                     //设置穿山甲广告交互监听器(必须)
@@ -364,7 +367,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                 mAdViewPositionMap.put(advanceNativeExpressAdItem.getExpressAdView(), position); // 广告在列表中的位置是可以被更新的
 
 
-                if (AdvanceConfig.SDK_TAG_GDT.equals(advanceNativeExpressAdItem.getSdkTag())) {
+                if (AdvanceConfig.SDK_ID_GDT.equals(advanceNativeExpressAdItem.getSdkId())) {
                     //广点通adview渲染方式
                     GdtNativeAdExpressAdItem gdtNativeAdExpressAdItem = (GdtNativeAdExpressAdItem) advanceNativeExpressAdItem;
                     NativeExpressADView adView = gdtNativeAdExpressAdItem.getNativeExpressADView();
@@ -382,7 +385,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
                     customViewHolder.container.addView(adView);
                     adView.render(); // 调用render方法后sdk才会开始展示广告
-                } else if (AdvanceConfig.SDK_TAG_MERCURY.equals(advanceNativeExpressAdItem.getSdkTag())) {
+                } else if (AdvanceConfig.SDK_ID_MERCURY.equals(advanceNativeExpressAdItem.getSdkId())) {
                     MercuryNativeExpressAdItem mercuryNativeExpressAdItem = (MercuryNativeExpressAdItem) advanceNativeExpressAdItem;
                     com.mercury.sdk.core.nativ.NativeExpressADView adView = mercuryNativeExpressAdItem.getNativeExpressADView();
                     if (customViewHolder.container.getChildCount() > 0
@@ -400,7 +403,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                     customViewHolder.container.addView(adView);
                     adView.render();
 
-                } else if (AdvanceConfig.SDK_TAG_CSJ.equals(advanceNativeExpressAdItem.getSdkTag())) {
+                } else if (AdvanceConfig.SDK_ID_CSJ.equals(advanceNativeExpressAdItem.getSdkId())) {
                     //穿山甲渲染方式
                     CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
                     View adView = csjNativeExpressAdItem.getExpressAdView();

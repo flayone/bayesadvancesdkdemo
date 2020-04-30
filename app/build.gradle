@@ -33,7 +33,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 //    implementation(name: 'advancelib-release', ext: 'aar')
-    implementation(name: 'advancelib_3.1.3', ext: 'aar')
+    implementation(name: 'advancelib_3.2.0', ext: 'aar')
     implementation(name: 'open_ad_sdk', ext: 'aar')
     implementation(name: 'GDTSDK.unionNormal.4.174.1044', ext: 'aar')
     implementation(name: 'mercurysdk_3.1.4', ext: 'aar')

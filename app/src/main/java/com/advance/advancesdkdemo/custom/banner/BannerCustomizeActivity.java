@@ -11,6 +11,7 @@ import com.advance.AdvanceBannerListener;
 import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.ADManager;
 import com.advance.advancesdkdemo.R;
+import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
 public class BannerCustomizeActivity extends Activity implements AdvanceBannerListener {
@@ -24,12 +25,15 @@ public class BannerCustomizeActivity extends Activity implements AdvanceBannerLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banner_cus);
         adContainer = findViewById(R.id.fl_ad);
-        myBannerAd = new MyBannerAd(this, adContainer, ADManager.getInstance().getMediaId(), ADManager.getInstance().getBannerAdspotId());
+        myBannerAd = new MyBannerAd(this, adContainer,  ADManager.getInstance().getBannerAdspotId());
+        //推荐：核心事件监听回调
         myBannerAd.setAdListener(this);
-        //设置是否将获取到的SDK选择策略进行缓存
-        myBannerAd.setUseCache(false);
-        //设置打底SDK参数
-        myBannerAd.setDefaultSdkSupplier(new SdkSupplier("100171", "10000396", "e1d0d3aaf95d3f1980367e75bc41141d", AdvanceConfig.SDK_TAG_MERCURY));
+        //推荐：设置是否将获取到的SDK选择策略进行缓存
+        myBannerAd.enableStrategyCache(false);
+        //必须：设置打底SDK参数
+        myBannerAd.setDefaultSdkSupplier(new SdkSupplier( "10000396" , AdvanceSupplierID.MERCURY));
+        //注意：如果是使用自定义渠道的广告做打底，需要额外设置媒体id参数！！
+//        myBannerAd.setDefaultSdkSupplier(new SdkSupplier( "自定义sdk渠道媒体id","自定义sdk渠道广告位id" , "自定义sdk渠道id"));
         myBannerAd.loadAd();
     }
 

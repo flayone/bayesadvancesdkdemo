@@ -13,8 +13,14 @@ public class MyBannerAd extends AdvanceBaseAdspot {
     private ViewGroup adContainer;
     private AdvanceBannerListener listener;//这里也可以根据自己需求自定义，这里使用了默认的 AdvanceBannerListener。
 
+    @Deprecated
     public MyBannerAd(Activity activity, ViewGroup adContainer, String mediaId, String adspotId) {
         super(activity, mediaId, adspotId);
+        this.adContainer = adContainer;
+    }
+
+    public MyBannerAd(Activity activity, ViewGroup adContainer, String adspotId) {
+        super(activity, "", adspotId);
         this.adContainer = adContainer;
     }
 
@@ -37,15 +43,15 @@ public class MyBannerAd extends AdvanceBaseAdspot {
                 //策略成功下发上报
                 reportAdvanceLoaded();
                 //根据策略选中的sdk标志，初始化各个SDK广告位
-                if (AdvanceConfig.SDK_TAG_MERCURY.equals(currentSdkSupplier.sdkTag)) {
+                if (AdvanceConfig.SDK_ID_MERCURY.equals(currentSdkSupplier.id)) {
                     initMercuryBanner();
 
-                } else if (AdvanceConfig.SDK_TAG_GDT.equals(currentSdkSupplier.sdkTag)) {
+                } else if (AdvanceConfig.SDK_ID_GDT.equals(currentSdkSupplier.id)) {
                     initGdtBanner();
 
-                } else if (AdvanceConfig.SDK_TAG_CSJ.equals(currentSdkSupplier.sdkTag)) {
+                } else if (AdvanceConfig.SDK_ID_CSJ.equals(currentSdkSupplier.id)) {
                     initCsjBanner();
-                } else if ("其他渠道tag".equals(currentSdkSupplier.sdkTag)) {
+                } else if ("其他渠道id".equals(currentSdkSupplier.id)) {
                     //进行其他渠道广告位的初始化创建、比如百度SDK，inmobi等等
                 }
             }

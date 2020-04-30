@@ -12,11 +12,14 @@ import java.util.List;
 public class MyNativeCustomizeAd extends AdvanceBaseAdspot {
 
     private FrameLayout adContainer;
-
+    @Deprecated
     public MyNativeCustomizeAd(Activity activity, String mediaId, String adspotId) {
         super(activity, mediaId, adspotId);
     }
 
+    public MyNativeCustomizeAd(Activity activity,  String adspotId) {
+        super(activity, "", adspotId);
+    }
     private MyNativeCustomizeListener listener;
 
     public void setListener(MyNativeCustomizeListener listener) {
@@ -46,13 +49,13 @@ public class MyNativeCustomizeAd extends AdvanceBaseAdspot {
                 //策略成功下发上报
                 reportAdvanceLoaded();
                 //根据策略选中的sdk标志，初始化各个SDK广告位
-                if (AdvanceConfig.SDK_TAG_MERCURY.equals(currentSdkSupplier.sdkTag)) {
+                if (AdvanceConfig.SDK_ID_MERCURY.equals(currentSdkSupplier.id)) {
                     initMercuryNat();
-                } else if (AdvanceConfig.SDK_TAG_GDT.equals(currentSdkSupplier.sdkTag)) {
+                } else if (AdvanceConfig.SDK_ID_GDT.equals(currentSdkSupplier.id)) {
                     initGdtNat();
-                } else if (AdvanceConfig.SDK_TAG_CSJ.equals(currentSdkSupplier.sdkTag)) {
+                } else if (AdvanceConfig.SDK_ID_CSJ.equals(currentSdkSupplier.id)) {
                     initCsjNat();
-                } else if ("baidu".equals(currentSdkSupplier.sdkTag)) { //百度渠道
+                } else if ("4".equals(currentSdkSupplier.id)) { //百度渠道
                     //进行其他渠道广告位的初始化创建、比如百度SDK，inmobi等等
                 }
             }

@@ -15,6 +15,7 @@ import com.advance.AdvanceNativeExpressListener;
 import com.advance.mercury.MercuryNativeExpressAdItem;
 import com.advance.csj.CsjNativeExpressAdItem;
 import com.advance.gdt.GdtNativeAdExpressAdItem;
+import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 import com.mercury.sdk.core.config.ADSize;
 import com.mercury.sdk.util.ADError;
@@ -38,16 +39,19 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native_express);
         container = findViewById(R.id.native_express_container);
-        advanceNativeExpress = new AdvanceNativeExpress(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getNativeExpressAdspotId());
+        advanceNativeExpress = new AdvanceNativeExpress(this, ADManager.getInstance().getNativeExpressAdspotId());
+        //可选：设置定制化参数
         advanceNativeExpress.setExpressViewAcceptedSize(600, 300)
                 .setCsjImageAcceptedSize(640, 320)
                 .setGdtMaxVideoDuration(60)
                 .setGdtAutoHeight(true)
                 .setGdtFullWidth(true);
+        //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
-        //可以设置是否采用缓存
-        advanceNativeExpress.setUseCache(true);
-        advanceNativeExpress.setDefaultSdkSupplier(new SdkSupplier("101010", "10002984", "562e84af6904499c5941dec115babaa9", AdvanceConfig.SDK_TAG_MERCURY));
+        //推荐：设置是否采用策略缓存
+        advanceNativeExpress.enableStrategyCache(true);
+        //必须：设置打底SDK参数
+        advanceNativeExpress.setDefaultSdkSupplier(new SdkSupplier("10002678", AdvanceSupplierID.MERCURY));
         advanceNativeExpress.loadAd();
     }
 
@@ -95,18 +99,18 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
     public void onAdLoaded(List<AdvanceNativeExpressAdItem> list) {
         Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
         Log.d("DEMO", "LOADED");
-        if (null == list && list.isEmpty()) {
-            return;
+        if (null == list || list.isEmpty()) {
+            Log.d("DEMO", "NO AD RESULT");
         } else {
             AdvanceNativeExpressAdItem advanceNativeExpressAdItem = list.get(0);
-            if (advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_GDT)) {
+            if (advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_GDT)) {
                 GdtNativeAdExpressAdItem gdtNativeAdExpressAdItem = (GdtNativeAdExpressAdItem) advanceNativeExpressAdItem;
                 renderGdtExpressAd(gdtNativeAdExpressAdItem);
-            } else if (advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_CSJ)) {
+            } else if (advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_CSJ)) {
                 CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
                 renderCsjExpressAd(csjNativeExpressAdItem);
 
-            } else if (advanceNativeExpressAdItem.getSdkTag().equals(AdvanceConfig.SDK_TAG_MERCURY)) {
+            } else if (advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_MERCURY)) {
                 MercuryNativeExpressAdItem mercuryNativeExpressAdItem = (MercuryNativeExpressAdItem) advanceNativeExpressAdItem;
                 renderMercuryExpressAd(mercuryNativeExpressAdItem);
 

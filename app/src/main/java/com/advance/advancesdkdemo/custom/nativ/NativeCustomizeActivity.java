@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.FrameLayout;
 
-import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.R;
+import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
 import java.util.List;
@@ -25,18 +25,20 @@ public class NativeCustomizeActivity extends Activity implements MyNativeCustomi
         fl = findViewById(R.id.fl_ad);
 
         //创建自己的自渲染广告位
-        nativeCustomizeAd = new MyNativeCustomizeAd(this, "后台获取的媒体id", "后台获取的广告位id");
+        nativeCustomizeAd = new MyNativeCustomizeAd(this, "后台获取的广告位id");
         //必须：设置广告载体
         nativeCustomizeAd.setAdContainer(fl);
-        //建议开启：设置是否开启策略缓存模式
+        //推荐：设置是否开启策略缓存模式
         nativeCustomizeAd.enableStrategyCache(true);
-//       非必须： 添加自定义的核心事件回调listener
+//       推荐： 添加自定义的核心事件回调listener
         nativeCustomizeAd.setListener(this);
-//        必须：设置打底广告，app第一次打开时，会先走这里设置的打底广告，下面有各个平台的打底广告可以做测试用。
-        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("1101152570", "4090398440079274", null, AdvanceConfig.SDK_TAG_GDT));
-//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("100171", "10002805", "e1d0d3aaf95d3f1980367e75bc41141d", AdvanceConfig.SDK_TAG_MERCURY));
-//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("100171", "10002806",  "e1d0d3aaf95d3f1980367e75bc41141d", AdvanceConfig.SDK_TAG_MERCURY));
-//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("5001121", "901121737", null, AdvanceConfig.SDK_TAG_CSJ));
+//        必须：设置打底广告，无策略时，会先走这里设置的打底广告。下面是各个渠道的测试用打底广告。
+        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("4090398440079274", AdvanceSupplierID.GDT));
+//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("10002805", AdvanceSupplierID.MERCURY);
+//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier( "10002806",  AdvanceSupplierID.MERCURY));
+//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier( "901121737",  AdvanceSupplierID.CSJ));
+//        注意：如果是使用自定义渠道的广告做打底，需要额外设置媒体id参数！！
+//        myBannerAd.setDefaultSdkSupplier(new SdkSupplier( "自定义sdk渠道媒体id","自定义sdk渠道广告位id" , "自定义sdk渠道id"));
 //        请求广告
         nativeCustomizeAd.loadAd();
     }
@@ -44,13 +46,13 @@ public class NativeCustomizeActivity extends Activity implements MyNativeCustomi
 
     @Override
     public void onAdClose(MyNativeCustomizeAdItem item) {
-        Log.d(Tag, "onAdClose" + item.getSDKTag());
+        Log.d(Tag, "onAdClose" + item.getSupplierId());
         fl.removeAllViews();
     }
 
     @Override
     public void onAdShow(MyNativeCustomizeAdItem item) {
-        Log.d(Tag, "onAdShow" + item.getSDKTag());
+        Log.d(Tag, "onAdShow" + item.getSupplierId());
     }
 
     @Override
@@ -61,7 +63,7 @@ public class NativeCustomizeActivity extends Activity implements MyNativeCustomi
 
     @Override
     public void onAdClicked(MyNativeCustomizeAdItem item) {
-        Log.d(Tag, "onAdClicked" + item.getSDKTag());
+        Log.d(Tag, "onAdClicked" + item.getSupplierId());
 
     }
 

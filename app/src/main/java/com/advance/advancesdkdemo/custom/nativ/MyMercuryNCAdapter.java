@@ -253,8 +253,8 @@ public class MyMercuryNCAdapter implements NativeADListener {
         }
 
         @Override
-        public String getSDKTag() {
-            return AdvanceConfig.SDK_TAG_MERCURY;
+        public String getSupplierId() {
+            return AdvanceConfig.SDK_ID_MERCURY;
         }
 
         private VideoOption getVideoOption() {

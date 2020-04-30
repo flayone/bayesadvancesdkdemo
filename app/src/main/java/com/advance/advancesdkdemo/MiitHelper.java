@@ -29,23 +29,27 @@ public class MiitHelper implements IIdentifierListener {
 
 
     public void getDeviceIds(Context cxt) {
-        long timeb = System.currentTimeMillis();
-        int nres = CallFromReflect(cxt);
+        try {
+            long timeb = System.currentTimeMillis();
+            int nres = CallFromReflect(cxt);
 //        int nres=DirectCall(cxt);
-        long timee = System.currentTimeMillis();
-        long offset = timee - timeb;
-        if (nres == ErrorCode.INIT_ERROR_DEVICE_NOSUPPORT) {//不支持的设备
+            long timee = System.currentTimeMillis();
+            long offset = timee - timeb;
+            if (nres == ErrorCode.INIT_ERROR_DEVICE_NOSUPPORT) {//不支持的设备
 
-        } else if (nres == ErrorCode.INIT_ERROR_LOAD_CONFIGFILE) {//加载配置文件出错
+            } else if (nres == ErrorCode.INIT_ERROR_LOAD_CONFIGFILE) {//加载配置文件出错
 
-        } else if (nres == ErrorCode.INIT_ERROR_MANUFACTURER_NOSUPPORT) {//不支持的设备厂商
+            } else if (nres == ErrorCode.INIT_ERROR_MANUFACTURER_NOSUPPORT) {//不支持的设备厂商
 
-        } else if (nres == ErrorCode.INIT_ERROR_RESULT_DELAY) {//获取接口是异步的，结果会在回调中返回，回调执行的回调可能在工作线程
+            } else if (nres == ErrorCode.INIT_ERROR_RESULT_DELAY) {//获取接口是异步的，结果会在回调中返回，回调执行的回调可能在工作线程
 
-        } else if (nres == ErrorCode.INIT_HELPER_CALL_ERROR) {//反射调用出错
+            } else if (nres == ErrorCode.INIT_HELPER_CALL_ERROR) {//反射调用出错
 
+            }
+            Log.d(getClass().getSimpleName(), "return value: " + String.valueOf(nres));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        Log.d(getClass().getSimpleName(), "return value: " + String.valueOf(nres));
 
     }
 
@@ -71,29 +75,33 @@ public class MiitHelper implements IIdentifierListener {
 
     @Override
     public void OnSupport(boolean isSupport, IdSupplier _supplier) {
-        if (_supplier == null) {
-            return;
-        }
-        String oaid = _supplier.getOAID();
-        String vaid = _supplier.getVAID();
-        String aaid = _supplier.getAAID();
-//        String udid=_supplier.getUDID();
-        StringBuilder builder = new StringBuilder();
-        builder.append("support: ").append(isSupport ? "true" : "false").append("\n");
-//        builder.append("UDID: ").append(udid).append("\n");
-        builder.append("OAID: ").append(oaid).append("\n");
-        builder.append("VAID: ").append(vaid).append("\n");
-        builder.append("AAID: ").append(aaid).append("\n");
-        String idstext = builder.toString();
-        //将oaid 赋值给mercury sdk
-        if (oaid != null && !"".equals(oaid)) {
-            Log.d("MiitHelper", "oaid == " + oaid);
-            if (oaidUpdater != null) {
-                oaidUpdater.IdReceived(oaid);
+        try {
+            if (_supplier == null) {
+                return;
             }
-        }
-        if (_listener != null) {
-            _listener.OnIdsAvalid(idstext);
+            String oaid = _supplier.getOAID();
+            String vaid = _supplier.getVAID();
+            String aaid = _supplier.getAAID();
+//        String udid=_supplier.getUDID();
+            StringBuilder builder = new StringBuilder();
+            builder.append("support: ").append(isSupport ? "true" : "false").append("\n");
+//        builder.append("UDID: ").append(udid).append("\n");
+            builder.append("OAID: ").append(oaid).append("\n");
+            builder.append("VAID: ").append(vaid).append("\n");
+            builder.append("AAID: ").append(aaid).append("\n");
+            String idstext = builder.toString();
+            //将oaid 赋值给mercury sdk
+            if (oaid != null && !"".equals(oaid)) {
+                Log.d("MiitHelper", "oaid == " + oaid);
+                if (oaidUpdater != null) {
+                    oaidUpdater.IdReceived(oaid);
+                }
+            }
+            if (_listener != null) {
+                _listener.OnIdsAvalid(idstext);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

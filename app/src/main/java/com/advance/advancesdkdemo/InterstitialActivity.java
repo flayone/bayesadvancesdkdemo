@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceInterstitial;
 import com.advance.AdvanceInterstitialListener;
+import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 import com.qq.e.ads.interstitial2.UnifiedInterstitialMediaListener;
 import com.qq.e.comm.util.AdError;
@@ -19,13 +20,17 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interstitial);
-        advanceInterstitial = new AdvanceInterstitial(this, ADManager.getInstance().getMediaId(), ADManager.getInstance().getInterstitialAdspotId());
-        //期望模板广告view的size,单位dp。高度为0代表自适应
+        advanceInterstitial = new AdvanceInterstitial(this, ADManager.getInstance().getInterstitialAdspotId());
+        //必须：期望模板广告view的size,单位dp。高度为0代表自适应
         advanceInterstitial.setCsjExpressViewAcceptedSize(300, 300);
-        advanceInterstitial.setDefaultSdkSupplier(new SdkSupplier("100171", "10000398",
-                "e1d0d3aaf95d3f1980367e75bc41141d", AdvanceConfig.SDK_TAG_MERCURY));
+        //必须：设置打底SDK参数
+        advanceInterstitial.setDefaultSdkSupplier(new SdkSupplier(   "10000398", AdvanceSupplierID.MERCURY));
+        //推荐：设置是否采用策略缓存
+        advanceInterstitial.enableStrategyCache(true);
+        //推荐：核心事件监听回调
         advanceInterstitial.setAdListener(this);
-        advanceInterstitial.setGdtMediaListener(this);//非必须，设置广点通的视频广告的播放回调，不需要可忽略。
+        //可选，设置广点通的视频广告的播放回调，不需要可忽略。
+        advanceInterstitial.setGdtMediaListener(this);
     }
 
     public void showAd(View view) {

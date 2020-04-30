@@ -3,7 +3,6 @@ package com.advance.advancesdkdemo;
 public class ADManager {
     private static ADManager instance;
 
-    private String mediaId;
     private String splashAdspotId;
     private String bannerAdspotId;
     private String nativeExpressAdspotId;
@@ -18,14 +17,6 @@ public class ADManager {
         return instance;
     }
 
-
-    public String getMediaId() {
-        return mediaId;
-    }
-
-    public void setMediaId(String mediaId) {
-        this.mediaId = mediaId;
-    }
 
     public String getSplashAdspotId() {
         return splashAdspotId;

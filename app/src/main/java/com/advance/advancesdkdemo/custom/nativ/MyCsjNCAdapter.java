@@ -79,7 +79,7 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
                 .setImageAcceptedSize(640, 320)
                 // 可选参数 设置是否支持deeplink
                 .setSupportDeepLink(true)
-                .setAdCount(3) //请求广告数量为1到3条
+                .setAdCount(sdkSupplier.adCount) //请求广告数量为1到3条
                 .build();
 
         ttAdNative.loadFeedAd(adSlot, this);
@@ -452,8 +452,8 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
 
 
         @Override
-        public String getSDKTag() {
-            return AdvanceConfig.SDK_TAG_CSJ;
+        public String getSupplierId() {
+            return AdvanceConfig.SDK_ID_CSJ;
         }
     }
 }
