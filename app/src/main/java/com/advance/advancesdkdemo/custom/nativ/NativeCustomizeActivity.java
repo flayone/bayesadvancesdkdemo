@@ -37,7 +37,7 @@ public class NativeCustomizeActivity extends Activity implements MyNativeCustomi
 //        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("10002805", AdvanceSupplierID.MERCURY);
 //        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier( "10002806",  AdvanceSupplierID.MERCURY));
 //        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier( "901121737",  AdvanceSupplierID.CSJ));
-//        注意：如果是使用自定义渠道的广告做打底，需要额外设置媒体id参数！！
+//        注意！！！：如果是使用自定义渠道的广告做打底，，需要使用下面的SdkSupplier初始化方法。
 //        myBannerAd.setDefaultSdkSupplier(new SdkSupplier( "自定义sdk渠道媒体id","自定义sdk渠道广告位id" , "自定义sdk渠道id"));
 //        请求广告
         nativeCustomizeAd.loadAd();

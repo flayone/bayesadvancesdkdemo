@@ -34,7 +34,7 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
         advanceFullScreenVideo = new AdvanceFullScreenVideo(this, ADManager.getInstance().getFullScreenVideoAdspotId());
         //推荐：核心事件监听回调
         advanceFullScreenVideo.setAdListener(this);
-        //必须：设置打底SDK参数
+        //必须：设置打底SDK参数，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         advanceFullScreenVideo.setDefaultSdkSupplier(new SdkSupplier("945065337", AdvanceSupplierID.CSJ));
         //可选： 设置广点通视频播放策略
         advanceFullScreenVideo.setGdtVideoOption(new VideoOption.Builder().setAutoPlayMuted(false)

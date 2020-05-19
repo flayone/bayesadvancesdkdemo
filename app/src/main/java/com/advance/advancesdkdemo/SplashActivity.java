@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,10 +19,13 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.advance.AdvanceConfig;
 import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
 import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
+import com.mercury.sdk.core.config.AdConfigManager;
+import com.mercury.sdk.core.config.LargeADCutType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +37,14 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
     private static final int MSG_GO_MAIN = 1;
     private boolean canJump = false;
     private String sdkId;
-
+    TextView skipView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         FrameLayout adContainer = findViewById(R.id.splash_container);
-        TextView skipView = findViewById(R.id.skip_view);
+        skipView = findViewById(R.id.skip_view);
         View skipCT = findViewById(R.id.splash_skip_container);
 
         //开屏初始化；adContainer为广告容器，skipView不需要自定义可以为null
@@ -50,17 +54,21 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         //可选：设置mercury开屏加载时占位图
         advanceSplash.setHolderImage(this.getResources().getDrawable(R.mipmap.background));
         //可选：设置跳过字体，穿山甲广告尺寸，核心事件回调
-        advanceSplash.setSkipText("%d s|跳过")
+        advanceSplash.setSkipText("跳过 %d ")
                 .setCsjAcceptedSize(1080, 1920);//设置穿山甲广告图片偏好尺寸(如果接入穿山甲的话
         //可选：设置广点通的跳过载体，传入一个默认可见view给广点通进行可见检查机制
         advanceSplash.setGdtSkipContainer(skipCT);
         //可选：设置广点通的广告点击后是否以onAdSkip(跳过事件)来回调，适合跳过和倒计时结束处理逻辑不同时设置，处理逻辑相同请忽略。true 点击广点通广告关闭后回调onAdSkip，false 回调 onAdTimeOver；默认为false。
         advanceSplash.setGdtClickAsSkip(true);
+        //可选：设置广点通自定义跳过是否提前隐藏。默认false
+        advanceSplash.setGdtCustomSkipHide(false);
+        //可选：设置mercury素材规格，具体参考：
+        AdConfigManager.getInstance().setLargeADCutType(LargeADCutType.CUT_BOTTOM);
         //推荐：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(this);
         //强烈推荐：设置是否将获取到的SDK选择策略进行缓存，有助于缩短开屏广告加载时间
         advanceSplash.enableStrategyCache(true);
-        //必须：设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)
+        //必须：设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         advanceSplash.setDefaultSdkSupplier(new SdkSupplier("887301946", AdvanceSupplierID.CSJ));
         // 如果targetSDKVersion >= 23，就要申请好权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
         if (Build.VERSION.SDK_INT >= 23) {
@@ -68,13 +76,17 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         } else {
             advanceSplash.loadAd();
         }
-
+        //建议：穿山甲权限校验禁止，开启的话会覆盖一个半透明页面，影响生命周期事件，导致穿山甲广告展示问题，默认false
+        AdvanceConfig.getInstance().setNeedPermissionCheck(false);
     }
 
     @Override
     public void onAdShow() {
         Log.d("DEMO", "Splash ad show");
         Toast.makeText(this, "广告展示成功", Toast.LENGTH_SHORT).show();
+        //强烈建议：skipView只有在广告展示出来以后才将背景色进行填充，默认加载时设置成透明状态，这样展现效果较佳
+        if (skipView != null)
+            skipView.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.background_circle));
     }
 
     @Override

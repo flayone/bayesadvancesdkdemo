@@ -23,7 +23,7 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
         advanceInterstitial = new AdvanceInterstitial(this, ADManager.getInstance().getInterstitialAdspotId());
         //必须：期望模板广告view的size,单位dp。高度为0代表自适应
         advanceInterstitial.setCsjExpressViewAcceptedSize(300, 300);
-        //必须：设置打底SDK参数
+        //必须：设置打底SDK参数，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         advanceInterstitial.setDefaultSdkSupplier(new SdkSupplier(   "10000398", AdvanceSupplierID.MERCURY));
         //推荐：设置是否采用策略缓存
         advanceInterstitial.enableStrategyCache(true);

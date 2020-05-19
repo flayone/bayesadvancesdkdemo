@@ -1,13 +1,7 @@
 package com.advance.advancesdkdemo;
 
 import android.app.Application;
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.util.Log;
-
 import com.advance.AdvanceConfig;
-import com.bun.miitmdid.core.JLibrary;
-import com.mercury.sdk.core.config.AdConfigManager;
 
 public class MyApplication extends Application {
     @Override
@@ -32,31 +26,7 @@ public class MyApplication extends Application {
                 .setMercuryMediaKey("e1d0d3aaf95d3f1980367e75bc41141d")
                 .initSDKs(this);
 
-        //必须：获取oaid，Android10 中手机唯一标识
-        new MiitHelper(new MiitHelper.OaidUpdater() {
-            @Override
-            public void IdReceived(@NonNull String id) {
-                //mercury sdk 需要在Android10以上机型设置oaid，否则可能无法获取广告
-                Log.d("MiitHelper", "IdReceived OAID = " + id);
-                //必须：Mercury SDK设置项，设置OAID参数，否则Android10设备无法展示广告
-                AdvanceConfig.getInstance().setOaid(id);
-            }
-        }).getDeviceIds(this);
-
-
-        //可选：Mercury SDK设置项，true允许提前缓存部分广告素材，优化弱网表现。默认false
-        AdConfigManager.getInstance().setNeedPreLoadMaterial(false);
-
     }
 
-    //必须：OAID获取初始化
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        try {
-            JLibrary.InitEntry(base);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }

@@ -30,9 +30,9 @@ public class BannerCustomizeActivity extends Activity implements AdvanceBannerLi
         myBannerAd.setAdListener(this);
         //推荐：设置是否将获取到的SDK选择策略进行缓存
         myBannerAd.enableStrategyCache(false);
-        //必须：设置打底SDK参数
+        //必须：设置打底SDK参数，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         myBannerAd.setDefaultSdkSupplier(new SdkSupplier( "10000396" , AdvanceSupplierID.MERCURY));
-        //注意：如果是使用自定义渠道的广告做打底，需要额外设置媒体id参数！！
+        //注意！！！：如果是使用自定义渠道的广告做打底，需要使用下面的SdkSupplier初始化方法。
 //        myBannerAd.setDefaultSdkSupplier(new SdkSupplier( "自定义sdk渠道媒体id","自定义sdk渠道广告位id" , "自定义sdk渠道id"));
         myBannerAd.loadAd();
     }

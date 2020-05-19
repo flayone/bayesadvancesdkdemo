@@ -36,7 +36,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
         advanceRewardVideo.setCsjRewardAmount(Toast.LENGTH_SHORT);
         //推荐：设置是否采用策略缓存
         advanceRewardVideo.enableStrategyCache(true);
-        //必须：设置打底广告
+        //必须：设置打底广告，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         advanceRewardVideo.setDefaultSdkSupplier(new SdkSupplier("2090845242931421", AdvanceSupplierID.GDT));
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(this);
@@ -156,6 +156,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
     @Override
     public void onAdLoaded(AdvanceRewardVideoItem advanceRewardVideoItem) {
+        isReady = true;
         Log.d("DEMO", "LOADED");
         this.advanceRewardVideoItem = advanceRewardVideoItem;
         Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
