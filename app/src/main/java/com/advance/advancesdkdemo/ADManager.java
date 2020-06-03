@@ -9,6 +9,7 @@ public class ADManager {
     private String rewardAdspotId;
     private String interstitialAdspotId;
     private String fullScreenVideoAdspotId;
+    private String customNativeAdspotId;
 
     public static synchronized ADManager getInstance() {
         if (instance == null) {
@@ -64,5 +65,13 @@ public class ADManager {
 
     public void setFullScreenVideoAdspotId(String fullScreenVideoAdspotId) {
         this.fullScreenVideoAdspotId = fullScreenVideoAdspotId;
+    }
+
+    public String getCustomNativeAdspotId() {
+        return customNativeAdspotId;
+    }
+
+    public void setCustomNativeAdspotId(String customNativeAdspotId) {
+        this.customNativeAdspotId = customNativeAdspotId;
     }
 }

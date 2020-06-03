@@ -10,6 +10,7 @@ public class Constants {
         public static final String interstitialAdspotId = "10000398";
         //Mercury渠道目前不支持全屏视频
         public static final String fullScreenVideoAdspotId = "";
+        public static final String customNativeAdspotId = "10003122";
     }
 
     // TODO: 2020-05-15 新建倍联对应的广告位
@@ -22,6 +23,7 @@ public class Constants {
         public static final String rewardAdspotId = "10003100";
         public static final String interstitialAdspotId = "10003097";
         public static final String fullScreenVideoAdspotId = "10003103";
+        public static final String customNativeAdspotId = "10003120";
     }
 
     static class Gdt {
@@ -32,5 +34,6 @@ public class Constants {
         public static final String rewardAdspotId = "10003101";
         public static final String interstitialAdspotId = "10003098";
         public static final String fullScreenVideoAdspotId = "10003104";
+        public static final String customNativeAdspotId = "10003121";
     }
 }

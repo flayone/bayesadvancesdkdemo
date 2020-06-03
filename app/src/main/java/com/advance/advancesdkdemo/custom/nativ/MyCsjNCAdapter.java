@@ -299,6 +299,15 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
                             Log.e("VideoAdListener", "===onVideoAdComplete");
                         }
                     });
+                    if (videoLayout != null) {
+                        View video = ad.getAdView();
+                        if (video != null) {
+                            if (video.getParent() == null) {
+                                videoLayout.removeAllViews();
+                                videoLayout.addView(video);
+                            }
+                        }
+                    }
                     break;
                 case TTAdConstant.IMAGE_MODE_GROUP_IMG:
                     if (ad.getImageList() != null && ad.getImageList().size() >= 3) {

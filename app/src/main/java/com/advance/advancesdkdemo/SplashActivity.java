@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,31 +39,29 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
     private boolean canJump = false;
     private String sdkId;
     TextView skipView;
+    ImageView holderImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_splash_custom_logo);
         FrameLayout adContainer = findViewById(R.id.splash_container);
         skipView = findViewById(R.id.skip_view);
-        View skipCT = findViewById(R.id.splash_skip_container);
+        holderImage = findViewById(R.id.splash_self_holder);
 
         //开屏初始化；adContainer为广告容器，skipView不需要自定义可以为null
         advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
-        //可选：设置mercury开屏底部logo
-        advanceSplash.setLogoImage(this.getResources().getDrawable(R.mipmap.logo));
         //可选：设置mercury开屏加载时占位图
         advanceSplash.setHolderImage(this.getResources().getDrawable(R.mipmap.background));
         //可选：设置跳过字体，穿山甲广告尺寸，核心事件回调
         advanceSplash.setSkipText("跳过 %d ")
-                .setCsjAcceptedSize(1080, 1920);//设置穿山甲广告图片偏好尺寸(如果接入穿山甲的话
-        //可选：设置广点通的跳过载体，传入一个默认可见view给广点通进行可见检查机制
-        advanceSplash.setGdtSkipContainer(skipCT);
+                //可选：设置穿山甲广告图片偏好尺寸(如果接入穿山甲的话
+                .setCsjAcceptedSize(1080, 1920);
         //可选：设置广点通的广告点击后是否以onAdSkip(跳过事件)来回调，适合跳过和倒计时结束处理逻辑不同时设置，处理逻辑相同请忽略。true 点击广点通广告关闭后回调onAdSkip，false 回调 onAdTimeOver；默认为false。
         advanceSplash.setGdtClickAsSkip(true);
         //可选：设置广点通自定义跳过是否提前隐藏。默认false
         advanceSplash.setGdtCustomSkipHide(false);
-        //可选：设置mercury素材规格，具体参考：
+        //推荐：设置mercury素材规格，LargeADCutType.CUT_BOTTOM代表对过长广告素材，保持宽度不变底部进行剪切。默认为LargeADCutType.DEFAULT 不对素材做剪切处理
         AdConfigManager.getInstance().setLargeADCutType(LargeADCutType.CUT_BOTTOM);
         //推荐：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(this);
@@ -84,6 +83,10 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
     public void onAdShow() {
         Log.d("DEMO", "Splash ad show");
         Toast.makeText(this, "广告展示成功", Toast.LENGTH_SHORT).show();
+        //广告展示回调，占位图隐藏
+        if (holderImage!=null){
+            holderImage.setVisibility(View.GONE);
+        }
         //强烈建议：skipView只有在广告展示出来以后才将背景色进行填充，默认加载时设置成透明状态，这样展现效果较佳
         if (skipView != null)
             skipView.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.background_circle));
@@ -102,7 +105,6 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
     public void onAdClicked() {
         Log.d("DEMO", "Splash ad clicked");
         Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
-
     }
 
 //    @Override

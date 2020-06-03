@@ -151,6 +151,29 @@ public class MyMercuryNCAdapter implements NativeADListener {
                     return;
                 }
                 adContainer.removeAllViews();
+                //核心事件去回调统一的show clicked 等方法
+                nativeADData.setNativeAdEventListener(new NativeADEventListener() {
+                    @Override
+                    public void onADExposed() {
+                        Log.d(TAG, "onADExposed: ");
+                        if (customizeAd != null)
+                            customizeAd.onShow(MercuryNativeAdData.this);
+                    }
+
+                    @Override
+                    public void onADClicked() {
+                        Log.d(TAG, "onADClicked: " + " clickUrl: " + nativeADData.ext.get("clickUrl"));
+                        if (customizeAd != null)
+                            customizeAd.onClicked(MercuryNativeAdData.this);
+                    }
+
+                    @Override
+                    public void onADError(ADError error) {
+                        Log.d(TAG, "onADError error code :" + error.code + "  error msg: " + error.msg);
+                        if (customizeAd != null)
+                            customizeAd.onFailed();
+                    }
+                });
 
                 renderAdUi(nativeADData);
                 updateAdAction(nativeADData);
@@ -217,31 +240,7 @@ public class MyMercuryNCAdapter implements NativeADListener {
                     clickableViews.add(mGroupContainer);
                 }
 
-                //核心事件去回调统一的show clicked 等方法
-                nativeADData.setNativeAdEventListener(new NativeADEventListener() {
-                    @Override
-                    public void onADExposed() {
-                        Log.d(TAG, "onADExposed: ");
-                        if (customizeAd != null)
-                            customizeAd.onShow(MercuryNativeAdData.this);
-                    }
 
-                    @Override
-                    public void onADClicked() {
-                        Log.d(TAG, "onADClicked: " + " clickUrl: " + nativeADData.ext.get("clickUrl"));
-                        if (customizeAd != null)
-                            customizeAd.onClicked(MercuryNativeAdData.this);
-                    }
-
-                    @Override
-                    public void onADError(ADError error) {
-                        Log.d(TAG, "onADError error code :" + error.code + "  error msg: " + error.msg);
-                        if (customizeAd != null)
-                            customizeAd.onFailed();
-                    }
-
-
-                });
                 nativeADData.bindAdToView(activity, nativeContainer, clickableViews);
 
                 adContainer.addView(adView);

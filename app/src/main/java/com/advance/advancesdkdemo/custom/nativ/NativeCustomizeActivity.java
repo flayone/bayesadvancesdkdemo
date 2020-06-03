@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.FrameLayout;
 
+import com.advance.AdvanceConfig;
+import com.advance.advancesdkdemo.ADManager;
 import com.advance.advancesdkdemo.R;
 import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
@@ -24,8 +26,8 @@ public class NativeCustomizeActivity extends Activity implements MyNativeCustomi
         setContentView(R.layout.activity_ad_container);
         fl = findViewById(R.id.fl_ad);
 
-        //创建自己的自渲染广告位
-        nativeCustomizeAd = new MyNativeCustomizeAd(this, "后台获取的广告位id");
+        //创建自己的自渲染广告位,第二个参数为mercury后台申请的自渲染广告位id
+        nativeCustomizeAd = new MyNativeCustomizeAd(this, "");
         //必须：设置广告载体
         nativeCustomizeAd.setAdContainer(fl);
         //推荐：设置是否开启策略缓存模式
@@ -36,9 +38,8 @@ public class NativeCustomizeActivity extends Activity implements MyNativeCustomi
         nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("4090398440079274", AdvanceSupplierID.GDT));
 //        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("10002805", AdvanceSupplierID.MERCURY);
 //        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier( "10002806",  AdvanceSupplierID.MERCURY));
-//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier( "901121737",  AdvanceSupplierID.CSJ));
 //        注意！！！：如果是使用自定义渠道的广告做打底，，需要使用下面的SdkSupplier初始化方法。
-//        myBannerAd.setDefaultSdkSupplier(new SdkSupplier( "自定义sdk渠道媒体id","自定义sdk渠道广告位id" , "自定义sdk渠道id"));
+//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier( "自定义sdk渠道媒体id","自定义sdk渠道广告位id" , "自定义sdk渠道id"));
 //        请求广告
         nativeCustomizeAd.loadAd();
     }
@@ -58,7 +59,6 @@ public class NativeCustomizeActivity extends Activity implements MyNativeCustomi
     @Override
     public void onAdFailed() {
         Log.d(Tag, "onAdFailed");
-
     }
 
     @Override

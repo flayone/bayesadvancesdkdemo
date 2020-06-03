@@ -24,14 +24,17 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
         RelativeLayout rl = findViewById(R.id.banner_layout);
         advanceBanner = new AdvanceBanner(this, rl, ADManager.getInstance().getBannerAdspotId());
 
-        //可选：个性化设置，穿山甲个性化模板广告的尺寸属性，期望模板广告view的size，刷新间隔（s）
+        //可选：个性化设置，穿山甲个性化模板广告的尺寸属性，期望模板广告view的size，单位dp
         advanceBanner.setCsjExpressViewAcceptedSize(640, 100)
+                //可选：穿山甲可以接受的尺寸大小，单位px
+                .setCsjAcceptedSize(640, 100)
+                //可选：设置广告刷新间隔（s）
                 .setRefreshInterval(60);
         //推荐：核心事件监听回调
         advanceBanner.setAdListener(this);
         //推荐：设置是否开启策略缓存
         advanceBanner.enableStrategyCache(true);
-        //必须：设置打底SDK参数，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
+        //必须：设置打底SDK参数，SdkSupplier（"该渠道平台申请的广告位id", 渠道平台id标识）
         advanceBanner.setDefaultSdkSupplier(new SdkSupplier("10000396", AdvanceSupplierID.MERCURY));
         advanceBanner.loadAd();
 

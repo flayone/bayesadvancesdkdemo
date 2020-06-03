@@ -1,10 +1,15 @@
 package com.advance.advancesdkdemo;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -17,14 +22,20 @@ import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.mercury.sdk.core.config.AdConfigManager;
 import com.qq.e.comm.managers.status.SDKStatus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     Spinner sdks;
+    Button fullVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fullVideo = findViewById(R.id.fullvideo_button);
 
         String csjV = TTAdSdk.getAdManager().getSDKVersion();
         String merV = AdConfigManager.getInstance().getSDKVersion();
@@ -55,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
                         ADManager.getInstance().setRewardAdspotId(Constants.Mercury.rewardAdspotId);
                         ADManager.getInstance().setSplashAdspotId(Constants.Mercury.splashAdspotId);
                         ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Mercury.fullScreenVideoAdspotId);
+                        ADManager.getInstance().setCustomNativeAdspotId(Constants.Mercury.customNativeAdspotId);
+                        fullVideo.setEnabled(false);
                         break;
                     case 1: //穿山甲
                         sdkName = "穿山甲";
@@ -64,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         ADManager.getInstance().setRewardAdspotId(Constants.Csj.rewardAdspotId);
                         ADManager.getInstance().setSplashAdspotId(Constants.Csj.splashAdspotId);
                         ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Csj.fullScreenVideoAdspotId);
+                        ADManager.getInstance().setCustomNativeAdspotId(Constants.Csj.customNativeAdspotId);
 
                         //设置穿山甲允许直接下载的网络状态集合，可以在调用广告之前的任何时间来设置
                         int[] directDownloadNetworkType;
@@ -74,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                             directDownloadNetworkType = new int[]{TTAdConstant.NETWORK_STATE_4G};
                         }
                         AdvanceConfig.getInstance().setCsjDirectDownloadNetworkType(directDownloadNetworkType);
+                        fullVideo.setEnabled(true);
 
                         break;
                     case 2: //广点通
@@ -84,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                         ADManager.getInstance().setRewardAdspotId(Constants.Gdt.rewardAdspotId);
                         ADManager.getInstance().setSplashAdspotId(Constants.Gdt.splashAdspotId);
                         ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Gdt.fullScreenVideoAdspotId);
+                        ADManager.getInstance().setCustomNativeAdspotId(Constants.Gdt.customNativeAdspotId);
+                        fullVideo.setEnabled(true);
                         break;
                 }
                 LogUtil.AdvanceLog("sdk Demo 选择：" + sdkName);
@@ -94,6 +111,29 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        checkAndRequestPermission();
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void checkAndRequestPermission() {
+        List<String> lackedPermission = new ArrayList<String>();
+        if (!(checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED)) {
+            lackedPermission.add(Manifest.permission.READ_PHONE_STATE);
+        }
+
+        if (!(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+            lackedPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+
+
+        // 权限都已经有了，
+        if (lackedPermission.size() > 0) {
+            // 请求所缺少的权限，在onRequestPermissionsResult中再看是否获得权限，如果获得权限就可以调用SDK，否则不要调用SDK。
+            String[] requestPermissions = new String[lackedPermission.size()];
+            lackedPermission.toArray(requestPermissions);
+            requestPermissions(requestPermissions, 1024);
+        }
     }
 
     public void onBanner(View view) {
