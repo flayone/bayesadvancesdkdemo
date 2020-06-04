@@ -49,6 +49,11 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         skipView = findViewById(R.id.skip_view);
         holderImage = findViewById(R.id.splash_self_holder);
 
+        //推荐：穿山甲权限校验禁止，开启的话会覆盖一个半透明页面，影响生命周期事件，导致穿山甲广告展示问题，默认false
+        AdvanceConfig.getInstance().setNeedPermissionCheck(false);
+        //推荐：设置mercury素材规格，LargeADCutType.CUT_BOTTOM代表对过长广告素材，保持宽度不变底部进行剪切。默认为LargeADCutType.DEFAULT 不对素材做剪切处理
+        AdConfigManager.getInstance().setLargeADCutType(LargeADCutType.CUT_BOTTOM);
+
         //开屏初始化；adContainer为广告容器，skipView不需要自定义可以为null
         advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
         //可选：设置mercury开屏加载时占位图
@@ -61,8 +66,6 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         advanceSplash.setGdtClickAsSkip(true);
         //可选：设置广点通自定义跳过是否提前隐藏。默认false
         advanceSplash.setGdtCustomSkipHide(false);
-        //推荐：设置mercury素材规格，LargeADCutType.CUT_BOTTOM代表对过长广告素材，保持宽度不变底部进行剪切。默认为LargeADCutType.DEFAULT 不对素材做剪切处理
-        AdConfigManager.getInstance().setLargeADCutType(LargeADCutType.CUT_BOTTOM);
         //推荐：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(this);
         //强烈推荐：设置是否将获取到的SDK选择策略进行缓存，有助于缩短开屏广告加载时间
@@ -75,8 +78,6 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         } else {
             advanceSplash.loadAd();
         }
-        //建议：穿山甲权限校验禁止，开启的话会覆盖一个半透明页面，影响生命周期事件，导致穿山甲广告展示问题，默认false
-        AdvanceConfig.getInstance().setNeedPermissionCheck(false);
     }
 
     @Override
@@ -107,13 +108,6 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
     }
 
-//    @Override
-//    public void onAdClose() {
-//        Log.d("DEMO", "Splash ad closed");
-////        Toast.makeText(this,"广告关闭",Toast.LENGTH_SHORT).show();
-//
-//        mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN,100);
-//    }
 
     @Override
     public void onAdSkip() {
