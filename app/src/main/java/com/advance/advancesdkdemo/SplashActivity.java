@@ -16,17 +16,16 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.advance.AdvanceConfig;
 import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
 import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
-import com.mercury.sdk.core.config.AdConfigManager;
 import com.mercury.sdk.core.config.LargeADCutType;
+import com.mercury.sdk.core.config.MercuryAD;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,8 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
     private boolean canJump = false;
     private String sdkId;
     TextView skipView;
-    ImageView holderImage;
+    LinearLayout logo;
+    private String TAG = "SplashActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,33 +47,35 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         setContentView(R.layout.activity_splash_custom_logo);
         FrameLayout adContainer = findViewById(R.id.splash_container);
         skipView = findViewById(R.id.skip_view);
-        holderImage = findViewById(R.id.splash_self_holder);
+        logo = findViewById(R.id.ll_asc_logo);
 
-        //推荐：穿山甲权限校验禁止，开启的话会覆盖一个半透明页面，影响生命周期事件，导致穿山甲广告展示问题，默认false
-        AdvanceConfig.getInstance().setNeedPermissionCheck(false);
-        //推荐：设置mercury素材规格，LargeADCutType.CUT_BOTTOM代表对过长广告素材，保持宽度不变底部进行剪切。默认为LargeADCutType.DEFAULT 不对素材做剪切处理
-        AdConfigManager.getInstance().setLargeADCutType(LargeADCutType.CUT_BOTTOM);
+        //自由选择：设置mercury素材展示模式，LargeADCutType.CUT_BOTTOM 代表对过长广告素材，保持宽度不变底部进行剪切。默认为LargeADCutType.DEFAULT 不对素材做剪切处理
+        MercuryAD.setLargeADCutType(LargeADCutType.CUT_BOTTOM);
 
         //开屏初始化；adContainer为广告容器，skipView不需要自定义可以为null
         advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
         //可选：设置mercury开屏加载时占位图
-        advanceSplash.setHolderImage(this.getResources().getDrawable(R.mipmap.background));
+        advanceSplash.setHolderImage(ContextCompat.getDrawable(this, R.mipmap.background));
+        //可选：设置mercury开屏logo资源
+        advanceSplash.setLogoImage(ContextCompat.getDrawable(this, R.mipmap.logo));
+        //自由选择：是否强制展示logo，默认false即大图小手机下会不展示logo
+        MercuryAD.setSplashForceShowLogo(true);
+        //可选，自定义强制显示的开屏logo高度，单位dp，默认-1不限制高度，跟随素材高度
+        MercuryAD.setSplashForceLogoHeight(100);
+        //可选，设置开屏页面的底色,默认无色透明
+        MercuryAD.setSplashBackgroundColor(ContextCompat.getColor(this, R.color.adv_white));
         //可选：设置跳过字体，穿山甲广告尺寸，核心事件回调
         advanceSplash.setSkipText("跳过 %d ")
                 //可选：设置穿山甲广告图片偏好尺寸(如果接入穿山甲的话
                 .setCsjAcceptedSize(1080, 1920);
-        //可选：设置广点通的广告点击后是否以onAdSkip(跳过事件)来回调，适合跳过和倒计时结束处理逻辑不同时设置，处理逻辑相同请忽略。true 点击广点通广告关闭后回调onAdSkip，false 回调 onAdTimeOver；默认为false。
-        advanceSplash.setGdtClickAsSkip(true);
-        //可选：设置广点通自定义跳过是否提前隐藏。默认false
-        advanceSplash.setGdtCustomSkipHide(false);
         //推荐：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(this);
         //强烈推荐：设置是否将获取到的SDK选择策略进行缓存，有助于缩短开屏广告加载时间
         advanceSplash.enableStrategyCache(true);
         //必须：设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         advanceSplash.setDefaultSdkSupplier(new SdkSupplier("887301946", AdvanceSupplierID.CSJ));
-        // 如果targetSDKVersion >= 23，就要申请好权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
-        if (Build.VERSION.SDK_INT >= 23) {
+        // 如果targetSDKVersion >= 23，需要申请好权限,android 10 以上可以不申请权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
             checkAndRequestPermission();
         } else {
             advanceSplash.loadAd();
@@ -81,62 +83,75 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
     }
 
     @Override
+    public void onSdkSelected(String id) {
+        // "1" 代表mercury策略 ，"2" 代表广点通策略， "3" 代表穿山甲策略
+        sdkId = id;
+
+        Log.d(TAG, "Splash ad onSdkSelected " + id);
+        Toast.makeText(this, "策略选中，选中SDK id = " + id, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAdLoaded() {
+        //穿山甲广告加载成功到展现时间很快，所以最好在这里进行logo布局的展示
+        if ("3".equals(sdkId)) {
+            logo.setVisibility(View.VISIBLE);
+        } else {
+            logo.setVisibility(View.GONE);
+        }
+
+        Log.d(TAG, "Splash ad onAdLoaded");
+        Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onAdShow() {
-        Log.d("DEMO", "Splash ad show");
-        Toast.makeText(this, "广告展示成功", Toast.LENGTH_SHORT).show();
-        //广告展示回调，占位图隐藏
-        if (holderImage!=null){
-            holderImage.setVisibility(View.GONE);
+        //Mercury SDK 支持内置logo，这里不再展示自定义的logo布局
+        if ("1".equals(sdkId)) {
+            logo.setVisibility(View.GONE);
+        } else {
+            logo.setVisibility(View.VISIBLE);
         }
         //强烈建议：skipView只有在广告展示出来以后才将背景色进行填充，默认加载时设置成透明状态，这样展现效果较佳
         if (skipView != null)
             skipView.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.background_circle));
+
+        Log.d(TAG, "Splash ad show");
+        Toast.makeText(this, "广告展示成功", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAdFailed() {
-        Log.d("DEMO", "Splash ad failed");
-        Toast.makeText(this, "广告加载失败", Toast.LENGTH_SHORT).show();
         goToMainActivity();
 
-
+        Log.d(TAG, "Splash ad failed");
+        Toast.makeText(this, "广告加载失败", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAdClicked() {
-        Log.d("DEMO", "Splash ad clicked");
+
+        Log.d(TAG, "Splash ad clicked");
         Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
     public void onAdSkip() {
-
-        Log.d("DEMO", "Splash ad kip");
-        Toast.makeText(this, "跳过广告", Toast.LENGTH_SHORT).show();
         mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN, 100);
+
+        Log.d(TAG, "Splash ad skip");
+        Toast.makeText(this, "跳过广告", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAdTimeOver() {
-        Log.d("DEMO", "Splash ad timeOver");
-        Toast.makeText(this, "倒计时结束，关闭广告", Toast.LENGTH_SHORT).show();
         mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN, 100);
+
+        Log.d(TAG, "Splash ad timeOver");
+        Toast.makeText(this, "倒计时结束，关闭广告", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onSdkSelected(String id) {
-        // "1" 代表mercury策略 ，"2" 代表广点通策略， "3" 代表穿山甲策略
-        sdkId = id;
-        Log.d("DEMO", "Splash ad onSdkSelected " + id);
-        Toast.makeText(this, "策略选中，选中SDK id = " + id, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onAdLoaded() {
-        Log.d("DEMO", "Splash ad onAdLoaded");
-        Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
-    }
 
     /**
      * ----------非常重要----------

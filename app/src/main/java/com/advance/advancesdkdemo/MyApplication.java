@@ -8,7 +8,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //聚合SDK初始化，请在bugly等sdk初始化之前
+        //聚合SDK初始化
         AdvanceConfig.getInstance()
                 //必须：设置各个sdk的媒体参数
 //                .setCsjAppId("你在穿山甲后台申请的的appId")

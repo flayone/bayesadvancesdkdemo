@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="transGrayBg">#dddddddd</color>
     <color name="trans">#02ffffff</color>
+    <color name="adv_white">#ffffff</color>
 </resources>

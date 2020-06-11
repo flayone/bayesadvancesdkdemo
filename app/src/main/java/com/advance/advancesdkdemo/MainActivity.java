@@ -111,8 +111,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        checkAndRequestPermission();
+        //权限校验,android O 以后,Android 10 以前推荐APP提前申请好权限再加载广告
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
+            checkAndRequestPermission();
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.M)
