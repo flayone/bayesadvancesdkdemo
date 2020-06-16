@@ -153,7 +153,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     public void onAdLoaded(List<AdvanceNativeExpressAdItem> list) {
         Toast.makeText(this, "广告加载完成", Toast.LENGTH_SHORT).show();
         mAdItemList = list;
-        for (int i = 0; i < mAdItemList.size(); i++) {
+        for (int i = 0; i <= mAdItemList.size(); i++) {
             int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
             if (position < mNormalDataList.size()) {
                 AdvanceNativeExpressAdItem item = mAdItemList.get(i);
@@ -364,65 +364,33 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
             int type = getItemViewType(position);
             if (TYPE_AD == type) {
                 final AdvanceNativeExpressAdItem advanceNativeExpressAdItem = (AdvanceNativeExpressAdItem) mData.get(position);
-                mAdViewPositionMap.put(advanceNativeExpressAdItem.getExpressAdView(), position); // 广告在列表中的位置是可以被更新的
 
+                View adView = advanceNativeExpressAdItem.getExpressAdView();
+                if (customViewHolder.container.getChildCount() > 0
+                        && customViewHolder.container.getChildAt(0) == adView) {
+                    return;
+                }
+
+                if (customViewHolder.container.getChildCount() > 0) {
+                    customViewHolder.container.removeAllViews();
+                }
+                if (adView.getParent() != null) {
+                    ((ViewGroup) adView.getParent()).removeView(adView);
+                }
+                customViewHolder.container.addView(adView);
+                mAdViewPositionMap.put(adView, position); // 广告在列表中的位置是可以被更新的
 
                 if (AdvanceConfig.SDK_ID_GDT.equals(advanceNativeExpressAdItem.getSdkId())) {
                     //广点通adview渲染方式
                     GdtNativeAdExpressAdItem gdtNativeAdExpressAdItem = (GdtNativeAdExpressAdItem) advanceNativeExpressAdItem;
-                    NativeExpressADView adView = gdtNativeAdExpressAdItem.getNativeExpressADView();
-                    if (customViewHolder.container.getChildCount() > 0
-                            && customViewHolder.container.getChildAt(0) == adView) {
-                        return;
-                    }
-
-                    if (customViewHolder.container.getChildCount() > 0) {
-                        customViewHolder.container.removeAllViews();
-                    }
-                    if (adView.getParent() != null) {
-                        ((ViewGroup) adView.getParent()).removeView(adView);
-                    }
-
-                    customViewHolder.container.addView(adView);
-                    adView.render(); // 调用render方法后sdk才会开始展示广告
+                    gdtNativeAdExpressAdItem.render(); // 调用render方法后sdk才会开始展示广告
                 } else if (AdvanceConfig.SDK_ID_MERCURY.equals(advanceNativeExpressAdItem.getSdkId())) {
                     MercuryNativeExpressAdItem mercuryNativeExpressAdItem = (MercuryNativeExpressAdItem) advanceNativeExpressAdItem;
-                    com.mercury.sdk.core.nativ.NativeExpressADView adView = mercuryNativeExpressAdItem.getNativeExpressADView();
-                    if (customViewHolder.container.getChildCount() > 0
-                            && customViewHolder.container.getChildAt(0) == adView) {
-                        return;
-                    }
-
-                    if (customViewHolder.container.getChildCount() > 0) {
-                        customViewHolder.container.removeAllViews();
-                    }
-                    if (adView.getParent() != null) {
-                        ((ViewGroup) adView.getParent()).removeView(adView);
-                    }
-
-                    customViewHolder.container.addView(adView);
-                    adView.render();
-
+                    mercuryNativeExpressAdItem.render();// 调用render方法后sdk才会开始展示广告
                 } else if (AdvanceConfig.SDK_ID_CSJ.equals(advanceNativeExpressAdItem.getSdkId())) {
                     //穿山甲渲染方式
                     CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
-                    View adView = csjNativeExpressAdItem.getExpressAdView();
-                    if (customViewHolder.container.getChildCount() > 0
-                            && customViewHolder.container.getChildAt(0) == adView) {
-                        return;
-                    }
-
-                    if (customViewHolder.container.getChildCount() > 0) {
-                        customViewHolder.container.removeAllViews();
-                    }
-                    if (adView.getParent() != null) {
-                        ((ViewGroup) adView.getParent()).removeView(adView);
-                    }
-
-                    customViewHolder.container.addView(adView);
-
                     csjNativeExpressAdItem.render(); //调用穿山甲render渲染方法
-
                 }
             } else {
                 customViewHolder.title.setText(((NormalItem) mData.get(position)).getTitle());
