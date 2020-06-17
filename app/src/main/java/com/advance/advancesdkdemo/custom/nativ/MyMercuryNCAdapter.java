@@ -6,13 +6,13 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.advance.AdvanceConfig;
+import com.advance.AdvanceCustomizeAd;
 import com.advance.advancesdkdemo.R;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
@@ -22,7 +22,6 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.mercury.sdk.core.config.AdConfigManager;
 import com.mercury.sdk.core.config.AdPatternType;
 import com.mercury.sdk.core.config.VideoOption;
 import com.mercury.sdk.core.nativ.NativeAD;
@@ -40,25 +39,28 @@ import java.util.List;
 public class MyMercuryNCAdapter implements NativeADListener {
     private Activity activity;
     private SdkSupplier sdkSupplier;
-    private MyNativeCustomizeAd customizeAd;
+    private AdvanceCustomizeAd customizeAd;
     private NativeAD mAdManager;
     boolean threeImageHasExposure = false;
+    private ViewGroup adContainer;
 
-    public MyMercuryNCAdapter(Activity activity, MyNativeCustomizeAd customizeAd, SdkSupplier sdkSupplier) {
+    public MyMercuryNCAdapter(Activity activity, AdvanceCustomizeAd customizeAd, SdkSupplier sdkSupplier, ViewGroup adContainer) {
         this.activity = activity;
         this.customizeAd = customizeAd;
         this.sdkSupplier = sdkSupplier;
+        this.adContainer = adContainer;
     }
 
     public void loadAd() {
         try {
             AdvanceUtil.initMercuryAccount(sdkSupplier.mediaid, sdkSupplier.mediakey);
-            AdConfigManager.getInstance().setOaId(AdvanceConfig.getInstance().getOaid());
             mAdManager = new NativeAD(activity, sdkSupplier.adspotid, this);
             mAdManager.loadAD(sdkSupplier.adCount);
         } catch (Exception e) {
             e.printStackTrace();
-            customizeAd.onFailed();
+            //这里一定要调用customizeAd 的事件方法
+            if (customizeAd != null)
+                customizeAd.adapterDidFailed();
         }
 
     }
@@ -66,30 +68,30 @@ public class MyMercuryNCAdapter implements NativeADListener {
     @Override
     public void onADLoaded(List<NativeADData> list) {
         if (list == null || list.isEmpty()) {
-            customizeAd.onFailed();
+            //这里一定要调用customizeAd 的事件方法
+            if (customizeAd != null)
+                customizeAd.adapterDidFailed();
         } else {
-            ArrayList<MyNativeCustomizeAdItem> advanceNativeAdDataList = new ArrayList<>();
-            for (NativeADData adData : list) {
-                MercuryNativeAdData advanceNativeAdData = new MercuryNativeAdData(activity, adData, customizeAd);
-                advanceNativeAdDataList.add(advanceNativeAdData);
-            }
-            customizeAd.onLoaded(advanceNativeAdDataList);
+            //这里一定要调用customizeAd 的事件方法
+            if (customizeAd != null)
+                customizeAd.adapterDidSucceed();
+            new MercuryNativeAdData(list.get(0)).showAd();
         }
     }
 
     @Override
     public void onNoAD(ADError adError) {
         LogUtil.AdvanceLog("onNoAD error code: " + adError.code + ", error msg: " + adError.msg);
-        customizeAd.onFailed();
+        //这里一定要调用customizeAd 的事件方法
+        if (customizeAd != null)
+            customizeAd.adapterDidFailed();
     }
 
 
-    class MercuryNativeAdData implements MyNativeCustomizeAdItem {
+    class MercuryNativeAdData {
 
         private View adView;
         NativeADData nativeADData;
-        Activity activity;
-        MyNativeCustomizeAd myNativeCustomizeAd;
 
         ImageView mIcon;
         ImageView mDislike;
@@ -110,16 +112,17 @@ public class MyMercuryNCAdapter implements NativeADListener {
 
         String TAG = "MercuryNativeAdData";
 
-        public MercuryNativeAdData(Activity activity, NativeADData nativeADData, MyNativeCustomizeAd myNativeCustomizeAd) {
-            this.activity = activity;
+        public MercuryNativeAdData(NativeADData nativeADData) {
             this.nativeADData = nativeADData;
-            this.myNativeCustomizeAd = myNativeCustomizeAd;
 
             try {
                 adView = LayoutInflater.from(activity).inflate(R.layout.mer_nc_layout, null, false);
                 initViews();
             } catch (Exception e) {
                 e.printStackTrace();
+                //这里一定要调用customizeAd 的事件方法
+                if (customizeAd != null)
+                    customizeAd.adapterDidFailed();
             }
         }
 
@@ -142,38 +145,13 @@ public class MyMercuryNCAdapter implements NativeADListener {
             nativeContainer = adView.findViewById(R.id.native_ad_container);
         }
 
-        @Override
         public void showAd() {
             try {
-                FrameLayout adContainer = myNativeCustomizeAd.getAdContainer();
                 if (adContainer == null) {
-                    Log.e(TAG, "需要先调用setAdContainer 设置广告位载体");
+                    Log.e("GdtNativeAdData", "需要先调用setAdContainer 设置广告位载体");
                     return;
                 }
                 adContainer.removeAllViews();
-                //核心事件去回调统一的show clicked 等方法
-                nativeADData.setNativeAdEventListener(new NativeADEventListener() {
-                    @Override
-                    public void onADExposed() {
-                        Log.d(TAG, "onADExposed: ");
-                        if (customizeAd != null)
-                            customizeAd.onShow(MercuryNativeAdData.this);
-                    }
-
-                    @Override
-                    public void onADClicked() {
-                        Log.d(TAG, "onADClicked: " + " clickUrl: " + nativeADData.ext.get("clickUrl"));
-                        if (customizeAd != null)
-                            customizeAd.onClicked(MercuryNativeAdData.this);
-                    }
-
-                    @Override
-                    public void onADError(ADError error) {
-                        Log.d(TAG, "onADError error code :" + error.code + "  error msg: " + error.msg);
-                        if (customizeAd != null)
-                            customizeAd.onFailed();
-                    }
-                });
 
                 renderAdUi(nativeADData);
                 updateAdAction(nativeADData);
@@ -240,21 +218,45 @@ public class MyMercuryNCAdapter implements NativeADListener {
                     clickableViews.add(mGroupContainer);
                 }
 
+                //核心事件去回调统一的show clicked 等方法
+                nativeADData.setNativeAdEventListener(new NativeADEventListener() {
+                    @Override
+                    public void onADExposed() {
+                        Log.d(TAG, "onADExposed: ");
+                        //这里一定要调用customizeAd 的事件方法
+                        if (customizeAd != null)
+                            customizeAd.adapterDidShow();
+                    }
 
+                    @Override
+                    public void onADClicked() {
+                        Log.d(TAG, "onADClicked: " + " clickUrl: " + nativeADData.ext.get("clickUrl"));
+                        //这里一定要调用customizeAd 的事件方法
+                        if (customizeAd != null)
+                            customizeAd.adapterDidClicked();
+                    }
+
+                    @Override
+                    public void onADError(ADError error) {
+                        Log.d(TAG, "onADError error code :" + error.code + "  error msg: " + error.msg);
+                        //这里一定要调用customizeAd 的事件方法
+                        if (customizeAd != null)
+                            customizeAd.adapterDidFailed();
+                    }
+
+
+                });
                 nativeADData.bindAdToView(activity, nativeContainer, clickableViews);
 
                 adContainer.addView(adView);
             } catch (Exception e) {
                 e.printStackTrace();
+                //这里一定要调用customizeAd 的事件方法
                 if (customizeAd != null)
-                    customizeAd.onFailed();
+                    customizeAd.adapterDidFailed();
             }
         }
 
-        @Override
-        public String getSupplierId() {
-            return AdvanceConfig.SDK_ID_MERCURY;
-        }
 
         private VideoOption getVideoOption() {
             VideoOption videoOption;
@@ -335,8 +337,6 @@ public class MyMercuryNCAdapter implements NativeADListener {
                 @Override
                 public void onClick(View v) {
                     ad.destroy();
-                    if (customizeAd != null)
-                        customizeAd.onClosed(MercuryNativeAdData.this);
                 }
             });
         }

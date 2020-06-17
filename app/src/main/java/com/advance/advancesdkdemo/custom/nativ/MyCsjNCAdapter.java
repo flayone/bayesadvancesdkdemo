@@ -13,13 +13,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
+import com.advance.AdvanceCustomizeAd;
 import com.advance.advancesdkdemo.R;
 import com.advance.model.SdkSupplier;
-import com.advance.utils.LogUtil;
+import com.advance.utils.AdvanceUtil;
 import com.bumptech.glide.Glide;
 import com.bytedance.sdk.openadsdk.AdSlot;
 import com.bytedance.sdk.openadsdk.FilterWord;
-import com.bytedance.sdk.openadsdk.TTAdConfig;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
 import com.bytedance.sdk.openadsdk.TTAdManager;
@@ -39,32 +39,21 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
 
     private Activity activity;
     private SdkSupplier sdkSupplier;
-    private MyNativeCustomizeAd customizeAd;
-    private TTAdNative mAdManager;
+    private AdvanceCustomizeAd customizeAd;
+    private ViewGroup adContainer;
 
-    public MyCsjNCAdapter(Activity activity, MyNativeCustomizeAd customizeAd, SdkSupplier sdkSupplier) {
+    public MyCsjNCAdapter(Activity activity, AdvanceCustomizeAd customizeAd, SdkSupplier sdkSupplier, ViewGroup adContainer) {
         this.activity = activity;
         this.customizeAd = customizeAd;
         this.sdkSupplier = sdkSupplier;
+        this.adContainer = adContainer;
     }
 
     public void loadAd() {
-        //初始化方法，这里也可以自己去创建初始化方法
-        TTAdSdk.init(activity.getApplicationContext(),
-                new TTAdConfig.Builder()
-                        .appId(sdkSupplier.mediaid)
-                        .useTextureView(true) //使用TextureView控件播放视频,默认为SurfaceView,当有SurfaceView冲突的场景，可以使用TextureView
-                        .appName(AdvanceConfig.getInstance().getAppName())
-                        .titleBarTheme(TTAdConstant.TITLE_BAR_THEME_LIGHT)
-                        .allowShowNotify(true) //是否允许sdk展示通知栏提示
-                        .allowShowPageWhenScreenLock(true) //是否在锁屏场景支持展示广告落地页
-                        .debug(AdvanceConfig.getInstance().getDebug()) //测试阶段打开，可以通过日志排查问题，上线时去除该调用
-                        .directDownloadNetworkType(TTAdConstant.NETWORK_STATE_4G, TTAdConstant.NETWORK_STATE_WIFI) //允许直接下载的网络状态集合
-                        .supportMultiProcess(true) //是否支持多进程，true支持
-                        .build());
+        //初始化advance默认的穿山甲配置，也可以自己选择初始化方式
+        AdvanceUtil.initCsj(activity, sdkSupplier.mediaid);
 
-
-        final TTAdManager ttAdManager = TTAdSdk.getAdManager();
+        TTAdManager ttAdManager = TTAdSdk.getAdManager();
         if (AdvanceConfig.getInstance().isNeedPermissionCheck()) {
             ttAdManager.requestPermissionIfNecessary(activity);
         }
@@ -81,36 +70,36 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
                 .setSupportDeepLink(true)
                 .setAdCount(sdkSupplier.adCount) //请求广告数量为1到3条
                 .build();
-
         ttAdNative.loadFeedAd(adSlot, this);
     }
 
     @Override
     public void onError(int code, String message) {
-        LogUtil.AdvanceLog("onNoAD error code: " + code + ", error msg: " + message);
-        customizeAd.onFailed();
+        //这里一定要调用customizeAd 的事件方法
+        if (customizeAd != null)
+            customizeAd.adapterDidFailed();
     }
 
 
     @Override
     public void onFeedAdLoad(List<TTFeedAd> ads) {
         if (ads == null || ads.isEmpty()) {
-            customizeAd.onFailed();
+            //这里一定要调用customizeAd 的事件方法
+            if (customizeAd != null)
+                customizeAd.adapterDidFailed();
         } else {
-            ArrayList<MyNativeCustomizeAdItem> advanceNativeAdDataList = new ArrayList<>();
-            for (TTFeedAd adData : ads) {
-                CsjAdData advanceNativeAdData = new CsjAdData(activity, adData, customizeAd);
-                advanceNativeAdDataList.add(advanceNativeAdData);
-            }
-            customizeAd.onLoaded(advanceNativeAdDataList);
+            //这里一定要调用customizeAd 的事件方法
+            if (customizeAd != null)
+                customizeAd.adapterDidSucceed();
+
+            CsjAdData advanceNativeAdData = new CsjAdData(ads.get(0));
+            advanceNativeAdData.showAd();
         }
     }
 
-    class CsjAdData implements MyNativeCustomizeAdItem {
+    class CsjAdData {
         private View adView;
         TTFeedAd ad;
-        Activity activity;
-        MyNativeCustomizeAd myNativeCustomizeAd;
 
         ImageView mIcon;
         ImageView mDislike;
@@ -129,13 +118,10 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
         private ImageView mSmallImagePoster;
         private LinearLayout nativeContainer;
         private Map<CsjAdData, TTAppDownloadListener> mTTAppDownloadListenerMap = new WeakHashMap<>();
-
         String TAG = "CsjAdData";
 
-        public CsjAdData(Activity activity, TTFeedAd adData, MyNativeCustomizeAd customizeAd) {
-            this.activity = activity;
+        public CsjAdData(TTFeedAd adData) {
             this.ad = adData;
-            this.myNativeCustomizeAd = customizeAd;
 
             try {
                 //小图布局不太一样
@@ -147,6 +133,9 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
                 initViews();
             } catch (Exception e) {
                 e.printStackTrace();
+                //这里一定要调用customizeAd 的事件方法
+                if (customizeAd != null)
+                    customizeAd.adapterDidFailed();
             }
         }
 
@@ -175,12 +164,10 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
 
         }
 
-        @Override
         public void showAd() {
             try {
-                FrameLayout adContainer = myNativeCustomizeAd.getAdContainer();
                 if (adContainer == null) {
-                    Log.e("GdtNativeAdData", "需要先调用setAdContainer 设置广告位载体");
+                    Log.e(TAG, "广告位载体为空，请检查载体设置");
                     return;
                 }
                 adContainer.removeAllViews();
@@ -192,8 +179,9 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
 
             } catch (Exception e) {
                 e.printStackTrace();
+                //这里一定要调用customizeAd 的事件方法
                 if (customizeAd != null)
-                    customizeAd.onFailed();
+                    customizeAd.adapterDidFailed();
             }
         }
 
@@ -210,20 +198,23 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
             ad.registerViewForInteraction((ViewGroup) adView, clickViewList, creativeViewList, new TTNativeAd.AdInteractionListener() {
                 @Override
                 public void onAdClicked(View view, TTNativeAd ad) {
+                    //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null)
-                        customizeAd.onClicked(CsjAdData.this);
+                        customizeAd.adapterDidClicked();
                 }
 
                 @Override
                 public void onAdCreativeClick(View view, TTNativeAd ad) {
+                    //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null)
-                        customizeAd.onClicked(CsjAdData.this);
+                        customizeAd.adapterDidClicked();
                 }
 
                 @Override
                 public void onAdShow(TTNativeAd ad) {
+                    //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null)
-                        customizeAd.onShow(CsjAdData.this);
+                        customizeAd.adapterDidShow();
                 }
             });
             mTitle.setText(ad.getTitle()); //title为广告的简单信息提示
@@ -364,9 +355,9 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
             dislikeDialog.setOnDislikeItemClick(new DislikeDialog.OnDislikeItemClick() {
                 @Override
                 public void onItemClick(FilterWord filterWord) {
-                    //屏蔽广告
-                    if (customizeAd != null)
-                        customizeAd.onClosed(CsjAdData.this);
+                    //布局清除
+                    if (adContainer != null)
+                        adContainer.removeAllViews();
                 }
             });
             final TTAdDislike ttAdDislike = ad.getDislikeDialog(dislikeDialog);
@@ -459,10 +450,5 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
             mTTAppDownloadListenerMap.put(CsjAdData.this, downloadListener);
         }
 
-
-        @Override
-        public String getSupplierId() {
-            return AdvanceConfig.SDK_ID_CSJ;
-        }
     }
 }

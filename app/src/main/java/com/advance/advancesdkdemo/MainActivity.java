@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
-import com.advance.advancesdkdemo.custom.banner.BannerCustomizeActivity;
+import com.advance.advancesdkdemo.custom.banner.CustomBannerActivity;
 import com.advance.advancesdkdemo.custom.nativ.NativeCustomizeActivity;
 import com.advance.utils.LogUtil;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onCusBanner(View view) {
-        startActivity(new Intent(this, BannerCustomizeActivity.class));
+        startActivity(new Intent(this, CustomBannerActivity.class));
     }
 
     public void onCusNative(View view) {

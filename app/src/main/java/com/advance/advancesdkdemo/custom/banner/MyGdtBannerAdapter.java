@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.advance.AdvanceCustomizeAd;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
 import com.advance.utils.LogUtil;
@@ -14,12 +15,12 @@ import com.qq.e.comm.util.AdError;
 public class MyGdtBannerAdapter {
     private Activity activity;
     private SdkSupplier sdkSupplier;
-    private MyBannerAd advanceBanner;
+    private AdvanceCustomizeAd advanceBanner;
     private ViewGroup adContainer;
     private UnifiedBannerView bv;
     private int refreshInterval = 30;
 
-    public MyGdtBannerAdapter(Activity activity, ViewGroup adContainer, final MyBannerAd advanceBanner, SdkSupplier sdkSupplier) {
+    public MyGdtBannerAdapter(Activity activity, ViewGroup adContainer, final AdvanceCustomizeAd advanceBanner, SdkSupplier sdkSupplier) {
         this.activity = activity;
         this.advanceBanner = advanceBanner;
         this.sdkSupplier = sdkSupplier;
@@ -34,14 +35,14 @@ public class MyGdtBannerAdapter {
                 public void onNoAD(AdError adError) {
                     LogUtil.AdvanceLog(adError.getErrorCode() + adError.getErrorMsg());
                     if (null != advanceBanner) {
-                        advanceBanner.onFailed();
+                        advanceBanner.adapterDidFailed();
                     }
                 }
 
                 @Override
                 public void onADReceive() {
                     if (null != advanceBanner) {
-                        advanceBanner.onLoaded();
+                        advanceBanner.adapterDidSucceed();
                     }
 
                 }
@@ -49,7 +50,7 @@ public class MyGdtBannerAdapter {
                 @Override
                 public void onADExposure() {
                     if (null != advanceBanner) {
-                        advanceBanner.onShow();
+                        advanceBanner.adapterDidShow();
                     }
 
                 }
@@ -62,7 +63,7 @@ public class MyGdtBannerAdapter {
                 @Override
                 public void onADClicked() {
                     if (null != advanceBanner) {
-                        advanceBanner.onClicked();
+                        advanceBanner.adapterDidClicked();
                     }
 
                 }
@@ -90,7 +91,7 @@ public class MyGdtBannerAdapter {
         } catch (Exception e) {
             e.printStackTrace();
             if (advanceBanner != null)
-                advanceBanner.onFailed();
+                advanceBanner.adapterDidFailed();
         }
     }
 

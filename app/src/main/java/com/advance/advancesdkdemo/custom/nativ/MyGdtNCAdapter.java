@@ -4,17 +4,16 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.advance.AdvanceConfig;
+import com.advance.AdvanceCustomizeAd;
 import com.advance.advancesdkdemo.R;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
-import com.advance.utils.LogUtil;
 import com.bumptech.glide.Glide;
 import com.qq.e.ads.cfg.DownAPPConfirmPolicy;
 import com.qq.e.ads.cfg.VideoOption;
@@ -35,14 +34,16 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
 
     private Activity activity;
     private SdkSupplier sdkSupplier;
-    private MyNativeCustomizeAd customizeAd;
+    private AdvanceCustomizeAd customizeAd;
     private NativeUnifiedAD mAdManager;
+    private ViewGroup adContainer;
 
-    public MyGdtNCAdapter(Activity activity, MyNativeCustomizeAd customizeAd, SdkSupplier sdkSupplier) {
+
+    public MyGdtNCAdapter(Activity activity, AdvanceCustomizeAd customizeAd, SdkSupplier sdkSupplier, ViewGroup adContainer) {
         this.activity = activity;
         this.customizeAd = customizeAd;
         this.sdkSupplier = sdkSupplier;
-
+        this.adContainer = adContainer;
     }
 
     public void loadAd() {
@@ -53,7 +54,9 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
             mAdManager.loadData(sdkSupplier.adCount);
         } catch (Exception e) {
             e.printStackTrace();
-            customizeAd.onFailed();
+            //这里一定要调用customizeAd 的事件方法
+            if (customizeAd != null)
+                customizeAd.adapterDidFailed();
         }
 
     }
@@ -61,30 +64,29 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
     @Override
     public void onADLoaded(List<NativeUnifiedADData> list) {
         if (list == null || list.isEmpty()) {
-            customizeAd.onFailed();
+            //这里一定要调用customizeAd 的事件方法
+            if (customizeAd != null)
+                customizeAd.adapterDidFailed();
         } else {
-            ArrayList<MyNativeCustomizeAdItem> advanceNativeAdDataList = new ArrayList<>();
-            for (NativeUnifiedADData nativeUnifiedADData : list) {
-                GdtNativeAdData advanceNativeAdData = new GdtNativeAdData(activity, nativeUnifiedADData, customizeAd);
-                advanceNativeAdDataList.add(advanceNativeAdData);
-            }
-            customizeAd.onLoaded(advanceNativeAdDataList);
+            //这里一定要调用customizeAd 的事件方法
+            if (customizeAd != null)
+                customizeAd.adapterDidSucceed();
+            new GdtNativeAdData(list.get(0)).showAd();
         }
     }
 
     @Override
     public void onNoAD(AdError adError) {
-        LogUtil.AdvanceLog(adError.getErrorCode() + adError.getErrorMsg());
-        customizeAd.onFailed();
+        //这里一定要调用customizeAd 的事件方法
+        if (customizeAd != null)
+            customizeAd.adapterDidFailed();
     }
 
 
-    private class GdtNativeAdData implements MyNativeCustomizeAdItem {
+    private class GdtNativeAdData {
 
         private View adView;
         NativeUnifiedADData nativeUnifiedADData;
-        Activity activity;
-        MyNativeCustomizeAd myNativeCustomizeAd;
 
         ImageView mIcon;
         ImageView mDislike;
@@ -104,16 +106,16 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
 
         String TAG = "GdtNativeAdData";
 
-        public GdtNativeAdData(Activity activity, NativeUnifiedADData nativeUnifiedADData, MyNativeCustomizeAd myNativeCustomizeAd) {
-            this.activity = activity;
+        public GdtNativeAdData(NativeUnifiedADData nativeUnifiedADData) {
             this.nativeUnifiedADData = nativeUnifiedADData;
-            this.myNativeCustomizeAd = myNativeCustomizeAd;
-
             try {
                 adView = LayoutInflater.from(activity).inflate(R.layout.gdt_nc_layout, null, false);
                 initViews();
             } catch (Exception e) {
                 e.printStackTrace();
+                //这里一定要调用customizeAd 的事件方法
+                if (customizeAd != null)
+                    customizeAd.adapterDidFailed();
             }
         }
 
@@ -135,10 +137,8 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
             nativeContainer = adView.findViewById(R.id.native_ad_container);
         }
 
-        @Override
         public void showAd() {
             try {
-                FrameLayout adContainer = myNativeCustomizeAd.getAdContainer();
                 if (adContainer == null) {
                     Log.e("GdtNativeAdData", "需要先调用setAdContainer 设置广告位载体");
                     return;
@@ -227,23 +227,26 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
                     @Override
                     public void onADExposed() {
                         Log.d(TAG, "onADExposed: ");
+                        //这里一定要调用customizeAd 的事件方法
                         if (customizeAd != null)
-                            customizeAd.onShow(GdtNativeAdData.this);
+                            customizeAd.adapterDidShow();
                     }
 
                     @Override
                     public void onADClicked() {
                         Log.d(TAG, "onADClicked: " + " clickUrl: " + nativeUnifiedADData.ext.get("clickUrl"));
+                        //这里一定要调用customizeAd 的事件方法
                         if (customizeAd != null)
-                            customizeAd.onClicked(GdtNativeAdData.this);
+                            customizeAd.adapterDidClicked();
 
                     }
 
                     @Override
                     public void onADError(AdError error) {
                         Log.d(TAG, "onADError error code :" + error.getErrorCode() + "  error msg: " + error.getErrorMsg());
+                        //这里一定要调用customizeAd 的事件方法
                         if (customizeAd != null)
-                            customizeAd.onFailed();
+                            customizeAd.adapterDidFailed();
                     }
 
                     @Override
@@ -255,16 +258,13 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
                 adContainer.addView(adView);
             } catch (Exception e) {
                 e.printStackTrace();
+                //这里一定要调用customizeAd 的事件方法
                 if (customizeAd != null)
-                    customizeAd.onFailed();
+                    customizeAd.adapterDidFailed();
             }
 
         }
 
-        @Override
-        public String getSupplierId() {
-            return AdvanceConfig.SDK_ID_GDT;
-        }
 
         private VideoOption getVideoOption() {
             VideoOption videoOption;
@@ -319,8 +319,6 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
                 public void onClick(View v) {
                     ad.destroy();
                     nativeContainer.removeAllViews();
-                    if (customizeAd != null)
-                        customizeAd.onClosed(GdtNativeAdData.this);
                 }
             });
         }

@@ -71,7 +71,13 @@
             android:screenOrientation="landscape" />
         <activity android:name=".FullScreenVideoActivity" />
         <activity android:name=".custom.nativ.NativeCustomizeActivity" />
-        <activity android:name=".custom.banner.BannerCustomizeActivity" />
+        <activity android:name=".custom.banner.CustomBannerActivity" />
+        <activity android:name=".custom.nativeexpress.CustomNativeExpressListActivity" />
+        <activity android:name=".SplashToMainActivity" />
+        <activity android:name=".custom.splash.CustomSplashActivity" />
+        <activity android:name=".custom.reward.CustomRewardActivity" />
+        <activity android:name=".custom.interstitial.CustomInterstitialActivity" />
+        <activity android:name=".custom.full.CustomFullScreenActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

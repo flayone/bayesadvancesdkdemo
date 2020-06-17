@@ -4,22 +4,20 @@ import android.app.Activity;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.advance.AdvanceConfig;
+import com.advance.AdvanceCustomizeAd;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
-import com.advance.utils.LogUtil;
 import com.mercury.sdk.core.banner.BannerAD;
 import com.mercury.sdk.core.banner.BannerADListener;
-import com.mercury.sdk.core.config.AdConfigManager;
 import com.mercury.sdk.util.ADError;
 
 public class MyMercuryBannerAdapter {
     private Activity activity;
     private SdkSupplier sdkSupplier;
-    private MyBannerAd advanceBanner;
+    private AdvanceCustomizeAd advanceBanner;
     private ViewGroup adContainer;
 
-    public MyMercuryBannerAdapter(Activity activity, ViewGroup adContainer, final MyBannerAd advanceBanner, SdkSupplier sdkSupplier) {
+    public MyMercuryBannerAdapter(Activity activity, ViewGroup adContainer, final AdvanceCustomizeAd advanceBanner, SdkSupplier sdkSupplier) {
         this.activity = activity;
         this.advanceBanner = advanceBanner;
         this.sdkSupplier = sdkSupplier;
@@ -30,12 +28,11 @@ public class MyMercuryBannerAdapter {
     public void loadAd() {
         try {
             AdvanceUtil.initMercuryAccount(sdkSupplier.mediaid, sdkSupplier.mediakey);
-            AdConfigManager.getInstance().setOaId(AdvanceConfig.getInstance().getOaid());
             BannerAD mercuryBanner = new BannerAD(activity, sdkSupplier.adspotid, new BannerADListener() {
                 @Override
                 public void onADReceived() {
                     if (null != advanceBanner) {
-                        advanceBanner.onLoaded();
+                        advanceBanner.adapterDidSucceed();
                     }
                 }
 
@@ -50,22 +47,21 @@ public class MyMercuryBannerAdapter {
                 @Override
                 public void onADExposure() {
                     if (null != advanceBanner) {
-                        advanceBanner.onShow();
+                        advanceBanner.adapterDidShow();
                     }
                 }
 
                 @Override
                 public void onADClicked() {
                     if (null != advanceBanner) {
-                        advanceBanner.onClicked();
+                        advanceBanner.adapterDidClicked();
                     }
                 }
 
                 @Override
                 public void onNoAD(ADError adError) {
-                    LogUtil.AdvanceLog(adError.code + adError.msg);
                     if (null != advanceBanner) {
-                        advanceBanner.onFailed();
+                        advanceBanner.adapterDidFailed();
                     }
                 }
             });
@@ -78,7 +74,7 @@ public class MyMercuryBannerAdapter {
         } catch (Exception e) {
             e.printStackTrace();
             if (null != advanceBanner)
-                advanceBanner.onFailed();
+                advanceBanner.adapterDidFailed();
         }
 
     }

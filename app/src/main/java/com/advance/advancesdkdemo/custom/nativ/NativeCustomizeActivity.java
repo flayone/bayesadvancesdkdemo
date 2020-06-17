@@ -3,20 +3,18 @@ package com.advance.advancesdkdemo.custom.nativ;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.FrameLayout;
 
 import com.advance.AdvanceConfig;
-import com.advance.advancesdkdemo.ADManager;
+import com.advance.AdvanceCustomizeAd;
+import com.advance.AdvanceCustomizeSupplierListener;
 import com.advance.advancesdkdemo.R;
 import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
-import java.util.List;
+public class NativeCustomizeActivity extends Activity {
 
-public class NativeCustomizeActivity extends Activity implements MyNativeCustomizeListener {
-
-    MyNativeCustomizeAd nativeCustomizeAd;
+    AdvanceCustomizeAd nativeCustomizeAd;
     FrameLayout fl;
     String Tag = NativeCustomizeActivity.class.getSimpleName();
 
@@ -26,54 +24,45 @@ public class NativeCustomizeActivity extends Activity implements MyNativeCustomi
         setContentView(R.layout.activity_ad_container);
         fl = findViewById(R.id.fl_ad);
 
-        //创建自己的自渲染广告位,第二个参数为mercury后台申请的自渲染广告位id
-        nativeCustomizeAd = new MyNativeCustomizeAd(this, "");
+        //创建自己的自渲染广告位，第二个参数为后台申请的广告位id
+        nativeCustomizeAd = new AdvanceCustomizeAd(this, "");
         //必须：设置广告载体
-        nativeCustomizeAd.setAdContainer(fl);
-        //推荐：设置是否开启策略缓存模式
-        nativeCustomizeAd.enableStrategyCache(true);
-//       推荐： 添加自定义的核心事件回调listener
-        nativeCustomizeAd.setListener(this);
-//        必须：设置打底广告，无策略时，会先走这里设置的打底广告。下面是各个渠道的测试用打底广告。
+        nativeCustomizeAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
+            @Override
+            public void onSupplierFailed() {
+                //一般是策略无填充，或者所有策略均加载失败时回调
+                fl.removeAllViews();
+            }
+
+            @Override
+            public void onSupplierSelected(SdkSupplier selectedSupplier) {
+                //策略选择回调，可根据不同的渠道ID来加载各渠道广告
+                switch (selectedSupplier.id) {
+                    case AdvanceConfig.SDK_ID_CSJ:
+                        new MyCsjNCAdapter(NativeCustomizeActivity.this, nativeCustomizeAd, selectedSupplier, fl).loadAd();
+                        break;
+                    case AdvanceConfig.SDK_ID_GDT:
+                        new MyGdtNCAdapter(NativeCustomizeActivity.this, nativeCustomizeAd, selectedSupplier, fl).loadAd();
+                        break;
+                    case AdvanceConfig.SDK_ID_MERCURY:
+                        new MyMercuryNCAdapter(NativeCustomizeActivity.this, nativeCustomizeAd, selectedSupplier, fl).loadAd();
+                        break;
+                    default:
+                        //不需要支持的渠道，建议选择重新调度策略
+                        nativeCustomizeAd.selectSdkSupplier();
+                }
+            }
+        });
+//        必须：设置打底广告，比如app第一次打开时，会先走这里设置的打底广告
         nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("4090398440079274", AdvanceSupplierID.GDT));
-//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("10002805", AdvanceSupplierID.MERCURY);
+//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("10002805", AdvanceSupplierID.MERCURY));
 //        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier( "10002806",  AdvanceSupplierID.MERCURY));
-//        注意！！！：如果是使用自定义渠道的广告做打底，，需要使用下面的SdkSupplier初始化方法。
-//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier( "自定义sdk渠道媒体id","自定义sdk渠道广告位id" , "自定义sdk渠道id"));
-//        请求广告
-        nativeCustomizeAd.loadAd();
+//        AdvanceConfig.getInstance().setCsjAppId("");
+//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("5001121", "901121737", AdvanceConfig.SDK_ID_CSJ));
+
+//        发起策略请求
+        nativeCustomizeAd.loadStrategy();
     }
 
 
-    @Override
-    public void onAdClose(MyNativeCustomizeAdItem item) {
-        Log.d(Tag, "onAdClose" + item.getSupplierId());
-        fl.removeAllViews();
-    }
-
-    @Override
-    public void onAdShow(MyNativeCustomizeAdItem item) {
-        Log.d(Tag, "onAdShow" + item.getSupplierId());
-    }
-
-    @Override
-    public void onAdFailed() {
-        Log.d(Tag, "onAdFailed");
-    }
-
-    @Override
-    public void onAdClicked(MyNativeCustomizeAdItem item) {
-        Log.d(Tag, "onAdClicked" + item.getSupplierId());
-
-    }
-
-    @Override
-    public void onAdLoaded(List<MyNativeCustomizeAdItem> list) {
-        Log.d(Tag, "onAdLoaded" + list);
-
-        //获取到广告调用封装的showAd方法来展示广告
-        if (list != null && list.size() > 0) {
-            list.get(0).showAd();
-        }
-    }
 }

@@ -302,7 +302,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
     }
 
-    public class NormalItem {
+    public static class NormalItem {
         private String title;
 
         public NormalItem(String title) {

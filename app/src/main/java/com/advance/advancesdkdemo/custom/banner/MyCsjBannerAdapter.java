@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.advance.AdvanceConfig;
+import com.advance.AdvanceCustomizeAd;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
 import com.advance.utils.LogUtil;
@@ -20,7 +21,7 @@ import java.util.List;
 public class MyCsjBannerAdapter {
     private Activity activity;
     private SdkSupplier sdkSupplier;
-    private MyBannerAd advanceBanner;
+    private AdvanceCustomizeAd advanceBanner;
     private ViewGroup adContainer;
     private long startTime = 0;
     private int csjAcceptedSizeWidth = 640;
@@ -30,7 +31,7 @@ public class MyCsjBannerAdapter {
     private int csjExpressViewAcceptedWidth = 640;
     private int csjExpressViewAcceptedHeight = 100;
 
-    public MyCsjBannerAdapter(Activity activity, ViewGroup adContainer, final MyBannerAd advanceBanner, SdkSupplier sdkSupplier) {
+    public MyCsjBannerAdapter(Activity activity, ViewGroup adContainer, final AdvanceCustomizeAd advanceBanner, SdkSupplier sdkSupplier) {
         this.activity = activity;
         this.advanceBanner = advanceBanner;
         this.sdkSupplier = sdkSupplier;
@@ -66,7 +67,7 @@ public class MyCsjBannerAdapter {
                 public void onError(int code, String message) {
                     LogUtil.AdvanceLog(code + message);
                     if (null != advanceBanner) {
-                        advanceBanner.onFailed();
+                        advanceBanner.adapterDidFailed();
                     }
                     if (adContainer != null) {
                         adContainer.removeAllViews();
@@ -77,7 +78,7 @@ public class MyCsjBannerAdapter {
                 public void onNativeExpressAdLoad(List<TTNativeExpressAd> ads) {
                     if (ads == null || ads.size() == 0) {
                         if (null != advanceBanner) {
-                            advanceBanner.onFailed();
+                            advanceBanner.adapterDidFailed();
                         }
                         return;
                     }
@@ -85,7 +86,7 @@ public class MyCsjBannerAdapter {
                     // 加载成功的回调，接入方可在此处做广告的展示，请确保您的代码足够健壮，能够处理异常情况；
                     if (null == ad) {
                         if (null != advanceBanner) {
-                            advanceBanner.onFailed();
+                            advanceBanner.adapterDidFailed();
                         }
                         return;
                     }
@@ -99,7 +100,7 @@ public class MyCsjBannerAdapter {
         } catch (Throwable e) {
             e.printStackTrace();
             if (null != advanceBanner) {
-                advanceBanner.onFailed();
+                advanceBanner.adapterDidFailed();
             }
         }
     }
@@ -114,14 +115,14 @@ public class MyCsjBannerAdapter {
                 @Override
                 public void onAdClicked(View view, int i) {
                     if (null != advanceBanner) {
-                        advanceBanner.onClicked();
+                        advanceBanner.adapterDidClicked();
                     }
                 }
 
                 @Override
                 public void onAdShow(View view, int i) {
                     if (null != advanceBanner) {
-                        advanceBanner.onShow();
+                        advanceBanner.adapterDidShow();
                     }
                 }
 
@@ -130,7 +131,7 @@ public class MyCsjBannerAdapter {
                     LogUtil.AdvanceLog("ExpressView render fail:" + (System.currentTimeMillis() - startTime));
 
                     if (null != advanceBanner) {
-                        advanceBanner.onFailed();
+                        advanceBanner.adapterDidFailed();
                     }
                 }
 
@@ -142,7 +143,7 @@ public class MyCsjBannerAdapter {
                         adContainer.addView(view);
                     }
                     if (null != advanceBanner) {
-                        advanceBanner.onLoaded();
+                        advanceBanner.adapterDidSucceed();
                     }
                 }
             });
@@ -156,9 +157,7 @@ public class MyCsjBannerAdapter {
                     if (adContainer != null) {
                         adContainer.removeAllViews();
                     }
-                    if (null != advanceBanner) {
-                        advanceBanner.doDislike();
-                    }
+
                 }
 
                 @Override
