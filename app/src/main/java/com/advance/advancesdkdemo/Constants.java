@@ -13,7 +13,6 @@ public class Constants {
         public static final String customNativeAdspotId = "10003122";
     }
 
-    // TODO: 2020-05-15 新建倍联对应的广告位
     static class Csj {
         //目前穿山甲后台没有使用模板广告选项。
         public static final String splashAdspotId = "10003083";

@@ -153,9 +153,9 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     public void onAdLoaded(List<AdvanceNativeExpressAdItem> list) {
         Toast.makeText(this, "广告加载完成", Toast.LENGTH_SHORT).show();
         mAdItemList = list;
-        for (int i = 0; i <= mAdItemList.size(); i++) {
+        for (int i = 0; i < mAdItemList.size(); i++) {
             int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
-            if (position < mNormalDataList.size()) {
+            if (position <= mNormalDataList.size()) {
                 AdvanceNativeExpressAdItem item = mAdItemList.get(i);
                 if (AdvanceConfig.SDK_ID_GDT.equals(item.getSdkId())) {
                     GdtNativeAdExpressAdItem gdtNativeAdExpressAdItem = (GdtNativeAdExpressAdItem) item;

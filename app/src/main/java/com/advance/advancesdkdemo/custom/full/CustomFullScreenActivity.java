@@ -17,11 +17,12 @@ import com.advance.model.SdkSupplier;
 public class CustomFullScreenActivity extends Activity {
     AdvanceCustomizeAd ad;
     BaseCustomAdapter adapter;
+    boolean isGdt = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reward_video);
+        setContentView(R.layout.activity_full_screen_video);
 
         ad = new AdvanceCustomizeAd(this, ADManager.getInstance().getFullScreenVideoAdspotId());
         //设置渠道的结果监听
@@ -34,6 +35,8 @@ public class CustomFullScreenActivity extends Activity {
 
             @Override
             public void onSupplierSelected(SdkSupplier selectedSupplier) {
+                isGdt = AdvanceConfig.SDK_ID_GDT.equals(selectedSupplier.id);
+
                 //策略选择回调，可根据不同的渠道ID来加载各渠道广告
                 switch (selectedSupplier.id) {
                     case AdvanceConfig.SDK_ID_CSJ:
@@ -64,18 +67,18 @@ public class CustomFullScreenActivity extends Activity {
 
     }
 
-    public void onLoad(View view) {
+    public void loadFull(View view) {
         //请求策略并加载广告
         ad.loadStrategy();
     }
 
-    public void onShow(View view) {
+    public void showFull(View view) {
         if (adapter != null) {
-            if (adapter.isVideoCached) {
-                adapter.showAD();
-            } else {
+            if (!adapter.isVideoCached &&  !isGdt) {
                 Toast.makeText(this, "视频还未准备好", Toast.LENGTH_SHORT).show();
+                return;
             }
+            adapter.showAD();
         } else {
             Toast.makeText(this, "广告未加载", Toast.LENGTH_SHORT).show();
         }

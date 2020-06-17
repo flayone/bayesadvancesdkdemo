@@ -1,5 +1,7 @@
 package com.advance.advancesdkdemo.custom.full;
 
+import android.widget.Toast;
+
 import com.advance.advancesdkdemo.custom.BaseCustomAdapter;
 import com.advance.utils.AdvanceUtil;
 import com.qq.e.ads.cfg.VideoOption;
@@ -16,6 +18,7 @@ public class MyGdtFSAdapter extends BaseCustomAdapter {
             iad = new UnifiedInterstitialAD(activity, AdvanceUtil.getGdtAccount(sdkSupplier.mediaid), sdkSupplier.adspotid, new UnifiedInterstitialADListener() {
                 @Override
                 public void onADReceive() {
+                    isVideoCached = false;
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
                         customizeAd.adapterDidSucceed();
@@ -24,7 +27,8 @@ public class MyGdtFSAdapter extends BaseCustomAdapter {
 
                 @Override
                 public void onVideoCached() {
-
+                    //只有loadFullScreenAD成功后立即调用showFullScreenAD时缓冲成功才会回掉，目前没有参考意义
+                    isVideoCached = true;
                 }
 
                 @Override
@@ -88,7 +92,7 @@ public class MyGdtFSAdapter extends BaseCustomAdapter {
     @Override
     public void showAD() {
         if (iad != null) {
-            iad.show();
+            iad.showFullScreenAD(activity);
         }
     }
 

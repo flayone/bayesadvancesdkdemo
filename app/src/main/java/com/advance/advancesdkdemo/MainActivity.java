@@ -15,7 +15,12 @@ import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.custom.banner.CustomBannerActivity;
+import com.advance.advancesdkdemo.custom.full.CustomFullScreenActivity;
+import com.advance.advancesdkdemo.custom.interstitial.CustomInterstitialActivity;
 import com.advance.advancesdkdemo.custom.nativ.NativeCustomizeActivity;
+import com.advance.advancesdkdemo.custom.nativeexpress.CustomNativeExpressListActivity;
+import com.advance.advancesdkdemo.custom.reward.CustomRewardActivity;
+import com.advance.advancesdkdemo.custom.splash.CustomSplashActivity;
 import com.advance.utils.LogUtil;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     Spinner sdks;
     Button fullVideo;
+    Button fullVideoCus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fullVideo = findViewById(R.id.fullvideo_button);
+        fullVideoCus = findViewById(R.id.cus_fullvideo_button);
 
         String csjV = TTAdSdk.getAdManager().getSDKVersion();
         String merV = AdConfigManager.getInstance().getSDKVersion();
@@ -68,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Mercury.fullScreenVideoAdspotId);
                         ADManager.getInstance().setCustomNativeAdspotId(Constants.Mercury.customNativeAdspotId);
                         fullVideo.setEnabled(false);
+                        fullVideoCus.setEnabled(false);
                         break;
                     case 1: //穿山甲
                         sdkName = "穿山甲";
@@ -89,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         AdvanceConfig.getInstance().setCsjDirectDownloadNetworkType(directDownloadNetworkType);
                         fullVideo.setEnabled(true);
+                        fullVideoCus.setEnabled(true);
 
                         break;
                     case 2: //广点通
@@ -101,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Gdt.fullScreenVideoAdspotId);
                         ADManager.getInstance().setCustomNativeAdspotId(Constants.Gdt.customNativeAdspotId);
                         fullVideo.setEnabled(true);
+                        fullVideoCus.setEnabled(true);
                         break;
                 }
                 LogUtil.AdvanceLog("sdk Demo 选择：" + sdkName);
@@ -172,5 +182,26 @@ public class MainActivity extends AppCompatActivity {
 
     public void onCusNative(View view) {
         startActivity(new Intent(this, NativeCustomizeActivity.class));
+    }
+
+
+    public void cusSplash(View view) {
+        startActivity(new Intent(this, CustomSplashActivity.class));
+    }
+
+    public void cusInterstitial(View view) {
+        startActivity(new Intent(this, CustomInterstitialActivity.class));
+    }
+
+    public void cusExpress(View view) {
+        startActivity(new Intent(this, CustomNativeExpressListActivity.class));
+    }
+
+    public void cusReward(View view) {
+        startActivity(new Intent(this, CustomRewardActivity.class));
+    }
+
+    public void cusFullSV(View view) {
+        startActivity(new Intent(this, CustomFullScreenActivity.class));
     }
 }

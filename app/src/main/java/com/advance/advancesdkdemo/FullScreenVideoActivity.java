@@ -38,7 +38,7 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
         advanceFullScreenVideo.setDefaultSdkSupplier(new SdkSupplier("945065337", AdvanceSupplierID.CSJ));
         //可选： 设置广点通视频播放策略
         advanceFullScreenVideo.setGdtVideoOption(new VideoOption.Builder().setAutoPlayMuted(false)
-                .setAutoPlayPolicy(VideoOption.AutoPlayPolicy.NEVER)
+                .setAutoPlayPolicy(VideoOption.AutoPlayPolicy.ALWAYS)
                 .build());
         //可选： 设置广点通媒体状态监听
         advanceFullScreenVideo.setGdtMediaListener(new UnifiedInterstitialMediaListener() {
