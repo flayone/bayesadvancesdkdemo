@@ -29,7 +29,7 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
                 //可选：穿山甲可以接受的尺寸大小，单位px
                 .setCsjAcceptedSize(640, 100)
                 //可选：设置广告刷新间隔（s）
-                .setRefreshInterval(60);
+                .setRefreshInterval(30);
         //推荐：核心事件监听回调
         advanceBanner.setAdListener(this);
         //推荐：设置是否开启策略缓存

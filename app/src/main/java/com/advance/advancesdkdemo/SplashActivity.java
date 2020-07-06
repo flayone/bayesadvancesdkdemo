@@ -82,9 +82,12 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         }
     }
 
+    /**
+     * @param id 代表当前被选中的策略id，值为"1" 代表mercury策略 ，值为"2" 代表广点通策略， 值为"3" 代表穿山甲策略
+     */
     @Override
     public void onSdkSelected(String id) {
-        // "1" 代表mercury策略 ，"2" 代表广点通策略， "3" 代表穿山甲策略
+        //给sdkId赋值用来判断被策略选中的是哪个SDK
         sdkId = id;
 
         Log.d(TAG, "Splash ad onSdkSelected " + id);
@@ -212,6 +215,23 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         }
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 穿山甲处理逻辑,h5类型的广告，跳转后返回不会回调onAdSkip或者onAdTimeOver，会导致无法跳转首页，需要在这里额外处理跳转逻辑
+        canJump = TextUtils.equals(sdkId, "3");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (canJump) {
+            next();
+        }
+        canJump = true;
+    }
+
     /**
      * 设置一个变量来控制当前开屏页面是否可以跳转，当开屏广告为普链类广告时，点击会打开一个广告落地页，此时开发者还不能打开自己的App主页。当从广告落地页返回以后，
      * 才可以跳转到开发者自己的App主页；当开屏广告是App类广告时只会下载App。
@@ -224,26 +244,15 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // 穿山甲处理逻辑,h5类型的广告，跳转后返回不会回调onAdTimeOver或者onAdTimeOver，会导致无法跳转首页，需要在这里额外处理跳转逻辑
-        if (TextUtils.equals(sdkId, "3")) {
-            canJump = true;
-        } else {
-            canJump = false;
-        }
+    /**
+     * 跳转到主页面
+     */
+    private void goToMainActivity() {
+        Intent intent = new Intent(SplashActivity.this, SplashToMainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        this.finish();
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (canJump) {
-            next();
-        }
-        canJump = true;
-    }
-
 
     @Override
     protected void onDestroy() {
@@ -262,15 +271,6 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
         return super.onKeyDown(keyCode, event);
     }
 
-    /**
-     * 跳转到主页面
-     */
-    private void goToMainActivity() {
-//        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        startActivity(intent);
-        this.finish();
-    }
 
     @Override
     public void handleMsg(Message msg) {

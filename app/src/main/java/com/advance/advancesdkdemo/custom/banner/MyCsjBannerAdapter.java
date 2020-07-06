@@ -109,7 +109,7 @@ public class MyCsjBannerAdapter {
 
         try {
             if (null != advanceBanner) {
-                ad.setSlideIntervalTime(refreshInterval);
+                ad.setSlideIntervalTime(refreshInterval * 1000);
             }
             ad.setExpressInteractionListener(new TTNativeExpressAd.ExpressAdInteractionListener() {
                 @Override
