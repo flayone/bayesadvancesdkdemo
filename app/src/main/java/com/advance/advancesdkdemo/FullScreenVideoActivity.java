@@ -40,6 +40,8 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
         advanceFullScreenVideo.setGdtVideoOption(new VideoOption.Builder().setAutoPlayMuted(false)
                 .setAutoPlayPolicy(VideoOption.AutoPlayPolicy.ALWAYS)
                 .build());
+        //可选： 设置是否采用策略缓存
+        advanceFullScreenVideo.enableStrategyCache(false);
         //可选： 设置广点通媒体状态监听
         advanceFullScreenVideo.setGdtMediaListener(new UnifiedInterstitialMediaListener() {
             @Override

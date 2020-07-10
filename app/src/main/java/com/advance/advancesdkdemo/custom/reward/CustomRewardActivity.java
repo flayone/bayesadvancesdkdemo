@@ -63,8 +63,8 @@ public class CustomRewardActivity extends Activity {
                 }
             }
         });
-        //设置是否使用策略缓存
-        ad.enableStrategyCache(true);
+        //可选：设置是否使用策略缓存
+        ad.enableStrategyCache(false);
         //必须：设置打底广告，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         ad.setDefaultSdkSupplier(new SdkSupplier("2090845242931421", AdvanceSupplierID.GDT));
 

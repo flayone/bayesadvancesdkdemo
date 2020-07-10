@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
-                android:text="手动切换SDK(非立即生效)：" />
+                android:text="切换SDK(仅用来演示)：" />
 
             <Spinner
                 android:id="@+id/sp_sdk"

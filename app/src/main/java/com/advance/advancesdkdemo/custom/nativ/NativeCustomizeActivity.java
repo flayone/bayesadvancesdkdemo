@@ -53,6 +53,8 @@ public class NativeCustomizeActivity extends Activity {
                 }
             }
         });
+        //可选：设置是否采用策略缓存
+        nativeCustomizeAd.enableStrategyCache(false);
 //        必须：设置打底广告，比如app第一次打开时，会先走这里设置的打底广告
         nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("4090398440079274", AdvanceSupplierID.GDT));
 //        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("10002805", AdvanceSupplierID.MERCURY));

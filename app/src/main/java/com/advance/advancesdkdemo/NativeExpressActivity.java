@@ -48,8 +48,8 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
                 .setGdtFullWidth(true);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
-        //推荐：设置是否采用策略缓存
-        advanceNativeExpress.enableStrategyCache(true);
+        //可选：设置是否采用策略缓存
+        advanceNativeExpress.enableStrategyCache(false);
         //必须：设置打底SDK参数，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         advanceNativeExpress.setDefaultSdkSupplier(new SdkSupplier("10002678", AdvanceSupplierID.MERCURY));
         advanceNativeExpress.loadAd();
@@ -265,6 +265,10 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
 
             @Override
             public void onCancel() {
+
+            }
+            @Override
+            public void onRefuse() {
 
             }
         });

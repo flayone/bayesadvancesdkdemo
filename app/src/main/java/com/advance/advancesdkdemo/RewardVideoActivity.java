@@ -34,8 +34,8 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
         advanceRewardVideo.setOrientation(AdvanceRewardVideo.ORIENTATION_HORIZONTAL);
         advanceRewardVideo.setCsjUserId("user123");
         advanceRewardVideo.setCsjRewardAmount(Toast.LENGTH_SHORT);
-        //推荐：设置是否采用策略缓存
-        advanceRewardVideo.enableStrategyCache(true);
+        //可选：设置是否采用策略缓存
+        advanceRewardVideo.enableStrategyCache(false);
         //必须：设置打底广告，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         advanceRewardVideo.setDefaultSdkSupplier(new SdkSupplier("2090845242931421", AdvanceSupplierID.GDT));
         //设置通用事件监听器

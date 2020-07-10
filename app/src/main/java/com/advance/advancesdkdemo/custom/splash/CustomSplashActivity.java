@@ -48,9 +48,9 @@ public class CustomSplashActivity extends Activity {
                 jump();
             }
         };
-        //开屏建议使用软引用activity，第二个参数为后台申请的广告位id
+        //初始化：开屏建议使用软引用activity，第二个参数为后台申请的广告位id
         customizeAd = new AdvanceCustomizeAd(new SoftReference<Activity>(this), ADManager.getInstance().getSplashAdspotId());
-        //设置渠道的结果监听
+        //必须：设置渠道的结果监听
         customizeAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override
             public void onSupplierFailed() {
@@ -82,9 +82,9 @@ public class CustomSplashActivity extends Activity {
             }
         });
 
-        //设置是否使用策略缓存
+        //推荐：设置是否将获取到的SDK选择策略进行缓存，有助于缩短开屏广告加载时间，如果有包段包天需求建议设置为false
         customizeAd.enableStrategyCache(true);
-        //设置打底SDK参数
+        //必须：设置打底SDK参数
         customizeAd.setDefaultSdkSupplier(new SdkSupplier("887301946", AdvanceSupplierID.CSJ));
         //请求策略
         customizeAd.loadStrategy();

@@ -1,27 +1,26 @@
 package com.advance.advancesdkdemo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.advance.AdvanceBanner;
 import com.advance.AdvanceBannerListener;
-import com.advance.AdvanceConfig;
 import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
-import com.mercury.sdk.core.config.AdConfigManager;
 
 public class BannerActivity extends AppCompatActivity implements AdvanceBannerListener {
     private String TAG = "DEMO BANNER";
     private AdvanceBanner advanceBanner;
+    FrameLayout rl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banner);
-        RelativeLayout rl = findViewById(R.id.banner_layout);
+        rl = findViewById(R.id.banner_layout);
         advanceBanner = new AdvanceBanner(this, rl, ADManager.getInstance().getBannerAdspotId());
 
         //可选：个性化设置，穿山甲个性化模板广告的尺寸属性，期望模板广告view的size，单位dp
@@ -32,7 +31,7 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
                 .setRefreshInterval(30);
         //推荐：核心事件监听回调
         advanceBanner.setAdListener(this);
-        //推荐：设置是否开启策略缓存
+        //可选：设置是否开启策略缓存
         advanceBanner.enableStrategyCache(true);
         //必须：设置打底SDK参数，SdkSupplier（"该渠道平台申请的广告位id", 渠道平台id标识）
         advanceBanner.setDefaultSdkSupplier(new SdkSupplier("10000396", AdvanceSupplierID.MERCURY));
@@ -64,16 +63,13 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
 
     @Override
     public void onDislike() {
-        RelativeLayout rl = findViewById(R.id.banner_layout);
         rl.removeAllViews();
         Toast.makeText(this, "广告关闭", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         advanceBanner.destroy();
-
     }
 }

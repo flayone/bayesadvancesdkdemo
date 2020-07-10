@@ -58,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
         sdks = findViewById(R.id.sp_sdk);
         sdks.setSelection(0);
         /**
-         *  注意：手动切换对于setUseCache(true); 的广告位，并不会立即生效，因为可能存在缓存的策略，会优先使用缓存，故第二次请求时切换才会生效。
+         *  注意！：
+         *  手动切换为在Demo中的演示功能，实际项目不需要切换功能，只需配置好聚合广告位ID即可。
+         *  手动切换对于setUseCache(true); 的广告位，并不会立即生效，因为可能存在缓存的策略，会优先使用缓存，故第二次请求时切换才会生效。
          */
         sdks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

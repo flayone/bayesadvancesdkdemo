@@ -112,8 +112,8 @@ public class CustomNativeExpressListActivity extends Activity {
                 }
             }
         });
-        //推荐：设置是否采用策略缓存
-        customizeAd.enableStrategyCache(true);
+        //可选：设置是否采用策略缓存
+        customizeAd.enableStrategyCache(false);
         //必须：设置打底SDK参数，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         customizeAd.setDefaultSdkSupplier(new SdkSupplier("10002678", AdvanceSupplierID.MERCURY));
         //必须：请求策略

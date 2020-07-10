@@ -163,6 +163,10 @@ public class MyCsjBannerAdapter {
                 @Override
                 public void onCancel() {
                 }
+                @Override
+                public void onRefuse() {
+
+                }
             });
         } catch (Throwable e) {
             e.printStackTrace();

@@ -70,7 +70,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
                 .setCsjAcceptedSize(1080, 1920);
         //推荐：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(this);
-        //强烈推荐：设置是否将获取到的SDK选择策略进行缓存，有助于缩短开屏广告加载时间
+        //推荐：设置是否将获取到的SDK选择策略进行缓存，有助于缩短开屏广告加载时间，如果有包段包天需求建议设置为false
         advanceSplash.enableStrategyCache(true);
         //必须：设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         advanceSplash.setDefaultSdkSupplier(new SdkSupplier("887301946", AdvanceSupplierID.CSJ));

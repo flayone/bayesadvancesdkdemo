@@ -96,8 +96,8 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                 .setCsjImageAcceptedSize(640, 320);
         //推荐：核心事件监听回调
         mADManager.setAdListener(this);
-        //推荐：设置是否采用策略缓存
-        mADManager.enableStrategyCache(true);
+        //可选：设置是否采用策略缓存
+        mADManager.enableStrategyCache(false);
         //必须：设置打底SDK参数，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         mADManager.setDefaultSdkSupplier(new SdkSupplier("10002678", AdvanceSupplierID.MERCURY));
         mADManager.loadAd();
@@ -289,6 +289,10 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
                         @Override
                         public void onCancel() {
+
+                        }
+                        @Override
+                        public void onRefuse() {
 
                         }
                     });

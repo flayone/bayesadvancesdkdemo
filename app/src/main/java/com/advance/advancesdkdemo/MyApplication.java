@@ -21,13 +21,13 @@ public class MyApplication extends Application {
                 .setGdtMediaId("1101152570")
                 .setMercuryMediaId("100171")
                 .setMercuryMediaKey("e1d0d3aaf95d3f1980367e75bc41141d")
-                //可选：设置debug开发调试模式
+                //------- 以上为演示用id，开发者接入时一定要替换为自己的平台id  -------
+                //可选：设置debug开发调试模式,tag为：Advance SDK
                 .setDebug(true)
                 //可选：设置是否在请求穿山甲sdk广告前校验权限，防止无权限不返回广告，默认为false不去校验。
                 .setNeedPermissionCheck(false)
                 .initSDKs(this);
 
     }
-
 
 }

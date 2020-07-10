@@ -146,6 +146,11 @@ public class MyCsjNEAdapter {
                 public void onCancel() {
 
                 }
+
+                @Override
+                public void onRefuse() {
+
+                }
             };
             ttNativeExpressAd.setDislikeCallback(activity, dislikeInteractionCallback1);
         }
