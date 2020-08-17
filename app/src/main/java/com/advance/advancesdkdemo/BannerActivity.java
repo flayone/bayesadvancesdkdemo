@@ -68,6 +68,11 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
     }
 
     @Override
+    public void onAdLoaded() {
+        Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         advanceBanner.destroy();

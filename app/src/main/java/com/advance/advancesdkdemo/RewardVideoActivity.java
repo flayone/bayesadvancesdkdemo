@@ -190,7 +190,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     public void onAdReward() {
         Log.d("DEMO", "AD REWARD");
         Toast.makeText(this, "激励发放", Toast.LENGTH_SHORT).show();
-
+        isReady = false;
     }
 
 }

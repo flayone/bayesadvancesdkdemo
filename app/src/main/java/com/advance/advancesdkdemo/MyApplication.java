@@ -12,6 +12,7 @@ public class MyApplication extends Application {
         AdvanceConfig.getInstance()
                 //必须：设置各个sdk的媒体参数
 //                .setCsjAppId("你在穿山甲后台申请的的appId")
+//                .setAppName("你在穿山甲后台申请的的应用名称")
 //                .setGdtMediaId("你在广点通后台申请的的MediaId")
 //                .setMercuryMediaId("你在Mercury SDK后台申请的的MediaId")
 //                .setMercuryMediaKey("你在Mercury SDK后台申请的的MediaKey")
