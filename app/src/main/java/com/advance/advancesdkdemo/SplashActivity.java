@@ -5,9 +5,12 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
@@ -31,50 +34,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SplashActivity extends Activity implements AdvanceSplashListener, WeakHandler.IHandler {
+public class SplashActivity extends Activity implements AdvanceSplashListener {
     private AdvanceSplash advanceSplash;
-    private final WeakHandler mHandler = new WeakHandler(this);
-    private static final int MSG_GO_MAIN = 1;
     private boolean canJump = false;
     private String sdkId;
     TextView skipView;
     LinearLayout logo;
+    FrameLayout adContainer;
     private String TAG = "SplashActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_custom_logo);
-        FrameLayout adContainer = findViewById(R.id.splash_container);
+        adContainer = findViewById(R.id.splash_container);
         skipView = findViewById(R.id.skip_view);
         logo = findViewById(R.id.ll_asc_logo);
 
-        //自由选择：设置mercury素材展示模式，LargeADCutType.CUT_BOTTOM 代表对过长广告素材，保持宽度不变底部进行剪切。默认为LargeADCutType.DEFAULT 不对素材做剪切处理
-        MercuryAD.setLargeADCutType(LargeADCutType.CUT_BOTTOM);
-
         //开屏初始化；adContainer为广告容器，skipView不需要自定义可以为null
         advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
-        //可选：设置mercury开屏加载时占位图
-        advanceSplash.setHolderImage(ContextCompat.getDrawable(this, R.mipmap.background));
-        //可选：设置mercury开屏logo资源
-        advanceSplash.setLogoImage(ContextCompat.getDrawable(this, R.mipmap.logo));
-        //自由选择：是否强制展示logo，默认false即大图小手机下会不展示logo
-        MercuryAD.setSplashForceShowLogo(true);
-        //可选，自定义强制显示的开屏logo高度，单位dp，默认-1不限制高度，跟随素材高度
-        MercuryAD.setSplashForceLogoHeight(100);
-        //可选，设置开屏页面的底色,默认无色透明
-        MercuryAD.setSplashBackgroundColor(ContextCompat.getColor(this, R.color.adv_white));
-        //可选：设置跳过字体，穿山甲广告尺寸，核心事件回调
-        advanceSplash.setSkipText("跳过 %d ")
-                //可选：设置穿山甲广告图片偏好尺寸(如果接入穿山甲的话
-                .setCsjAcceptedSize(1080, 1920);
-        //推荐：设置开屏核心回调事件的监听器。
+        //必须：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(this);
-        //推荐：设置是否将获取到的SDK选择策略进行缓存，有助于缩短开屏广告加载时间，如果有包段包天需求建议设置为false
-        advanceSplash.enableStrategyCache(true);
-        //必须：设置打底sdk参数（当策略服务有问题的话，会使用 该sdk的参数)，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
         advanceSplash.setDefaultSdkSupplier(new SdkSupplier("887301946", AdvanceSupplierID.CSJ));
-        // 如果targetSDKVersion >= 23，需要申请好权限,android 10 以上可以不申请权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
+
+// 如果targetSDKVersion >= 23，需要申请好权限,如果您的App没有适配到Android6.0（即targetSDKVersion < 23）或者已经提前申请权限，那么只需要在这里直接调用loadAd方法。
         if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
             checkAndRequestPermission();
         } else {
@@ -109,12 +92,10 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
 
     @Override
     public void onAdShow() {
-        //Mercury SDK 支持内置logo，这里不再展示自定义的logo布局
-        if ("1".equals(sdkId)) {
-            logo.setVisibility(View.GONE);
-        } else {
-            logo.setVisibility(View.VISIBLE);
-        }
+        //logo展示建议：广告展示的时候再展示logo，其他时刻都是展示的全屏的background图片
+        adContainer.setBackgroundColor(Color.WHITE);
+        logo.setVisibility(View.VISIBLE);
+
         //强烈建议：skipView只有在广告展示出来以后才将背景色进行填充，默认加载时设置成透明状态，这样展现效果较佳
         if (skipView != null)
             skipView.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.background_circle));
@@ -141,7 +122,12 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
 
     @Override
     public void onAdSkip() {
-        mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN, 100);
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                next();
+            }
+        }, 100);
 
         Log.d(TAG, "Splash ad skip");
         Toast.makeText(this, "跳过广告", Toast.LENGTH_SHORT).show();
@@ -149,7 +135,12 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
 
     @Override
     public void onAdTimeOver() {
-        mHandler.sendEmptyMessageDelayed(MSG_GO_MAIN, 100);
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                next();
+            }
+        }, 100);
 
         Log.d(TAG, "Splash ad timeOver");
         Toast.makeText(this, "倒计时结束，关闭广告", Toast.LENGTH_SHORT).show();
@@ -257,7 +248,6 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mHandler.removeCallbacksAndMessages(null);
     }
 
     /**
@@ -272,10 +262,4 @@ public class SplashActivity extends Activity implements AdvanceSplashListener, W
     }
 
 
-    @Override
-    public void handleMsg(Message msg) {
-        if (msg.what == MSG_GO_MAIN) {
-            next();
-        }
-    }
 }

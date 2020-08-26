@@ -160,6 +160,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
         Log.d("DEMO", "LOADED");
         this.advanceRewardVideoItem = advanceRewardVideoItem;
         Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
+        advanceRewardVideoItem.showAd();
 
 
     }

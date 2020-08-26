@@ -18,8 +18,9 @@
         <!--  按钮要保证可见，推荐一开始给透明背景，当广告load出来后再设置成想要的背景样式 -->
         <TextView
             android:id="@+id/skip_view"
-            android:layout_width="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="70dp"
             android:layout_gravity="right"
             android:layout_margin="15dp"
             android:background="@color/trans"

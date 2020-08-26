@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        // 权限都已经有了，
+        // 缺少权限，进行申请
         if (lackedPermission.size() > 0) {
             // 请求所缺少的权限，在onRequestPermissionsResult中再看是否获得权限，如果获得权限就可以调用SDK，否则不要调用SDK。
             String[] requestPermissions = new String[lackedPermission.size()];
