@@ -13,7 +13,7 @@ import com.advance.model.SdkSupplier;
 import com.qq.e.ads.interstitial2.UnifiedInterstitialMediaListener;
 import com.qq.e.comm.util.AdError;
 
-public class InterstitialActivity extends AppCompatActivity implements AdvanceInterstitialListener, UnifiedInterstitialMediaListener {
+public class InterstitialActivity extends AppCompatActivity implements AdvanceInterstitialListener {
     private AdvanceInterstitial advanceInterstitial;
 
     @Override
@@ -21,18 +21,14 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interstitial);
         advanceInterstitial = new AdvanceInterstitial(this, ADManager.getInstance().getInterstitialAdspotId());
-        //必须：期望模板广告view的size,单位dp。高度为0代表自适应
-        advanceInterstitial.setCsjExpressViewAcceptedSize(300, 300);
-        //必须：设置打底SDK参数，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
-        advanceInterstitial.setDefaultSdkSupplier(new SdkSupplier(   "10000398", AdvanceSupplierID.MERCURY));
-        //可选：设置是否采用策略缓存
-        advanceInterstitial.enableStrategyCache(false);
         //推荐：核心事件监听回调
         advanceInterstitial.setAdListener(this);
-        //可选，设置广点通的视频广告的播放回调，不需要可忽略。
-        advanceInterstitial.setGdtMediaListener(this);
     }
 
+    public void loadAd(View view) {
+        advanceInterstitial.loadStrategy();
+
+    }
     public void showAd(View view) {
         advanceInterstitial.show();
     }
@@ -73,54 +69,5 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
         advanceInterstitial.destroy();
     }
 
-    public void loadAd(View view) {
-        advanceInterstitial.loadAd();
 
-    }
-
-    // 以下是广点通视频广告的相关回调
-    @Override
-    public void onVideoInit() {
-
-    }
-
-    @Override
-    public void onVideoLoading() {
-
-    }
-
-    @Override
-    public void onVideoReady(long l) {
-
-    }
-
-    @Override
-    public void onVideoStart() {
-
-    }
-
-    @Override
-    public void onVideoPause() {
-
-    }
-
-    @Override
-    public void onVideoComplete() {
-
-    }
-
-    @Override
-    public void onVideoError(AdError adError) {
-
-    }
-
-    @Override
-    public void onVideoPageOpen() {
-
-    }
-
-    @Override
-    public void onVideoPageClose() {
-
-    }
 }

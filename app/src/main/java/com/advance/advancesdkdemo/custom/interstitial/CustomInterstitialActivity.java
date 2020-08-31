@@ -56,10 +56,6 @@ public class CustomInterstitialActivity extends Activity {
                 }
             }
         });
-        //可选：设置是否使用策略缓存
-        myInterstitialAd.enableStrategyCache(false);
-        //必须：设置打底SDK参数
-        myInterstitialAd.setDefaultSdkSupplier(new SdkSupplier("10000398", AdvanceSupplierID.MERCURY));
 
     }
 

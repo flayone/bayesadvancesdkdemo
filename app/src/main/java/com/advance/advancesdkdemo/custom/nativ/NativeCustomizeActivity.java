@@ -25,7 +25,7 @@ public class NativeCustomizeActivity extends Activity {
         fl = findViewById(R.id.fl_ad);
 
         //创建自己的自渲染广告位，第二个参数为后台申请的广告位id
-        nativeCustomizeAd = new AdvanceCustomizeAd(this, "");
+        nativeCustomizeAd = new AdvanceCustomizeAd(this, "10003122");
         //必须：设置广告载体
         nativeCustomizeAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override
@@ -53,14 +53,7 @@ public class NativeCustomizeActivity extends Activity {
                 }
             }
         });
-        //可选：设置是否采用策略缓存
-        nativeCustomizeAd.enableStrategyCache(false);
-//        必须：设置打底广告，比如app第一次打开时，会先走这里设置的打底广告
-        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("4090398440079274", AdvanceSupplierID.GDT));
-//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("10002805", AdvanceSupplierID.MERCURY));
-//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier( "10002806",  AdvanceSupplierID.MERCURY));
-//        AdvanceConfig.getInstance().setCsjAppId("");
-//        nativeCustomizeAd.setDefaultSdkSupplier(new SdkSupplier("5001121", "901121737", AdvanceConfig.SDK_ID_CSJ));
+
 
 //        发起策略请求
         nativeCustomizeAd.loadStrategy();

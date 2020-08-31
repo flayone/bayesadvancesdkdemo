@@ -35,7 +35,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation(name: 'advancelib_3.2.6', ext: 'aar')
+//    implementation(name: 'advancelib_3.2.6', ext: 'aar')
+    implementation(name: 'advancelib_cpt', ext: 'aar')
     implementation(name: 'open_ad_sdk', ext: 'aar')
     implementation(name: 'GDTSDK.unionNormal.4.232.1102', ext: 'aar')
     implementation(name: 'oaid_sdk_1.0.22', ext: 'aar')

@@ -61,7 +61,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
         if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
             checkAndRequestPermission();
         } else {
-            advanceSplash.loadAd();
+            advanceSplash.loadStrategy();
         }
     }
 
@@ -171,7 +171,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
 
         // 权限都已经有了，那么直接调用SDK
         if (lackedPermission.size() == 0) {
-            advanceSplash.loadAd();
+            advanceSplash.loadStrategy();
 
         } else {
             // 请求所缺少的权限，在onRequestPermissionsResult中再看是否获得权限，如果获得权限就可以调用SDK，否则不要调用SDK。
@@ -194,7 +194,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1024 && hasAllPermissionsGranted(grantResults)) {
-            advanceSplash.loadAd();
+            advanceSplash.loadStrategy();
 
         } else {
             // 如果用户没有授权，那么应该说明意图，引导用户去设置里面授权。

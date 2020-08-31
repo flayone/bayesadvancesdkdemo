@@ -28,16 +28,6 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward_video);
         advanceRewardVideo = new AdvanceRewardVideo(this, ADManager.getInstance().getRewardAdspotId());
-        //可选：设置穿山甲相关参数(如果有的话)
-        advanceRewardVideo.setCsjImageAcceptedSize(1080, 1920);
-        advanceRewardVideo.setCsjRewardName("金币");
-        advanceRewardVideo.setOrientation(AdvanceRewardVideo.ORIENTATION_HORIZONTAL);
-        advanceRewardVideo.setCsjUserId("user123");
-        advanceRewardVideo.setCsjRewardAmount(Toast.LENGTH_SHORT);
-        //可选：设置是否采用策略缓存
-        advanceRewardVideo.enableStrategyCache(false);
-        //必须：设置打底广告，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
-        advanceRewardVideo.setDefaultSdkSupplier(new SdkSupplier("2090845242931421", AdvanceSupplierID.GDT));
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(this);
 
@@ -45,92 +35,26 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
     public void onLoad(View view) {
         isReady = false;
-        advanceRewardVideo.loadAd();
+        advanceRewardVideo.loadStrategy();
 
     }
 
     public void onShow(View view) {
         if (isReady) {
-            //穿山甲SDK特定设置
-            if (AdvanceConfig.SDK_ID_CSJ.equals(advanceRewardVideoItem.getSdkId())) {
-                CsjRewardVideoAdItem csjRewardVideoAdItem = (CsjRewardVideoAdItem) advanceRewardVideoItem;
-                //设置穿山甲SDK监听器（必须），可以监听穿山甲sdk特定回调,通用的回调同时会回调通用监听器
-                csjRewardVideoAdItem.setRewardAdInteractionListener(new TTRewardVideoAd.RewardAdInteractionListener() {
-                    @Override
-                    public void onAdShow() {
-
-                    }
-
-                    @Override
-                    public void onAdVideoBarClick() {
-
-                    }
-
-                    @Override
-                    public void onAdClose() {
-
-                    }
-
-                    @Override
-                    public void onVideoComplete() {
-
-                    }
-
-                    @Override
-                    public void onVideoError() {
-
-                    }
-
-                    @Override
-                    public void onRewardVerify(boolean b, int i, String s) {
-
-                    }
-
-                    @Override
-                    public void onSkippedVideo() {
-
-                    }
-                });
-                csjRewardVideoAdItem.setShowDownLoadBar(true);
-
-                csjRewardVideoAdItem.setDownloadListener(new TTAppDownloadListener() {
-                    @Override
-                    public void onIdle() {
-
-                    }
-
-                    @Override
-                    public void onDownloadActive(long l, long l1, String s, String s1) {
-
-                    }
-
-                    @Override
-                    public void onDownloadPaused(long l, long l1, String s, String s1) {
-
-                    }
-
-                    @Override
-                    public void onDownloadFailed(long l, long l1, String s, String s1) {
-
-                    }
-
-                    @Override
-                    public void onDownloadFinished(long l, String s, String s1) {
-
-                    }
-
-                    @Override
-                    public void onInstalled(String s, String s1) {
-
-                    }
-                });
-            }
             //展示广告
             advanceRewardVideoItem.showAd();
         } else {
             Toast.makeText(this, "广告未加载", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    @Override
+    public void onAdLoaded(AdvanceRewardVideoItem advanceRewardVideoItem) {
+        isReady = true;
+        Log.d("DEMO", "LOADED");
+        this.advanceRewardVideoItem = advanceRewardVideoItem;
+        Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -154,16 +78,6 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
     }
 
-    @Override
-    public void onAdLoaded(AdvanceRewardVideoItem advanceRewardVideoItem) {
-        isReady = true;
-        Log.d("DEMO", "LOADED");
-        this.advanceRewardVideoItem = advanceRewardVideoItem;
-        Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
-        advanceRewardVideoItem.showAd();
-
-
-    }
 
     @Override
     public void onVideoCached() {

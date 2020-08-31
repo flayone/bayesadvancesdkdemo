@@ -72,6 +72,7 @@ public class CustomSplashActivity extends Activity {
                         SplashAdapter.loadGdtAD(new SoftReference<Activity>(CustomSplashActivity.this), customizeAd, selectedSupplier, adContainer, skipView, listener);
                         break;
                     case AdvanceConfig.SDK_ID_MERCURY:
+                        //logo隐藏，使用mercury内置logo方法。
                         logo.setVisibility(View.GONE);
                         SplashAdapter.loadMercuryAD(new SoftReference<Activity>(CustomSplashActivity.this), customizeAd, selectedSupplier, adContainer, skipView, listener);
                         break;
@@ -82,11 +83,7 @@ public class CustomSplashActivity extends Activity {
             }
         });
 
-        //推荐：设置是否将获取到的SDK选择策略进行缓存，有助于缩短开屏广告加载时间，如果有包段包天需求建议设置为false
-        customizeAd.enableStrategyCache(true);
-        //必须：设置打底SDK参数
-        customizeAd.setDefaultSdkSupplier(new SdkSupplier("887301946", AdvanceSupplierID.CSJ));
-        //请求策略
+       //请求策略
         customizeAd.loadStrategy();
     }
 

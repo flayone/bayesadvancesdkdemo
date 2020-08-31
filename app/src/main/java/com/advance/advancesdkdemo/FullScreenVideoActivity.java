@@ -34,119 +34,16 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
         advanceFullScreenVideo = new AdvanceFullScreenVideo(this, ADManager.getInstance().getFullScreenVideoAdspotId());
         //推荐：核心事件监听回调
         advanceFullScreenVideo.setAdListener(this);
-        //必须：设置打底SDK参数，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
-        advanceFullScreenVideo.setDefaultSdkSupplier(new SdkSupplier("945065337", AdvanceSupplierID.CSJ));
-        //可选： 设置广点通视频播放策略
-        advanceFullScreenVideo.setGdtVideoOption(new VideoOption.Builder().setAutoPlayMuted(false)
-                .setAutoPlayPolicy(VideoOption.AutoPlayPolicy.ALWAYS)
-                .build());
-        //可选： 设置是否采用策略缓存
-        advanceFullScreenVideo.enableStrategyCache(false);
-        //可选： 设置广点通媒体状态监听
-        advanceFullScreenVideo.setGdtMediaListener(new UnifiedInterstitialMediaListener() {
-            @Override
-            public void onVideoInit() {
-                Log.d(TAG, "onVideoInit");
 
-            }
-
-            @Override
-            public void onVideoLoading() {
-                Log.d(TAG, "onVideoLoading");
-
-            }
-
-            @Override
-            public void onVideoReady(long l) {
-                Log.d(TAG, "onVideoReady ,video duration = " + l);
-
-            }
-
-            @Override
-            public void onVideoStart() {
-                Log.d(TAG, "onVideoStart");
-
-            }
-
-            @Override
-            public void onVideoPause() {
-                Log.d(TAG, "onVideoPause");
-
-            }
-
-            @Override
-            public void onVideoComplete() {
-                Log.d(TAG, "MediaListener onVideoComplete");
-
-            }
-
-            @Override
-            public void onVideoError(AdError adError) {
-                Log.d(TAG, "onVideoError code:" + adError.getErrorCode() + " msg:" + adError.getErrorMsg());
-
-            }
-
-            @Override
-            public void onVideoPageOpen() {
-                Log.d(TAG, "onVideoPageOpen");
-
-            }
-
-            @Override
-            public void onVideoPageClose() {
-                Log.d(TAG, "onVideoPageClose");
-
-            }
-        });
     }
 
     public void loadFull(View view) {
         isReady = false;
-        advanceFullScreenVideo.loadAd();
+        advanceFullScreenVideo.loadStrategy();
     }
 
     public void showFull(View view) {
         if (isReady && advanceFullScreenItem != null) {
-            if (AdvanceConfig.SDK_ID_CSJ.equals(advanceFullScreenItem.getSdkId())) {
-                CsjFullScreenVideoItem csj = (CsjFullScreenVideoItem) advanceFullScreenItem;
-                csj.setDownloadListener(new TTAppDownloadListener() {
-                    @Override
-                    public void onIdle() {
-                        Log.d(TAG, "onIdle");
-
-                    }
-
-                    @Override
-                    public void onDownloadActive(long l, long l1, String s, String s1) {
-                        Log.d(TAG, "onDownloadActive");
-
-                    }
-
-                    @Override
-                    public void onDownloadPaused(long l, long l1, String s, String s1) {
-                        Log.d(TAG, "onDownloadPaused");
-
-                    }
-
-                    @Override
-                    public void onDownloadFailed(long l, long l1, String s, String s1) {
-                        Log.d(TAG, "onDownloadFailed");
-
-                    }
-
-                    @Override
-                    public void onDownloadFinished(long l, String s, String s1) {
-                        Log.d(TAG, "onDownloadFinished");
-
-                    }
-
-                    @Override
-                    public void onInstalled(String s, String s1) {
-                        Log.d(TAG, "onInstalled");
-
-                    }
-                });
-            }
             advanceFullScreenItem.showAd();
         }
     }

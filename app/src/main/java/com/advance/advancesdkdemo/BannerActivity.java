@@ -31,12 +31,7 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
                 .setRefreshInterval(30);
         //推荐：核心事件监听回调
         advanceBanner.setAdListener(this);
-        //可选：设置是否开启策略缓存
-        advanceBanner.enableStrategyCache(true);
-        //必须：设置打底SDK参数，SdkSupplier（"该渠道平台申请的广告位id", 渠道平台id标识）
-        advanceBanner.setDefaultSdkSupplier(new SdkSupplier("10000396", AdvanceSupplierID.MERCURY));
-        advanceBanner.loadAd();
-
+        advanceBanner.loadStrategy();
     }
 
     @Override

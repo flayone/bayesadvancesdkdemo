@@ -59,10 +59,6 @@ public class CustomBannerActivity extends Activity {
                 }
             }
         });
-        //可选：设置是否使用策略缓存
-        myBannerAd.enableStrategyCache(true);
-        //必须：设置打底SDK参数
-        myBannerAd.setDefaultSdkSupplier(new SdkSupplier("10000396", AdvanceSupplierID.MERCURY));
         //请求策略
         myBannerAd.loadStrategy();
     }

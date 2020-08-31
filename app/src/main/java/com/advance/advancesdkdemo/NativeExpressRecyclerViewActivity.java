@@ -19,8 +19,6 @@ import com.advance.AdvanceNativeExpressListener;
 import com.advance.mercury.MercuryNativeExpressAdItem;
 import com.advance.csj.CsjNativeExpressAdItem;
 import com.advance.gdt.GdtNativeAdExpressAdItem;
-import com.advance.model.AdvanceSupplierID;
-import com.advance.model.SdkSupplier;
 import com.mercury.sdk.util.ADError;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
 import com.bytedance.sdk.openadsdk.TTNativeExpressAd;
@@ -48,7 +46,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     private RecyclerView mRecyclerView;
     private CustomAdapter mAdapter;
     private List<NormalItem> mNormalDataList = new ArrayList<>();
-    private AdvanceNativeExpress mADManager;
+    private AdvanceNativeExpress advanceNativeExpress;
     private List<AdvanceNativeExpressAdItem> mAdItemList;
     private HashMap<View, Integer> mAdViewPositionMap = new HashMap<>();
 
@@ -88,19 +86,10 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
      *
      */
     private void initAdvanceNativeExpressAD() {
-        mADManager = new AdvanceNativeExpress(this, ADManager.getInstance().getNativeExpressAdspotId());
-        //可选：设置定制化参数
-        mADManager.setExpressViewAcceptedSize(600, 250)
-                .setGdtFullWidth(true)
-                .setGdtAutoHeight(true)
-                .setCsjImageAcceptedSize(640, 320);
+        advanceNativeExpress = new AdvanceNativeExpress(this, ADManager.getInstance().getNativeExpressAdspotId());
         //推荐：核心事件监听回调
-        mADManager.setAdListener(this);
-        //可选：设置是否采用策略缓存
-        mADManager.enableStrategyCache(false);
-        //必须：设置打底SDK参数，SdkSupplier（"对应渠道平台申请的广告位id", 渠道平台id标识）
-        mADManager.setDefaultSdkSupplier(new SdkSupplier("10002678", AdvanceSupplierID.MERCURY));
-        mADManager.loadAd();
+        advanceNativeExpress.setAdListener(this);
+        advanceNativeExpress.loadStrategy();
     }
     //AdvanceSDK回调接口
 
@@ -157,149 +146,9 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
             int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
             if (position <= mNormalDataList.size()) {
                 AdvanceNativeExpressAdItem item = mAdItemList.get(i);
-                if (AdvanceConfig.SDK_ID_GDT.equals(item.getSdkId())) {
-                    GdtNativeAdExpressAdItem gdtNativeAdExpressAdItem = (GdtNativeAdExpressAdItem) item;
-                    if (gdtNativeAdExpressAdItem.getBoundData().getAdPatternType() == AdPatternType.NATIVE_VIDEO) {
-                        gdtNativeAdExpressAdItem.setMediaListener(new NativeExpressMediaListener() {
-                            @Override
-                            public void onVideoInit(NativeExpressADView nativeExpressADView) {
-
-                            }
-
-                            @Override
-                            public void onVideoLoading(NativeExpressADView nativeExpressADView) {
-
-                            }
-
-                            @Override
-                            public void onVideoCached(NativeExpressADView nativeExpressADView) {
-
-                            }
-
-                            @Override
-                            public void onVideoReady(NativeExpressADView nativeExpressADView, long l) {
-
-                            }
-
-                            @Override
-                            public void onVideoStart(NativeExpressADView nativeExpressADView) {
-
-                            }
-
-                            @Override
-                            public void onVideoPause(NativeExpressADView nativeExpressADView) {
-
-                            }
-
-                            @Override
-                            public void onVideoComplete(NativeExpressADView nativeExpressADView) {
-
-                            }
-
-                            @Override
-                            public void onVideoError(NativeExpressADView nativeExpressADView, AdError adError) {
-
-                            }
-
-                            @Override
-                            public void onVideoPageOpen(NativeExpressADView nativeExpressADView) {
-
-                            }
-
-                            @Override
-                            public void onVideoPageClose(NativeExpressADView nativeExpressADView) {
-
-                            }
-                        });
-                    }
-                }
-                if (AdvanceConfig.SDK_ID_MERCURY.equals((item.getSdkId()))) {
-                    MercuryNativeExpressAdItem mercuryNativeExpressAdItem = (MercuryNativeExpressAdItem) item;
-                    if (mercuryNativeExpressAdItem.getAdPatternType() == com.mercury.sdk.core.config.AdPatternType.NATIVE_VIDEO_2TEXT ||
-                            mercuryNativeExpressAdItem.getAdPatternType() == com.mercury.sdk.core.config.AdPatternType.NATIVE_1VIDEO_1ICON_2TEXT) {
-                        mercuryNativeExpressAdItem.setMediaListener(new com.mercury.sdk.core.nativ.NativeExpressMediaListener() {
-                            @Override
-                            public void onVideoInit(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
-
-                            }
-
-                            @Override
-                            public void onVideoLoading(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
-
-                            }
-
-                            @Override
-                            public void onVideoReady(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView, long l) {
-
-                            }
-
-                            @Override
-                            public void onVideoStart(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
-
-                            }
-
-                            @Override
-                            public void onVideoPause(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
-
-                            }
-
-                            @Override
-                            public void onVideoComplete(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView) {
-
-                            }
-
-                            @Override
-                            public void onVideoError(com.mercury.sdk.core.nativ.NativeExpressADView nativeExpressADView, ADError adError) {
-
-                            }
-                        });
-                    }
-
-                } else if (AdvanceConfig.SDK_ID_CSJ.equals(item.getSdkId())) {
-
-                    CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) item;
-                    //设置穿山甲广告交互监听器(必须)
-                    csjNativeExpressAdItem.setExpressInteractionListener(new TTNativeExpressAd.ExpressAdInteractionListener() {
-                        @Override
-                        public void onAdClicked(View view, int i) {
-
-                        }
-
-                        @Override
-                        public void onAdShow(View view, int i) {
-
-                        }
-
-                        @Override
-                        public void onRenderFail(View view, String s, int i) {
-
-                        }
-
-                        @Override
-                        public void onRenderSuccess(View view, float v, float v1) {
-
-                        }
-                    });
-                    //设置穿山甲SDK关闭监听器
-                    csjNativeExpressAdItem.setDislikeCallback(this, new TTAdDislike.DislikeInteractionCallback() {
-                        @Override
-                        public void onSelected(int i, String s) {
-                            Toast.makeText(NativeExpressRecyclerViewActivity.this, s, Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onCancel() {
-
-                        }
-                        @Override
-                        public void onRefuse() {
-
-                        }
-                    });
-                }
 
                 mAdViewPositionMap.put(item.getExpressAdView(), position); // 把每个广告在列表中位置记录下来
-                mAdapter.addADItemToPosition(position, mAdItemList.get(i));
+                mAdapter.addADItemToPosition(position, item);
             }
         }
         mAdapter.notifyDataSetChanged();
@@ -384,18 +233,8 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                 customViewHolder.container.addView(adView);
                 mAdViewPositionMap.put(adView, position); // 广告在列表中的位置是可以被更新的
 
-                if (AdvanceConfig.SDK_ID_GDT.equals(advanceNativeExpressAdItem.getSdkId())) {
-                    //广点通adview渲染方式
-                    GdtNativeAdExpressAdItem gdtNativeAdExpressAdItem = (GdtNativeAdExpressAdItem) advanceNativeExpressAdItem;
-                    gdtNativeAdExpressAdItem.render(); // 调用render方法后sdk才会开始展示广告
-                } else if (AdvanceConfig.SDK_ID_MERCURY.equals(advanceNativeExpressAdItem.getSdkId())) {
-                    MercuryNativeExpressAdItem mercuryNativeExpressAdItem = (MercuryNativeExpressAdItem) advanceNativeExpressAdItem;
-                    mercuryNativeExpressAdItem.render();// 调用render方法后sdk才会开始展示广告
-                } else if (AdvanceConfig.SDK_ID_CSJ.equals(advanceNativeExpressAdItem.getSdkId())) {
-                    //穿山甲渲染方式
-                    CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
-                    csjNativeExpressAdItem.render(); //调用穿山甲render渲染方法
-                }
+                //一定要进行render 否则无法成功展示广告
+                advanceNativeExpressAdItem.render();
             } else {
                 customViewHolder.title.setText(((NormalItem) mData.get(position)).getTitle());
             }
@@ -415,8 +254,8 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
             public CustomViewHolder(View view) {
                 super(view);
-                title = (TextView) view.findViewById(R.id.title);
-                container = (ViewGroup) view.findViewById(R.id.express_ad_container);
+                title = view.findViewById(R.id.title);
+                container = view.findViewById(R.id.express_ad_container);
             }
         }
     }
