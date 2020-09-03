@@ -21,6 +21,10 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
                     if (null != customizeAd) {
                         customizeAd.adapterDidSucceed();
                     }
+                    //收到广告回调
+                    if (customRewardListener != null) {
+                        customRewardListener.onLoaded();
+                    }
                     isVideoCached = false;
                 }
 
@@ -28,14 +32,7 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
                 public void onVideoCached() {
                     try {
                         //判断是否超过视频展示的最长有效时间，或者已经展示过
-                        if (SystemClock.elapsedRealtime() > (rewardVideoAD.getExpireTimestamp() - 1000) || rewardVideoAD.hasShown()) {
-                            //这里一定要调用customizeAd 的事件方法
-                            if (null != customizeAd) {
-                                customizeAd.adapterDidFailed();
-                            }
-                        } else {
-                            isVideoCached = true;
-                        }
+                        isVideoCached = true;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

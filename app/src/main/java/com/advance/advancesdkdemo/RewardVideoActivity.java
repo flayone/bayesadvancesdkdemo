@@ -20,8 +20,6 @@ import com.bytedance.sdk.openadsdk.TTRewardVideoAd;
 
 public class RewardVideoActivity extends AppCompatActivity implements AdvanceRewardVideoListener {
     private AdvanceRewardVideo advanceRewardVideo;
-    private AdvanceRewardVideoItem advanceRewardVideoItem;
-    private boolean isReady = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,27 +32,59 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     }
 
     public void onLoad(View view) {
-        isReady = false;
         advanceRewardVideo.loadStrategy();
 
     }
 
-    public void onShow(View view) {
-        if (isReady) {
-            //展示广告
-            advanceRewardVideoItem.showAd();
-        } else {
-            Toast.makeText(this, "广告未加载", Toast.LENGTH_SHORT).show();
-        }
 
-    }
 
     @Override
     public void onAdLoaded(AdvanceRewardVideoItem advanceRewardVideoItem) {
-        isReady = true;
         Log.d("DEMO", "LOADED");
-        this.advanceRewardVideoItem = advanceRewardVideoItem;
         Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
+        //设置穿山甲的回调（必须）
+        if (advanceRewardVideoItem.getSdkId().equals(AdvanceConfig.SDK_ID_CSJ)){
+            CsjRewardVideoAdItem csjRewardVideoAdItem =  (CsjRewardVideoAdItem) advanceRewardVideoItem;
+            csjRewardVideoAdItem.setRewardAdInteractionListener(new TTRewardVideoAd.RewardAdInteractionListener() {
+                @Override
+                public void onAdShow() {
+
+                }
+
+                @Override
+                public void onAdVideoBarClick() {
+
+                }
+
+                @Override
+                public void onAdClose() {
+
+                }
+
+                @Override
+                public void onVideoComplete() {
+
+                }
+
+                @Override
+                public void onVideoError() {
+
+                }
+
+                @Override
+                public void onRewardVerify(boolean b, int i, String s) {
+
+                }
+
+                @Override
+                public void onSkippedVideo() {
+
+                }
+            });
+        }
+        //展示广告
+        advanceRewardVideoItem.showAd();
+
     }
 
     @Override
@@ -82,7 +112,6 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     @Override
     public void onVideoCached() {
         Log.d("DEMO", "CACHED");
-        isReady = true;
         Toast.makeText(this, "广告缓存成功", Toast.LENGTH_SHORT).show();
 
     }
@@ -105,7 +134,6 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     public void onAdReward() {
         Log.d("DEMO", "AD REWARD");
         Toast.makeText(this, "激励发放", Toast.LENGTH_SHORT).show();
-        isReady = false;
     }
 
 }

@@ -23,6 +23,10 @@ public class MyMercuryRewardAdapter extends BaseCustomAdapter {
                         customizeAd.adapterDidSucceed();
                     }
                     isVideoCached = false;
+                    //收到广告回调
+                    if (customRewardListener!=null){
+                        customRewardListener.onLoaded();
+                    }
                 }
 
                 @Override

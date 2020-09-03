@@ -65,6 +65,10 @@ public class MyCsjRewardAdapter extends BaseCustomAdapter {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd)
                         customizeAd.adapterDidSucceed();
+                    //收到广告回调
+                    if (customRewardListener!=null){
+                        customRewardListener.onLoaded();
+                    }
                     ttRewardVideoAd.setRewardAdInteractionListener(new TTRewardVideoAd.RewardAdInteractionListener() {
                         @Override
                         public void onAdShow() {

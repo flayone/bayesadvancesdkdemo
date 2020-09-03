@@ -11,7 +11,6 @@ import com.advance.AdvanceCustomizeSupplierListener;
 import com.advance.advancesdkdemo.ADManager;
 import com.advance.advancesdkdemo.R;
 import com.advance.advancesdkdemo.custom.BaseCustomAdapter;
-import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
 public class CustomRewardActivity extends Activity {
@@ -55,6 +54,12 @@ public class CustomRewardActivity extends Activity {
                     adapter.init(CustomRewardActivity.this, ad, selectedSupplier);
                     adapter.setCustomRewardListener(new CustomRewardListener() {
                         @Override
+                        public void onLoaded() {
+                            //展示广告
+                            adapter.showAD();
+                        }
+
+                        @Override
                         public void onReward() {
                             Toast.makeText(CustomRewardActivity.this, "激励奖励发放", Toast.LENGTH_SHORT).show();
                         }
@@ -71,16 +76,6 @@ public class CustomRewardActivity extends Activity {
         ad.loadStrategy();
     }
 
-    public void onShow(View view) {
-        if (adapter != null) {
-            if (adapter.isVideoCached) {
-                adapter.showAD();
-            } else {
-                Toast.makeText(this, "视频还未准备好", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(this, "广告未加载", Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
 }

@@ -53,6 +53,28 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
             Log.d("DEMO", "NO AD RESULT");
         } else {
             AdvanceNativeExpressAdItem advanceNativeExpressAdItem = list.get(0);
+
+            //穿山甲需要设置dislike逻辑，否则无法关闭广告
+            if (advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_CSJ)){
+                CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem)advanceNativeExpressAdItem;
+                csjNativeExpressAdItem.setDislikeCallback(NativeExpressActivity.this, new TTAdDislike.DislikeInteractionCallback() {
+                    @Override
+                    public void onSelected(int i, String s) {
+                        container.removeAllViews();
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onRefuse() {
+
+                    }
+                });
+            }
+
             container.removeAllViews();
             container.setVisibility(View.VISIBLE);
             container.addView(advanceNativeExpressAdItem.getExpressAdView());

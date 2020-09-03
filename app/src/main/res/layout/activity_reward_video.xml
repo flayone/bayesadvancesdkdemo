@@ -21,14 +21,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:onClick="onLoad"
-                android:text="加载激励视频" />
+                android:text="加载并展示激励视频" />
 
-            <Button
-                android:id="@+id/show_rewardvideo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onShow"
-                android:text="展示视频" />
         </LinearLayout>
 
     </RelativeLayout>
