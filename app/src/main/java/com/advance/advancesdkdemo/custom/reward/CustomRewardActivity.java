@@ -17,6 +17,9 @@ public class CustomRewardActivity extends Activity {
     AdvanceCustomizeAd ad;
     BaseCustomAdapter adapter;
 
+    private boolean isReady = false;
+    private boolean isPause = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,13 +58,21 @@ public class CustomRewardActivity extends Activity {
                     adapter.setCustomRewardListener(new CustomRewardListener() {
                         @Override
                         public void onLoaded() {
-                            //展示广告
-                            adapter.showAD();
+                            isReady = true;
+                            //页面非暂停状态才展示广告
+                            if (adapter != null&& !isPause)
+                                adapter.showAD();
                         }
 
                         @Override
                         public void onReward() {
                             Toast.makeText(CustomRewardActivity.this, "激励奖励发放", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onClose() {
+                            Toast.makeText(CustomRewardActivity.this, "广告关闭", Toast.LENGTH_SHORT).show();
+                            isReady = false;
                         }
                     });
                     adapter.loadAD();
@@ -76,6 +87,20 @@ public class CustomRewardActivity extends Activity {
         ad.loadStrategy();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isPause = true;
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isPause = false;
+        if (isReady && adapter != null) {
+            //广告已经调用过，且页面从后台恢复前台后重新展示广告
+            adapter.showAD();
+        }
+    }
 
 }

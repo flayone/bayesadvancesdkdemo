@@ -73,7 +73,8 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
 
                 @Override
                 public void onADClose() {
-
+                    if (customRewardListener != null )
+                        customRewardListener.onClose();
                 }
 
                 @Override

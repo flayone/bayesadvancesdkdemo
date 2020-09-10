@@ -88,7 +88,8 @@ public class MyCsjRewardAdapter extends BaseCustomAdapter {
 
                         @Override
                         public void onAdClose() {
-
+                            if (customRewardListener != null )
+                                customRewardListener.onClose();
                         }
 
                         @Override
