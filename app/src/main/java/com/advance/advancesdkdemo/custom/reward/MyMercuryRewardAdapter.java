@@ -13,7 +13,7 @@ public class MyMercuryRewardAdapter extends BaseCustomAdapter {
     @Override
     public void loadAD() {
         try {
-            AdvanceUtil.initMercuryAccount(sdkSupplier.mediaid,sdkSupplier.mediakey);
+            AdvanceUtil.initMercuryAccount(sdkSupplier.mediaid, sdkSupplier.mediakey);
 
             rewardVideoAD = new RewardVideoAD(activity, sdkSupplier.adspotid, new RewardVideoADListener() {
                 @Override
@@ -24,26 +24,16 @@ public class MyMercuryRewardAdapter extends BaseCustomAdapter {
                     }
                     isVideoCached = false;
                     //收到广告回调
-                    if (customRewardListener!=null){
+                    if (customRewardListener != null) {
                         customRewardListener.onLoaded();
                     }
                 }
 
                 @Override
                 public void onVideoCached() {
-                    try {
-                        //判断是否已经展示过
-                        if (  rewardVideoAD.hasShown()) {
-                            //这里一定要调用customizeAd 的事件方法
-                            if (null != customizeAd) {
-                                customizeAd.adapterDidFailed();
-                            }
-                        } else {
-                            isVideoCached = true;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
+                    isVideoCached = true;
+
 
                 }
 
@@ -81,7 +71,7 @@ public class MyMercuryRewardAdapter extends BaseCustomAdapter {
 
                 @Override
                 public void onADClose() {
-                    if (customRewardListener != null )
+                    if (customRewardListener != null)
                         customRewardListener.onClose();
                 }
 
@@ -107,7 +97,14 @@ public class MyMercuryRewardAdapter extends BaseCustomAdapter {
     @Override
     public void showAD() {
         if (rewardVideoAD != null) {
-            rewardVideoAD.showAD();
+            if (rewardVideoAD.hasShown()) {
+                //这里一定要调用customizeAd 的事件方法
+                if (null != customizeAd) {
+                    customizeAd.adapterDidFailed();
+                }
+            } else {
+                rewardVideoAD.showAD();
+            }
         }
     }
 

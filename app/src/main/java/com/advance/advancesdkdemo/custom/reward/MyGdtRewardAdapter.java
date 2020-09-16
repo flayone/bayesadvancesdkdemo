@@ -4,6 +4,7 @@ import android.os.SystemClock;
 
 import com.advance.advancesdkdemo.custom.BaseCustomAdapter;
 import com.advance.utils.AdvanceUtil;
+import com.advance.utils.LogUtil;
 import com.qq.e.ads.rewardvideo.RewardVideoAD;
 import com.qq.e.ads.rewardvideo.RewardVideoADListener;
 import com.qq.e.comm.util.AdError;
@@ -11,32 +12,37 @@ import com.qq.e.comm.util.AdError;
 public class MyGdtRewardAdapter extends BaseCustomAdapter {
     private RewardVideoAD rewardVideoAD;
 
+    private long expireTimestamp = 0;
+    private long expireBuffer = 1000;
+
     @Override
     public void loadAD() {
         try {
             rewardVideoAD = new RewardVideoAD(activity, AdvanceUtil.getGdtAccount(sdkSupplier.mediaid), sdkSupplier.adspotid, new RewardVideoADListener() {
                 @Override
                 public void onADLoad() {
-                    //这里一定要调用customizeAd 的事件方法
-                    if (null != customizeAd) {
-                        customizeAd.adapterDidSucceed();
-                    }
-                    //收到广告回调
-                    if (customRewardListener != null) {
-                        customRewardListener.onLoaded();
+                    //检查激励视频是否可用
+                    if (checkRewardOk(rewardVideoAD)) {
+                        //这里一定要调用customizeAd 的事件方法
+                        if (null != customizeAd) {
+                            customizeAd.adapterDidSucceed();
+                        }
+                        //收到广告回调
+                        if (customRewardListener != null) {
+                            customRewardListener.onLoaded();
+                        }
+                    } else {
+                        //这里一定要调用customizeAd 的事件方法
+                        if (null != customizeAd) {
+                            customizeAd.adapterDidFailed();
+                        }
                     }
                     isVideoCached = false;
                 }
 
                 @Override
                 public void onVideoCached() {
-                    try {
-                        //判断是否超过视频展示的最长有效时间，或者已经展示过
-                        isVideoCached = true;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
+                    isVideoCached = true;
                 }
 
                 @Override
@@ -73,7 +79,7 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
 
                 @Override
                 public void onADClose() {
-                    if (customRewardListener != null )
+                    if (customRewardListener != null)
                         customRewardListener.onClose();
                 }
 
@@ -99,7 +105,15 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
     @Override
     public void showAD() {
         if (rewardVideoAD != null) {
-            rewardVideoAD.showAD();
+            //检查广告是否可以展示
+            if (checkRewardOk(rewardVideoAD)) {
+                rewardVideoAD.showAD();
+            } else {
+                //这里一定要调用customizeAd 的事件方法
+                if (null != customizeAd) {
+                    customizeAd.adapterDidFailed();
+                }
+            }
         }
     }
 
@@ -107,4 +121,26 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
     public void destroy() {
 
     }
+
+
+    public boolean checkRewardOk(RewardVideoAD rewardVideoAD) {
+        try {
+            if (rewardVideoAD != null)
+                expireTimestamp = rewardVideoAD.getExpireTimestamp();
+            LogUtil.AdvanceLog("[gdt] elapsedRealtime = " + SystemClock.elapsedRealtime() + "  expireTimestamp = " + expireTimestamp);
+
+            if (SystemClock.elapsedRealtime() >= (expireTimestamp - expireBuffer)) {
+                LogUtil.AdvanceLog("[gdt] 激励视频广告已过期");
+                return false;
+            } else if (rewardVideoAD != null && rewardVideoAD.hasShown()) {
+                LogUtil.AdvanceLog("[gdt] 当前激励视频广告已被展示过");
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+
 }

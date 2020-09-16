@@ -1,6 +1,12 @@
 package com.advance.advancesdkdemo;
 
 public class Constants {
+    /**
+     * 注意！！！
+     *
+     * 这里分渠道设置的id仅仅是演示不同渠道展示效果，如果正式使用只需填写给到的一个广告位id（1000开头）即可，
+     * 广告位id直接设置在初始化方法里，不要学这里，不要学这里，不要学这里。
+     */
     //测试mercury广告用例
     static class Mercury {
         public static final String splashAdspotId = "10000531";
