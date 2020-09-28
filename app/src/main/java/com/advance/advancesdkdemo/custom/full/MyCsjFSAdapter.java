@@ -41,6 +41,8 @@ public class MyCsjFSAdapter extends BaseCustomAdapter {
             AdSlot adSlot = new AdSlot.Builder()
                     .setCodeId(sdkSupplier.adspotid)
                     .setSupportDeepLink(true)
+                    //如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,全屏视频场景，只要设置的值大于0即可
+                    .setExpressViewAcceptedSize(500,500)
                     .setOrientation(orientation)//必填参数，期望视频的播放方向：TTAdConstant.HORIZONTAL 或 TTAdConstant.VERTICAL
                     .build();
 //step5:请求广告

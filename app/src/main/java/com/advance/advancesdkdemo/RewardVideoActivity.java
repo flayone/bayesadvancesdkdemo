@@ -24,6 +24,8 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward_video);
         advanceRewardVideo = new AdvanceRewardVideo(this, ADManager.getInstance().getRewardAdspotId());
+        //如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,激励视频场景，只要设置的值大于0即可
+        advanceRewardVideo.setCsjExpressSize(500,500);
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(this);
 

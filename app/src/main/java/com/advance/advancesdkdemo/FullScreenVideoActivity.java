@@ -32,6 +32,8 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
         setContentView(R.layout.activity_full_screen_video);
 
         advanceFullScreenVideo = new AdvanceFullScreenVideo(this, ADManager.getInstance().getFullScreenVideoAdspotId());
+        //如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,全屏视频场景，只要设置的值大于0即可
+        advanceFullScreenVideo.setCsjExpressSize(500,500);
         //推荐：核心事件监听回调
         advanceFullScreenVideo.setAdListener(this);
 
