@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.view.View;
 
 import com.advance.AdvanceCustomizeAd;
+import com.advance.model.AdvanceError;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
+import com.advance.utils.LogUtil;
 import com.qq.e.ads.cfg.DownAPPConfirmPolicy;
 import com.qq.e.ads.nativ.ADSize;
 import com.qq.e.ads.nativ.NativeExpressAD;
@@ -14,6 +16,9 @@ import com.qq.e.comm.util.AdError;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.advance.model.AdvanceError.ERROR_DATA_NULL;
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
 
 public class MyGdtNEAdapter {
     private Activity activity;
@@ -41,7 +46,7 @@ public class MyGdtNEAdapter {
 
                             //这里一定要调用customizeAd 的事件方法
                             if (null != customizeAd) {
-                                customizeAd.adapterDidFailed();
+                                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_DATA_NULL));
                             }
                         } else {
                             List<CustomExpressAdItem> CustomNativeExpressAdItemList = new ArrayList<>();
@@ -63,7 +68,7 @@ public class MyGdtNEAdapter {
 
                         //这里一定要调用customizeAd 的事件方法
                         if (null != customizeAd)
-                            customizeAd.adapterDidFailed();
+                            customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
                     }
 
                 }
@@ -124,10 +129,17 @@ public class MyGdtNEAdapter {
 
                 @Override
                 public void onNoAD(AdError adError) {
+                    int code = -1;
+                    String msg = "default onNoAD";
+                    if (adError != null) {
+                        code = adError.getErrorCode();
+                        msg = adError.getErrorMsg();
+                    }
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidFailed();
+                        customizeAd.adapterDidFailed(AdvanceError.parseErr(code,msg));
                     }
+                    LogUtil.AdvanceLog(code + msg);
                 }
             }); // 这里的Context必须为Activity
             nativeExpressAd.setMaxVideoDuration(60);
@@ -138,7 +150,7 @@ public class MyGdtNEAdapter {
             e.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (null != customizeAd) {
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
             }
         }
 

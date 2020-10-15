@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
+import com.advance.model.AdvanceError;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
 import com.advance.utils.LogUtil;
@@ -67,7 +68,7 @@ public class MyCsjBannerAdapter {
                 public void onError(int code, String message) {
                     LogUtil.AdvanceLog(code + message);
                     if (null != advanceBanner) {
-                        advanceBanner.adapterDidFailed();
+                        advanceBanner.adapterDidFailed(AdvanceError.parseErr(code,message));
                     }
                     if (adContainer != null) {
                         adContainer.removeAllViews();
@@ -78,7 +79,7 @@ public class MyCsjBannerAdapter {
                 public void onNativeExpressAdLoad(List<TTNativeExpressAd> ads) {
                     if (ads == null || ads.size() == 0) {
                         if (null != advanceBanner) {
-                            advanceBanner.adapterDidFailed();
+                            advanceBanner.adapterDidFailed(AdvanceError.parseErr(AdvanceError.ERROR_DATA_NULL));
                         }
                         return;
                     }
@@ -86,7 +87,7 @@ public class MyCsjBannerAdapter {
                     // 加载成功的回调，接入方可在此处做广告的展示，请确保您的代码足够健壮，能够处理异常情况；
                     if (null == ad) {
                         if (null != advanceBanner) {
-                            advanceBanner.adapterDidFailed();
+                            advanceBanner.adapterDidFailed(AdvanceError.parseErr(AdvanceError.ERROR_DATA_NULL));
                         }
                         return;
                     }
@@ -100,7 +101,7 @@ public class MyCsjBannerAdapter {
         } catch (Throwable e) {
             e.printStackTrace();
             if (null != advanceBanner) {
-                advanceBanner.adapterDidFailed();
+                advanceBanner.adapterDidFailed(AdvanceError.parseErr(AdvanceError.ERROR_EXCEPTION_LOAD));
             }
         }
     }
@@ -131,7 +132,7 @@ public class MyCsjBannerAdapter {
                     LogUtil.AdvanceLog("ExpressView render fail:" + (System.currentTimeMillis() - startTime));
 
                     if (null != advanceBanner) {
-                        advanceBanner.adapterDidFailed();
+                        advanceBanner.adapterDidFailed(AdvanceError.parseErr(i,s));
                     }
                 }
 

@@ -1,10 +1,15 @@
 package com.advance.advancesdkdemo.custom.reward;
 
 import com.advance.advancesdkdemo.custom.BaseCustomAdapter;
+import com.advance.model.AdvanceError;
 import com.advance.utils.AdvanceUtil;
+import com.advance.utils.LogUtil;
 import com.mercury.sdk.core.rewardvideo.RewardVideoAD;
 import com.mercury.sdk.core.rewardvideo.RewardVideoADListener;
 import com.mercury.sdk.util.ADError;
+
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_SHOW;
 
 public class MyMercuryRewardAdapter extends BaseCustomAdapter {
 
@@ -77,10 +82,17 @@ public class MyMercuryRewardAdapter extends BaseCustomAdapter {
 
                 @Override
                 public void onNoAD(ADError adError) {
+                    int code = -1;
+                    String msg = "default onNoAD";
+                    if (adError != null) {
+                        code = adError.code;
+                        msg = adError.msg;
+                    }
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidFailed();
+                        customizeAd.adapterDidFailed(AdvanceError.parseErr(code, msg));
                     }
+                    LogUtil.AdvanceLog(code + msg);
                 }
             });
             rewardVideoAD.loadAD();
@@ -88,7 +100,7 @@ public class MyMercuryRewardAdapter extends BaseCustomAdapter {
             e.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (null != customizeAd) {
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
             }
         }
 
@@ -100,7 +112,7 @@ public class MyMercuryRewardAdapter extends BaseCustomAdapter {
             if (rewardVideoAD.hasShown()) {
                 //这里一定要调用customizeAd 的事件方法
                 if (null != customizeAd) {
-                    customizeAd.adapterDidFailed();
+                    customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_SHOW));
                 }
             } else {
                 rewardVideoAD.showAD();

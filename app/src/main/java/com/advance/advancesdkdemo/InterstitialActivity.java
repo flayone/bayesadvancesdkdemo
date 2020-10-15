@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceInterstitial;
 import com.advance.AdvanceInterstitialListener;
+import com.advance.model.AdvanceError;
 import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 import com.qq.e.ads.interstitial2.UnifiedInterstitialMediaListener;
@@ -52,9 +53,10 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
     }
 
     @Override
-    public void onAdFailed() {
+    public void onAdFailed(AdvanceError advanceError)  {
 
-        Toast.makeText(this, "广告失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

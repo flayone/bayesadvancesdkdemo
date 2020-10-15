@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.advance.AdvanceCustomizeAd;
 import com.advance.advancesdkdemo.R;
+import com.advance.model.AdvanceError;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
 import com.advance.utils.LogUtil;
@@ -35,6 +36,10 @@ import com.mercury.sdk.util.ADError;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.advance.model.AdvanceError.ERROR_DATA_NULL;
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_SHOW;
 
 public class MyMercuryNCAdapter implements NativeADListener {
     private Activity activity;
@@ -60,31 +65,45 @@ public class MyMercuryNCAdapter implements NativeADListener {
             e.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (customizeAd != null)
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
         }
 
     }
 
     @Override
     public void onADLoaded(List<NativeADData> list) {
-        if (list == null || list.isEmpty()) {
+        try {
+            if (list == null || list.isEmpty()) {
+                //这里一定要调用customizeAd 的事件方法
+                if (customizeAd != null)
+                    customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_DATA_NULL));
+            } else {
+                //这里一定要调用customizeAd 的事件方法
+                if (customizeAd != null)
+                    customizeAd.adapterDidSucceed();
+                new MercuryNativeAdData(list.get(0)).showAd();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (customizeAd != null)
-                customizeAd.adapterDidFailed();
-        } else {
-            //这里一定要调用customizeAd 的事件方法
-            if (customizeAd != null)
-                customizeAd.adapterDidSucceed();
-            new MercuryNativeAdData(list.get(0)).showAd();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
         }
     }
 
     @Override
     public void onNoAD(ADError adError) {
-        LogUtil.AdvanceLog("onNoAD error code: " + adError.code + ", error msg: " + adError.msg);
+        int code = -1;
+        String msg = "default onNoAD";
+        if (adError != null) {
+            code = adError.code;
+            msg = adError.msg;
+        }
         //这里一定要调用customizeAd 的事件方法
-        if (customizeAd != null)
-            customizeAd.adapterDidFailed();
+        if (null != customizeAd) {
+            customizeAd.adapterDidFailed(AdvanceError.parseErr(code, msg));
+        }
+        LogUtil.AdvanceLog(code + msg);
     }
 
 
@@ -122,7 +141,7 @@ public class MyMercuryNCAdapter implements NativeADListener {
                 e.printStackTrace();
                 //这里一定要调用customizeAd 的事件方法
                 if (customizeAd != null)
-                    customizeAd.adapterDidFailed();
+                    customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
             }
         }
 
@@ -237,11 +256,18 @@ public class MyMercuryNCAdapter implements NativeADListener {
                     }
 
                     @Override
-                    public void onADError(ADError error) {
-                        Log.d(TAG, "onADError error code :" + error.code + "  error msg: " + error.msg);
+                    public void onADError(ADError adError) {
+                        int code = -1;
+                        String msg = "default onNoAD";
+                        if (adError != null) {
+                            code = adError.code;
+                            msg = adError.msg;
+                        }
                         //这里一定要调用customizeAd 的事件方法
-                        if (customizeAd != null)
-                            customizeAd.adapterDidFailed();
+                        if (null != customizeAd) {
+                            customizeAd.adapterDidFailed(AdvanceError.parseErr(code, msg));
+                        }
+                        LogUtil.AdvanceLog(code + msg);
                     }
 
 
@@ -253,7 +279,7 @@ public class MyMercuryNCAdapter implements NativeADListener {
                 e.printStackTrace();
                 //这里一定要调用customizeAd 的事件方法
                 if (customizeAd != null)
-                    customizeAd.adapterDidFailed();
+                    customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_SHOW));
             }
         }
 

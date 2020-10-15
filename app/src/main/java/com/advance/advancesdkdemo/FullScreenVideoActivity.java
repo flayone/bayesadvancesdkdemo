@@ -12,6 +12,7 @@ import com.advance.AdvanceFullScreenItem;
 import com.advance.AdvanceFullScreenVideo;
 import com.advance.AdvanceFullScreenVideoListener;
 import com.advance.csj.CsjFullScreenVideoItem;
+import com.advance.model.AdvanceError;
 import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
@@ -100,7 +101,7 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
     }
 
     @Override
-    public void onAdFailed() {
+    public void onAdFailed(AdvanceError advanceError)  {
         Log.d(TAG, "onAdFailed");
         Toast.makeText(this, "广告加载失败", Toast.LENGTH_SHORT).show();
 

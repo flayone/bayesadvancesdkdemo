@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
+import com.advance.model.AdvanceError;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
 import com.bytedance.sdk.openadsdk.AdSlot;
@@ -16,6 +17,9 @@ import com.bytedance.sdk.openadsdk.TTNativeExpressAd;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.advance.model.AdvanceError.ERROR_DATA_NULL;
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
 
 public class MyCsjNEAdapter {
 
@@ -61,7 +65,7 @@ public class MyCsjNEAdapter {
                         if (list == null || list.size() == 0) {
                             //这里一定要调用customizeAd 的事件方法
                             if (null != customizeAd) {
-                                customizeAd.adapterDidFailed();
+                                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_DATA_NULL));
                             }
                         } else {
                             List<CustomExpressAdItem> customExpressAdItems = new ArrayList<>();
@@ -81,7 +85,7 @@ public class MyCsjNEAdapter {
                         e.printStackTrace();
                         //这里一定要调用customizeAd 的事件方法
                         if (customizeAd != null)
-                            customizeAd.adapterDidFailed();
+                            customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
                     }
                 }
             });
@@ -89,7 +93,7 @@ public class MyCsjNEAdapter {
             e.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (null != customizeAd) {
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
             }
         }
 
@@ -120,7 +124,7 @@ public class MyCsjNEAdapter {
                 public void onRenderFail(View view, String s, int i) {
                     //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null)
-                        customizeAd.adapterDidFailed();
+                        customizeAd.adapterDidFailed(AdvanceError.parseErr(i,s));
 
                     if (listener!=null){
                         listener.onADRenderFailed(ttNativeExpressAd.getExpressAdView());

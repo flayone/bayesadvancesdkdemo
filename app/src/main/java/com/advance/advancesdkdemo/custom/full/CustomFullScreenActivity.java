@@ -11,6 +11,7 @@ import com.advance.AdvanceCustomizeSupplierListener;
 import com.advance.advancesdkdemo.ADManager;
 import com.advance.advancesdkdemo.R;
 import com.advance.advancesdkdemo.custom.BaseCustomAdapter;
+import com.advance.model.AdvanceError;
 import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
@@ -28,8 +29,9 @@ public class CustomFullScreenActivity extends Activity {
         //设置渠道的结果监听
         ad.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override
-            public void onSupplierFailed() {
+            public void onSupplierFailed(AdvanceError advanceError)  {
                 //一般是策略无填充，或者所有策略均加载失败时回调
+                Toast.makeText(CustomFullScreenActivity.this, "策略加载失败" + advanceError.code + "," + advanceError.msg, Toast.LENGTH_LONG).show();
 
             }
 

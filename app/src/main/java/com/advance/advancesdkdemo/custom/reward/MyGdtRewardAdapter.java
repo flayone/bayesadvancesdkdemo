@@ -3,11 +3,15 @@ package com.advance.advancesdkdemo.custom.reward;
 import android.os.SystemClock;
 
 import com.advance.advancesdkdemo.custom.BaseCustomAdapter;
+import com.advance.model.AdvanceError;
 import com.advance.utils.AdvanceUtil;
 import com.advance.utils.LogUtil;
 import com.qq.e.ads.rewardvideo.RewardVideoAD;
 import com.qq.e.ads.rewardvideo.RewardVideoADListener;
 import com.qq.e.comm.util.AdError;
+
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_SHOW;
 
 public class MyGdtRewardAdapter extends BaseCustomAdapter {
     private RewardVideoAD rewardVideoAD;
@@ -34,7 +38,7 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
                     } else {
                         //这里一定要调用customizeAd 的事件方法
                         if (null != customizeAd) {
-                            customizeAd.adapterDidFailed();
+                            customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
                         }
                     }
                     isVideoCached = false;
@@ -85,10 +89,17 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
 
                 @Override
                 public void onError(AdError adError) {
+                    int code = -1;
+                    String msg = "default onNoAD";
+                    if (adError != null) {
+                        code = adError.getErrorCode();
+                        msg = adError.getErrorMsg();
+                    }
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidFailed();
+                        customizeAd.adapterDidFailed(AdvanceError.parseErr(code, msg));
                     }
+                    LogUtil.AdvanceLog(code + msg);
                 }
             });
             rewardVideoAD.loadAD();
@@ -96,7 +107,7 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
             e.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (null != customizeAd) {
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
             }
         }
 
@@ -111,7 +122,7 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
             } else {
                 //这里一定要调用customizeAd 的事件方法
                 if (null != customizeAd) {
-                    customizeAd.adapterDidFailed();
+                    customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_SHOW));
                 }
             }
         }

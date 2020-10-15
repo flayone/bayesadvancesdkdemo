@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 
 import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.custom.BaseCustomAdapter;
+import com.advance.model.AdvanceError;
 import com.advance.utils.AdvanceUtil;
 import com.bytedance.sdk.openadsdk.AdSlot;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
@@ -11,6 +12,9 @@ import com.bytedance.sdk.openadsdk.TTAdManager;
 import com.bytedance.sdk.openadsdk.TTAdNative;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.bytedance.sdk.openadsdk.TTFullScreenVideoAd;
+
+import static com.advance.model.AdvanceError.ERROR_DATA_NULL;
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
 
 public class MyCsjFSAdapter extends BaseCustomAdapter {
     private TTFullScreenVideoAd fullScreenVideoAd;
@@ -52,7 +56,7 @@ public class MyCsjFSAdapter extends BaseCustomAdapter {
                 public void onError(int i, String s) {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd)
-                        customizeAd.adapterDidFailed();
+                        customizeAd.adapterDidFailed(AdvanceError.parseErr(i,s));
                 }
 
                 @Override
@@ -62,7 +66,7 @@ public class MyCsjFSAdapter extends BaseCustomAdapter {
                     if (fullScreenVideoAd == null) {
                         //这里一定要调用customizeAd 的事件方法
                         if (null != customizeAd)
-                            customizeAd.adapterDidFailed();
+                            customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_DATA_NULL));
                         return;
                     }
                     //这里一定要调用customizeAd 的事件方法
@@ -111,7 +115,7 @@ public class MyCsjFSAdapter extends BaseCustomAdapter {
             e.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (null != customizeAd)
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
 
         }
     }

@@ -5,12 +5,15 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.advance.AdvanceCustomizeAd;
+import com.advance.model.AdvanceError;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
 import com.advance.utils.LogUtil;
 import com.qq.e.ads.banner2.UnifiedBannerADListener;
 import com.qq.e.ads.banner2.UnifiedBannerView;
 import com.qq.e.comm.util.AdError;
+
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
 
 public class MyGdtBannerAdapter {
     private Activity activity;
@@ -33,10 +36,16 @@ public class MyGdtBannerAdapter {
             bv = new UnifiedBannerView(activity, AdvanceUtil.getGdtAccount(sdkSupplier.mediaid), sdkSupplier.adspotid, new UnifiedBannerADListener() {
                 @Override
                 public void onNoAD(AdError adError) {
-                    LogUtil.AdvanceLog(adError.getErrorCode() + adError.getErrorMsg());
-                    if (null != advanceBanner) {
-                        advanceBanner.adapterDidFailed();
+                    int code = -1;
+                    String msg = "default onNoAD";
+                    if (adError != null) {
+                        code = adError.getErrorCode();
+                        msg = adError.getErrorMsg();
                     }
+                    if (null != advanceBanner) {
+                        advanceBanner.adapterDidFailed(AdvanceError.parseErr(code,msg));
+                    }
+                    LogUtil.AdvanceLog(code + msg);
                 }
 
                 @Override
@@ -91,7 +100,7 @@ public class MyGdtBannerAdapter {
         } catch (Exception e) {
             e.printStackTrace();
             if (advanceBanner != null)
-                advanceBanner.adapterDidFailed();
+                advanceBanner.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
         }
     }
 

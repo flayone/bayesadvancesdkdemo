@@ -9,6 +9,7 @@ import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
 import com.advance.AdvanceCustomizeSupplierListener;
 import com.advance.advancesdkdemo.R;
+import com.advance.model.AdvanceError;
 import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
@@ -29,7 +30,7 @@ public class NativeCustomizeActivity extends Activity {
         //必须：设置广告载体
         nativeCustomizeAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override
-            public void onSupplierFailed() {
+            public void onSupplierFailed(AdvanceError advanceError)  {
                 //一般是策略无填充，或者所有策略均加载失败时回调
                 fl.removeAllViews();
             }

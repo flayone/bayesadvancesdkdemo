@@ -10,8 +10,10 @@ import android.widget.TextView;
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
 import com.advance.advancesdkdemo.R;
+import com.advance.model.AdvanceError;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
+import com.advance.utils.LogUtil;
 import com.bytedance.sdk.openadsdk.AdSlot;
 import com.bytedance.sdk.openadsdk.TTAdManager;
 import com.bytedance.sdk.openadsdk.TTAdNative;
@@ -25,6 +27,10 @@ import com.mercury.sdk.util.ADError;
 import com.qq.e.comm.util.AdError;
 
 import java.lang.ref.SoftReference;
+
+import static com.advance.model.AdvanceError.ERROR_CSJ_TIMEOUT;
+import static com.advance.model.AdvanceError.ERROR_DATA_NULL;
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
 
 public class SplashAdapter {
 
@@ -51,7 +57,7 @@ public class SplashAdapter {
                 public void onError(int code, String message) {
                     //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null) {
-                        customizeAd.adapterDidFailed();
+                        customizeAd.adapterDidFailed(AdvanceError.parseErr(code, message));
                     }
                 }
 
@@ -60,7 +66,7 @@ public class SplashAdapter {
                 public void onTimeout() {
                     //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null) {
-                        customizeAd.adapterDidFailed();
+                        customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_CSJ_TIMEOUT));
                     }
                 }
 
@@ -70,7 +76,7 @@ public class SplashAdapter {
                     if (ad == null) {
                         //这里一定要调用customizeAd 的事件方法
                         if (customizeAd != null) {
-                            customizeAd.adapterDidFailed();
+                            customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_DATA_NULL));
                         }
                         return;
                     }
@@ -127,7 +133,7 @@ public class SplashAdapter {
             e.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (customizeAd != null)
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
         }
     }
 
@@ -146,10 +152,17 @@ public class SplashAdapter {
 
                 @Override
                 public void onNoAD(AdError adError) {
-                    //这里一定要调用customizeAd 的事件方法
-                    if (customizeAd != null) {
-                        customizeAd.adapterDidFailed();
+                    int code = -1;
+                    String msg = "default onNoAD";
+                    if (adError != null) {
+                        code = adError.getErrorCode();
+                        msg = adError.getErrorMsg();
                     }
+                    //这里一定要调用customizeAd 的事件方法
+                    if (null != customizeAd) {
+                        customizeAd.adapterDidFailed(AdvanceError.parseErr(code,msg));
+                    }
+                    LogUtil.AdvanceLog(code + msg);
                 }
 
                 @Override
@@ -197,7 +210,8 @@ public class SplashAdapter {
             e.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (null != customizeAd)
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
+
         }
     }
 
@@ -264,10 +278,17 @@ public class SplashAdapter {
 
                 @Override
                 public void onNoAD(ADError adError) {
+                    int code = -1;
+                    String msg = "default onNoAD";
+                    if (adError != null) {
+                        code = adError.code;
+                        msg = adError.msg;
+                    }
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidFailed();
+                        customizeAd.adapterDidFailed(AdvanceError.parseErr(code,msg));
                     }
+                    LogUtil.AdvanceLog(code + msg);
                 }
             });
             //可选设置，设置底部logo图片，建议使用宽高比6：1左右的细长图片，展示效果最好
@@ -276,11 +297,16 @@ public class SplashAdapter {
             mercurySplash.setSplashHolderImage(R.mipmap.background);
             //展示广告
             mercurySplash.fetchAndShowIn(adContainer);
+
+            //重新设置按钮样式
+            if (skipView != null)
+                skipView.setBackgroundDrawable(ContextCompat.getDrawable(activity.get(), R.drawable.background_circle));
+
         } catch (Throwable e) {
             e.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (customizeAd != null)
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
         }
     }
 }

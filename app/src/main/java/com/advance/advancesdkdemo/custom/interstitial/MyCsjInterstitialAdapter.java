@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.custom.BaseCustomAdapter;
+import com.advance.model.AdvanceError;
 import com.advance.utils.AdvanceUtil;
 import com.bytedance.sdk.openadsdk.AdSlot;
 import com.bytedance.sdk.openadsdk.TTAdManager;
@@ -12,6 +13,9 @@ import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.bytedance.sdk.openadsdk.TTNativeExpressAd;
 
 import java.util.List;
+
+import static com.advance.model.AdvanceError.ERROR_DATA_NULL;
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
 
 public class MyCsjInterstitialAdapter extends BaseCustomAdapter {
     private TTNativeExpressAd mTTAd;
@@ -45,7 +49,7 @@ public class MyCsjInterstitialAdapter extends BaseCustomAdapter {
                 public void onError(int i, String s) {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidFailed();
+                        customizeAd.adapterDidFailed(AdvanceError.parseErr(i,s));
                     }
                 }
 
@@ -55,7 +59,7 @@ public class MyCsjInterstitialAdapter extends BaseCustomAdapter {
                     if (ads == null || ads.size() == 0) {
                         //这里一定要调用customizeAd 的事件方法
                         if (null != customizeAd) {
-                            customizeAd.adapterDidFailed();
+                            customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_DATA_NULL));
                         }
                         return;
                     }
@@ -63,7 +67,7 @@ public class MyCsjInterstitialAdapter extends BaseCustomAdapter {
                     if (null == mTTAd) {
                         //这里一定要调用customizeAd 的事件方法
                         if (null != customizeAd) {
-                            customizeAd.adapterDidFailed();
+                            customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_DATA_NULL));
                         }
                         return;
                     }
@@ -93,7 +97,7 @@ public class MyCsjInterstitialAdapter extends BaseCustomAdapter {
                         public void onRenderFail(View view, String msg, int code) {
                             //这里一定要调用customizeAd 的事件方法
                             if (null != customizeAd) {
-                                customizeAd.adapterDidFailed();
+                                customizeAd.adapterDidFailed(AdvanceError.parseErr(code,msg));
                             }
                         }
 
@@ -112,7 +116,7 @@ public class MyCsjInterstitialAdapter extends BaseCustomAdapter {
             t.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (null != customizeAd) {
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
             }
         }
     }

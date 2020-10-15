@@ -1,11 +1,15 @@
 package com.advance.advancesdkdemo.custom.interstitial;
 
 import com.advance.advancesdkdemo.custom.BaseCustomAdapter;
+import com.advance.model.AdvanceError;
 import com.advance.utils.AdvanceUtil;
+import com.advance.utils.LogUtil;
 import com.qq.e.ads.interstitial2.UnifiedInterstitialAD;
 import com.qq.e.ads.interstitial2.UnifiedInterstitialADListener;
 import com.qq.e.comm.constants.AdPatternType;
 import com.qq.e.comm.util.AdError;
+
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
 
 public class MyGdtInterstitialAdapter extends BaseCustomAdapter {
     private UnifiedInterstitialAD interstitialAD;
@@ -33,10 +37,18 @@ public class MyGdtInterstitialAdapter extends BaseCustomAdapter {
 
                 @Override
                 public void onNoAD(AdError adError) {
+                    int code = -1;
+                    String msg = "default onNoAD";
+                    if (adError != null) {
+                        code = adError.getErrorCode();
+                        msg = adError.getErrorMsg();
+                    }
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidFailed();
+                        customizeAd.adapterDidFailed(AdvanceError.parseErr(code,msg));
                     }
+                    LogUtil.AdvanceLog(code + msg);
+
 
                 }
 
@@ -79,7 +91,8 @@ public class MyGdtInterstitialAdapter extends BaseCustomAdapter {
             t.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (null != customizeAd)
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
+
         }
 
     }

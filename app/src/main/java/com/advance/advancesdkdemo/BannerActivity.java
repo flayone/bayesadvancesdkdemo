@@ -8,8 +8,7 @@ import android.widget.Toast;
 
 import com.advance.AdvanceBanner;
 import com.advance.AdvanceBannerListener;
-import com.advance.model.AdvanceSupplierID;
-import com.advance.model.SdkSupplier;
+import com.advance.model.AdvanceError;
 
 public class BannerActivity extends AppCompatActivity implements AdvanceBannerListener {
     private String TAG = "DEMO BANNER";
@@ -42,11 +41,10 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
     }
 
     @Override
-    public void onAdFailed() {
+    public void onAdFailed(AdvanceError advanceError) {
 
         Log.d(TAG, "Failed");
-        Toast.makeText(this, "广告失败", Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
     }
 
     @Override

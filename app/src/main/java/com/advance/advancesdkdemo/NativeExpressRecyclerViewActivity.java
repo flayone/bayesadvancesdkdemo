@@ -19,6 +19,7 @@ import com.advance.AdvanceNativeExpressListener;
 import com.advance.mercury.MercuryNativeExpressAdItem;
 import com.advance.csj.CsjNativeExpressAdItem;
 import com.advance.gdt.GdtNativeAdExpressAdItem;
+import com.advance.model.AdvanceError;
 import com.mercury.sdk.util.ADError;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
 import com.bytedance.sdk.openadsdk.TTNativeExpressAd;
@@ -83,7 +84,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     }
 
     /**
-     *
+     *初始化信息流广告，加载SDK策略
      */
     private void initAdvanceNativeExpressAD() {
         advanceNativeExpress = new AdvanceNativeExpress(this, ADManager.getInstance().getNativeExpressAdspotId());
@@ -100,8 +101,8 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     }
 
     @Override
-    public void onAdFailed() {
-        Toast.makeText(this, "广告失败", Toast.LENGTH_SHORT).show();
+    public void onAdFailed(AdvanceError advanceError) {
+        Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -232,8 +233,8 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                 }
 
                 //穿山甲需要设置dislike逻辑，否则无法关闭广告
-                if (advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_CSJ)){
-                    CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem)advanceNativeExpressAdItem;
+                if (advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_CSJ)) {
+                    CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
                     csjNativeExpressAdItem.setDislikeCallback(NativeExpressRecyclerViewActivity.this, new TTAdDislike.DislikeInteractionCallback() {
                         @Override
                         public void onSelected(int i, String s) {

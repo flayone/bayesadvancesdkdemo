@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
+import com.advance.model.AdvanceError;
 import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 import com.mercury.sdk.core.config.LargeADCutType;
@@ -55,7 +56,8 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
         advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
         //必须：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(this);
-        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("887301946", AdvanceSupplierID.CSJ));
+        //无品牌广告订单（cpt包段广告）建议设置打底广告，减少流量损失
+//        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("887301946", AdvanceSupplierID.CSJ));
 
 // 如果targetSDKVersion >= 23，需要申请好权限,如果您的App没有适配到Android6.0（即targetSDKVersion < 23）或者已经提前申请权限，那么只需要在这里直接调用loadAd方法。
         if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
@@ -105,11 +107,11 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
     }
 
     @Override
-    public void onAdFailed() {
+    public void onAdFailed(AdvanceError advanceError) {
         goToMainActivity();
 
         Log.d(TAG, "Splash ad failed");
-        Toast.makeText(this, "广告加载失败", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
     }
 
     @Override

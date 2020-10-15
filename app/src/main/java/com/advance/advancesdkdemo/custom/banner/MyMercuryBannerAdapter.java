@@ -5,11 +5,15 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.advance.AdvanceCustomizeAd;
+import com.advance.model.AdvanceError;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
+import com.advance.utils.LogUtil;
 import com.mercury.sdk.core.banner.BannerAD;
 import com.mercury.sdk.core.banner.BannerADListener;
 import com.mercury.sdk.util.ADError;
+
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
 
 public class MyMercuryBannerAdapter {
     private Activity activity;
@@ -60,9 +64,17 @@ public class MyMercuryBannerAdapter {
 
                 @Override
                 public void onNoAD(ADError adError) {
-                    if (null != advanceBanner) {
-                        advanceBanner.adapterDidFailed();
+                    int code = -1;
+                    String msg = "default onNoAD";
+                    if (adError != null) {
+                        code = adError.code;
+                        msg = adError.msg;
                     }
+                    //这里一定要调用customizeAd 的事件方法
+                    if (null != advanceBanner) {
+                        advanceBanner.adapterDidFailed(AdvanceError.parseErr(code,msg));
+                    }
+                    LogUtil.AdvanceLog(code + msg);
                 }
             });
             RelativeLayout.LayoutParams rbl = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
@@ -74,7 +86,7 @@ public class MyMercuryBannerAdapter {
         } catch (Exception e) {
             e.printStackTrace();
             if (null != advanceBanner)
-                advanceBanner.adapterDidFailed();
+                advanceBanner.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
         }
 
     }

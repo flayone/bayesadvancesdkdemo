@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.advance.AdvanceCustomizeAd;
 import com.advance.advancesdkdemo.R;
+import com.advance.model.AdvanceError;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
+import com.advance.utils.LogUtil;
 import com.bumptech.glide.Glide;
 import com.qq.e.ads.cfg.DownAPPConfirmPolicy;
 import com.qq.e.ads.cfg.VideoOption;
@@ -29,6 +31,9 @@ import com.qq.e.comm.util.AdError;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.advance.model.AdvanceError.ERROR_DATA_NULL;
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
 
 public class MyGdtNCAdapter implements NativeADUnifiedListener {
 
@@ -56,7 +61,7 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
             e.printStackTrace();
             //这里一定要调用customizeAd 的事件方法
             if (customizeAd != null)
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
         }
 
     }
@@ -66,7 +71,7 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
         if (list == null || list.isEmpty()) {
             //这里一定要调用customizeAd 的事件方法
             if (customizeAd != null)
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_DATA_NULL));
         } else {
             //这里一定要调用customizeAd 的事件方法
             if (customizeAd != null)
@@ -77,9 +82,17 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
 
     @Override
     public void onNoAD(AdError adError) {
+        int code = -1;
+        String msg = "default onNoAD";
+        if (adError != null) {
+            code = adError.getErrorCode();
+            msg = adError.getErrorMsg();
+        }
         //这里一定要调用customizeAd 的事件方法
-        if (customizeAd != null)
-            customizeAd.adapterDidFailed();
+        if (null != customizeAd) {
+            customizeAd.adapterDidFailed(AdvanceError.parseErr(code,msg));
+        }
+        LogUtil.AdvanceLog(code + msg);
     }
 
 
@@ -115,7 +128,7 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
                 e.printStackTrace();
                 //这里一定要调用customizeAd 的事件方法
                 if (customizeAd != null)
-                    customizeAd.adapterDidFailed();
+                    customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
             }
         }
 
@@ -242,11 +255,18 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
                     }
 
                     @Override
-                    public void onADError(AdError error) {
-                        Log.d(TAG, "onADError error code :" + error.getErrorCode() + "  error msg: " + error.getErrorMsg());
+                    public void onADError(AdError adError) {
+                        int code = -1;
+                        String msg = "default onNoAD";
+                        if (adError != null) {
+                            code = adError.getErrorCode();
+                            msg = adError.getErrorMsg();
+                        }
                         //这里一定要调用customizeAd 的事件方法
-                        if (customizeAd != null)
-                            customizeAd.adapterDidFailed();
+                        if (null != customizeAd) {
+                            customizeAd.adapterDidFailed(AdvanceError.parseErr(code,msg));
+                        }
+                        LogUtil.AdvanceLog(code + msg);
                     }
 
                     @Override
@@ -260,7 +280,7 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
                 e.printStackTrace();
                 //这里一定要调用customizeAd 的事件方法
                 if (customizeAd != null)
-                    customizeAd.adapterDidFailed();
+                    customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
             }
 
         }

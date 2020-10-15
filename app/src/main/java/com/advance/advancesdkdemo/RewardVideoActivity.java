@@ -11,6 +11,7 @@ import com.advance.AdvanceRewardVideo;
 import com.advance.AdvanceRewardVideoItem;
 import com.advance.AdvanceRewardVideoListener;
 import com.advance.csj.CsjRewardVideoAdItem;
+import com.advance.model.AdvanceError;
 import com.bytedance.sdk.openadsdk.TTRewardVideoAd;
 
 public class RewardVideoActivity extends AppCompatActivity implements AdvanceRewardVideoListener {
@@ -121,11 +122,11 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     }
 
     @Override
-    public void onAdFailed() {
+    public void onAdFailed(AdvanceError advanceError)  {
         isReady = false;
 
         Log.d("DEMO", "FAILED");
-        Toast.makeText(this, "广告加载失败", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
 
     }
 

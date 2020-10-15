@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
 import com.advance.advancesdkdemo.R;
+import com.advance.model.AdvanceError;
 import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
 import com.bumptech.glide.Glide;
@@ -34,6 +35,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
+
+import static com.advance.model.AdvanceError.ERROR_DATA_NULL;
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
+import static com.advance.model.AdvanceError.ERROR_EXCEPTION_SHOW;
 
 public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
 
@@ -77,7 +82,7 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
     public void onError(int code, String message) {
         //这里一定要调用customizeAd 的事件方法
         if (customizeAd != null)
-            customizeAd.adapterDidFailed();
+            customizeAd.adapterDidFailed(AdvanceError.parseErr(code, message));
     }
 
 
@@ -86,7 +91,7 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
         if (ads == null || ads.isEmpty()) {
             //这里一定要调用customizeAd 的事件方法
             if (customizeAd != null)
-                customizeAd.adapterDidFailed();
+                customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_DATA_NULL));
         } else {
             //这里一定要调用customizeAd 的事件方法
             if (customizeAd != null)
@@ -135,7 +140,7 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
                 e.printStackTrace();
                 //这里一定要调用customizeAd 的事件方法
                 if (customizeAd != null)
-                    customizeAd.adapterDidFailed();
+                    customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
             }
         }
 
@@ -181,7 +186,7 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
                 e.printStackTrace();
                 //这里一定要调用customizeAd 的事件方法
                 if (customizeAd != null)
-                    customizeAd.adapterDidFailed();
+                    customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_SHOW));
             }
         }
 

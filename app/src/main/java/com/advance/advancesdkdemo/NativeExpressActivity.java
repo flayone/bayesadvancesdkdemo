@@ -15,6 +15,7 @@ import com.advance.AdvanceNativeExpressListener;
 import com.advance.mercury.MercuryNativeExpressAdItem;
 import com.advance.csj.CsjNativeExpressAdItem;
 import com.advance.gdt.GdtNativeAdExpressAdItem;
+import com.advance.model.AdvanceError;
 import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 import com.mercury.sdk.core.config.ADSize;
@@ -54,9 +55,9 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         } else {
             AdvanceNativeExpressAdItem advanceNativeExpressAdItem = list.get(0);
 
-            //穿山甲需要设置dislike逻辑，否则无法关闭广告
-            if (advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_CSJ)){
-                CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem)advanceNativeExpressAdItem;
+            //穿山甲需要设置dislike逻辑，要在选中回调里移除广告
+            if (advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_CSJ)) {
+                CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
                 csjNativeExpressAdItem.setDislikeCallback(NativeExpressActivity.this, new TTAdDislike.DislikeInteractionCallback() {
                     @Override
                     public void onSelected(int i, String s) {
@@ -91,8 +92,9 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
     }
 
     @Override
-    public void onAdFailed() {
-        Toast.makeText(this, "广告失败", Toast.LENGTH_SHORT).show();
+    public void onAdFailed(AdvanceError advanceError) {
+        Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
+
         Log.d("DEMO", "FAILED");
 
     }

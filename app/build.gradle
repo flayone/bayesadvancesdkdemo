@@ -36,8 +36,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+//    implementation(name: 'advancelib_3.2.7_4qsk', ext: 'aar')
+
     //聚合SDK引入
-    implementation(name: 'advancelib_3.3.0', ext: 'aar')
+//    implementation(name: 'advancelib_3.3.0', ext: 'aar')
+    implementation 'com.advsdk:advance:3.3.1'
+
     //mercury 引入
     implementation 'com.mercury:mercurysdk:3.3.2'
     //穿山甲SDK
