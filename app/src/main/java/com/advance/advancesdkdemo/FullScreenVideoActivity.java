@@ -11,14 +11,7 @@ import com.advance.AdvanceConfig;
 import com.advance.AdvanceFullScreenItem;
 import com.advance.AdvanceFullScreenVideo;
 import com.advance.AdvanceFullScreenVideoListener;
-import com.advance.csj.CsjFullScreenVideoItem;
 import com.advance.model.AdvanceError;
-import com.advance.model.AdvanceSupplierID;
-import com.advance.model.SdkSupplier;
-import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
-import com.qq.e.ads.cfg.VideoOption;
-import com.qq.e.ads.interstitial2.UnifiedInterstitialMediaListener;
-import com.qq.e.comm.util.AdError;
 
 public class FullScreenVideoActivity extends Activity implements AdvanceFullScreenVideoListener {
 
@@ -34,7 +27,7 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
 
         advanceFullScreenVideo = new AdvanceFullScreenVideo(this, ADManager.getInstance().getFullScreenVideoAdspotId());
         //如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,全屏视频场景，只要设置的值大于0即可
-        advanceFullScreenVideo.setCsjExpressSize(500,500);
+        advanceFullScreenVideo.setCsjExpressSize(500, 500);
         //推荐：核心事件监听回调
         advanceFullScreenVideo.setAdListener(this);
 
@@ -101,7 +94,7 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
     }
 
     @Override
-    public void onAdFailed(AdvanceError advanceError)  {
+    public void onAdFailed(AdvanceError advanceError) {
         Log.d(TAG, "onAdFailed");
         Toast.makeText(this, "广告加载失败", Toast.LENGTH_SHORT).show();
 

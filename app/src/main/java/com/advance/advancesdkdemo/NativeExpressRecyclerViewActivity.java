@@ -16,17 +16,9 @@ import com.advance.AdvanceConfig;
 import com.advance.AdvanceNativeExpress;
 import com.advance.AdvanceNativeExpressAdItem;
 import com.advance.AdvanceNativeExpressListener;
-import com.advance.mercury.MercuryNativeExpressAdItem;
 import com.advance.csj.CsjNativeExpressAdItem;
-import com.advance.gdt.GdtNativeAdExpressAdItem;
 import com.advance.model.AdvanceError;
-import com.mercury.sdk.util.ADError;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
-import com.bytedance.sdk.openadsdk.TTNativeExpressAd;
-import com.qq.e.ads.nativ.NativeExpressADView;
-import com.qq.e.ads.nativ.NativeExpressMediaListener;
-import com.qq.e.comm.constants.AdPatternType;
-import com.qq.e.comm.util.AdError;
 
 import java.util.ArrayList;
 import java.util.HashMap;

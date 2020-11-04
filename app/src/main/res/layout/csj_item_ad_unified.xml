@@ -165,8 +165,7 @@
             android:id="@+id/tv_listitem_ad_logo"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
-            app:srcCompat="@drawable/tt_ad_logo_small" />
+            android:layout_marginLeft="10dp" />
 
         <TextView
             android:id="@+id/tv_listitem_ad_source"

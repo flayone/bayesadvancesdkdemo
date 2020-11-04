@@ -26,7 +26,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
         setContentView(R.layout.activity_reward_video);
         advanceRewardVideo = new AdvanceRewardVideo(this, ADManager.getInstance().getRewardAdspotId());
         //如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,激励视频场景，只要设置的值大于0即可
-        advanceRewardVideo.setCsjExpressSize(500,500);
+        advanceRewardVideo.setCsjExpressSize(500, 500);
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(this);
 
@@ -84,10 +84,15 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
                     }
 
-                    @Override
-                    public void onRewardVerify(boolean b, int i, String s) {
+                                        @Override
+                    public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName) {
 
                     }
+
+//                    @Override
+//                    public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName, int errorCode, String errMsg) {
+//
+//                    }
 
                     @Override
                     public void onSkippedVideo() {
@@ -122,7 +127,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     }
 
     @Override
-    public void onAdFailed(AdvanceError advanceError)  {
+    public void onAdFailed(AdvanceError advanceError) {
         isReady = false;
 
         Log.d("DEMO", "FAILED");

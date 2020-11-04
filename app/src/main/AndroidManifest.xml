@@ -48,16 +48,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- targetSDKVersion >= 24时才需要添加这个provider。provider的authorities属性的值为${applicationId}.fileprovider，请开发者根据自己的${applicationId}来设置这个值，例如本例中applicationId为"com.qq.e.union.demo"。 -->
-        <!-- <provider -->
-        <!-- android:name="android.support.v4.content.FileProvider" -->
-        <!-- android:authorities="com.qq.e.union.demo.fileprovider" -->
-        <!-- android:exported="false" -->
-        <!-- android:grantUriPermissions="true"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
-        <!-- android:resource="@xml/gdt_file_path" /> -->
-        <!-- </provider> -->
+        </activity>
+
         <!-- 声明SDK所需要的组件 -->
         <service
             android:name="com.qq.e.comm.DownloadService"
@@ -72,7 +64,8 @@
         <activity
             android:name="com.qq.e.ads.LandscapeADActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            tools:replace="android:screenOrientation"/>
         <activity android:name=".FullScreenVideoActivity" />
         <activity android:name=".custom.nativ.NativeCustomizeActivity" />
         <activity android:name=".custom.banner.CustomBannerActivity" />
@@ -93,6 +86,16 @@
                 android:resource="@xml/gdt_file_path" />
         </provider>
 
+        <!--        <provider-->
+        <!--            android:name="com.qq.e.comm.GDTFileProvider"-->
+        <!--            android:authorities="${applicationId}.gdt.fileprovider"-->
+        <!--            android:exported="false"-->
+        <!--            android:grantUriPermissions="true">-->
+        <!--            <meta-data-->
+        <!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
+        <!--                android:resource="@xml/gdt_file_path" />-->
+        <!--        </provider>-->
+
         <provider
             android:name="com.bytedance.sdk.openadsdk.TTFileProvider"
             android:authorities="${applicationId}.TTFileProvider"
@@ -106,7 +109,6 @@
             android:name="com.bytedance.sdk.openadsdk.multipro.TTMultiProvider"
             android:authorities="${applicationId}.TTMultiProvider"
             android:exported="false" />
-
 
 
     </application>
