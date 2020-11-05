@@ -11,7 +11,6 @@ import com.advance.AdvanceConfig;
 import com.advance.AdvanceNativeExpress;
 import com.advance.AdvanceNativeExpressAdItem;
 import com.advance.AdvanceNativeExpressListener;
-import com.advance.AdvanceSetting;
 import com.advance.csj.CsjNativeExpressAdItem;
 import com.advance.model.AdvanceError;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
@@ -28,12 +27,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         setContentView(R.layout.activity_native_express);
         container = findViewById(R.id.native_express_container);
 
-        //请求 mock 数据，测试逻辑表现
-        AdvanceSetting.getInstance().isMock = true;
-        AdvanceSetting.getInstance().isDev = true;
-        String id = "20000004";
-//        String id = ADManager.getInstance().getNativeExpressAdspotId();
-        advanceNativeExpress = new AdvanceNativeExpress(this, id);
+        advanceNativeExpress = new AdvanceNativeExpress(this, ADManager.getInstance().getNativeExpressAdspotId());
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
         advanceNativeExpress.loadStrategy();

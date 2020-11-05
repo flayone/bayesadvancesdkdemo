@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -23,14 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.advance.AdvanceSetting;
 import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
 import com.advance.model.AdvanceError;
-import com.advance.model.AdvanceSupplierID;
-import com.advance.model.SdkSupplier;
-import com.mercury.sdk.core.config.LargeADCutType;
-import com.mercury.sdk.core.config.MercuryAD;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,15 +47,8 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
         skipView = findViewById(R.id.skip_view);
         logo = findViewById(R.id.ll_asc_logo);
 
-        //请求 mock 数据，测试包天逻辑表现
-        AdvanceSetting.getInstance().isMock = true;
-        AdvanceSetting.getInstance().isDev = true;
-        String adid = "20000003";
-//        String adid =ADManager.getInstance().getSplashAdspotId();
-
-
         //开屏初始化；adContainer为广告容器，skipView不需要自定义可以为null
-        advanceSplash = new AdvanceSplash(this, adid, adContainer, skipView);
+        advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
         //必须：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(this);
         //无品牌广告订单（cpt包段广告）建议设置打底广告，减少流量损失
