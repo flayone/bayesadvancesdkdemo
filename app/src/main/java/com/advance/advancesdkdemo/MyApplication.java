@@ -19,11 +19,11 @@ public class MyApplication extends Application {
 //                .setAppName("你在穿山甲后台申请的的应用名称")
 //                .setGdtMediaId("你在广点通后台申请的的MediaId")
                 //------- 以下为演示用id，开发者接入时一定要替换为自己的平台id  -------
-                .setMercuryMediaId("100171")
-                .setMercuryMediaKey("e1d0d3aaf95d3f1980367e75bc41141d")
-                .setCsjAppId("5051624")
-                .setAppName("聚合测试用")
-                .setGdtMediaId("1101152570")
+//                .setMercuryMediaId("100171")
+//                .setMercuryMediaKey("e1d0d3aaf95d3f1980367e75bc41141d")
+//                .setCsjAppId("5051624")
+//                .setAppName("聚合测试用")
+//                .setGdtMediaId("1101152570")
                 //------- 以上为演示用id，开发者接入时一定要替换为自己的平台id  -------
                 //可选：设置debug开发调试模式,tag为：Advance SDK
                 .setDebug(true)

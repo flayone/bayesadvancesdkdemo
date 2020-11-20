@@ -53,9 +53,9 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
     }
 
     @Override
-    public void onAdFailed(AdvanceError advanceError)  {
+    public void onAdFailed(AdvanceError advanceError) {
 
-                Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
 
     }
 

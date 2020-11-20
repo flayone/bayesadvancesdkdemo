@@ -38,8 +38,14 @@
             android:name="com.advance.advancesdkdemo.NativeExpressActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
         <activity
-            android:name="com.advance.advancesdkdemo.SplashActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+            android:name="com.advance.advancesdkdemo.SplashActivity" >
+<!--        <intent-filter>-->
+<!--        <action android:name="android.intent.action.MAIN" />-->
+
+<!--            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--        </intent-filter>-->
+        </activity>
+
         <activity android:name="com.advance.advancesdkdemo.BannerActivity" />
         <activity android:name="com.advance.advancesdkdemo.MainActivity">
             <intent-filter>
