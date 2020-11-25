@@ -31,8 +31,6 @@ public class MyApplication extends Application {
                 .setNeedPermissionCheck(false)
                 .initSDKs(this);
 
-        AdConfigManager.getInstance().setMediaId("100171");
-        MercuryAD.needPreLoadMaterial(true);
     }
 
 }
