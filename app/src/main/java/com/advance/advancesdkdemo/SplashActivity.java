@@ -46,14 +46,14 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
         adContainer = findViewById(R.id.splash_container);
         skipView = findViewById(R.id.skip_view);
         logo = findViewById(R.id.ll_asc_logo);
-
-        //开屏初始化；adContainer为广告容器，skipView不需要自定义可以为null
-        advanceSplash = new AdvanceSplash(this, ADManager.getInstance().getSplashAdspotId(), adContainer, skipView);
+        //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
+        String adspotId = ADManager.getInstance().getSplashAdspotId();
+        //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
+        advanceSplash = new AdvanceSplash(this, adspotId, adContainer, skipView);
         //必须：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(this);
         //无品牌广告订单（cpt包段广告）建议设置打底广告，减少流量损失
 //        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("887301946", AdvanceSupplierID.CSJ));
-
 // 如果targetSDKVersion >= 23，需要申请好权限,如果您的App没有适配到Android6.0（即targetSDKVersion < 23）或者已经提前申请权限，那么只需要在这里直接调用loadAd方法。
         if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
             checkAndRequestPermission();

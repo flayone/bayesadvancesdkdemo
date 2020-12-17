@@ -21,7 +21,10 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interstitial);
-        advanceInterstitial = new AdvanceInterstitial(this, ADManager.getInstance().getInterstitialAdspotId());
+        //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
+        String adspotId = ADManager.getInstance().getInterstitialAdspotId();
+        //初始化
+        advanceInterstitial = new AdvanceInterstitial(this, adspotId);
         //推荐：核心事件监听回调
         advanceInterstitial.setAdListener(this);
     }
@@ -30,6 +33,7 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
         advanceInterstitial.loadStrategy();
 
     }
+
     public void showAd(View view) {
         advanceInterstitial.show();
     }
@@ -56,6 +60,11 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
     public void onAdFailed(AdvanceError advanceError) {
 
         Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onSdkSelected(String id) {
 
     }
 

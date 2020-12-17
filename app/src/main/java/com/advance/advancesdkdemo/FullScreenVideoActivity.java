@@ -24,9 +24,11 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen_video);
-
-        advanceFullScreenVideo = new AdvanceFullScreenVideo(this, ADManager.getInstance().getFullScreenVideoAdspotId());
-        //如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,全屏视频场景，只要设置的值大于0即可
+        //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
+        String adspotId =ADManager.getInstance().getFullScreenVideoAdspotId();
+        //初始化
+        advanceFullScreenVideo = new AdvanceFullScreenVideo(this, adspotId);
+        //注意：如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,全屏视频场景，只要设置的值大于0即可
         advanceFullScreenVideo.setCsjExpressSize(500, 500);
         //推荐：核心事件监听回调
         advanceFullScreenVideo.setAdListener(this);
@@ -97,6 +99,11 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
     public void onAdFailed(AdvanceError advanceError) {
         Log.d(TAG, "onAdFailed");
         Toast.makeText(this, "广告加载失败", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onSdkSelected(String id) {
 
     }
 

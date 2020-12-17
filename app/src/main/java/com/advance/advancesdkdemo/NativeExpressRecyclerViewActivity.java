@@ -79,7 +79,10 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
      *初始化信息流广告，加载SDK策略
      */
     private void initAdvanceNativeExpressAD() {
-        advanceNativeExpress = new AdvanceNativeExpress(this, ADManager.getInstance().getNativeExpressAdspotId());
+        //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
+        String adspotId = ADManager.getInstance().getNativeExpressAdspotId();
+        //初始化
+        advanceNativeExpress = new AdvanceNativeExpress(this,adspotId);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
         advanceNativeExpress.loadStrategy();
@@ -95,6 +98,11 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     @Override
     public void onAdFailed(AdvanceError advanceError) {
         Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSdkSelected(String id) {
+
     }
 
     @Override

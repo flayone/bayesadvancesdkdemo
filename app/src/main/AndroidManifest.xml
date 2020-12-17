@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.advance.advancesdkdemo">
 
-    <uses-sdk tools:overrideLibrary="com.bun.miitmdid" />
+    <!-- 如果未引入快手，com.advance.supplier.ks可以不添加-->
+    <uses-sdk tools:overrideLibrary="com.bun.miitmdid,com.advance.supplier.ks" />
 
     <!-- 必须要有的权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -37,13 +38,12 @@
         <activity
             android:name="com.advance.advancesdkdemo.NativeExpressActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
-        <activity
-            android:name="com.advance.advancesdkdemo.SplashActivity" >
-<!--        <intent-filter>-->
-<!--        <action android:name="android.intent.action.MAIN" />-->
+        <activity android:name="com.advance.advancesdkdemo.SplashActivity">
+            <!--        <intent-filter>-->
+            <!--        <action android:name="android.intent.action.MAIN" />-->
 
-<!--            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--        </intent-filter>-->
+            <!--            <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--        </intent-filter>-->
         </activity>
 
         <activity android:name="com.advance.advancesdkdemo.BannerActivity" />
@@ -71,7 +71,7 @@
             android:name="com.qq.e.ads.LandscapeADActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:screenOrientation="landscape"
-            tools:replace="android:screenOrientation"/>
+            tools:replace="android:screenOrientation" />
         <activity android:name=".FullScreenVideoActivity" />
         <activity android:name=".custom.nativ.NativeCustomizeActivity" />
         <activity android:name=".custom.banner.CustomBannerActivity" />
@@ -82,25 +82,16 @@
         <activity android:name=".custom.interstitial.CustomInterstitialActivity" />
         <activity android:name=".custom.full.CustomFullScreenActivity" />
 
+
         <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:name="com.qq.e.comm.GDTFileProvider"
+            android:authorities="${applicationId}.gdt.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/gdt_file_path" />
         </provider>
-
-        <!--        <provider-->
-        <!--            android:name="com.qq.e.comm.GDTFileProvider"-->
-        <!--            android:authorities="${applicationId}.gdt.fileprovider"-->
-        <!--            android:exported="false"-->
-        <!--            android:grantUriPermissions="true">-->
-        <!--            <meta-data-->
-        <!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
-        <!--                android:resource="@xml/gdt_file_path" />-->
-        <!--        </provider>-->
 
         <provider
             android:name="com.bytedance.sdk.openadsdk.TTFileProvider"

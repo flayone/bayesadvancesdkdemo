@@ -24,8 +24,11 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward_video);
-        advanceRewardVideo = new AdvanceRewardVideo(this, ADManager.getInstance().getRewardAdspotId());
-        //如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,激励视频场景，只要设置的值大于0即可
+        //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
+        String adspotId = ADManager.getInstance().getRewardAdspotId();
+        //初始化
+        advanceRewardVideo = new AdvanceRewardVideo(this, adspotId);
+        //注意：如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,激励视频场景，只要设置的值大于0即可
         advanceRewardVideo.setCsjExpressSize(500, 500);
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(this);
@@ -84,15 +87,15 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
                     }
 
-                                        @Override
-                    public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName) {
-
-                    }
-
-//                    @Override
-//                    public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName, int errorCode, String errMsg) {
+//                                        @Override
+//                    public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName) {
 //
 //                    }
+
+                    @Override
+                    public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName, int errorCode, String errMsg) {
+
+                    }
 
                     @Override
                     public void onSkippedVideo() {
@@ -132,6 +135,11 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
         Log.d("DEMO", "FAILED");
         Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onSdkSelected(String id) {
 
     }
 

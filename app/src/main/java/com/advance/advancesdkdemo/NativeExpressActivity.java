@@ -26,8 +26,10 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native_express);
         container = findViewById(R.id.native_express_container);
-
-        advanceNativeExpress = new AdvanceNativeExpress(this, ADManager.getInstance().getNativeExpressAdspotId());
+        //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
+        String adspotId = ADManager.getInstance().getNativeExpressAdspotId();
+        //初始化
+        advanceNativeExpress = new AdvanceNativeExpress(this,adspotId);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
         advanceNativeExpress.loadStrategy();
@@ -83,6 +85,11 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
 
         Log.d("DEMO", "FAILED");
+
+    }
+
+    @Override
+    public void onSdkSelected(String id) {
 
     }
 

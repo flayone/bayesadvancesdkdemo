@@ -9,15 +9,23 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true    // true时，生成多个dex
     }
     buildTypes {
-        debug {
-            minifyEnabled false
-        }
+//        debug {
+//            minifyEnabled false
+//        }
+//        dexOptions {
+//            // release & debug is in project animators
+//            matchingFallbacks = ['release', 'debug']
+//        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 repositories {
@@ -34,23 +42,28 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "com.android.support:multidex:1.0.3"
 
 
     //Advance聚合SDK 引入
-    //若使用lib中GDTSDK包（广点通4.232）和openad包（穿山甲3.2.5.1）使用此引用。 若使用自用广点通高于4.270版本或者穿山甲高于3.3.0.0版本，需要联系我们做版本适配
-    implementation 'com.advsdk:advance:3.3.4'
+    implementation 'com.advsdk:advance:3.4.2'
 
     //mercury SDK 引入
-    implementation 'com.mercury:mercurysdk:3.3.2'
+    implementation 'com.mercury:mercurysdk:3.3.3'
     //穿山甲SDK 引入
-    implementation(name: 'open_ad_sdk3251', ext: 'aar')
+    implementation(name: 'open_ad_sdk3400', ext: 'aar')
     //广点通SDK 引入
-    implementation(name: 'GDTSDK.unionNormal.4.232.1102', ext: 'aar')
+    implementation 'com.qq.e.union:union:4.310.1180'
+    //百度SDK 引入
+    implementation 'com.advsdk:advance_bd:3.4.0_596'
+    //快手SDK 引入
+    implementation 'com.advsdk:advance_ks:3.4.0_3353'
+
     //MSA Android10以上设备唯一标识 OAID SDK 引入
-    implementation(name: 'oaid_sdk_1.0.22', ext: 'aar')
+    implementation(name: 'oaid_sdk_1.0.25', ext: 'aar')
 
 
-    implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号
+//    implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号
     implementation 'com.android.support:support-v4:28.0.0'
     implementation("com.github.bumptech.glide:glide:4.8.0") {
         exclude group: "com.android.support"

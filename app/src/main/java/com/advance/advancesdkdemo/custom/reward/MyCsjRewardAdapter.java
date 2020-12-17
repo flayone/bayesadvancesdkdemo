@@ -108,17 +108,17 @@ public class MyCsjRewardAdapter extends BaseCustomAdapter {
                                 customizeAd.adapterDidFailed(AdvanceError.parseErr(ERROR_EXCEPTION_LOAD));
                         }
 
-                        @Override
-                        public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName) {
-                            if (customRewardListener != null && rewardVerify)
-                                customRewardListener.onReward();
-                        }
-
 //                        @Override
-//                        public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName, int errorCode, String errMsg) {
+//                        public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName) {
 //                            if (customRewardListener != null && rewardVerify)
 //                                customRewardListener.onReward();
 //                        }
+
+                        @Override
+                        public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName, int errorCode, String errMsg) {
+                            if (customRewardListener != null && rewardVerify)
+                                customRewardListener.onReward();
+                        }
 
                         @Override
                         public void onSkippedVideo() {

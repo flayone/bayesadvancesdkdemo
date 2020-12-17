@@ -20,7 +20,9 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banner);
         rl = findViewById(R.id.banner_layout);
-        advanceBanner = new AdvanceBanner(this, rl, ADManager.getInstance().getBannerAdspotId());
+        //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
+        String adspotId = ADManager.getInstance().getBannerAdspotId();
+        advanceBanner = new AdvanceBanner(this, rl, adspotId);
 
         //可选：个性化设置，穿山甲个性化模板广告的尺寸属性，期望模板广告view的size，单位dp
         advanceBanner.setCsjExpressViewAcceptedSize(640, 100)
@@ -45,6 +47,11 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
 
         Log.d(TAG, "Failed");
         Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSdkSelected(String id) {
+
     }
 
     @Override
