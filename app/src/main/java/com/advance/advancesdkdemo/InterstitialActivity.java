@@ -1,18 +1,13 @@
 package com.advance.advancesdkdemo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.advance.AdvanceConfig;
 import com.advance.AdvanceInterstitial;
 import com.advance.AdvanceInterstitialListener;
 import com.advance.model.AdvanceError;
-import com.advance.model.AdvanceSupplierID;
-import com.advance.model.SdkSupplier;
-import com.qq.e.ads.interstitial2.UnifiedInterstitialMediaListener;
-import com.qq.e.comm.util.AdError;
 
 public class InterstitialActivity extends AppCompatActivity implements AdvanceInterstitialListener {
     private AdvanceInterstitial advanceInterstitial;

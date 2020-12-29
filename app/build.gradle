@@ -45,7 +45,7 @@ dependencies {
     implementation "com.android.support:multidex:1.0.3"
 
 
-    //Advance聚合SDK 引入
+    //Advance聚合SDK 引入，gradle引入异常可以联系我们使用aar引入
     implementation 'com.advsdk:advance:3.4.2'
 
     //mercury SDK 引入
