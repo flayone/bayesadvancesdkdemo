@@ -3,6 +3,7 @@ package com.advance.advancesdkdemo;
 import android.app.Application;
 
 import com.advance.AdvanceConfig;
+import com.mercury.sdk.core.config.MercuryAD;
 
 public class MyApplication extends Application {
     @Override
@@ -15,14 +16,15 @@ public class MyApplication extends Application {
 //                .setMercuryMediaId("你在聚合SDK后台申请的的 媒体ID")
 //                .setMercuryMediaKey("你在聚合SDK后台申请的的 媒体Key")
 //                .setCsjAppId("你在穿山甲后台申请的的 媒体ID")
-//                .setAppName("你在穿山甲后台申请的的 媒体应用名称")
 //                .setGdtMediaId("你在广点通后台申请的的 媒体ID")
+                //聚合穿山甲必须：在穿山甲平台填入的媒体应用名称
+                .setAppName("聚合测试")
                 //可选：设置debug开发调试模式,tag为：Advance SDK
                 .setDebug(true)
-                //可选：设置是否在请求穿山甲sdk广告前校验权限，防止无权限不返回广告，默认为false不去校验。
-                .setNeedPermissionCheck(false)
                 .initSDKs(this);
 
+        //如果媒体有cpt品牌订单、或者需求视频类开屏广告，请打开这里的素材预缓存，同时上面setMercuryMediaId()方法进行设置值
+//        MercuryAD.needPreLoadMaterial(true);
     }
 
 }

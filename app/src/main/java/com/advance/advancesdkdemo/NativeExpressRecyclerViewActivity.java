@@ -76,13 +76,13 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     }
 
     /**
-     *初始化信息流广告，加载SDK策略
+     * 初始化信息流广告，加载SDK策略
      */
     private void initAdvanceNativeExpressAD() {
         //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
         String adspotId = ADManager.getInstance().getNativeExpressAdspotId();
         //初始化
-        advanceNativeExpress = new AdvanceNativeExpress(this,adspotId);
+        advanceNativeExpress = new AdvanceNativeExpress(this, adspotId);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
         advanceNativeExpress.loadStrategy();
@@ -109,11 +109,13 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     public void onAdRenderFailed(View view) {
         Toast.makeText(this, "广告渲染失败", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onADRenderFail: " + view.toString());
-        if (mAdapter != null) {
+        if (mAdViewPositionMap != null) {
             int removedPosition = mAdViewPositionMap.get(view);
-            mAdapter.removeADView(removedPosition);
+            if (mAdapter != null) {
+                mAdapter.removeADView(removedPosition);
+            }
+            mAdViewPositionMap.remove(view);
         }
-        mAdViewPositionMap.remove(view);
     }
 
     @Override
@@ -131,12 +133,13 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     public void onAdClose(View view) {
         Toast.makeText(this, "广告关闭", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onADClosed: " + view.toString());
-        if (mAdapter != null) {
+        if (mAdViewPositionMap != null) {
             int removedPosition = mAdViewPositionMap.get(view);
-            mAdapter.removeADView(removedPosition);
+            if (mAdapter != null) {
+                mAdapter.removeADView(removedPosition);
+            }
+            mAdViewPositionMap.remove(view);
         }
-        mAdViewPositionMap.remove(view);
-
     }
 
     @Override

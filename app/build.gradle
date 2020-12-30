@@ -46,10 +46,10 @@ dependencies {
 
 
     //Advance聚合SDK 引入，gradle引入异常可以联系我们使用aar引入
-    implementation 'com.advsdk:advance:3.4.2'
+    implementation 'com.advsdk:advance:3.4.3.1'
 
     //mercury SDK 引入
-    implementation 'com.mercury:mercurysdk:3.3.3'
+    implementation 'com.mercury:mercurysdk:3.3.4'
     //穿山甲SDK 引入
     implementation(name: 'open_ad_sdk3400', ext: 'aar')
     //广点通SDK 引入

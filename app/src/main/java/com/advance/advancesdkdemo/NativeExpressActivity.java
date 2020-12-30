@@ -29,7 +29,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
         String adspotId = ADManager.getInstance().getNativeExpressAdspotId();
         //初始化
-        advanceNativeExpress = new AdvanceNativeExpress(this,adspotId);
+        advanceNativeExpress = new AdvanceNativeExpress(this, adspotId);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
         advanceNativeExpress.loadStrategy();
@@ -50,7 +50,8 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
                 csjNativeExpressAdItem.setDislikeCallback(NativeExpressActivity.this, new TTAdDislike.DislikeInteractionCallback() {
                     @Override
                     public void onSelected(int i, String s) {
-                        container.removeAllViews();
+                        if (container != null)
+                            container.removeAllViews();
                     }
 
                     @Override

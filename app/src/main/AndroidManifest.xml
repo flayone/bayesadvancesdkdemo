@@ -82,16 +82,24 @@
         <activity android:name=".custom.interstitial.CustomInterstitialActivity" />
         <activity android:name=".custom.full.CustomFullScreenActivity" />
 
-
-        <provider
-            android:name="com.qq.e.comm.GDTFileProvider"
-            android:authorities="${applicationId}.gdt.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/gdt_file_path" />
-        </provider>
+         <provider
+         android:name="android.support.v4.content.FileProvider"
+         android:authorities="com.qq.e.union.demo.fileprovider"
+         android:exported="false"
+         android:grantUriPermissions="true">
+         <meta-data
+         android:name="android.support.FILE_PROVIDER_PATHS"
+         android:resource="@xml/gdt_file_path" />
+         </provider>
+<!--        <provider-->
+<!--            android:name="com.qq.e.comm.GDTFileProvider"-->
+<!--            android:authorities="${applicationId}.gdt.fileprovider"-->
+<!--            android:exported="false"-->
+<!--            android:grantUriPermissions="true">-->
+<!--            <meta-data-->
+<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
+<!--                android:resource="@xml/gdt_file_path" />-->
+<!--        </provider>-->
 
         <provider
             android:name="com.bytedance.sdk.openadsdk.TTFileProvider"

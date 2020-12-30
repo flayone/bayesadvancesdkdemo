@@ -6,13 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.advance.AdvanceConfig;
 import com.advance.AdvanceRewardVideo;
 import com.advance.AdvanceRewardVideoItem;
 import com.advance.AdvanceRewardVideoListener;
-import com.advance.csj.CsjRewardVideoAdItem;
 import com.advance.model.AdvanceError;
-import com.bytedance.sdk.openadsdk.TTRewardVideoAd;
 
 public class RewardVideoActivity extends AppCompatActivity implements AdvanceRewardVideoListener {
     private AdvanceRewardVideo advanceRewardVideo;
@@ -58,51 +55,6 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
     private void showReward() {
         if (advanceRewardVideoItem != null) {
-            //设置穿山甲的回调（必须）
-            if (advanceRewardVideoItem.getSdkId().equals(AdvanceConfig.SDK_ID_CSJ)) {
-                CsjRewardVideoAdItem csjRewardVideoAdItem = (CsjRewardVideoAdItem) advanceRewardVideoItem;
-                csjRewardVideoAdItem.setRewardAdInteractionListener(new TTRewardVideoAd.RewardAdInteractionListener() {
-                    @Override
-                    public void onAdShow() {
-
-                    }
-
-                    @Override
-                    public void onAdVideoBarClick() {
-
-                    }
-
-                    @Override
-                    public void onAdClose() {
-
-                    }
-
-                    @Override
-                    public void onVideoComplete() {
-
-                    }
-
-                    @Override
-                    public void onVideoError() {
-
-                    }
-
-//                                        @Override
-//                    public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName) {
-//
-//                    }
-
-                    @Override
-                    public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName, int errorCode, String errMsg) {
-
-                    }
-
-                    @Override
-                    public void onSkippedVideo() {
-
-                    }
-                });
-            }
             //展示广告
             advanceRewardVideoItem.showAd();
         }
