@@ -11,8 +11,8 @@ import com.advance.AdvanceConfig;
 import com.advance.AdvanceNativeExpress;
 import com.advance.AdvanceNativeExpressAdItem;
 import com.advance.AdvanceNativeExpressListener;
-import com.advance.csj.CsjNativeExpressAdItem;
 import com.advance.model.AdvanceError;
+import com.advance.supplier.csj.CsjNativeExpressAdItem;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
 
 import java.util.List;
