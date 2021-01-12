@@ -33,4 +33,7 @@
 -keep class android.support.v4.app.NotificationCompat**{
     public *;
 }
--keep class com.bun.miitmdid.core.** {*;}
+#oaid 混淆部分
+-keep class com.bun.miitmdid.** {*;}
+-dontwarn XI.**
+-keep class  XI.** {*;}

@@ -13,7 +13,8 @@ android {
     }
     buildTypes {
 //        debug {
-//            minifyEnabled false
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //        }
 //        dexOptions {
 //            // release & debug is in project animators

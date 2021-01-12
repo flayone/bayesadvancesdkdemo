@@ -1,6 +1,7 @@
 package com.advance.advancesdkdemo;
 
 import android.app.Application;
+import android.support.annotation.Keep;
 
 import com.advance.AdvanceConfig;
 import com.mercury.sdk.core.config.MercuryAD;
