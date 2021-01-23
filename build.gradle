@@ -3,11 +3,10 @@
 buildscript {
     repositories {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-
-        google()
         jcenter()
-
+        google()
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.4'
 
@@ -18,11 +17,11 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-
-        google()
+        //一定要引入此项，如果同时有引入了阿里云的代理仓库地址，尽量将jcenter() 放在最前面
         jcenter()
-
+//    maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        google()
     }
 }
 

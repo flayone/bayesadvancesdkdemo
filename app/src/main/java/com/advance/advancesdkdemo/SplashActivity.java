@@ -215,7 +215,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
     protected void onResume() {
         super.onResume();
         if (canJump) {
-            next();
+            goToMainActivity();
         }
         canJump = true;
     }

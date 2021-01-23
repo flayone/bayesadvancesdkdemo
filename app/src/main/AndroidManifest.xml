@@ -4,7 +4,7 @@
     package="com.advance.advancesdkdemo">
 
     <!-- 如果未引入快手，com.advance.supplier.ks可以不添加-->
-    <uses-sdk tools:overrideLibrary="com.bun.miitmdid,com.advance.supplier.ks" />
+    <uses-sdk tools:overrideLibrary="com.bun.miitmdid,com.advance.supplier.ks,com.kwad.sdk" />
 
     <!-- 必须要有的权限 -->
     <uses-permission android:name="android.permission.INTERNET" />

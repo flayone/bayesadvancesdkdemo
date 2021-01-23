@@ -46,8 +46,10 @@ dependencies {
     implementation "com.android.support:multidex:1.0.3"
 
 
-    //Advance聚合SDK 引入，gradle引入异常可以联系我们使用本地aar引入
+    //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle进行配置，如果依然无法引入，请联系我们使用本地aar引入。
     implementation 'com.advsdk:advance:3.4.4'
+    //必须，MSA Android10以上设备唯一标识 OAID SDK 引入
+    implementation 'com.advsdk:advance_oaid:1.0.25'
     //mercury SDK 引入
     implementation 'com.advsdk:advance_mry:3.4.4_334'
     //穿山甲SDK 引入
@@ -57,10 +59,8 @@ dependencies {
     //百度SDK 引入
     implementation 'com.advsdk:advance_bd:3.4.4_596'
     //快手SDK 引入
-    implementation 'com.advsdk:advance_ks:3.4.4_3353'
-
-    //MSA Android10以上设备唯一标识 OAID SDK 引入
-    implementation(name: 'oaid_sdk_1.0.25', ext: 'aar')
+    implementation 'com.advsdk:advance_ks:3.4.4_3353_core'
+    implementation 'com.advsdk:advance_kslib:3.4.4_3353'
 
 
 //    implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号
