@@ -86,6 +86,11 @@ public class DislikeDialog extends TTDislikeDialogAbstract {
     }
 
     @Override
+    public int[] getPersonalizationPromptIds() {
+        return new int[0];
+    }
+
+    @Override
     public ViewGroup.LayoutParams getLayoutParams() {
         return null;
     }

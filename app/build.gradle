@@ -51,9 +51,9 @@ dependencies {
     //必须，MSA Android10以上设备唯一标识 OAID SDK 引入
     implementation 'com.advsdk:advance_oaid:1.0.25'
     //mercury SDK 引入
-    implementation 'com.advsdk:advance_mry:3.4.4_334'
+    implementation 'com.advsdk:advance_mry:3.4.4_340'
     //穿山甲SDK 引入
-    implementation 'com.advsdk:advance_csj:3.4.4_3400_1'
+    implementation 'com.advsdk:advance_csj:3.4.4_3412'
     //广点通SDK 引入
     implementation 'com.advsdk:advance_gdt:3.4.4_4310'
     //百度SDK 引入
