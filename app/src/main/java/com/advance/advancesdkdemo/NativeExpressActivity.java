@@ -26,6 +26,8 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native_express);
         container = findViewById(R.id.native_express_container);
+
+
         //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
         String adspotId = ADManager.getInstance().getNativeExpressAdspotId();
         //初始化
@@ -45,7 +47,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
             AdvanceNativeExpressAdItem advanceNativeExpressAdItem = list.get(0);
 
             //穿山甲需要设置dislike逻辑，要在选中回调里移除广告
-            if (advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_CSJ)) {
+            if (AdvanceConfig.SDK_ID_CSJ.equals(advanceNativeExpressAdItem.getSdkId())) {
                 CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
                 csjNativeExpressAdItem.setDislikeCallback(NativeExpressActivity.this, new TTAdDislike.DislikeInteractionCallback() {
                     @Override

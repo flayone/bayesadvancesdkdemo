@@ -20,10 +20,11 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banner);
         rl = findViewById(R.id.banner_layout);
+
+
         //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
         String adspotId = ADManager.getInstance().getBannerAdspotId();
         advanceBanner = new AdvanceBanner(this, rl, adspotId);
-
         //推荐：核心事件监听回调
         advanceBanner.setAdListener(this);
         advanceBanner.loadStrategy();

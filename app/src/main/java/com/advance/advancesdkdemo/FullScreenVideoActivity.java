@@ -24,6 +24,8 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen_video);
+
+
         //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
         String adspotId =ADManager.getInstance().getFullScreenVideoAdspotId();
         //初始化

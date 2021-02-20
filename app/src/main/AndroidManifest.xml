@@ -56,6 +56,18 @@
             </intent-filter>
         </activity>
 
+
+        <activity android:name=".FullScreenVideoActivity" />
+        <activity android:name=".custom.nativ.NativeCustomizeActivity" />
+        <activity android:name=".custom.banner.CustomBannerActivity" />
+        <activity android:name=".custom.nativeexpress.CustomNativeExpressListActivity" />
+        <activity android:name=".SplashToMainActivity" />
+        <activity android:name=".custom.splash.CustomSplashActivity" />
+        <activity android:name=".custom.reward.CustomRewardActivity" />
+        <activity android:name=".custom.interstitial.CustomInterstitialActivity" />
+        <activity android:name=".custom.full.CustomFullScreenActivity" />
+
+
         <!-- 声明SDK所需要的组件 -->
         <service
             android:name="com.qq.e.comm.DownloadService"
@@ -72,34 +84,25 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:screenOrientation="landscape"
             tools:replace="android:screenOrientation" />
-        <activity android:name=".FullScreenVideoActivity" />
-        <activity android:name=".custom.nativ.NativeCustomizeActivity" />
-        <activity android:name=".custom.banner.CustomBannerActivity" />
-        <activity android:name=".custom.nativeexpress.CustomNativeExpressListActivity" />
-        <activity android:name=".SplashToMainActivity" />
-        <activity android:name=".custom.splash.CustomSplashActivity" />
-        <activity android:name=".custom.reward.CustomRewardActivity" />
-        <activity android:name=".custom.interstitial.CustomInterstitialActivity" />
-        <activity android:name=".custom.full.CustomFullScreenActivity" />
 
-         <provider
-         android:name="android.support.v4.content.FileProvider"
-         android:authorities="com.qq.e.union.demo.fileprovider"
-         android:exported="false"
-         android:grantUriPermissions="true">
-         <meta-data
-         android:name="android.support.FILE_PROVIDER_PATHS"
-         android:resource="@xml/gdt_file_path" />
-         </provider>
-<!--        <provider-->
-<!--            android:name="com.qq.e.comm.GDTFileProvider"-->
-<!--            android:authorities="${applicationId}.gdt.fileprovider"-->
-<!--            android:exported="false"-->
-<!--            android:grantUriPermissions="true">-->
-<!--            <meta-data-->
-<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
-<!--                android:resource="@xml/gdt_file_path" />-->
-<!--        </provider>-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.gdt.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/gdt_file_path" />
+        </provider>
+        <!--        <provider-->
+        <!--            android:name="com.qq.e.comm.GDTFileProvider"-->
+        <!--            android:authorities="${applicationId}.gdt.fileprovider"-->
+        <!--            android:exported="false"-->
+        <!--            android:grantUriPermissions="true">-->
+        <!--            <meta-data-->
+        <!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
+        <!--                android:resource="@xml/gdt_file_path" />-->
+        <!--        </provider>-->
 
         <provider
             android:name="com.bytedance.sdk.openadsdk.TTFileProvider"

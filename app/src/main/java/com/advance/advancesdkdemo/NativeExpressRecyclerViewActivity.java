@@ -236,7 +236,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                 }
 
                 //穿山甲需要设置dislike逻辑，否则无法关闭广告
-                if (advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_CSJ)) {
+                if (AdvanceConfig.SDK_ID_CSJ.equals(advanceNativeExpressAdItem.getSdkId())) {
                     CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
                     csjNativeExpressAdItem.setDislikeCallback(NativeExpressRecyclerViewActivity.this, new TTAdDislike.DislikeInteractionCallback() {
                         @Override

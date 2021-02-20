@@ -1,17 +1,11 @@
 package com.advance.advancesdkdemo;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,9 +19,6 @@ import android.widget.Toast;
 import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
 import com.advance.model.AdvanceError;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class SplashActivity extends Activity implements AdvanceSplashListener {
@@ -46,20 +37,16 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
         adContainer = findViewById(R.id.splash_container);
         skipView = findViewById(R.id.skip_view);
         logo = findViewById(R.id.ll_asc_logo);
+
+
         //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
         String adspotId = ADManager.getInstance().getSplashAdspotId();
         //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
         advanceSplash = new AdvanceSplash(this, adspotId, adContainer, skipView);
         //必须：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(this);
-        //无品牌广告订单（cpt包段广告）建议设置打底广告，减少流量损失
-//        advanceSplash.setDefaultSdkSupplier(new SdkSupplier("887301946", AdvanceSupplierID.CSJ));
-// 如果targetSDKVersion >= 23，需要申请好权限,如果您的App没有适配到Android6.0（即targetSDKVersion < 23）或者已经提前申请权限，那么只需要在这里直接调用loadAd方法。
-        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
-            checkAndRequestPermission();
-        } else {
-            advanceSplash.loadStrategy();
-        }
+        //必须：请求广告
+        advanceSplash.loadStrategy();
     }
 
     /**
@@ -143,65 +130,6 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
         Toast.makeText(this, "倒计时结束，关闭广告", Toast.LENGTH_SHORT).show();
     }
 
-
-    /**
-     * ----------非常重要----------
-     * <p>
-     * Android6.0以上的权限适配简单示例：
-     * <p>
-     * 如果targetSDKVersion >= 23，那么必须要申请到所需要的权限，再调用广点通SDK，否则广点通SDK不会工作。
-     * <p>
-     * Demo代码里是一个基本的权限申请示例，请开发者根据自己的场景合理地编写这部分代码来实现权限申请。
-     * 注意：下面的`checkSelfPermission`和`requestPermissions`方法都是在Android6.0的SDK中增加的API，如果您的App还没有适配到Android6.0以上，则不需要调用这些方法，直接调用即可。
-     */
-    @TargetApi(Build.VERSION_CODES.M)
-    private void checkAndRequestPermission() {
-        List<String> lackedPermission = new ArrayList<String>();
-        if (!(checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED)) {
-            lackedPermission.add(Manifest.permission.READ_PHONE_STATE);
-        }
-
-        if (!(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
-            lackedPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-
-
-        // 权限都已经有了，那么直接调用SDK
-        if (lackedPermission.size() == 0) {
-            advanceSplash.loadStrategy();
-
-        } else {
-            // 请求所缺少的权限，在onRequestPermissionsResult中再看是否获得权限，如果获得权限就可以调用SDK，否则不要调用SDK。
-            String[] requestPermissions = new String[lackedPermission.size()];
-            lackedPermission.toArray(requestPermissions);
-            requestPermissions(requestPermissions, 1024);
-        }
-    }
-
-    private boolean hasAllPermissionsGranted(int[] grantResults) {
-        for (int grantResult : grantResults) {
-            if (grantResult == PackageManager.PERMISSION_DENIED) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1024 && hasAllPermissionsGranted(grantResults)) {
-            advanceSplash.loadStrategy();
-
-        } else {
-            // 如果用户没有授权，那么应该说明意图，引导用户去设置里面授权。
-            Toast.makeText(this, "应用缺少必要的权限！请点击\"权限\"，打开所需要的权限。", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.setData(Uri.parse("package:" + getPackageName()));
-            startActivity(intent);
-            finish();
-        }
-    }
 
 
     @Override

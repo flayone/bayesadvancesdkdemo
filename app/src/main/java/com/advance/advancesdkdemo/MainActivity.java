@@ -41,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /**
+         * 注意！：由于工信部对设备权限等隐私权限要求愈加严格,强烈推荐APP提前申请好权限再加载广告
+         */
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
+            checkAndRequestPermission();
+        }
+
         fullVideo = findViewById(R.id.fullvideo_button);
         fullVideoCus = findViewById(R.id.cus_fullvideo_button);
 
@@ -123,10 +130,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        //权限校验,android O 以后,Android 10 以前推荐APP提前申请好权限再加载广告
-        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
-            checkAndRequestPermission();
-        }
+
+
     }
 
     @TargetApi(Build.VERSION_CODES.M)
