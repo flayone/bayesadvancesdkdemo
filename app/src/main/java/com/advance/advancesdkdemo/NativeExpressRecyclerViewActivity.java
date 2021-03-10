@@ -79,10 +79,8 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
      * 初始化信息流广告，加载SDK策略
      */
     private void initAdvanceNativeExpressAD() {
-        //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
-        String adspotId = ADManager.getInstance().getNativeExpressAdspotId();
         //初始化
-        advanceNativeExpress = new AdvanceNativeExpress(this, adspotId);
+        advanceNativeExpress = new AdvanceNativeExpress(this, Constants.Csj.nativeExpressAdspotId);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
         advanceNativeExpress.loadStrategy();

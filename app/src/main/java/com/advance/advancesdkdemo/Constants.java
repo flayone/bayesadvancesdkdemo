@@ -1,25 +1,23 @@
 package com.advance.advancesdkdemo;
 
 public class Constants {
-    /**
-     * 注意！！！
-     *
-     * 这里分渠道设置的id仅仅是演示不同渠道展示效果，如果正式使用只需填写给到的一个广告位id（1000开头）即可，
-     * 广告位id直接设置在初始化方法里，不要学这里，不要学这里，不要学这里。
-     */
-    //测试mercury广告用例
-    static class Mercury {
+
+    // 配置为Mercury渠道优先的广告用例
+   public static class Mercury {
         public static final String splashAdspotId = "10000531";
         public static final String bannerAdspotId = "10003093";
         public static final String nativeExpressAdspotId = "10003096";
         public static final String rewardAdspotId = "10003102";
         public static final String interstitialAdspotId = "10000398";
+        public static final String customNativeAdspotId = "10003122";
+
+
         //Mercury渠道目前不支持全屏视频
         public static final String fullScreenVideoAdspotId = "";
-        public static final String customNativeAdspotId = "10003122";
     }
 
-    static class Csj {
+    // 配置为穿山甲渠道优先的广告用例
+    public static class Csj {
         //目前穿山甲后台没有使用模板广告选项。
         public static final String splashAdspotId = "10003083";
         //使用模板的穿山甲广告
@@ -31,8 +29,8 @@ public class Constants {
         public static final String customNativeAdspotId = "10003120";
     }
 
-    static class Gdt {
-        // 测试广点通广告用例
+    // 配置为广点通渠道优先的广告用例
+   public static class Gdt {
         public static final String splashAdspotId = "10003079";
         public static final String bannerAdspotId = "10003092";
         public static final String nativeExpressAdspotId = "10003095";

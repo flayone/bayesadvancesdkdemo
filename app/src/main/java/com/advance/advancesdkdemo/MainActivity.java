@@ -62,74 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 "穿山甲 SDK 版本号： " + csjV + "\n" +
                 "广点通 SDK 版本号： " + gdtV + "\n"
         );
-        sdks = findViewById(R.id.sp_sdk);
-        sdks.setSelection(0);
-        /**
-         *  注意！：
-         *  手动切换为在Demo中的演示功能，实际项目不需要切换功能，只需配置好聚合广告位ID即可。
-         *  手动切换对于setUseCache(true); 的广告位，并不会立即生效，因为可能存在缓存的策略，会优先使用缓存，故第二次请求时切换才会生效。
-         */
-        sdks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String sdkName = "";
-                switch (position) {
-                    case 0: //Mercury
-                        sdkName = "Mercury";
-                        ADManager.getInstance().setBannerAdspotId(Constants.Mercury.bannerAdspotId);
-                        ADManager.getInstance().setInterstitialAdspotId(Constants.Mercury.interstitialAdspotId);
-                        ADManager.getInstance().setNativeExpressAdspotId(Constants.Mercury.nativeExpressAdspotId);
-                        ADManager.getInstance().setRewardAdspotId(Constants.Mercury.rewardAdspotId);
-                        ADManager.getInstance().setSplashAdspotId(Constants.Mercury.splashAdspotId);
-                        ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Mercury.fullScreenVideoAdspotId);
-                        ADManager.getInstance().setCustomNativeAdspotId(Constants.Mercury.customNativeAdspotId);
-                        fullVideo.setEnabled(false);
-                        fullVideoCus.setEnabled(false);
-                        break;
-                    case 1: //穿山甲
-                        sdkName = "穿山甲";
-                        ADManager.getInstance().setBannerAdspotId(Constants.Csj.bannerAdspotId);
-                        ADManager.getInstance().setInterstitialAdspotId(Constants.Csj.interstitialAdspotId);
-                        ADManager.getInstance().setNativeExpressAdspotId(Constants.Csj.nativeExpressAdspotId);
-                        ADManager.getInstance().setRewardAdspotId(Constants.Csj.rewardAdspotId);
-                        ADManager.getInstance().setSplashAdspotId(Constants.Csj.splashAdspotId);
-                        ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Csj.fullScreenVideoAdspotId);
-                        ADManager.getInstance().setCustomNativeAdspotId(Constants.Csj.customNativeAdspotId);
 
-                        //设置穿山甲允许直接下载的网络状态集合，可以在调用广告之前的任何时间来设置
-                        int[] directDownloadNetworkType;
-                        boolean csjDownloadForWifi = true;
-                        if (csjDownloadForWifi) {//可以根据自己需求来设置状态值
-                            directDownloadNetworkType = new int[]{TTAdConstant.NETWORK_STATE_WIFI};
-                        } else {
-                            directDownloadNetworkType = new int[]{TTAdConstant.NETWORK_STATE_4G};
-                        }
-                        AdvanceConfig.getInstance().setCsjDirectDownloadNetworkType(directDownloadNetworkType);
-                        fullVideo.setEnabled(true);
-                        fullVideoCus.setEnabled(true);
-
-                        break;
-                    case 2: //广点通
-                        sdkName = "广点通";
-                        ADManager.getInstance().setBannerAdspotId(Constants.Gdt.bannerAdspotId);
-                        ADManager.getInstance().setInterstitialAdspotId(Constants.Gdt.interstitialAdspotId);
-                        ADManager.getInstance().setNativeExpressAdspotId(Constants.Gdt.nativeExpressAdspotId);
-                        ADManager.getInstance().setRewardAdspotId(Constants.Gdt.rewardAdspotId);
-                        ADManager.getInstance().setSplashAdspotId(Constants.Gdt.splashAdspotId);
-                        ADManager.getInstance().setFullScreenVideoAdspotId(Constants.Gdt.fullScreenVideoAdspotId);
-                        ADManager.getInstance().setCustomNativeAdspotId(Constants.Gdt.customNativeAdspotId);
-                        fullVideo.setEnabled(true);
-                        fullVideoCus.setEnabled(true);
-                        break;
-                }
-                LogUtil.AdvanceLog("sdk Demo 选择：" + sdkName);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
     }

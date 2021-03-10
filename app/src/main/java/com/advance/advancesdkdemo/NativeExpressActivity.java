@@ -27,9 +27,6 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         setContentView(R.layout.activity_native_express);
         container = findViewById(R.id.native_express_container);
 
-
-        //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
-        String adspotId = ADManager.getInstance().getNativeExpressAdspotId();
         //初始化
         advanceNativeExpress = new AdvanceNativeExpress(this, adspotId);
         //推荐：核心事件监听回调

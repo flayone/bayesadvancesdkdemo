@@ -13,11 +13,10 @@ import android.widget.TextView;
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
 import com.advance.AdvanceCustomizeSupplierListener;
-import com.advance.advancesdkdemo.ADManager;
+import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.NativeExpressRecyclerViewActivity;
 import com.advance.advancesdkdemo.R;
 import com.advance.model.AdvanceError;
-import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
 import java.util.ArrayList;
@@ -86,7 +85,7 @@ public class CustomNativeExpressListActivity extends Activity {
                 mAdViewPositionMap.remove(view);
             }
         };
-        customizeAd = new AdvanceCustomizeAd(this, ADManager.getInstance().getNativeExpressAdspotId());
+        customizeAd = new AdvanceCustomizeAd(this, Constants.Csj.nativeExpressAdspotId);
         //设置渠道的结果监听
         customizeAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override

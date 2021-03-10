@@ -8,7 +8,7 @@ import android.widget.Toast;
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
 import com.advance.AdvanceCustomizeSupplierListener;
-import com.advance.advancesdkdemo.ADManager;
+import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
 import com.advance.advancesdkdemo.custom.BaseCustomAdapter;
 import com.advance.model.AdvanceError;
@@ -26,11 +26,11 @@ public class CustomRewardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward_video);
 
-        ad = new AdvanceCustomizeAd(this, ADManager.getInstance().getRewardAdspotId());
+        ad = new AdvanceCustomizeAd(this, Constants.Csj.rewardAdspotId);
         //设置渠道的结果监听
         ad.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override
-            public void onSupplierFailed(AdvanceError advanceError)  {
+            public void onSupplierFailed(AdvanceError advanceError) {
                 //一般是策略无填充，或者所有策略均加载失败时回调
                 Toast.makeText(CustomRewardActivity.this, "策略加载失败" + advanceError.code + "," + advanceError.msg, Toast.LENGTH_LONG).show();
 
@@ -62,7 +62,7 @@ public class CustomRewardActivity extends Activity {
                         public void onLoaded() {
                             isReady = true;
                             //页面非暂停状态才展示广告
-                            if (adapter != null&& !isPause)
+                            if (adapter != null && !isPause)
                                 adapter.showAD();
                         }
 

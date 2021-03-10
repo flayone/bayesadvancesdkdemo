@@ -12,11 +12,10 @@ import android.widget.TextView;
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
 import com.advance.AdvanceCustomizeSupplierListener;
-import com.advance.advancesdkdemo.ADManager;
+import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
 import com.advance.advancesdkdemo.SplashToMainActivity;
 import com.advance.model.AdvanceError;
-import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
 import java.lang.ref.SoftReference;
@@ -50,11 +49,11 @@ public class CustomSplashActivity extends Activity {
             }
         };
         //初始化：开屏建议使用软引用activity，第二个参数为后台申请的广告位id
-        customizeAd = new AdvanceCustomizeAd(new SoftReference<Activity>(this), ADManager.getInstance().getSplashAdspotId());
+        customizeAd = new AdvanceCustomizeAd(new SoftReference<Activity>(this), Constants.Csj.splashAdspotId);
         //必须：设置渠道的结果监听
         customizeAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override
-            public void onSupplierFailed(AdvanceError advanceError)  {
+            public void onSupplierFailed(AdvanceError advanceError) {
                 //一般是策略无填充，或者所有策略均加载失败时回调
                 jump();
             }
@@ -84,7 +83,7 @@ public class CustomSplashActivity extends Activity {
             }
         });
 
-       //请求策略
+        //请求策略
         customizeAd.loadStrategy();
     }
 

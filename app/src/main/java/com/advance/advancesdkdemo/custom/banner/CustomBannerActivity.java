@@ -9,10 +9,9 @@ import android.widget.Toast;
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
 import com.advance.AdvanceCustomizeSupplierListener;
-import com.advance.advancesdkdemo.ADManager;
+import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
 import com.advance.model.AdvanceError;
-import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
 public class CustomBannerActivity extends Activity {
@@ -32,7 +31,7 @@ public class CustomBannerActivity extends Activity {
 
     private void loadBanner() {
 
-        myBannerAd = new AdvanceCustomizeAd(this, ADManager.getInstance().getBannerAdspotId());
+        myBannerAd = new AdvanceCustomizeAd(this, Constants.Csj.bannerAdspotId);
         //设置渠道的结果监听
         myBannerAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override

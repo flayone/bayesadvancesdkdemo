@@ -8,11 +8,10 @@ import android.widget.Toast;
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
 import com.advance.AdvanceCustomizeSupplierListener;
-import com.advance.advancesdkdemo.ADManager;
+import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
 import com.advance.advancesdkdemo.custom.BaseCustomAdapter;
 import com.advance.model.AdvanceError;
-import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
 public class CustomInterstitialActivity extends Activity {
@@ -24,7 +23,7 @@ public class CustomInterstitialActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interstitial);
 
-        myInterstitialAd = new AdvanceCustomizeAd(this, ADManager.getInstance().getInterstitialAdspotId());
+        myInterstitialAd = new AdvanceCustomizeAd(this, Constants.Csj.interstitialAdspotId);
         //设置渠道的结果监听
         myInterstitialAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override

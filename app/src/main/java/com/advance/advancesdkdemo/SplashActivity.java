@@ -39,8 +39,6 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
         logo = findViewById(R.id.ll_asc_logo);
 
 
-        //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
-        String adspotId = ADManager.getInstance().getSplashAdspotId();
         //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
         advanceSplash = new AdvanceSplash(this, adspotId, adContainer, skipView);
         //必须：设置开屏核心回调事件的监听器。
@@ -106,12 +104,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
 
     @Override
     public void onAdSkip() {
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                next();
-            }
-        }, 100);
+        next();
 
         Log.d(TAG, "Splash ad skip");
         Toast.makeText(this, "跳过广告", Toast.LENGTH_SHORT).show();
@@ -119,17 +112,11 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
 
     @Override
     public void onAdTimeOver() {
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                next();
-            }
-        }, 100);
+        next();
 
         Log.d(TAG, "Splash ad timeOver");
         Toast.makeText(this, "倒计时结束，关闭广告", Toast.LENGTH_SHORT).show();
     }
-
 
 
     @Override
@@ -150,14 +137,20 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
 
     /**
      * 设置一个变量来控制当前开屏页面是否可以跳转，当开屏广告为普链类广告时，点击会打开一个广告落地页，此时开发者还不能打开自己的App主页。当从广告落地页返回以后，
-     * 才可以跳转到开发者自己的App主页；当开屏广告是App类广告时只会下载App。
+     * 才可以跳转到开发者自己的App主页；当开屏广告是下载类广告时只会下载App。
      */
     private void next() {
-        if (canJump) {
-            goToMainActivity();
-        } else {
-            canJump = true;
-        }
+        //建议延迟100ms执行跳转首页，主要是部分机型上反应比较慢，广点通广告时可能还没有吊起落地页，但回调了广告关闭方法，此时会发生先跳首页再打开广告落地页的异常情况，所以需要进行100ms的延迟。
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (canJump) {
+                    goToMainActivity();
+                } else {
+                    canJump = true;
+                }
+            }
+        }, 100);
     }
 
     /**

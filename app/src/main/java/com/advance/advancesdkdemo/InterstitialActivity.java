@@ -17,11 +17,8 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interstitial);
 
-
-        //这里是获取测试广告位id，实际请替换成自己应用的正式广告位id！
-        String adspotId = ADManager.getInstance().getInterstitialAdspotId();
         //初始化
-        advanceInterstitial = new AdvanceInterstitial(this, adspotId);
+        advanceInterstitial = new AdvanceInterstitial(this, Constants.Csj.interstitialAdspotId);
         //推荐：核心事件监听回调
         advanceInterstitial.setAdListener(this);
     }

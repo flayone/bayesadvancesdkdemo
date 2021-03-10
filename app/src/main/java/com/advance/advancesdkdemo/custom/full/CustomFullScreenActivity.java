@@ -8,11 +8,10 @@ import android.widget.Toast;
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
 import com.advance.AdvanceCustomizeSupplierListener;
-import com.advance.advancesdkdemo.ADManager;
+import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
 import com.advance.advancesdkdemo.custom.BaseCustomAdapter;
 import com.advance.model.AdvanceError;
-import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
 public class CustomFullScreenActivity extends Activity {
@@ -25,7 +24,7 @@ public class CustomFullScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen_video);
 
-        ad = new AdvanceCustomizeAd(this, ADManager.getInstance().getFullScreenVideoAdspotId());
+        ad = new AdvanceCustomizeAd(this, Constants.Csj.fullScreenVideoAdspotId);
         //设置渠道的结果监听
         ad.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override
