@@ -83,7 +83,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
         advanceNativeExpress = new AdvanceNativeExpress(this, Constants.Csj.nativeExpressAdspotId);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
-        advanceNativeExpress.loadStrategy();
+        advanceNativeExpress.loadStrategy(3);
     }
     //AdvanceSDK回调接口
 

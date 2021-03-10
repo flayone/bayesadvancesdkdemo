@@ -28,7 +28,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         container = findViewById(R.id.native_express_container);
 
         //初始化
-        advanceNativeExpress = new AdvanceNativeExpress(this, adspotId);
+        advanceNativeExpress = new AdvanceNativeExpress(this, Constants.Csj.nativeExpressAdspotId);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
         advanceNativeExpress.loadStrategy();

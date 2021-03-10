@@ -20,32 +20,6 @@
             android:textSize="17sp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="6dp"
-                android:text="切换SDK(仅用来演示)：" />
-
-            <Spinner
-                android:id="@+id/sp_sdk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/sdk_platform" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="注意！！！：手动切换为Demo中的演示功能，实际项目不需要按照demo中方式配置id，每个广告位只需对应一个广告位id即可。"
-            android:textColor="@color/colorAccent"
-            android:textSize="13sp" />
-
         <Button
             android:id="@+id/splash_button"
             android:layout_width="match_parent"
