@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.advance.AdvanceRewardVideo;
 import com.advance.AdvanceRewardVideoItem;
 import com.advance.AdvanceRewardVideoListener;
+import com.advance.RewardServerCallBackInf;
 import com.advance.model.AdvanceError;
 
 public class RewardVideoActivity extends AppCompatActivity implements AdvanceRewardVideoListener {
@@ -106,6 +107,11 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
         Log.d("DEMO", "AD REWARD");
         Toast.makeText(this, "激励发放", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardServerInf(RewardServerCallBackInf inf) {
+
     }
 
 }

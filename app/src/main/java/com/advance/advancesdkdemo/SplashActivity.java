@@ -54,6 +54,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
     public void onSdkSelected(String id) {
         //给sdkId赋值用来判断被策略选中的是哪个SDK
         sdkId = id;
+        advanceSplash.getAdvanceId();
 
         Log.d(TAG, "Splash ad onSdkSelected " + id);
         Toast.makeText(this, "策略选中，选中SDK id = " + id, Toast.LENGTH_SHORT).show();

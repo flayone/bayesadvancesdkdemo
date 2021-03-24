@@ -20,6 +20,8 @@ import java.util.List;
 public class NativeExpressActivity extends AppCompatActivity implements AdvanceNativeExpressListener {
     private AdvanceNativeExpress advanceNativeExpress;
     private FrameLayout container;
+    private boolean isGdtExpress2 = false;
+    AdvanceNativeExpressAdItem advanceNativeExpressAdItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         if (null == list || list.isEmpty()) {
             Log.d("DEMO", "NO AD RESULT");
         } else {
-            AdvanceNativeExpressAdItem advanceNativeExpressAdItem = list.get(0);
+            advanceNativeExpressAdItem = list.get(0);
 
             //穿山甲需要设置dislike逻辑，要在选中回调里移除广告
             if (AdvanceConfig.SDK_ID_CSJ.equals(advanceNativeExpressAdItem.getSdkId())) {
@@ -65,9 +67,14 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
                 });
             }
 
-            container.removeAllViews();
-            container.setVisibility(View.VISIBLE);
-            container.addView(advanceNativeExpressAdItem.getExpressAdView());
+            isGdtExpress2 = AdvanceConfig.SDK_ID_GDT.equals(advanceNativeExpressAdItem.getSdkId()) && advanceNativeExpress.isGdtExpress2();
+
+            //广点通模板2.0不可以在这里可以直接添加视图，否则无法展示，应该在onAdRenderSuccess中添加视图
+            if (!isGdtExpress2) {
+                container.removeAllViews();
+                container.setVisibility(View.VISIBLE);
+                container.addView(advanceNativeExpressAdItem.getExpressAdView());
+            }
             //render以后才会进行广告渲染， 广告可见才会产生曝光，否则将无法产生收益。
             advanceNativeExpressAdItem.render();
         }
@@ -102,7 +109,13 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
     @Override
     public void onAdRenderSuccess(View view) {
         Toast.makeText(this, "广告渲染成功", Toast.LENGTH_SHORT).show();
-
+        //广点通模板2.0 需要在RenderSuccess以后再加载视图
+        if (advanceNativeExpressAdItem != null && advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_GDT) && isGdtExpress2) {
+            container.removeAllViews();
+            container.setVisibility(View.VISIBLE);
+            //广告可见才会产生曝光，否则将无法产生收益。
+            container.addView(advanceNativeExpressAdItem.getExpressAdView());
+        }
     }
 
     @Override

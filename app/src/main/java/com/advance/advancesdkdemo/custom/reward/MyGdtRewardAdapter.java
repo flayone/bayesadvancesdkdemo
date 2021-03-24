@@ -10,6 +10,8 @@ import com.qq.e.ads.rewardvideo.RewardVideoAD;
 import com.qq.e.ads.rewardvideo.RewardVideoADListener;
 import com.qq.e.comm.util.AdError;
 
+import java.util.Map;
+
 import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
 import static com.advance.model.AdvanceError.ERROR_EXCEPTION_SHOW;
 
@@ -63,7 +65,7 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
                 }
 
                 @Override
-                public void onReward() {
+                public void onReward(Map<String, Object> map) {
                     if (customRewardListener != null)
                         customRewardListener.onReward();
                 }

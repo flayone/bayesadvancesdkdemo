@@ -18,10 +18,12 @@ import com.advance.AdvanceNativeExpressAdItem;
 import com.advance.AdvanceNativeExpressListener;
 import com.advance.model.AdvanceError;
 import com.advance.supplier.csj.CsjNativeExpressAdItem;
+import com.advance.supplier.gdt.GdtNativeAdExpressAdItem;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -42,6 +44,10 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     private AdvanceNativeExpress advanceNativeExpress;
     private List<AdvanceNativeExpressAdItem> mAdItemList;
     private HashMap<View, Integer> mAdViewPositionMap = new HashMap<>();
+
+    String selectedSupplierID;//当前聚合选中的SDK渠道标识
+    boolean isGdtExpress2 = false; //是否为广点通模板2.0广告
+    Iterator<AdvanceNativeExpressAdItem> iterator; //广点通模板2.0处理使用的迭代器
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,11 +106,15 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
     @Override
     public void onSdkSelected(String id) {
-
+        selectedSupplierID = id;
     }
 
     @Override
     public void onAdRenderFailed(View view) {
+        //广点通模板信息流2.0不在这里处理，参考processGDT2Data方法中处理
+        if (isGdtExpress2){
+            return;
+        }
         Toast.makeText(this, "广告渲染失败", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onADRenderFail: " + view.toString());
         if (mAdViewPositionMap != null) {
@@ -129,6 +139,10 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
     @Override
     public void onAdClose(View view) {
+        //广点通模板信息流2.0不在这里处理，参考processGDT2Data方法中处理
+        if (isGdtExpress2){
+            return;
+        }
         Toast.makeText(this, "广告关闭", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onADClosed: " + view.toString());
         if (mAdViewPositionMap != null) {
@@ -144,18 +158,71 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
     public void onAdLoaded(List<AdvanceNativeExpressAdItem> list) {
         Toast.makeText(this, "广告加载完成", Toast.LENGTH_SHORT).show();
         mAdItemList = list;
-        for (int i = 0; i < mAdItemList.size(); i++) {
-            int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
-            if (position <= mNormalDataList.size()) {
-                AdvanceNativeExpressAdItem item = mAdItemList.get(i);
+        isGdtExpress2 = AdvanceConfig.SDK_ID_GDT.equals(selectedSupplierID) && advanceNativeExpress.isGdtExpress2();
+        mAdapter.setGdtExpress2(isGdtExpress2);
 
-                mAdViewPositionMap.put(item.getExpressAdView(), position); // 把每个广告在列表中位置记录下来
-                mAdapter.addADItemToPosition(position, item);
+        if (isGdtExpress2) {
+            iterator = list.iterator();
+            processGDT2Data(0);
+        } else {
+            for (int i = 0; i < mAdItemList.size(); i++) {
+                int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
+                if (position <= mNormalDataList.size()) {
+                    AdvanceNativeExpressAdItem item = mAdItemList.get(i);
+
+                    mAdViewPositionMap.put(item.getExpressAdView(), position); // 把每个广告在列表中位置记录下来
+                    mAdapter.addADItemToPosition(position, item);
+                }
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 因为广点通模板2.0 的广告是渲染成功后，才有广告的 View，进而添加到UI中显示。
+     * 如果多条广告同时开始渲染，渲染成功的回调顺序是不确定的，有可能第 2 条先渲染成功，然后第 1 条才渲染成功，
+     * 这样导致的结果可能就是列表被滚动到第 2 条广告第位置，但其实用户并没有滑动。
+     * 所以这里采用一条一条的渲染广告的方式，当前广告渲染成功或失败后再去渲染下一条广告。
+     */
+    private void processGDT2Data(final int i) {
+        if (iterator.hasNext()) {
+            final AdvanceNativeExpressAdItem data = iterator.next();
+
+            final int position = FIRST_AD_POSITION + ITEMS_PER_AD * i + 1;
+            if (position < mNormalDataList.size()) {
+                final GdtNativeAdExpressAdItem gdtItem = (GdtNativeAdExpressAdItem) data;
+//                gdtItem.setAdEventListener2(new GdtEventListener2() {
+//
+//                    @Override
+//                    public void onRenderSuccess(View nativeExpressADView) {
+//                        mAdViewPositionMap.put(nativeExpressADView, position);
+//                        mAdapter.addADItemToPosition(position, data);
+//                        mAdapter.notifyItemInserted(position);
+//                        // 当前广告渲染成功，开始渲染下一条广告
+//                        processGDT2Data(i + 1);
+//                    }
+//
+//                    @Override
+//                    public void onRenderFail(View nativeExpressADView) {
+//                        processGDT2Data(i + 1);
+//
+//                    }
+//
+//                    @Override
+//                    public void onAdClosed(View nativeExpressADView) {
+//                        gdtItem.destroy();
+//                        Log.i(TAG, "onAdClosed, position:" + position);
+//                        if (mAdapter != null) {
+//                            int position = mAdViewPositionMap.get(nativeExpressADView);
+//                            mAdapter.removeADView(position);
+//                        }
+//                    }
+//                });
+                gdtItem.render();
             }
         }
-        mAdapter.notifyDataSetChanged();
-
     }
+
 
     public static class NormalItem {
         private String title;
@@ -181,9 +248,14 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
         static final int TYPE_DATA = 0;
         static final int TYPE_AD = 1;
         private List<Object> mData;
+        private boolean gdtExpress2 = false;
 
         public CustomAdapter(List list) {
             mData = list;
+        }
+
+        public void setGdtExpress2(boolean gdtExpress2) {
+            this.gdtExpress2 = gdtExpress2;
         }
 
         // 把返回的NativeExpressADView添加到数据集里面去
@@ -229,8 +301,12 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                 if (customViewHolder.container.getChildCount() > 0) {
                     customViewHolder.container.removeAllViews();
                 }
-                if (adView.getParent() != null) {
-                    ((ViewGroup) adView.getParent()).removeView(adView);
+
+                if (adView != null) {
+                    if (adView.getParent() != null)
+                        ((ViewGroup) adView.getParent()).removeView(adView);
+                    customViewHolder.container.addView(adView);
+                    mAdViewPositionMap.put(adView, position); // 广告在列表中的位置是可以被更新的
                 }
 
                 //穿山甲需要设置dislike逻辑，否则无法关闭广告
@@ -253,11 +329,12 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                         }
                     });
                 }
-                customViewHolder.container.addView(adView);
-                mAdViewPositionMap.put(adView, position); // 广告在列表中的位置是可以被更新的
 
-                //一定要进行render 否则无法成功展示广告
-                advanceNativeExpressAdItem.render();
+                //广点通2.0需执行单独的渲染逻辑
+                if (!gdtExpress2) {
+                    //一定要进行render 否则无法成功展示广告
+                    advanceNativeExpressAdItem.render();
+                }
             } else {
                 customViewHolder.title.setText(((NormalItem) mData.get(position)).getTitle());
             }
