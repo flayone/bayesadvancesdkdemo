@@ -35,6 +35,7 @@ repositories {
     }
 }
 
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -45,21 +46,21 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "com.android.support:multidex:1.0.3"
 
-
+    def advanceVersion = "3.5.0"
     //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle进行配置，如果依然无法引入，请联系我们使用本地aar引入。
-    implementation 'com.advsdk:advance:3.4.5c1'
+    implementation "com.advsdk:advance:${advanceVersion}"
     //必须，MSA Android10以上设备唯一标识 OAID SDK 引入
     implementation 'com.advsdk:advance_oaid:1.0.25'
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
-    implementation 'com.advsdk:advance_mry:3.4.5c1_342'
+    implementation "com.advsdk:advance_mry:${advanceVersion}_342"
     //穿山甲、广点通、百度SDK 引入，包含了广告aar以及渠道处理逻辑(如果APP本地引入了平台SDK的aar，不希望使用带aar引入的advance渠道库，可以在版本号后面加上 _core 标识，这样就不会产生aar引入冲突了，但是请注意，非advance推荐版本可能会出现广告加载异常，一定要充分测试)
-    implementation 'com.advsdk:advance_csj:3.4.5c1_3450'
-    implementation 'com.advsdk:advance_gdt:3.4.5c1_4330'
-    implementation 'com.advsdk:advance_bd:3.4.5c1_596'
+    implementation "com.advsdk:advance_csj:${advanceVersion}_3450"
+    implementation "com.advsdk:advance_gdt:${advanceVersion}_4330"
+    implementation "com.advsdk:advance_bd:${advanceVersion}_596"
     //快手SDK 引入 仅包含了渠道处理逻辑
-    implementation 'com.advsdk:advance_ks:3.4.5c1_3353_core'
+    implementation "com.advsdk:advance_ks:${advanceVersion}_3353_core"
     //快手SDK 引入 仅包含了快手广告aar
-    implementation 'com.advsdk:advance_kslib:3.4.5c1_3353'
+    implementation "com.advsdk:advance_kslib:${advanceVersion}_3353"
 
 
 //    implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号

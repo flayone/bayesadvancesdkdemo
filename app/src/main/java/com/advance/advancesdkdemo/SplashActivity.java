@@ -8,13 +8,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
@@ -56,8 +54,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
         sdkId = id;
         advanceSplash.getAdvanceId();
 
-        Log.d(TAG, "Splash ad onSdkSelected " + id);
-        Toast.makeText(this, "策略选中，选中SDK id = " + id, Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "策略选中SDK id = " + id);
     }
 
     @Override
@@ -69,8 +66,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
             logo.setVisibility(View.GONE);
         }
 
-        Log.d(TAG, "Splash ad onAdLoaded");
-        Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "广告加载成功");
     }
 
     @Override
@@ -83,23 +79,19 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
         if (skipView != null)
             skipView.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.background_circle));
 
-        Log.d(TAG, "Splash ad show");
-        Toast.makeText(this, "广告展示成功", Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "广告展示成功");
     }
 
     @Override
     public void onAdFailed(AdvanceError advanceError) {
         goToMainActivity();
 
-        Log.d(TAG, "Splash ad failed");
-        Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code);
     }
 
     @Override
     public void onAdClicked() {
-
-        Log.d(TAG, "Splash ad clicked");
-        Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "广告点击");
     }
 
 
@@ -107,16 +99,14 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
     public void onAdSkip() {
         next();
 
-        Log.d(TAG, "Splash ad skip");
-        Toast.makeText(this, "跳过广告", Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "跳过广告");
     }
 
     @Override
     public void onAdTimeOver() {
         next();
 
-        Log.d(TAG, "Splash ad timeOver");
-        Toast.makeText(this, "倒计时结束，关闭广告", Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "倒计时结束，关闭广告");
     }
 
 

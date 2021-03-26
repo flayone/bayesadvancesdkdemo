@@ -21,19 +21,3 @@
 #-renamesourcefileattribute SourceFile
 
 
--keep class com.bytedance.sdk.openadsdk.** { *; }
--keep public interface com.bytedance.sdk.openadsdk.downloadnew.** {*;}
--keep class com.ss.sys.ces.* {*;}
--keep class com.ss.android.**{*;}
--keep class com.pgl.sys.ces.* {*;}
-
--keep class com.qq.e.** {
-    public protected *;
-}
--keep class android.support.v4.app.NotificationCompat**{
-    public *;
-}
-#oaid 混淆部分
--keep class com.bun.miitmdid.** {*;}
--dontwarn XI.**
--keep class  XI.** {*;}

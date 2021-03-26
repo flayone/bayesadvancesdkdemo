@@ -19,8 +19,7 @@ public class Constants {
     // 配置为穿山甲渠道优先的广告用例
     public static class Csj {
         //目前穿山甲后台没有使用模板广告选项。
-//        public static final String splashAdspotId = "10003083";
-        public static final String splashAdspotId = "10004193";
+        public static final String splashAdspotId = "10003083";
         //使用模板的穿山甲广告
         public static final String bannerAdspotId = "10003091";
         public static final String nativeExpressAdspotId = "10003094";

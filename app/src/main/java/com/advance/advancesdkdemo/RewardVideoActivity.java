@@ -2,9 +2,7 @@ package com.advance.advancesdkdemo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.advance.AdvanceRewardVideo;
 import com.advance.AdvanceRewardVideoItem;
@@ -45,9 +43,8 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
     @Override
     public void onAdLoaded(AdvanceRewardVideoItem advanceRewardVideoItem) {
+        DemoUtil.logAndToast(this, "广告加载成功");
 
-        Log.d("DEMO", "LOADED");
-        Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
         this.advanceRewardVideoItem = advanceRewardVideoItem;
         //广告加载成功后立即展示。也可选择提前加载，但要控制好调用顺序以及初始化操作，一次广告初始化一次，切忌复用。
         showReward();
@@ -55,63 +52,49 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
     @Override
     public void onAdShow() {
-        Log.d("DEMO", "SHOW");
-        Toast.makeText(this, "广告展示", Toast.LENGTH_SHORT).show();
-
+        DemoUtil.logAndToast(this, "广告展示");
     }
 
     @Override
     public void onAdFailed(AdvanceError advanceError) {
-
-        Log.d("DEMO", "FAILED");
-        Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code);
     }
 
     @Override
     public void onSdkSelected(String id) {
-
+        DemoUtil.logAndToast(this, "onSdkSelected = " + id);
     }
 
     @Override
     public void onAdClicked() {
-        Log.d("DEMO", "CLICKED");
-        Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "广告点击");
     }
 
 
     @Override
     public void onVideoCached() {
-
-        Log.d("DEMO", "CACHED");
-        Toast.makeText(this, "广告缓存成功", Toast.LENGTH_SHORT).show();
-
+        DemoUtil.logAndToast(this, "广告缓存成功");
     }
 
     @Override
     public void onVideoComplete() {
-
-        Log.d("DEMO", "VIDEO COMPLETE");
-        Toast.makeText(this, "视频播放完毕", Toast.LENGTH_SHORT).show();
-
+        DemoUtil.logAndToast(this, "视频播放完毕");
     }
 
     @Override
     public void onAdClose() {
-
-        Log.d("DEMO", "AD CLOSE");
-        Toast.makeText(this, "广告关闭", Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "广告关闭");
     }
 
     @Override
     public void onAdReward() {
-
-        Log.d("DEMO", "AD REWARD");
-        Toast.makeText(this, "激励发放", Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "激励发放");
     }
 
     @Override
     public void onRewardServerInf(RewardServerCallBackInf inf) {
-
+        //广点通和穿山甲支持回调服务端激励验证信息，详见RewardServerCallBackInf中字段信息
+        DemoUtil.logAndToast(this, "onRewardServerInf");
     }
 
 }

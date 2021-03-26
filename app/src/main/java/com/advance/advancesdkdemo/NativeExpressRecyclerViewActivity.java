@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceNativeExpress;
@@ -18,6 +17,7 @@ import com.advance.AdvanceNativeExpressAdItem;
 import com.advance.AdvanceNativeExpressListener;
 import com.advance.model.AdvanceError;
 import com.advance.supplier.csj.CsjNativeExpressAdItem;
+import com.advance.supplier.gdt.GdtEventListener2;
 import com.advance.supplier.gdt.GdtNativeAdExpressAdItem;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
 
@@ -89,34 +89,35 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
         advanceNativeExpress = new AdvanceNativeExpress(this, Constants.Csj.nativeExpressAdspotId);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
-        advanceNativeExpress.loadStrategy(3);
+        advanceNativeExpress.loadStrategy();
     }
     //AdvanceSDK回调接口
 
     @Override
     public void onAdShow(View view) {
-        Toast.makeText(this, "广告展示", Toast.LENGTH_SHORT).show();
-
+        DemoUtil.logAndToast(this, "广告展示");
     }
 
     @Override
     public void onAdFailed(AdvanceError advanceError) {
-        Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code);
     }
 
     @Override
     public void onSdkSelected(String id) {
+        DemoUtil.logAndToast(this, "onSdkSelected = " + id);
+
         selectedSupplierID = id;
     }
 
     @Override
     public void onAdRenderFailed(View view) {
+        DemoUtil.logAndToast(this, "广告渲染失败"+ view.toString());
+
         //广点通模板信息流2.0不在这里处理，参考processGDT2Data方法中处理
-        if (isGdtExpress2){
+        if (isGdtExpress2) {
             return;
         }
-        Toast.makeText(this, "广告渲染失败", Toast.LENGTH_SHORT).show();
-        Log.i(TAG, "onADRenderFail: " + view.toString());
         if (mAdViewPositionMap != null) {
             int removedPosition = mAdViewPositionMap.get(view);
             if (mAdapter != null) {
@@ -128,23 +129,23 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
     @Override
     public void onAdRenderSuccess(View view) {
+        DemoUtil.logAndToast(this, "广告渲染成功"+ view.toString());
 
     }
 
     @Override
     public void onAdClicked(View view) {
-
-        Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "广告点击"+ view.toString());
     }
 
     @Override
     public void onAdClose(View view) {
+        DemoUtil.logAndToast(this, "广告关闭"+ view.toString());
+
         //广点通模板信息流2.0不在这里处理，参考processGDT2Data方法中处理
-        if (isGdtExpress2){
+        if (isGdtExpress2) {
             return;
         }
-        Toast.makeText(this, "广告关闭", Toast.LENGTH_SHORT).show();
-        Log.i(TAG, "onADClosed: " + view.toString());
         if (mAdViewPositionMap != null) {
             int removedPosition = mAdViewPositionMap.get(view);
             if (mAdapter != null) {
@@ -156,9 +157,12 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
     @Override
     public void onAdLoaded(List<AdvanceNativeExpressAdItem> list) {
-        Toast.makeText(this, "广告加载完成", Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "广告加载成功");
+
         mAdItemList = list;
+        //从实际执行结果中获取是否是广点通模板2.0类型广告
         isGdtExpress2 = AdvanceConfig.SDK_ID_GDT.equals(selectedSupplierID) && advanceNativeExpress.isGdtExpress2();
+        Log.i(TAG, "isGdtExpress2: " + isGdtExpress2);
         mAdapter.setGdtExpress2(isGdtExpress2);
 
         if (isGdtExpress2) {
@@ -191,33 +195,33 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
             final int position = FIRST_AD_POSITION + ITEMS_PER_AD * i + 1;
             if (position < mNormalDataList.size()) {
                 final GdtNativeAdExpressAdItem gdtItem = (GdtNativeAdExpressAdItem) data;
-//                gdtItem.setAdEventListener2(new GdtEventListener2() {
-//
-//                    @Override
-//                    public void onRenderSuccess(View nativeExpressADView) {
-//                        mAdViewPositionMap.put(nativeExpressADView, position);
-//                        mAdapter.addADItemToPosition(position, data);
-//                        mAdapter.notifyItemInserted(position);
-//                        // 当前广告渲染成功，开始渲染下一条广告
-//                        processGDT2Data(i + 1);
-//                    }
-//
-//                    @Override
-//                    public void onRenderFail(View nativeExpressADView) {
-//                        processGDT2Data(i + 1);
-//
-//                    }
-//
-//                    @Override
-//                    public void onAdClosed(View nativeExpressADView) {
-//                        gdtItem.destroy();
-//                        Log.i(TAG, "onAdClosed, position:" + position);
-//                        if (mAdapter != null) {
-//                            int position = mAdViewPositionMap.get(nativeExpressADView);
-//                            mAdapter.removeADView(position);
-//                        }
-//                    }
-//                });
+                gdtItem.setAdEventListener2(new GdtEventListener2() {
+
+                    @Override
+                    public void onRenderSuccess(View nativeExpressADView) {
+                        mAdViewPositionMap.put(nativeExpressADView, position);
+                        mAdapter.addADItemToPosition(position, data);
+                        mAdapter.notifyItemInserted(position);
+                        // 当前广告渲染成功，开始渲染下一条广告
+                        processGDT2Data(i + 1);
+                    }
+
+                    @Override
+                    public void onRenderFail(View nativeExpressADView) {
+                        processGDT2Data(i + 1);
+
+                    }
+
+                    @Override
+                    public void onAdClosed(View nativeExpressADView) {
+                        gdtItem.destroy();
+                        Log.i(TAG, "onAdClosed, position:" + position);
+                        if (mAdapter != null) {
+                            int position = mAdViewPositionMap.get(nativeExpressADView);
+                            mAdapter.removeADView(position);
+                        }
+                    }
+                });
                 gdtItem.render();
             }
         }

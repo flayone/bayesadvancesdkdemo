@@ -33,46 +33,39 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
     }
 
     @Override
-    public void onAdClose() {
-        Toast.makeText(this, "广告关闭", Toast.LENGTH_SHORT).show();
-
-    }
-
-
-    @Override
-    public void onAdReady() {
-        Toast.makeText(this, "广告就绪", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onAdShow() {
-
-        Toast.makeText(this, "广告展示", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onAdFailed(AdvanceError advanceError) {
-
-        Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onSdkSelected(String id) {
-
-    }
-
-    @Override
-    public void onAdClicked() {
-
-        Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         advanceInterstitial.destroy();
     }
 
+    @Override
+    public void onAdClose() {
+        DemoUtil.logAndToast(this, "广告关闭");
+    }
+
+    @Override
+    public void onAdReady() {
+        DemoUtil.logAndToast(this, "广告就绪");
+    }
+
+    @Override
+    public void onAdShow() {
+        DemoUtil.logAndToast(this, "广告展示");
+    }
+
+    @Override
+    public void onAdFailed(AdvanceError advanceError) {
+        DemoUtil.logAndToast(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code);
+    }
+
+    @Override
+    public void onSdkSelected(String id) {
+        DemoUtil.logAndToast(this, "onSdkSelected = " + id);
+    }
+
+    @Override
+    public void onAdClicked() {
+        DemoUtil.logAndToast(this, "广告点击");
+    }
 
 }

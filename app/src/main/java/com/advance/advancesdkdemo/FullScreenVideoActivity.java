@@ -48,34 +48,28 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
 
     @Override
     public void onAdLoaded(AdvanceFullScreenItem advanceFullScreenItem) {
-        Log.d(TAG, "onAdLoaded");
+        DemoUtil.logAndToast(this, "广告加载成功");
+
 
         //广点通 onVideoCached 方法在show以后才会触发，所以在获取广告后就可以去做展示
         if (AdvanceConfig.SDK_ID_GDT.equals(advanceFullScreenItem.getSdkId())) isReady = true;
         this.advanceFullScreenItem = advanceFullScreenItem;
-        Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onAdClose() {
-        Log.d(TAG, "onAdClose");
-        Toast.makeText(this, "广告关闭", Toast.LENGTH_SHORT).show();
-
+        DemoUtil.logAndToast(this, "广告关闭");
     }
 
     @Override
     public void onVideoComplete() {
-        Log.d(TAG, "onVideoComplete");
-        Toast.makeText(this, "视频播放结束", Toast.LENGTH_SHORT).show();
-
+        DemoUtil.logAndToast(this, "视频播放结束");
     }
 
     @Override
     public void onVideoSkipped() {
-        Log.d(TAG, "onVideoSkipped");
-        Toast.makeText(this, "跳过视频", Toast.LENGTH_SHORT).show();
-
+        DemoUtil.logAndToast(this, "跳过视频");
     }
 
     @Override
@@ -83,34 +77,26 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
         //穿山甲可以广告缓存成功后再去展示广告
         isReady = true;
 
-        Log.d(TAG, "onVideoCached");
-        Toast.makeText(this, "广告缓存成功", Toast.LENGTH_SHORT).show();
-
+        DemoUtil.logAndToast(this, "广告缓存成功");
     }
 
     @Override
     public void onAdShow() {
-        Log.d(TAG, "onAdShow");
-        Toast.makeText(this, "广告展示", Toast.LENGTH_SHORT).show();
-
+        DemoUtil.logAndToast(this, "广告展示");
     }
 
     @Override
     public void onAdFailed(AdvanceError advanceError) {
-        Log.d(TAG, "onAdFailed");
-        Toast.makeText(this, "广告加载失败", Toast.LENGTH_SHORT).show();
-
+        DemoUtil.logAndToast(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code);
     }
 
     @Override
     public void onSdkSelected(String id) {
-
+        DemoUtil.logAndToast(this, "onSdkSelected = "+ id);
     }
 
     @Override
     public void onAdClicked() {
-        Log.d(TAG, "onAdClicked");
-        Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
-
+        DemoUtil.logAndToast(this, "广告点击");
     }
 }

@@ -37,9 +37,17 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (advanceNativeExpress != null) {
+            advanceNativeExpress.destroy();
+        }
+    }
+
+    @Override
     public void onAdLoaded(List<AdvanceNativeExpressAdItem> list) {
-        Toast.makeText(this, "广告加载成功", Toast.LENGTH_SHORT).show();
-        Log.d("DEMO", "LOADED");
+        DemoUtil.logAndToast(this, "广告加载成功");
+
         if (null == list || list.isEmpty()) {
             Log.d("DEMO", "NO AD RESULT");
         } else {
@@ -67,6 +75,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
                 });
             }
 
+            //从实际执行结果中获取是否是广点通模板2.0类型广告
             isGdtExpress2 = AdvanceConfig.SDK_ID_GDT.equals(advanceNativeExpressAdItem.getSdkId()) && advanceNativeExpress.isGdtExpress2();
 
             //广点通模板2.0不可以在这里可以直接添加视图，否则无法展示，应该在onAdRenderSuccess中添加视图
@@ -81,34 +90,9 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
     }
 
     @Override
-    public void onAdShow(View view) {
-        Toast.makeText(this, "广告展示", Toast.LENGTH_SHORT).show();
-
-        Log.d("DEMO", "SHOW");
-    }
-
-    @Override
-    public void onAdFailed(AdvanceError advanceError) {
-        Toast.makeText(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code, Toast.LENGTH_SHORT).show();
-
-        Log.d("DEMO", "FAILED");
-
-    }
-
-    @Override
-    public void onSdkSelected(String id) {
-
-    }
-
-    @Override
-    public void onAdRenderFailed(View view) {
-
-        Toast.makeText(this, "广告渲染失败", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void onAdRenderSuccess(View view) {
-        Toast.makeText(this, "广告渲染成功", Toast.LENGTH_SHORT).show();
+        DemoUtil.logAndToast(this, "广告渲染成功");
+
         //广点通模板2.0 需要在RenderSuccess以后再加载视图
         if (advanceNativeExpressAdItem != null && advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_GDT) && isGdtExpress2) {
             container.removeAllViews();
@@ -118,22 +102,36 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         }
     }
 
+
+    @Override
+    public void onAdShow(View view) {
+        DemoUtil.logAndToast(this, "广告展示");
+    }
+
+    @Override
+    public void onAdFailed(AdvanceError advanceError) {
+        DemoUtil.logAndToast(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code);
+    }
+
+    @Override
+    public void onSdkSelected(String id) {
+        DemoUtil.logAndToast(this, "onSdkSelected = " + id);
+    }
+
+    @Override
+    public void onAdRenderFailed(View view) {
+        DemoUtil.logAndToast(this, "广告渲染失败");
+    }
+
     @Override
     public void onAdClicked(View view) {
-        Toast.makeText(this, "广告点击", Toast.LENGTH_SHORT).show();
-        Log.d("DEMO", "CLICKED");
-
+        DemoUtil.logAndToast(this, "广告点击");
     }
 
     @Override
     public void onAdClose(View view) {
-
-        Toast.makeText(this, "广告关闭", Toast.LENGTH_SHORT).show();
-        Log.d("DEMO", "CLOSED");
+        DemoUtil.logAndToast(this, "广告关闭");
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
+
 }
