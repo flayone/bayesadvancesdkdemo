@@ -3,7 +3,6 @@ package com.advance.advancesdkdemo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.advance.AdvanceInterstitial;
 import com.advance.AdvanceInterstitialListener;
@@ -18,7 +17,7 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
         setContentView(R.layout.activity_interstitial);
 
         //初始化
-        advanceInterstitial = new AdvanceInterstitial(this, Constants.Csj.interstitialAdspotId);
+        advanceInterstitial = new AdvanceInterstitial(this, Constants.TestIds.interstitialAdspotId);
         //推荐：核心事件监听回调
         advanceInterstitial.setAdListener(this);
     }

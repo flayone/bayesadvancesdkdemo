@@ -177,7 +177,7 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
                 }
                 adContainer.removeAllViews();
                 //设置dislike弹窗，这里展示自定义的dialog
-                bindDislikeCustom(ad);
+//                bindDislikeCustom(ad);
 
                 bindData(ad);
                 adContainer.addView(adView);
@@ -350,34 +350,34 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
 
         }
 
-        private void bindDislikeCustom(TTFeedAd ad) {
-            List<FilterWord> words = ad.getFilterWords();
-            if (words == null || words.isEmpty()) {
-                return;
-            }
-
-            final DislikeDialog dislikeDialog = new DislikeDialog(activity, words);
-            dislikeDialog.setOnDislikeItemClick(new DislikeDialog.OnDislikeItemClick() {
-                @Override
-                public void onItemClick(FilterWord filterWord) {
-                    //布局清除
-                    if (adContainer != null)
-                        adContainer.removeAllViews();
-                }
-            });
-            final TTAdDislike ttAdDislike = ad.getDislikeDialog(dislikeDialog);
-
-            mDislike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //展示dislike可以自行调用dialog
-                    dislikeDialog.show();
-
-                    //也可以使用接口来展示
-                    //ttAdDislike.showDislikeDialog();
-                }
-            });
-        }
+//        private void bindDislikeCustom(TTFeedAd ad) {
+//            List<FilterWord> words = ad.getFilterWords();
+//            if (words == null || words.isEmpty()) {
+//                return;
+//            }
+//
+//            final DislikeDialog dislikeDialog = new DislikeDialog(activity, words);
+//            dislikeDialog.setOnDislikeItemClick(new DislikeDialog.OnDislikeItemClick() {
+//                @Override
+//                public void onItemClick(FilterWord filterWord) {
+//                    //布局清除
+//                    if (adContainer != null)
+//                        adContainer.removeAllViews();
+//                }
+//            });
+//            final TTAdDislike ttAdDislike = ad.getDislikeDialog(dislikeDialog);
+//
+//            mDislike.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    //展示dislike可以自行调用dialog
+//                    dislikeDialog.show();
+//
+//                    //也可以使用接口来展示
+//                    //ttAdDislike.showDislikeDialog();
+//                }
+//            });
+//        }
 
         private void bindDownloadListener(final Button adCreativeButton, TTFeedAd ad) {
             TTAppDownloadListener downloadListener = new TTAppDownloadListener() {

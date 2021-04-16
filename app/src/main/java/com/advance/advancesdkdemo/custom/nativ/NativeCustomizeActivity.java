@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
 import com.advance.AdvanceCustomizeSupplierListener;
+import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
 import com.advance.model.AdvanceError;
 import com.advance.model.AdvanceSupplierID;
@@ -26,7 +27,7 @@ public class NativeCustomizeActivity extends Activity {
         fl = findViewById(R.id.fl_ad);
 
         //创建自己的自渲染广告位，第二个参数为后台申请的广告位id
-        nativeCustomizeAd = new AdvanceCustomizeAd(this, "10003122");
+        nativeCustomizeAd = new AdvanceCustomizeAd(this, Constants.TestIds.customNativeAdspotId);
         //必须：设置广告载体
         nativeCustomizeAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override

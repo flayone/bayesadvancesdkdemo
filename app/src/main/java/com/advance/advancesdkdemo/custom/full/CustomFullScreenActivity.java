@@ -24,7 +24,7 @@ public class CustomFullScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen_video);
 
-        ad = new AdvanceCustomizeAd(this, Constants.Csj.fullScreenVideoAdspotId);
+        ad = new AdvanceCustomizeAd(this, Constants.TestIds.fullScreenVideoAdspotId);
         //设置渠道的结果监听
         ad.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override

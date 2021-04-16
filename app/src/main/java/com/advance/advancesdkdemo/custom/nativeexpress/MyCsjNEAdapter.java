@@ -140,6 +140,11 @@ public class MyCsjNEAdapter {
 
             TTAdDislike.DislikeInteractionCallback dislikeInteractionCallback1 = new TTAdDislike.DislikeInteractionCallback() {
                 @Override
+                public void onShow() {
+
+                }
+
+                @Override
                 public void onSelected(int i, String s) {
                     if (listener!=null){
                         listener.onADClosed(ttNativeExpressAd.getExpressAdView());

@@ -30,7 +30,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         container = findViewById(R.id.native_express_container);
 
         //初始化
-        advanceNativeExpress = new AdvanceNativeExpress(this, Constants.Csj.nativeExpressAdspotId);
+        advanceNativeExpress = new AdvanceNativeExpress(this, Constants.TestIds.nativeExpressAdspotId);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
         advanceNativeExpress.loadStrategy();
@@ -57,6 +57,11 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
             if (AdvanceConfig.SDK_ID_CSJ.equals(advanceNativeExpressAdItem.getSdkId())) {
                 CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
                 csjNativeExpressAdItem.setDislikeCallback(NativeExpressActivity.this, new TTAdDislike.DislikeInteractionCallback() {
+                    @Override
+                    public void onShow() {
+
+                    }
+
                     @Override
                     public void onSelected(int i, String s) {
                         if (container != null)
@@ -102,6 +107,12 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         }
     }
 
+    @Override
+    public void onAdClose(View view) {
+        //移除布局
+        container.removeAllViews();
+        DemoUtil.logAndToast(this, "广告关闭");
+    }
 
     @Override
     public void onAdShow(View view) {
@@ -128,10 +139,6 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
         DemoUtil.logAndToast(this, "广告点击");
     }
 
-    @Override
-    public void onAdClose(View view) {
-        DemoUtil.logAndToast(this, "广告关闭");
-    }
 
 
 }

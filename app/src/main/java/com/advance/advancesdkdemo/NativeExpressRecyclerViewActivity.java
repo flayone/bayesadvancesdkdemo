@@ -86,7 +86,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
      */
     private void initAdvanceNativeExpressAD() {
         //初始化
-        advanceNativeExpress = new AdvanceNativeExpress(this, Constants.Csj.nativeExpressAdspotId);
+        advanceNativeExpress = new AdvanceNativeExpress(this,Constants.TestIds.nativeExpressAdspotId);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
         advanceNativeExpress.loadStrategy();
@@ -317,6 +317,11 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                 if (AdvanceConfig.SDK_ID_CSJ.equals(advanceNativeExpressAdItem.getSdkId())) {
                     CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
                     csjNativeExpressAdItem.setDislikeCallback(NativeExpressRecyclerViewActivity.this, new TTAdDislike.DislikeInteractionCallback() {
+                        @Override
+                        public void onShow() {
+
+                        }
+
                         @Override
                         public void onSelected(int i, String s) {
                             customViewHolder.container.removeAllViews();

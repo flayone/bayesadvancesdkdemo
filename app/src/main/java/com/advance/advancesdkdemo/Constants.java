@@ -2,41 +2,15 @@ package com.advance.advancesdkdemo;
 
 public class Constants {
 
-    // 配置为Mercury渠道优先的广告用例
-   public static class Mercury {
-        public static final String splashAdspotId = "10000531";
-        public static final String bannerAdspotId = "10003093";
-        public static final String nativeExpressAdspotId = "10003096";
-        public static final String rewardAdspotId = "10003102";
-        public static final String interstitialAdspotId = "10000398";
-        public static final String customNativeAdspotId = "10003122";
-
-
-        //Mercury渠道目前不支持全屏视频
-        public static final String fullScreenVideoAdspotId = "";
-    }
-
-    // 配置为穿山甲渠道优先的广告用例
-    public static class Csj {
-        //目前穿山甲后台没有使用模板广告选项。
-        public static final String splashAdspotId = "10003083";
-        //使用模板的穿山甲广告
-        public static final String bannerAdspotId = "10003091";
-        public static final String nativeExpressAdspotId = "10003094";
-        public static final String rewardAdspotId = "10003100";
-        public static final String interstitialAdspotId = "10003097";
-        public static final String fullScreenVideoAdspotId = "10003103";
-        public static final String customNativeAdspotId = "10003120";
-    }
-
-    // 配置为广点通渠道优先的广告用例
-   public static class Gdt {
-        public static final String splashAdspotId = "10003079";
-        public static final String bannerAdspotId = "10003092";
-        public static final String nativeExpressAdspotId = "10003095";
-        public static final String rewardAdspotId = "10003101";
-        public static final String interstitialAdspotId = "10003098";
-        public static final String fullScreenVideoAdspotId = "10003104";
-        public static final String customNativeAdspotId = "10003121";
+    //示例代码位id，具体展现的是哪个广告, 由后台策略来决定。实际使用请使用自己的广告位id，一定不要使用这里的id上线发布，否则无收益！
+    public static class TestIds {
+        //示例id默认配置为穿山甲广告
+        public static final String splashAdspotId = "10003083"; //开屏
+        public static final String bannerAdspotId = "10003091"; //banner
+        public static final String nativeExpressAdspotId = "10003094"; //信息流
+        public static final String rewardAdspotId = "10003100"; //激励视频
+        public static final String interstitialAdspotId = "10003097"; //插屏
+        public static final String fullScreenVideoAdspotId = "10003103"; //全屏视频
+        public static final String customNativeAdspotId = "10003120"; //原生自渲染
     }
 }

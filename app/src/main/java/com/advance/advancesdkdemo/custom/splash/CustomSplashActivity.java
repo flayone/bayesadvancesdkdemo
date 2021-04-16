@@ -49,7 +49,7 @@ public class CustomSplashActivity extends Activity {
             }
         };
         //初始化：开屏建议使用软引用activity，第二个参数为后台申请的广告位id
-        customizeAd = new AdvanceCustomizeAd(new SoftReference<Activity>(this), Constants.Csj.splashAdspotId);
+        customizeAd = new AdvanceCustomizeAd(new SoftReference<Activity>(this), Constants.TestIds.splashAdspotId);
         //必须：设置渠道的结果监听
         customizeAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override

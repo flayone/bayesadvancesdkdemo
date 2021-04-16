@@ -85,10 +85,10 @@ public class DislikeDialog extends TTDislikeDialogAbstract {
         return new int[]{R.id.lv_dislike_custom};
     }
 
-    @Override
-    public int[] getPersonalizationPromptIds() {
-        return new int[0];
-    }
+//    @Override
+//    public int[] getPersonalizationPromptIds() {
+//        return new int[0];
+//    }
 
     @Override
     public ViewGroup.LayoutParams getLayoutParams() {

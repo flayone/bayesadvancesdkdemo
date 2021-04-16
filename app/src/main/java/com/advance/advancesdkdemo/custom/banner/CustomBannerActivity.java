@@ -31,7 +31,7 @@ public class CustomBannerActivity extends Activity {
 
     private void loadBanner() {
 
-        myBannerAd = new AdvanceCustomizeAd(this, Constants.Csj.bannerAdspotId);
+        myBannerAd = new AdvanceCustomizeAd(this, Constants.TestIds.bannerAdspotId);
         //设置渠道的结果监听
         myBannerAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override

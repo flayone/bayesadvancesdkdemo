@@ -2,9 +2,7 @@ package com.advance.advancesdkdemo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.advance.AdvanceBanner;
 import com.advance.AdvanceBannerListener;
@@ -22,7 +20,7 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
         rl = findViewById(R.id.banner_layout);
 
 
-        advanceBanner = new AdvanceBanner(this, rl, Constants.Csj.bannerAdspotId);
+        advanceBanner = new AdvanceBanner(this, rl, Constants.TestIds.bannerAdspotId);
         //推荐：核心事件监听回调
         advanceBanner.setAdListener(this);
         advanceBanner.loadStrategy();

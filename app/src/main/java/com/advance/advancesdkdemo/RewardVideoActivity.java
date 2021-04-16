@@ -21,7 +21,7 @@ public class RewardVideoActivity extends AppCompatActivity implements AdvanceRew
 
 
         //初始化，注意需要时再初始化，不要复用。
-        advanceRewardVideo = new AdvanceRewardVideo(this, Constants.Csj.rewardAdspotId);
+        advanceRewardVideo = new AdvanceRewardVideo(this, Constants.TestIds.rewardAdspotId);
         //按需必填，注意：如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,激励视频场景，只要设置的值大于0即可
         advanceRewardVideo.setCsjExpressSize(500, 500);
         //设置通用事件监听器

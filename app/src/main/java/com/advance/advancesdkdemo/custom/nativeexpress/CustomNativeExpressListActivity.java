@@ -85,7 +85,7 @@ public class CustomNativeExpressListActivity extends Activity {
                 mAdViewPositionMap.remove(view);
             }
         };
-        customizeAd = new AdvanceCustomizeAd(this, Constants.Csj.nativeExpressAdspotId);
+        customizeAd = new AdvanceCustomizeAd(this, Constants.TestIds.nativeExpressAdspotId);
         //设置渠道的结果监听
         customizeAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override

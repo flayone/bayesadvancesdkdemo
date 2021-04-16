@@ -23,7 +23,7 @@ public class CustomInterstitialActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interstitial);
 
-        myInterstitialAd = new AdvanceCustomizeAd(this, Constants.Csj.interstitialAdspotId);
+        myInterstitialAd = new AdvanceCustomizeAd(this, Constants.TestIds.interstitialAdspotId);
         //设置渠道的结果监听
         myInterstitialAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override

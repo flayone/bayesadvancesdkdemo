@@ -26,7 +26,7 @@ public class CustomRewardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward_video);
 
-        ad = new AdvanceCustomizeAd(this, Constants.Csj.rewardAdspotId);
+        ad = new AdvanceCustomizeAd(this, Constants.TestIds.rewardAdspotId);
         //设置渠道的结果监听
         ad.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override

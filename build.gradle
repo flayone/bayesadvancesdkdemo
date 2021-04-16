@@ -3,8 +3,10 @@
 buildscript {
     repositories {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        jcenter()
+        //advance相关引用的maven依赖根目录地址
+        maven { url 'https://s01.oss.sonatype.org/content/groups/public' }
         google()
+        jcenter()
     }
 
     dependencies {
@@ -17,10 +19,9 @@ buildscript {
 
 allprojects {
     repositories {
-        //一定要引入此项，如果同时有引入了阿里云的代理仓库地址，尽量将jcenter() 放在最前面
-        jcenter()
-//    maven { url 'https://maven.aliyun.com/repository/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        //advance相关引用的maven依赖根目录地址
+        maven { url 'https://s01.oss.sonatype.org/content/groups/public' }
         google()
     }
 }

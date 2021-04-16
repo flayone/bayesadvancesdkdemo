@@ -38,7 +38,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
 
 
         //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
-        advanceSplash = new AdvanceSplash(this, Constants.Csj.splashAdspotId, adContainer, skipView);
+        advanceSplash = new AdvanceSplash(this, Constants.TestIds.splashAdspotId, adContainer, skipView);
         //必须：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(this);
         //必须：请求广告

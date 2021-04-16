@@ -3,9 +3,7 @@ package com.advance.advancesdkdemo;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceFullScreenItem;
@@ -27,7 +25,7 @@ public class FullScreenVideoActivity extends Activity implements AdvanceFullScre
 
 
         //初始化
-        advanceFullScreenVideo = new AdvanceFullScreenVideo(this, Constants.Csj.fullScreenVideoAdspotId);
+        advanceFullScreenVideo = new AdvanceFullScreenVideo(this, Constants.TestIds.fullScreenVideoAdspotId);
         //注意：如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,全屏视频场景，只要设置的值大于0即可
         advanceFullScreenVideo.setCsjExpressSize(500, 500);
         //推荐：核心事件监听回调
