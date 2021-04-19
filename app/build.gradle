@@ -53,13 +53,11 @@ dependencies {
     implementation "io.github.flayone:advance-core:${advanceVersion}"
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
     implementation "io.github.flayone:advance-mry:${advanceVersion}_343"
-    //穿山甲、广点通、百度SDK 引入，包含了广告aar以及渠道处理逻辑(如果APP本地引入了平台SDK的aar，不希望使用带aar引入的advance渠道库，可以在版本号后面加上 _core 标识，这样就不会产生aar引入冲突了，但是请注意，非advance推荐版本可能会出现广告加载异常，一定要充分测试)
+    //穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑(如果APP本地引入了平台SDK的aar，不希望使用带aar引入的advance渠道库，可以在版本号后面加上 _core 标识，这样就不会产生aar引入冲突了，但是请注意，非advance推荐版本可能会出现广告加载异常，一定要充分测试)
     implementation "io.github.flayone:advance-gdt:${advanceVersion}_4333"
     implementation "io.github.flayone:advance-csj:${advanceVersion}_3550"
     implementation "io.github.flayone:advance-bd:${advanceVersion}_596"
-    //快手SDK 引入
-    implementation "io.github.flayone:advance-ks:${advanceVersion}_3353_core"
-    implementation "io.github.flayone:advance-kslib:${advanceVersion}_3353"
+    implementation "io.github.flayone:advance-ks:${advanceVersion}_338"
 
 
 //    implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号
