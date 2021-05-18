@@ -80,7 +80,7 @@ public class MyMercuryNCAdapter implements NativeADListener {
             } else {
                 //这里一定要调用customizeAd 的事件方法
                 if (customizeAd != null)
-                    customizeAd.adapterDidSucceed();
+                    customizeAd.adapterDidSucceed(sdkSupplier);
                 new MercuryNativeAdData(list.get(0)).showAd();
             }
         } catch (Exception e) {
@@ -244,7 +244,7 @@ public class MyMercuryNCAdapter implements NativeADListener {
                         Log.d(TAG, "onADExposed: ");
                         //这里一定要调用customizeAd 的事件方法
                         if (customizeAd != null)
-                            customizeAd.adapterDidShow();
+                            customizeAd.adapterDidShow(sdkSupplier);
                     }
 
                     @Override
@@ -252,7 +252,7 @@ public class MyMercuryNCAdapter implements NativeADListener {
                         Log.d(TAG, "onADClicked: " + " clickUrl: " + nativeADData.ext.get("clickUrl"));
                         //这里一定要调用customizeAd 的事件方法
                         if (customizeAd != null)
-                            customizeAd.adapterDidClicked();
+                            customizeAd.adapterDidClicked(sdkSupplier);
                     }
 
                     @Override

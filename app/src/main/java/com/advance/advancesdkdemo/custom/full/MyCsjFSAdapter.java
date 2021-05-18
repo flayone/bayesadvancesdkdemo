@@ -71,14 +71,14 @@ public class MyCsjFSAdapter extends BaseCustomAdapter {
                     }
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd)
-                        customizeAd.adapterDidSucceed();
+                        customizeAd.adapterDidSucceed(sdkSupplier);
                     fullScreenVideoAd.setFullScreenVideoAdInteractionListener(new TTFullScreenVideoAd.FullScreenVideoAdInteractionListener() {
                         @Override
                         public void onAdShow() {
 
                             //这里一定要调用customizeAd 的事件方法
                             if (null != customizeAd)
-                                customizeAd.adapterDidShow();
+                                customizeAd.adapterDidShow(sdkSupplier);
                         }
 
                         @Override
@@ -86,7 +86,7 @@ public class MyCsjFSAdapter extends BaseCustomAdapter {
 
                             //这里一定要调用customizeAd 的事件方法
                             if (null != customizeAd)
-                                customizeAd.adapterDidClicked();
+                                customizeAd.adapterDidClicked(sdkSupplier);
                         }
 
                         @Override

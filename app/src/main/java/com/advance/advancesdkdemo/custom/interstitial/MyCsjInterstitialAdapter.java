@@ -81,7 +81,7 @@ public class MyCsjInterstitialAdapter extends BaseCustomAdapter {
                         public void onAdClicked(View view, int type) {
                             //这里一定要调用customizeAd 的事件方法
                             if (null != customizeAd) {
-                                customizeAd.adapterDidClicked();
+                                customizeAd.adapterDidClicked(sdkSupplier);
                             }
                         }
 
@@ -89,7 +89,7 @@ public class MyCsjInterstitialAdapter extends BaseCustomAdapter {
                         public void onAdShow(View view, int type) {
                             //这里一定要调用customizeAd 的事件方法
                             if (null != customizeAd) {
-                                customizeAd.adapterDidShow();
+                                customizeAd.adapterDidShow(sdkSupplier);
                             }
                         }
 
@@ -105,7 +105,7 @@ public class MyCsjInterstitialAdapter extends BaseCustomAdapter {
                         public void onRenderSuccess(View view, float width, float height) {
                             //这里一定要调用customizeAd 的事件方法
                             if (null != customizeAd) {
-                                customizeAd.adapterDidSucceed();
+                                customizeAd.adapterDidSucceed(sdkSupplier);
                             }
                         }
                     });

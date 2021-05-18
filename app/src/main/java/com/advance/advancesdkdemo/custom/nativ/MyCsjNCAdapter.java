@@ -95,7 +95,7 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
         } else {
             //这里一定要调用customizeAd 的事件方法
             if (customizeAd != null)
-                customizeAd.adapterDidSucceed();
+                customizeAd.adapterDidSucceed(sdkSupplier);
 
             CsjAdData advanceNativeAdData = new CsjAdData(ads.get(0));
             advanceNativeAdData.showAd();
@@ -205,21 +205,21 @@ public class MyCsjNCAdapter implements TTAdNative.FeedAdListener {
                 public void onAdClicked(View view, TTNativeAd ad) {
                     //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null)
-                        customizeAd.adapterDidClicked();
+                        customizeAd.adapterDidClicked(sdkSupplier);
                 }
 
                 @Override
                 public void onAdCreativeClick(View view, TTNativeAd ad) {
                     //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null)
-                        customizeAd.adapterDidClicked();
+                        customizeAd.adapterDidClicked(sdkSupplier);
                 }
 
                 @Override
                 public void onAdShow(TTNativeAd ad) {
                     //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null)
-                        customizeAd.adapterDidShow();
+                        customizeAd.adapterDidShow(sdkSupplier);
                 }
             });
             mTitle.setText(ad.getTitle()); //title为广告的简单信息提示

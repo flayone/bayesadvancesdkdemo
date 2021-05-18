@@ -75,7 +75,7 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
         } else {
             //这里一定要调用customizeAd 的事件方法
             if (customizeAd != null)
-                customizeAd.adapterDidSucceed();
+                customizeAd.adapterDidSucceed(sdkSupplier);
             new GdtNativeAdData(list.get(0)).showAd();
         }
     }
@@ -242,7 +242,7 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
                         Log.d(TAG, "onADExposed: ");
                         //这里一定要调用customizeAd 的事件方法
                         if (customizeAd != null)
-                            customizeAd.adapterDidShow();
+                            customizeAd.adapterDidShow(sdkSupplier);
                     }
 
                     @Override
@@ -250,7 +250,7 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
                         Log.d(TAG, "onADClicked: " + " clickUrl: " + nativeUnifiedADData.ext.get("clickUrl"));
                         //这里一定要调用customizeAd 的事件方法
                         if (customizeAd != null)
-                            customizeAd.adapterDidClicked();
+                            customizeAd.adapterDidClicked(sdkSupplier);
 
                     }
 

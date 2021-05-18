@@ -75,7 +75,7 @@ public class MyCsjNEAdapter {
                             }
                             //这里一定要调用customizeAd 的事件方法
                             if (null != customizeAd) {
-                                customizeAd.adapterDidSucceed();
+                                customizeAd.adapterDidSucceed(sdkSupplier);
                             }
                             if (null != listener) {
                                 listener.onADLoaded(customExpressAdItems);
@@ -109,14 +109,14 @@ public class MyCsjNEAdapter {
                 public void onAdClicked(View view, int i) {
                     //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null)
-                        customizeAd.adapterDidClicked();
+                        customizeAd.adapterDidClicked(sdkSupplier);
                 }
 
                 @Override
                 public void onAdShow(View view, int i) {
                     //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null)
-                        customizeAd.adapterDidShow();
+                        customizeAd.adapterDidShow(sdkSupplier);
 
                 }
 
@@ -145,7 +145,7 @@ public class MyCsjNEAdapter {
                 }
 
                 @Override
-                public void onSelected(int i, String s) {
+                public void onSelected(int i, String s, boolean enforce) {
                     if (listener!=null){
                         listener.onADClosed(ttNativeExpressAd.getExpressAdView());
                     }
@@ -156,10 +156,10 @@ public class MyCsjNEAdapter {
 
                 }
 
-                @Override
-                public void onRefuse() {
-
-                }
+//                @Override
+//                public void onRefuse() {
+//
+//                }
             };
             ttNativeExpressAd.setDislikeCallback(activity, dislikeInteractionCallback1);
         }

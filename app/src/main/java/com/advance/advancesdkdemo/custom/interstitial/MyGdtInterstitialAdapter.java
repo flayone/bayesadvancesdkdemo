@@ -22,7 +22,7 @@ public class MyGdtInterstitialAdapter extends BaseCustomAdapter {
                 public void onADReceive() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidSucceed();
+                        customizeAd.adapterDidSucceed(sdkSupplier);
                     }
                     // onADReceive之后才能调用getAdPatternType()
                     if (interstitialAD != null && interstitialAD.getAdPatternType() == AdPatternType.NATIVE_VIDEO) {
@@ -61,7 +61,7 @@ public class MyGdtInterstitialAdapter extends BaseCustomAdapter {
                 public void onADExposure() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidShow();
+                        customizeAd.adapterDidShow(sdkSupplier);
                     }
                 }
 
@@ -69,7 +69,7 @@ public class MyGdtInterstitialAdapter extends BaseCustomAdapter {
                 public void onADClicked() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidClicked();
+                        customizeAd.adapterDidClicked(sdkSupplier);
                     }
                 }
 

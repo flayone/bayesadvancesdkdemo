@@ -25,7 +25,7 @@ public class MyMercuryRewardAdapter extends BaseCustomAdapter {
                 public void onADLoad() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidSucceed();
+                        customizeAd.adapterDidSucceed(sdkSupplier);
                     }
                     isVideoCached = false;
                     //收到广告回调
@@ -46,7 +46,7 @@ public class MyMercuryRewardAdapter extends BaseCustomAdapter {
                 public void onADShow() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidShow();
+                        customizeAd.adapterDidShow(sdkSupplier);
                     }
                 }
 
@@ -65,7 +65,7 @@ public class MyMercuryRewardAdapter extends BaseCustomAdapter {
                 public void onADClicked() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidClicked();
+                        customizeAd.adapterDidClicked(sdkSupplier);
                     }
                 }
 

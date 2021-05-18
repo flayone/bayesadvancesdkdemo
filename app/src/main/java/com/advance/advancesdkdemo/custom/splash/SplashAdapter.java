@@ -34,7 +34,7 @@ import static com.advance.model.AdvanceError.ERROR_EXCEPTION_LOAD;
 
 public class SplashAdapter {
 
-    public static void loadCsjAD(final SoftReference<Activity> activity, final AdvanceCustomizeAd customizeAd, SdkSupplier sdkSupplier, final ViewGroup adContainer, final MySplashListener mySplashListener) {
+    public static void loadCsjAD(final SoftReference<Activity> activity, final AdvanceCustomizeAd customizeAd, final SdkSupplier sdkSupplier, final ViewGroup adContainer, final MySplashListener mySplashListener) {
         try {
             //初始化advance默认的穿山甲配置，也可以自己选择初始化方式
             AdvanceUtil.initCsj(activity.get(), sdkSupplier.mediaid);
@@ -96,7 +96,7 @@ public class SplashAdapter {
                         public void onAdClicked(View view, int type) {
                             //这里一定要调用customizeAd 的事件方法
                             if (customizeAd != null) {
-                                customizeAd.adapterDidClicked();
+                                customizeAd.adapterDidClicked(sdkSupplier);
                             }
                         }
 
@@ -104,7 +104,7 @@ public class SplashAdapter {
                         public void onAdShow(View view, int type) {
                             //这里一定要调用customizeAd 的事件方法
                             if (customizeAd != null) {
-                                customizeAd.adapterDidShow();
+                                customizeAd.adapterDidShow(sdkSupplier);
                             }
                         }
 
@@ -124,7 +124,7 @@ public class SplashAdapter {
                     });
                     //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null) {
-                        customizeAd.adapterDidSucceed();
+                        customizeAd.adapterDidSucceed(sdkSupplier);
                     }
                 }
             }, timeout);
@@ -137,7 +137,7 @@ public class SplashAdapter {
         }
     }
 
-    public static void loadGdtAD(final SoftReference<Activity> activity, final AdvanceCustomizeAd customizeAd, SdkSupplier sdkSupplier, ViewGroup adContainer, final TextView skipView, final MySplashListener mySplashListener) {
+    public static void loadGdtAD(final SoftReference<Activity> activity, final AdvanceCustomizeAd customizeAd, final SdkSupplier sdkSupplier, ViewGroup adContainer, final TextView skipView, final MySplashListener mySplashListener) {
 
         try {
             final String skipText = "跳过 %d";
@@ -169,7 +169,7 @@ public class SplashAdapter {
                 public void onADPresent() {
                     //这里一定要调用customizeAd 的事件方法
                     if (customizeAd != null) {
-                        customizeAd.adapterDidShow();
+                        customizeAd.adapterDidShow(sdkSupplier);
                     }
                     if (skipView != null) {
                         skipView.setVisibility(View.VISIBLE);
@@ -181,7 +181,7 @@ public class SplashAdapter {
                 public void onADClicked() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidClicked();
+                        customizeAd.adapterDidClicked(sdkSupplier);
                     }
                 }
 
@@ -200,7 +200,7 @@ public class SplashAdapter {
                 public void onADLoaded(long expireTimestamp) {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidSucceed();
+                        customizeAd.adapterDidSucceed(sdkSupplier);
                     }
                 }
             };
@@ -216,7 +216,7 @@ public class SplashAdapter {
     }
 
 
-    public static void loadMercuryAD(SoftReference<Activity> activity, final AdvanceCustomizeAd customizeAd, SdkSupplier sdkSupplier, ViewGroup adContainer, final TextView skipView, final MySplashListener mySplashListener) {
+    public static void loadMercuryAD(SoftReference<Activity> activity, final AdvanceCustomizeAd customizeAd, final SdkSupplier sdkSupplier, ViewGroup adContainer, final TextView skipView, final MySplashListener mySplashListener) {
 
         try {
             final String skipText = "跳过 %d";
@@ -246,7 +246,7 @@ public class SplashAdapter {
                 public void onADPresent() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidSucceed();
+                        customizeAd.adapterDidSucceed(sdkSupplier);
                     }
                 }
 
@@ -262,7 +262,7 @@ public class SplashAdapter {
                 public void onADExposure() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidShow();
+                        customizeAd.adapterDidShow(sdkSupplier);
                     }
 
                 }
@@ -271,7 +271,7 @@ public class SplashAdapter {
                 public void onADClicked() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidClicked();
+                        customizeAd.adapterDidClicked(sdkSupplier);
                     }
 
                 }

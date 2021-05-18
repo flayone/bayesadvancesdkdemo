@@ -25,7 +25,7 @@ public class MyGdtFSAdapter extends BaseCustomAdapter {
                     isVideoCached = false;
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidSucceed();
+                        customizeAd.adapterDidSucceed(sdkSupplier);
                     }
                 }
 
@@ -59,7 +59,7 @@ public class MyGdtFSAdapter extends BaseCustomAdapter {
                 public void onADExposure() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidShow();
+                        customizeAd.adapterDidShow(sdkSupplier);
                     }
 
                 }
@@ -68,7 +68,7 @@ public class MyGdtFSAdapter extends BaseCustomAdapter {
                 public void onADClicked() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidClicked();
+                        customizeAd.adapterDidClicked(sdkSupplier);
                     }
 
                 }

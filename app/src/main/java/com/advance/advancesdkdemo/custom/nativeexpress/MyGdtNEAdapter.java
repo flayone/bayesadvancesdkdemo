@@ -57,7 +57,7 @@ public class MyGdtNEAdapter {
 
                             //这里一定要调用customizeAd 的事件方法
                             if (null != customizeAd) {
-                                customizeAd.adapterDidSucceed();
+                                customizeAd.adapterDidSucceed(sdkSupplier);
                             }
                             if (listener != null) {
                                 listener.onADLoaded(CustomNativeExpressAdItemList);
@@ -92,7 +92,7 @@ public class MyGdtNEAdapter {
 
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidShow();
+                        customizeAd.adapterDidShow(sdkSupplier);
                     }
                 }
 
@@ -101,7 +101,7 @@ public class MyGdtNEAdapter {
 
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidClicked();
+                        customizeAd.adapterDidClicked(sdkSupplier);
                     }
                 }
 

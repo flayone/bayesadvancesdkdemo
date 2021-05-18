@@ -31,7 +31,7 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
                     if (checkRewardOk(rewardVideoAD)) {
                         //这里一定要调用customizeAd 的事件方法
                         if (null != customizeAd) {
-                            customizeAd.adapterDidSucceed();
+                            customizeAd.adapterDidSucceed(sdkSupplier);
                         }
                         //收到广告回调
                         if (customRewardListener != null) {
@@ -55,7 +55,7 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
                 public void onADShow() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidShow();
+                        customizeAd.adapterDidShow(sdkSupplier);
                     }
                 }
 
@@ -74,7 +74,7 @@ public class MyGdtRewardAdapter extends BaseCustomAdapter {
                 public void onADClick() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidClicked();
+                        customizeAd.adapterDidClicked(sdkSupplier);
                     }
                 }
 

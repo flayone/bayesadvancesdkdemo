@@ -51,7 +51,7 @@ public class MyGdtBannerAdapter {
                 @Override
                 public void onADReceive() {
                     if (null != advanceBanner) {
-                        advanceBanner.adapterDidSucceed();
+                        advanceBanner.adapterDidSucceed(sdkSupplier);
                     }
 
                 }
@@ -59,7 +59,7 @@ public class MyGdtBannerAdapter {
                 @Override
                 public void onADExposure() {
                     if (null != advanceBanner) {
-                        advanceBanner.adapterDidShow();
+                        advanceBanner.adapterDidShow(sdkSupplier);
                     }
 
                 }
@@ -72,7 +72,7 @@ public class MyGdtBannerAdapter {
                 @Override
                 public void onADClicked() {
                     if (null != advanceBanner) {
-                        advanceBanner.adapterDidClicked();
+                        advanceBanner.adapterDidClicked(sdkSupplier);
                     }
 
                 }

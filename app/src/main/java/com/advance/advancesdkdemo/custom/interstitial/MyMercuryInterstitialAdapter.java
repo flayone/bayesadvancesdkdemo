@@ -22,7 +22,7 @@ public class MyMercuryInterstitialAdapter extends BaseCustomAdapter {
                 public void onADReceive() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidSucceed();
+                        customizeAd.adapterDidSucceed(sdkSupplier);
                     }
                 }
 
@@ -30,7 +30,7 @@ public class MyMercuryInterstitialAdapter extends BaseCustomAdapter {
                 public void onADOpened() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidShow();
+                        customizeAd.adapterDidShow(sdkSupplier);
                     }
                 }
 
@@ -53,7 +53,7 @@ public class MyMercuryInterstitialAdapter extends BaseCustomAdapter {
                 public void onADClicked() {
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd) {
-                        customizeAd.adapterDidClicked();
+                        customizeAd.adapterDidClicked(sdkSupplier);
                     }
                 }
 

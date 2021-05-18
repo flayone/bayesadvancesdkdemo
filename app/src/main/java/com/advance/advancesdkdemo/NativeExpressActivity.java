@@ -1,6 +1,8 @@
 package com.advance.advancesdkdemo;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import com.advance.AdvanceNativeExpressAdItem;
 import com.advance.AdvanceNativeExpressListener;
 import com.advance.model.AdvanceError;
 import com.advance.supplier.csj.CsjNativeExpressAdItem;
+import com.advance.utils.LogUtil;
 import com.bytedance.sdk.openadsdk.TTAdDislike;
 
 import java.util.List;
@@ -63,7 +66,7 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
                     }
 
                     @Override
-                    public void onSelected(int i, String s) {
+                    public void onSelected(int i, String s, boolean enforce) {
                         if (container != null)
                             container.removeAllViews();
                     }
@@ -73,10 +76,10 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
 
                     }
 
-                    @Override
-                    public void onRefuse() {
-
-                    }
+//                    @Override
+//                    public void onRefuse() {
+//
+//                    }
                 });
             }
 
@@ -98,11 +101,29 @@ public class NativeExpressActivity extends AppCompatActivity implements AdvanceN
     public void onAdRenderSuccess(View view) {
         DemoUtil.logAndToast(this, "广告渲染成功");
 
+        //需要对回调进行主线程切换，防止回调在非主线程导致崩溃
+        boolean isMainThread = Looper.myLooper() == Looper.getMainLooper();
+        if (isMainThread) {
+            renderGdt2();
+        } else {
+            //如果是非主线程，需要强制切换到主线程来进行初始化
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    LogUtil.AdvanceLog("force to main thread run render");
+                    renderGdt2();
+                }
+            });
+        }
+    }
+
+    private void renderGdt2(){
         //广点通模板2.0 需要在RenderSuccess以后再加载视图
         if (advanceNativeExpressAdItem != null && advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_GDT) && isGdtExpress2) {
             container.removeAllViews();
             container.setVisibility(View.VISIBLE);
-            //广告可见才会产生曝光，否则将无法产生收益。
+
+            // 广告可见才会产生曝光，否则将无法产生收益。
             container.addView(advanceNativeExpressAdItem.getExpressAdView());
         }
     }

@@ -68,7 +68,7 @@ public class MyCsjRewardAdapter extends BaseCustomAdapter {
                     MyCsjRewardAdapter.this.isVideoCached = false;
                     //这里一定要调用customizeAd 的事件方法
                     if (null != customizeAd)
-                        customizeAd.adapterDidSucceed();
+                        customizeAd.adapterDidSucceed(sdkSupplier);
                     //收到广告回调
                     if (customRewardListener!=null){
                         customRewardListener.onLoaded();
@@ -78,7 +78,7 @@ public class MyCsjRewardAdapter extends BaseCustomAdapter {
                         public void onAdShow() {
                             //这里一定要调用customizeAd 的事件方法
                             if (null != customizeAd)
-                                customizeAd.adapterDidShow();
+                                customizeAd.adapterDidShow(sdkSupplier);
 
                         }
 
@@ -86,7 +86,7 @@ public class MyCsjRewardAdapter extends BaseCustomAdapter {
                         public void onAdVideoBarClick() {
                             //这里一定要调用customizeAd 的事件方法
                             if (null != customizeAd)
-                                customizeAd.adapterDidClicked();
+                                customizeAd.adapterDidClicked(sdkSupplier);
 
                         }
 

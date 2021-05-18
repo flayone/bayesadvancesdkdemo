@@ -116,14 +116,14 @@ public class MyCsjBannerAdapter {
                 @Override
                 public void onAdClicked(View view, int i) {
                     if (null != advanceBanner) {
-                        advanceBanner.adapterDidClicked();
+                        advanceBanner.adapterDidClicked(sdkSupplier);
                     }
                 }
 
                 @Override
                 public void onAdShow(View view, int i) {
                     if (null != advanceBanner) {
-                        advanceBanner.adapterDidShow();
+                        advanceBanner.adapterDidShow(sdkSupplier);
                     }
                 }
 
@@ -144,7 +144,7 @@ public class MyCsjBannerAdapter {
                         adContainer.addView(view);
                     }
                     if (null != advanceBanner) {
-                        advanceBanner.adapterDidSucceed();
+                        advanceBanner.adapterDidSucceed(sdkSupplier);
                     }
                 }
             });
@@ -158,7 +158,7 @@ public class MyCsjBannerAdapter {
                 }
 
                 @Override
-                public void onSelected(int position, String value) {
+                public void onSelected(int position, String value, boolean enforce) {
                     //用户选择不喜欢原因后，移除广告展示
                     if (adContainer != null) {
                         adContainer.removeAllViews();
@@ -169,10 +169,10 @@ public class MyCsjBannerAdapter {
                 @Override
                 public void onCancel() {
                 }
-                @Override
-                public void onRefuse() {
-
-                }
+//                @Override
+//                public void onRefuse() {
+//
+//                }
             });
         } catch (Throwable e) {
             e.printStackTrace();

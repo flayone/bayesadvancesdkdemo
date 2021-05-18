@@ -86,7 +86,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
      */
     private void initAdvanceNativeExpressAD() {
         //初始化
-        advanceNativeExpress = new AdvanceNativeExpress(this,Constants.TestIds.nativeExpressAdspotId);
+        advanceNativeExpress = new AdvanceNativeExpress(this, Constants.TestIds.nativeExpressAdspotId);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(this);
         advanceNativeExpress.loadStrategy();
@@ -112,7 +112,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
     @Override
     public void onAdRenderFailed(View view) {
-        DemoUtil.logAndToast(this, "广告渲染失败"+ view.toString());
+        DemoUtil.logAndToast(this, "广告渲染失败" + view.toString());
 
         //广点通模板信息流2.0不在这里处理，参考processGDT2Data方法中处理
         if (isGdtExpress2) {
@@ -129,18 +129,18 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
     @Override
     public void onAdRenderSuccess(View view) {
-        DemoUtil.logAndToast(this, "广告渲染成功"+ view.toString());
+        DemoUtil.logAndToast(this, "广告渲染成功" + view.toString());
 
     }
 
     @Override
     public void onAdClicked(View view) {
-        DemoUtil.logAndToast(this, "广告点击"+ view.toString());
+        DemoUtil.logAndToast(this, "广告点击" + view.toString());
     }
 
     @Override
     public void onAdClose(View view) {
-        DemoUtil.logAndToast(this, "广告关闭"+ view.toString());
+        DemoUtil.logAndToast(this, "广告关闭" + view.toString());
 
         //广点通模板信息流2.0不在这里处理，参考processGDT2Data方法中处理
         if (isGdtExpress2) {
@@ -323,7 +323,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
                         }
 
                         @Override
-                        public void onSelected(int i, String s) {
+                        public void onSelected(int i, String s, boolean enforce) {
                             customViewHolder.container.removeAllViews();
                         }
 
@@ -332,10 +332,10 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
                         }
 
-                        @Override
-                        public void onRefuse() {
-
-                        }
+//                        @Override
+//                        public void onRefuse() {
+//
+//                        }
                     });
                 }
 
