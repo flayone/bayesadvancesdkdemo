@@ -20,6 +20,8 @@ public class InterstitialActivity extends AppCompatActivity implements AdvanceIn
         advanceInterstitial = new AdvanceInterstitial(this, Constants.TestIds.interstitialAdspotId);
         //推荐：核心事件监听回调
         advanceInterstitial.setAdListener(this);
+        //注意：穿山甲是否为新插屏广告，默认为true
+//        advanceInterstitial.setCsjNew(false);
     }
 
     public void loadAd(View view) {

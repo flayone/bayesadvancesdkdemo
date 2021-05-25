@@ -2,7 +2,7 @@
 
 buildscript {
     repositories {
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+//        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         //advance相关引用的maven依赖根目录地址
         maven { url 'https://s01.oss.sonatype.org/content/groups/public' }
         google()
