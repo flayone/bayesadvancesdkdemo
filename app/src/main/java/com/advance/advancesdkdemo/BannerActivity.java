@@ -7,9 +7,9 @@ import android.widget.FrameLayout;
 import com.advance.AdvanceBanner;
 import com.advance.AdvanceBannerListener;
 import com.advance.model.AdvanceError;
+import com.advance.utils.ScreenUtil;
 
 public class BannerActivity extends AppCompatActivity implements AdvanceBannerListener {
-    private String TAG = "DEMO BANNER";
     private AdvanceBanner advanceBanner;
     FrameLayout rl;
 
@@ -23,6 +23,8 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
         advanceBanner = new AdvanceBanner(this, rl, Constants.TestIds.bannerAdspotId);
         //推荐：核心事件监听回调
         advanceBanner.setAdListener(this);
+        //设置穿山甲布局尺寸，宽度全屏，高度自适应
+        advanceBanner.setCsjExpressViewAcceptedSize(ScreenUtil.px2dip(this,ScreenUtil.getScreenWidth(this)),0);
         advanceBanner.loadStrategy();
     }
 
@@ -46,7 +48,7 @@ public class BannerActivity extends AppCompatActivity implements AdvanceBannerLi
 
     @Override
     public void onAdFailed(AdvanceError advanceError) {
-        DemoUtil.logAndToast(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code);
+        DemoUtil.logAndToast(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.msg);
     }
 
     @Override

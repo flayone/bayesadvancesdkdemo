@@ -74,6 +74,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
         //logo展示建议：广告展示的时候再展示logo，其他时刻都是展示的全屏的background图片
         adContainer.setBackgroundColor(Color.WHITE);
         logo.setVisibility(View.VISIBLE);
+        canJump = true;
 
         //强烈建议：skipView只有在广告展示出来以后才将背景色进行填充，默认加载时设置成透明状态，这样展现效果较佳
         if (skipView != null)
@@ -86,7 +87,7 @@ public class SplashActivity extends Activity implements AdvanceSplashListener {
     public void onAdFailed(AdvanceError advanceError) {
         goToMainActivity();
 
-        DemoUtil.logAndToast(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code);
+        DemoUtil.logAndToast(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.msg);
     }
 
     @Override

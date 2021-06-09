@@ -100,7 +100,7 @@ public class NativeExpressRecyclerViewActivity extends Activity implements
 
     @Override
     public void onAdFailed(AdvanceError advanceError) {
-        DemoUtil.logAndToast(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.code);
+        DemoUtil.logAndToast(this, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.msg);
     }
 
     @Override
