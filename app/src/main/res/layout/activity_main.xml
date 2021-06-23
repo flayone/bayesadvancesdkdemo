@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
+            android:layout_margin="4dp"
             android:gravity="center"
             android:text="Advance Demo"
             android:textSize="17sp"
@@ -24,13 +24,14 @@
             android:id="@+id/splash_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="18dp"
             android:onClick="onSplash"
             android:text="开屏" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal">
 
             <Button
@@ -54,6 +55,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal">
 
             <Button
@@ -77,6 +79,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal">
 
             <Button
@@ -103,72 +106,17 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/cus_native_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onCusNative"
-            android:text="自定义原生自渲染" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="cusSplash"
-            android:text="自定义开屏" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/cus_banner_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onCusBanner"
-                android:text="自定义横幅" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="cusInterstitial"
-                android:text="自定义插屏" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="cusReward"
-                android:text="自定义激励视频" />
-
-            <Button
-                android:id="@+id/cus_fullvideo_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="cusFullSV"
-                android:text="自定义全屏视频" />
-        </LinearLayout>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="cusExpress"
-            android:text="自定义原生模板RecyclerView" />
+            android:layout_marginTop="4dp"
+            android:onClick="cusAD"
+            android:text="自定义广告" />
 
         <TextView
             android:id="@+id/tv_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:padding="10dp"
             android:text="" />
     </LinearLayout>

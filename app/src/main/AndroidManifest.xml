@@ -46,9 +46,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.advance.advancesdkdemo.InterstitialActivity"/>
         <activity android:name="com.advance.advancesdkdemo.NativeExpressRecyclerViewActivity" />
-        <activity android:name="com.advance.advancesdkdemo.RewardVideoActivity" />
         <activity android:name="com.advance.advancesdkdemo.NativeExpressActivity"/>
         <activity android:name="com.advance.advancesdkdemo.SplashActivity">
             <!--        <intent-filter>-->
@@ -58,7 +56,6 @@
             <!--        </intent-filter>-->
         </activity>
         <activity android:name="com.advance.advancesdkdemo.BannerActivity" />
-        <activity android:name=".FullScreenVideoActivity" />
         <activity android:name=".SplashToMainActivity" />
 
         <activity android:name=".custom.nativ.NativeCustomizeActivity" />
@@ -68,6 +65,7 @@
         <activity android:name=".custom.reward.CustomRewardActivity" />
         <activity android:name=".custom.interstitial.CustomInterstitialActivity" />
         <activity android:name=".custom.full.CustomFullScreenActivity" />
+        <activity android:name=".custom.CustomActivity" />
 
 
     </application>

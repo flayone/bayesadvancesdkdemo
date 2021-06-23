@@ -13,14 +13,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
-import com.advance.advancesdkdemo.custom.banner.CustomBannerActivity;
-import com.advance.advancesdkdemo.custom.full.CustomFullScreenActivity;
-import com.advance.advancesdkdemo.custom.interstitial.CustomInterstitialActivity;
-import com.advance.advancesdkdemo.custom.nativ.NativeCustomizeActivity;
-import com.advance.advancesdkdemo.custom.nativeexpress.CustomNativeExpressListActivity;
-import com.advance.advancesdkdemo.custom.reward.CustomRewardActivity;
-import com.advance.advancesdkdemo.custom.splash.CustomSplashActivity;
+import com.advance.advancesdkdemo.custom.CustomActivity;
+import com.baidu.mobads.AdSettings;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
+import com.kwad.sdk.api.KsAdSDK;
 import com.mercury.sdk.core.config.AdConfigManager;
 import com.qq.e.comm.managers.status.SDKStatus;
 
@@ -39,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /**
-         * 注意！：由于工信部对设备权限等隐私权限要求愈加严格,强烈推荐APP提前申请好权限再加载广告
+         * 注意！：由于工信部对设备权限等隐私权限要求愈加严格,强烈推荐APP提前申请好权限，且用户同意隐私政策后再加载广告
          */
         if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
             checkAndRequestPermission();
@@ -51,17 +47,18 @@ public class MainActivity extends AppCompatActivity {
         String csjV = TTAdSdk.getAdManager().getSDKVersion();
         String merV = AdConfigManager.getInstance().getSDKVersion();
         String gdtV = SDKStatus.getSDKVersion();
+        String bdV = AdSettings.getSDKVersion() + "";
+        String ksV = KsAdSDK.getSDKVersion();
         String av = AdvanceConfig.AdvanceSdkVersion;
 
         TextView tv = findViewById(R.id.tv_version);
-        tv.setText("聚合 SDK 版本号： " + av + "\n" +
+        tv.setText("聚合 SDK 版本号： " + av + "\n" + "\n" +
                 "Mercury SDK 版本号： " + merV + "\n" +
                 "穿山甲 SDK 版本号： " + csjV + "\n" +
-                "广点通 SDK 版本号： " + gdtV + "\n"
+                "广点通 SDK 版本号： " + gdtV + "\n" +
+                "百度 SDK 版本号： " + bdV + "\n" +
+                "快手 SDK 版本号： " + ksV + "\n"
         );
-
-
-
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -98,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onRewardVideo(View view) {
-        startActivity(new Intent(this, RewardVideoActivity.class));
+        new AdvanceAD(this).loadReward();
     }
 
     public void onNativeExpressRecyclerView(View view) {
@@ -106,39 +103,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onInterstitial(View view) {
-        startActivity(new Intent(this, InterstitialActivity.class));
+        new AdvanceAD(this).loadInterstitial();
     }
 
     public void onFullVideo(View view) {
-        startActivity(new Intent(this, FullScreenVideoActivity.class));
+        new AdvanceAD(this).loadFullVideo();
     }
 
-    public void onCusBanner(View view) {
-        startActivity(new Intent(this, CustomBannerActivity.class));
-    }
-
-    public void onCusNative(View view) {
-        startActivity(new Intent(this, NativeCustomizeActivity.class));
-    }
-
-
-    public void cusSplash(View view) {
-        startActivity(new Intent(this, CustomSplashActivity.class));
-    }
-
-    public void cusInterstitial(View view) {
-        startActivity(new Intent(this, CustomInterstitialActivity.class));
-    }
-
-    public void cusExpress(View view) {
-        startActivity(new Intent(this, CustomNativeExpressListActivity.class));
-    }
-
-    public void cusReward(View view) {
-        startActivity(new Intent(this, CustomRewardActivity.class));
-    }
-
-    public void cusFullSV(View view) {
-        startActivity(new Intent(this, CustomFullScreenActivity.class));
+    public void cusAD(View view) {
+        startActivity(new Intent(this, CustomActivity.class));
     }
 }
