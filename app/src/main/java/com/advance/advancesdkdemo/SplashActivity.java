@@ -55,20 +55,22 @@ public class SplashActivity extends Activity {
     protected void onPause() {
         super.onPause();
         // 穿山甲处理逻辑,h5类型的广告，跳转后返回不会回调onAdSkip或者onAdTimeOver，会导致无法跳转首页，需要在这里额外处理跳转逻辑
-        String id = "";
         if (ad != null) {
-            id = ad.sdkId;
+            String id = ad.sdkId;
+            ad.canJump = TextUtils.equals(id, "3");
+
         }
-        canJump = TextUtils.equals(id, "3");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (canJump) {
-            goToMainActivity();
+        if (ad != null) {
+            if (ad.canJump) {
+                goToMainActivity();
+            }
+            ad.canJump = true;
         }
-        canJump = true;
     }
 
 

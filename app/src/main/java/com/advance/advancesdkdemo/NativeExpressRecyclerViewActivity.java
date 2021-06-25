@@ -48,7 +48,8 @@ public class NativeExpressRecyclerViewActivity extends Activity {
         for (int i = 0; i < maxAD; i++) {
             int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
             if (position <= mNormalDataList.size()) {
-                //将广告的NormalItem定义为默认的空标题item，也可以传入广告位id
+                //将广告的NormalItem定义为默认的空标题item。
+                //也可以不同item使用不同的广告位id作为广告标识，这样方便区分不同item的广告数据表现。
                 mNormalDataList.add(position, new NormalItem(""));
             }
         }
