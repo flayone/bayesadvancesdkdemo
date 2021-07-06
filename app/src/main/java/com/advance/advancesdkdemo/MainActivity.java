@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
@@ -17,7 +16,7 @@ import com.advance.advancesdkdemo.custom.CustomActivity;
 import com.baidu.mobads.AdSettings;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.kwad.sdk.api.KsAdSDK;
-import com.mercury.sdk.core.config.AdConfigManager;
+import com.mercury.sdk.core.config.MercuryAD;
 import com.qq.e.comm.managers.status.SDKStatus;
 
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Spinner sdks;
     Button fullVideo;
     Button fullVideoCus;
 
@@ -35,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /**
-         * 注意！：由于工信部对设备权限等隐私权限要求愈加严格,强烈推荐APP提前申请好权限，且用户同意隐私政策后再加载广告
+         * 注意！：由于工信部对设备权限等隐私权限要求愈加严格，强烈推荐APP提前申请好权限，且用户同意隐私政策后再加载广告
          */
         if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
             checkAndRequestPermission();
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         fullVideoCus = findViewById(R.id.cus_fullvideo_button);
 
         String csjV = TTAdSdk.getAdManager().getSDKVersion();
-        String merV = AdConfigManager.getInstance().getSDKVersion();
+        String merV = MercuryAD.getVersion();
         String gdtV = SDKStatus.getSDKVersion();
         String bdV = AdSettings.getSDKVersion() + "";
         String ksV = KsAdSDK.getSDKVersion();

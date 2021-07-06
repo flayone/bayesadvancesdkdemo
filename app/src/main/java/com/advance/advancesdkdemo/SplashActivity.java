@@ -2,27 +2,15 @@ package com.advance.advancesdkdemo;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.advance.AdvanceSplash;
-import com.advance.AdvanceSplashListener;
-import com.advance.model.AdvanceError;
-
 
 public class SplashActivity extends Activity {
-    private AdvanceSplash advanceSplash;
-    private boolean canJump = false;
-    private String sdkId;
     TextView skipView;
     LinearLayout logo;
     FrameLayout adContainer;
@@ -42,7 +30,8 @@ public class SplashActivity extends Activity {
          * 加载并展示开屏广告
          */
         ad = new AdvanceAD(this);
-        ad.loadSplash(adContainer, logo, skipView, new AdvanceAD.SplashCallBack() {
+        //建议skipView传入null，代表使用SDK内部默认跳过按钮。如果需要自定义跳过按钮，skipView传入自定义跳过布局即可，注意：部分渠道不支持自定义，即使传了也不会生效。
+        ad.loadSplash(adContainer, logo, null, new AdvanceAD.SplashCallBack() {
             @Override
             public void jumpMain() {
                 goToMainActivity();
@@ -58,7 +47,6 @@ public class SplashActivity extends Activity {
         if (ad != null) {
             String id = ad.sdkId;
             ad.canJump = TextUtils.equals(id, "3");
-
         }
     }
 

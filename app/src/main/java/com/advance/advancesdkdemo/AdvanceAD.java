@@ -115,13 +115,14 @@ public class AdvanceAD {
             @Override
             public void onAdShow() {
                 canJump = true;
-                //logo展示建议：广告展示的时候再展示logo，其他时刻都是展示的全屏的background图片
+                //设置开屏父布局背景色为白色
                 if (adContainer != null)
                     adContainer.setBackgroundColor(Color.WHITE);
+                //logo展示建议：广告展示的时候再展示logo，其他时刻都是展示的全屏的background图片
                 if (logoContainer != null)
                     logoContainer.setVisibility(View.VISIBLE);
 
-                //强烈建议：skipView只有在广告展示出来以后才将背景色进行填充，默认加载时设置成透明状态，这样展现效果较佳
+                //如果选择了自定义skipView，强烈建议：开屏页布局中按钮初始背景设置成透明背景，skipView只有在广告展示出来以后才将背景色进行填充，这样展现效果较佳
                 if (skipView != null)
                     skipView.setBackgroundDrawable(ContextCompat.getDrawable(mActivity, R.drawable.background_circle));
 
@@ -302,7 +303,7 @@ public class AdvanceAD {
         //按需必填，注意：如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,激励视频场景，只要设置的值大于0即可
         advanceRewardVideo.setCsjExpressSize(500, 500);
         //按需填写，如果在广点通后台创建的为激励视频2.0，设置值为true，否则false
-        advanceRewardVideo.setGdtExpress(true);
+//        advanceRewardVideo.setGdtExpress(true);
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(new AdvanceRewardVideoListener() {
             @Override
