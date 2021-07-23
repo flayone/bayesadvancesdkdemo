@@ -84,6 +84,8 @@ public class AdvanceAD {
         //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
         final AdvanceSplash advanceSplash = new AdvanceSplash(mActivity, Constants.TestIds.splashAdspotId, adContainer, skipView);
         baseAD = advanceSplash;
+        //注意：如果开屏页是fragment或者dialog实现，这里需要置为true。默认为false，代表开屏和首页为两个不同的activity
+//        advanceSplash.setShowInSingleActivity(true);
         //必须：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(new AdvanceSplashListener() {
             /**

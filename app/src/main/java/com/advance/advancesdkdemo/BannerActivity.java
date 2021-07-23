@@ -19,13 +19,5 @@ public class BannerActivity extends AppCompatActivity {
         ad.loadBanner(rl);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //销毁广告
-        if (ad != null) {
-            ad.destroy();
-        }
-    }
 
 }
