@@ -3,7 +3,6 @@ package com.advance.advancesdkdemo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -39,29 +38,6 @@ public class SplashActivity extends Activity {
         });
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // 穿山甲处理逻辑,h5类型的广告，跳转后返回不会回调onAdSkip或者onAdTimeOver，会导致无法跳转首页，需要在这里额外处理跳转逻辑
-        if (ad != null) {
-            String id = ad.sdkId;
-            ad.canJump = TextUtils.equals(id, "3");
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (ad != null) {
-            if (ad.canJump) {
-                goToMainActivity();
-            }
-            ad.canJump = true;
-        }
-    }
-
-
     /**
      * 跳转到主页面
      */
@@ -72,12 +48,6 @@ public class SplashActivity extends Activity {
         this.finish();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (ad != null)
-            ad.destroy();
-    }
 
     /**
      * 开屏页一定要禁止用户对返回按钮的控制，否则将可能导致用户手动退出了App而广告无法正常曝光和计费

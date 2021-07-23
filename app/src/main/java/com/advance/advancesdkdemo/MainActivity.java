@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.custom.CustomActivity;
-import com.baidu.mobads.AdSettings;
+import com.baidu.mobads.sdk.api.AdSettings;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.kwad.sdk.api.KsAdSDK;
 import com.mercury.sdk.core.config.MercuryAD;

@@ -49,7 +49,6 @@ public class AdvanceAD {
     Activity mActivity;
 
     String sdkId;
-    boolean canJump = false;
 
     /**
      * 初始化广告处理类
@@ -113,8 +112,13 @@ public class AdvanceAD {
             }
 
             @Override
+            public void jumpToMain() {
+                if (callBack != null)
+                    callBack.jumpMain();
+            }
+
+            @Override
             public void onAdShow() {
-                canJump = true;
                 //设置开屏父布局背景色为白色
                 if (adContainer != null)
                     adContainer.setBackgroundColor(Color.WHITE);
@@ -132,9 +136,6 @@ public class AdvanceAD {
             @Override
             public void onAdFailed(AdvanceError advanceError) {
                 logAndToast(mActivity, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.msg);
-                canJump = true;
-                if (callBack != null)
-                    callBack.jumpMain();
             }
 
             @Override
@@ -146,40 +147,17 @@ public class AdvanceAD {
             @Override
             public void onAdSkip() {
                 logAndToast(mActivity, "跳过广告");
-                splashNext(callBack);
-
             }
 
             @Override
             public void onAdTimeOver() {
                 logAndToast(mActivity, "倒计时结束，关闭广告");
-                splashNext(callBack);
-
             }
         });
         //必须：请求广告
         advanceSplash.loadStrategy();
     }
 
-    /**
-     * 设置一个变量来控制当前开屏页面是否可以跳转，当开屏广告为普链类广告时，点击会打开一个广告落地页，此时开发者还不能打开自己的App主页。当从广告落地页返回以后，
-     * 才可以跳转到开发者自己的App主页；当开屏广告是下载类广告时只会下载App。
-     */
-    private void splashNext(final SplashCallBack callBack) {
-        //建议延迟100ms执行跳转首页，主要是部分机型上反应比较慢，广点通广告时可能还没有吊起落地页，但回调了广告关闭方法，此时会发生先跳首页再打开广告落地页的异常情况，所以需要进行100ms的延迟。
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (canJump) {
-                    if (callBack != null) {
-                        callBack.jumpMain();
-                    }
-                } else {
-                    canJump = true;
-                }
-            }
-        }, 100);
-    }
 
     /**
      * 开屏跳转回调
@@ -302,8 +280,6 @@ public class AdvanceAD {
         baseAD = advanceRewardVideo;
         //按需必填，注意：如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,激励视频场景，只要设置的值大于0即可
         advanceRewardVideo.setCsjExpressSize(500, 500);
-        //按需填写，如果在广点通后台创建的为激励视频2.0，设置值为true，否则false
-//        advanceRewardVideo.setGdtExpress(true);
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(new AdvanceRewardVideoListener() {
             @Override
@@ -351,6 +327,11 @@ public class AdvanceAD {
             }
 
             @Override
+            public void onVideoSkip() {
+
+            }
+
+            @Override
             public void onAdClose() {
                 logAndToast(mActivity, "广告关闭");
             }
@@ -371,7 +352,7 @@ public class AdvanceAD {
 
     /**
      * 加载并展示全屏视频广告。
-     * 也可以选择性先提前加载，然后在合适的时机再调用展示方法
+     * 也可以选择先提前加载，然后在合适的时机再调用展示方法
      */
     public void loadFullVideo() {
         //初始化

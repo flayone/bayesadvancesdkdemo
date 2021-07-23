@@ -131,6 +131,11 @@ public class MyCsjRewardAdapter extends BaseCustomAdapter {
                 public void onRewardVideoCached() {
                     isVideoCached = true;
                 }
+
+                @Override
+                public void onRewardVideoCached(TTRewardVideoAd ttRewardVideoAd) {
+                    isVideoCached = true;
+                }
             });
         } catch (Exception e) {
             e.printStackTrace();

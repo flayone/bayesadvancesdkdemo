@@ -110,6 +110,11 @@ public class MyCsjFSAdapter extends BaseCustomAdapter {
                 public void onFullScreenVideoCached() {
                     isVideoCached = true;
                 }
+
+                @Override
+                public void onFullScreenVideoCached(TTFullScreenVideoAd ttFullScreenVideoAd) {
+                    isVideoCached = true;
+                }
             });
         } catch (Throwable e) {
             e.printStackTrace();

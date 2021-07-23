@@ -82,6 +82,16 @@ public class MyGdtInterstitialAdapter extends BaseCustomAdapter {
                 public void onADClosed() {
 
                 }
+
+                @Override
+                public void onRenderSuccess() {
+
+                }
+
+                @Override
+                public void onRenderFail() {
+
+                }
             };
 
             interstitialAD = new UnifiedInterstitialAD(activity, AdvanceUtil.getGdtAccount(sdkSupplier.mediaid), sdkSupplier.adspotid, listener);

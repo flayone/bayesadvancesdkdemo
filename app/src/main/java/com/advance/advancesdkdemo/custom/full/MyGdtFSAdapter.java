@@ -82,6 +82,16 @@ public class MyGdtFSAdapter extends BaseCustomAdapter {
                 public void onADClosed() {
 
                 }
+
+                @Override
+                public void onRenderSuccess() {
+
+                }
+
+                @Override
+                public void onRenderFail() {
+
+                }
             });
 
             VideoOption videoOption = new VideoOption.Builder().setAutoPlayMuted(false)
