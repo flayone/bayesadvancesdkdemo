@@ -7,6 +7,8 @@ buildscript {
         //maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         jcenter()
+        // 配置HUAWEI Ads SDK的Maven仓地址
+        maven { url 'https://developer.huawei.com/repo/' }
     }
 
     dependencies {
@@ -23,6 +25,8 @@ allprojects {
         maven { url 'https://s01.oss.sonatype.org/content/groups/public' }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
+        // 配置HUAWEI Ads SDK的Maven仓地址
+        maven { url 'https://developer.huawei.com/repo/' }
     }
 }
 

@@ -15,6 +15,8 @@ public class SplashActivity extends Activity {
     FrameLayout adContainer;
     private String TAG = "SplashActivity";
     AdvanceAD ad;
+    boolean cusXiaoMi = false;
+    boolean cusHuaWei = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +26,17 @@ public class SplashActivity extends Activity {
         skipView = findViewById(R.id.skip_view);
         logo = findViewById(R.id.ll_asc_logo);
 
+        //获取是否需要支持自定义SDK渠道
+        cusXiaoMi = getIntent().getBooleanExtra("cusXM", false);
+        cusHuaWei = getIntent().getBooleanExtra("cusHW", false);
 
         /**
          * 加载并展示开屏广告
          */
         ad = new AdvanceAD(this);
+        //自定义参数传递
+        ad.cusXiaoMi = cusXiaoMi;
+        ad.cusHuaWei = cusHuaWei;
         //建议skipView传入null，代表使用SDK内部默认跳过按钮。如果需要自定义跳过按钮，skipView传入自定义跳过布局即可，注意：部分渠道不支持自定义，即使传了也不会生效。
         ad.loadSplash(adContainer, logo, null, new AdvanceAD.SplashCallBack() {
             @Override

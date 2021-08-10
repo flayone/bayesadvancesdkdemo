@@ -110,7 +110,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:onClick="cusAD"
-            android:text="自定义广告" />
+            android:text="自定义自渲染广告" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:onClick="cusHW"
+            android:text="自定义渠道：支持华为广告SDK的开屏广告" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:onClick="cusXM"
+            android:text="自定义渠道：支持小米广告SDK的开屏广告" />
 
         <TextView
             android:id="@+id/tv_version"

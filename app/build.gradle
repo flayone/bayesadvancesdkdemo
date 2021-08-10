@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.advance.advancesdkdemo"
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -54,18 +54,25 @@ dependencies {
     }
 
     //引入Advance SDK
-    def advanceVersion = "3.5.2"
+    def advanceVersion = "3.5.2.1"
+    def ext = "-SNAPSHOT" //测试版本标志
     //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle进行配置，如果依然无法引入，请联系我们使用本地aar引入。
-    implementation "io.github.flayone:advance-core:${advanceVersion}_1"
+    implementation "io.github.flayone:advance-core:${advanceVersion}${ext}"
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
-    implementation "io.github.flayone:advance-mry:${advanceVersion}_346"
+    implementation "io.github.flayone:advance-mry:${advanceVersion}_346${ext}"
     //穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑(如果APP本地引入了平台SDK的aar，不希望使用带aar引入的advance渠道库，可以在最后面加上 _core 标识，这样就不会产生aar引入冲突了，但是请注意，非advance推荐版本可能会出现广告加载异常，一定要充分测试)
-    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4373"
-    implementation "io.github.flayone:advance-csj:${advanceVersion}_3803"
-    implementation "io.github.flayone:advance-bd:${advanceVersion}_9131"
-    implementation "io.github.flayone:advance-ks:${advanceVersion}_3310"
+    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4373${ext}"
+    implementation "io.github.flayone:advance-csj:${advanceVersion}_3803${ext}"
+    implementation "io.github.flayone:advance-bd:${advanceVersion}_9131${ext}"
+    implementation "io.github.flayone:advance-ks:${advanceVersion}_3310${ext}"
 
-    //_core版本依赖配置参考，需搭配渠道aar一起策略才真正可以执行
+    //小米广告引用
+    implementation(name: "mimo-ad-sdk", ext: "aar")
+    //华为广告引用
+    implementation 'com.huawei.hms:ads-lite:13.4.45.304'
+
+
+    //以下为_core版本依赖配置参考，需搭配渠道aar一起策略才真正可以执行
 //    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4373_core"
 //    implementation "io.github.flayone:advance-csj:${advanceVersion}_3803_core"
 //    implementation "io.github.flayone:advance-bd:${advanceVersion}_9131_core"

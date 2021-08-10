@@ -31,6 +31,9 @@ import com.advance.AdvanceSDK;
 import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
 import com.advance.RewardServerCallBackInf;
+import com.advance.advancesdkdemo.custom.HuaWeiSplashAdapter;
+import com.advance.advancesdkdemo.custom.XiaoMiSplashAdapter;
+import com.advance.custom.AdvanceBaseCustomAdapter;
 import com.advance.model.AdvanceError;
 import com.advance.supplier.baidu.AdvanceBDManager;
 import com.advance.supplier.csj.CsjNativeExpressAdItem;
@@ -47,8 +50,12 @@ import java.util.List;
 public class AdvanceAD {
     AdvanceBaseAdspot baseAD;
     Activity mActivity;
-
     String sdkId;
+
+    //小米渠道是否需要添加为自定义渠道
+    public boolean cusXiaoMi = false;
+    //华为渠道是否需要添加为自定义渠道
+    public boolean cusHuaWei = false;
 
     /**
      * 初始化广告处理类
@@ -59,6 +66,18 @@ public class AdvanceAD {
         mActivity = activity;
     }
 
+
+    /**
+     * 添加自定义渠道，注意一定要在广告初始化以后再调用！
+     *
+     * @param sdkID   SDK渠道id。具体值需联系运营获取对应接入渠道的id。
+     * @param adapter 继承与基类adapter的自定义adapter
+     */
+    public void addCustomAdapter(String sdkID, AdvanceBaseCustomAdapter adapter) {
+        if (baseAD != null) {
+            baseAD.addCustomSupplier(sdkID, adapter);
+        }
+    }
 
     /**
      * 初始化advance sdk
@@ -86,6 +105,14 @@ public class AdvanceAD {
         baseAD = advanceSplash;
         //注意：如果开屏页是fragment或者dialog实现，这里需要置为true。默认为false，代表开屏和首页为两个不同的activity
 //        advanceSplash.setShowInSingleActivity(true);
+        if (cusXiaoMi) {
+            //此处自定义的渠道id值，需要联系我们获取。
+            advanceSplash.addCustomSupplier("小米SDK渠道id", new XiaoMiSplashAdapter(mActivity, advanceSplash));
+        }
+        if (cusHuaWei) {
+            advanceSplash.addCustomSupplier("华为SDK渠道id", new HuaWeiSplashAdapter(mActivity, advanceSplash));
+        }
+
         //必须：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(new AdvanceSplashListener() {
             /**

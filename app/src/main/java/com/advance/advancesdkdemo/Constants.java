@@ -2,6 +2,7 @@ package com.advance.advancesdkdemo;
 
 public class Constants {
 
+    //应用id（仅测试用，不可用来上线正式使用！）
     public static final String APP_ID = "100171";
 
     //示例代码位id（仅测试用，不可用来上线正式使用！），具体展现的是哪个广告, 由后台策略来决定。实际使用请使用自己的广告位id，一定不要使用这里的测试id上线发布，否则无收益！

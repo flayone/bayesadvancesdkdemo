@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
-import com.advance.advancesdkdemo.custom.CustomActivity;
+import com.advance.advancesdkdemo.custom.nativ.NativeCustomizeActivity;
 import com.baidu.mobads.sdk.api.AdSettings;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.kwad.sdk.api.KsAdSDK;
@@ -109,6 +109,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void cusAD(View view) {
-        startActivity(new Intent(this, CustomActivity.class));
+        startActivity(new Intent(this, NativeCustomizeActivity.class));
+    }
+
+    public void cusHW(View view) {
+        Intent intent = new Intent(this, SplashActivity.class);
+        intent.putExtra("cusHW", true);
+        startActivity(intent);
+    }
+
+    public void cusXM(View view) {
+        Intent intent = new Intent(this, SplashActivity.class);
+        intent.putExtra("cusXM", true);
+        startActivity(intent);
     }
 }
