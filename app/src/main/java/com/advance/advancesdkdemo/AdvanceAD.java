@@ -103,8 +103,15 @@ public class AdvanceAD {
         //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
         final AdvanceSplash advanceSplash = new AdvanceSplash(mActivity, Constants.TestIds.splashAdspotId, adContainer, skipView);
         baseAD = advanceSplash;
-        //注意：如果开屏页是fragment或者dialog实现，这里需要置为true。默认为false，代表开屏和首页为两个不同的activity
+        //注意：如果开屏页是fragment或者dialog实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        advanceSplash.setShowInSingleActivity(true);
+        //设置穿山甲素材尺寸跟随父布局大小
+        adContainer.post(new Runnable() {
+            @Override
+            public void run() {
+                advanceSplash.setCsjExpressViewAcceptedSize(adContainer.getWidth(), adContainer.getHeight());
+            }
+        });
         if (cusXiaoMi) {
             //此处自定义的渠道id值，需要联系我们获取。
             advanceSplash.addCustomSupplier("小米SDK渠道id", new XiaoMiSplashAdapter(mActivity, advanceSplash));
@@ -480,11 +487,13 @@ public class AdvanceAD {
         //初始化
         final AdvanceNativeExpress advanceNativeExpress = new AdvanceNativeExpress(mActivity, Constants.TestIds.nativeExpressAdspotId);
         baseAD = advanceNativeExpress;
+        //必须：设置广告父布局
+        advanceNativeExpress.setAdContainer(adContainer);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(new AdvanceNativeExpressListener() {
             @Override
             public void onAdLoaded(List<AdvanceNativeExpressAdItem> list) {
-
+                advanceNativeExpress.show();
                 if (null == list || list.isEmpty()) {
                     Log.d("DEMO", "NO AD RESULT");
                 } else {
@@ -593,6 +602,7 @@ public class AdvanceAD {
             }
 
         });
+        //必须
         advanceNativeExpress.loadStrategy();
     }
 

@@ -36,6 +36,8 @@ public class NativeExpressRecyclerViewActivity extends Activity {
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //一定要加上该配置，防止item复用导致广告重复
+        mRecyclerView.setItemViewCacheSize(500);
         initData();
     }
 

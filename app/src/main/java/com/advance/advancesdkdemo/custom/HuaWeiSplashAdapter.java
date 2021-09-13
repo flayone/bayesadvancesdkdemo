@@ -51,9 +51,6 @@ public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
         int orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         AdParam adParam = new AdParam.Builder().build();
         splashView = new SplashView(getADActivity());
-        if (splashView != null) {
-            adContainer.addView(splashView);
-        }
         SplashAdDisplayListener adDisplayListener = new SplashAdDisplayListener() {
             @Override
             public void onAdShowed() {
@@ -108,6 +105,9 @@ public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
                 }
             }
         });
+        if (splashView != null) {
+            adContainer.addView(splashView);
+        }
     }
 
 
