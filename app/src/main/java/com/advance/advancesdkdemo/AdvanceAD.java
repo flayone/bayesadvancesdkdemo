@@ -3,8 +3,6 @@ package com.advance.advancesdkdemo;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.widget.Toast;
 import com.advance.AdvanceBanner;
 import com.advance.AdvanceBannerListener;
 import com.advance.AdvanceBaseAdspot;
-import com.advance.AdvanceConfig;
 import com.advance.AdvanceFullScreenItem;
 import com.advance.AdvanceFullScreenVideo;
 import com.advance.AdvanceFullScreenVideoListener;
@@ -36,10 +33,8 @@ import com.advance.advancesdkdemo.custom.XiaoMiSplashAdapter;
 import com.advance.custom.AdvanceBaseCustomAdapter;
 import com.advance.model.AdvanceError;
 import com.advance.supplier.baidu.AdvanceBDManager;
-import com.advance.supplier.csj.CsjNativeExpressAdItem;
 import com.advance.utils.LogUtil;
 import com.advance.utils.ScreenUtil;
-import com.bytedance.sdk.openadsdk.TTAdDislike;
 import com.mercury.sdk.core.config.MercuryAD;
 
 import java.util.List;
@@ -494,82 +489,16 @@ public class AdvanceAD {
             @Override
             public void onAdLoaded(List<AdvanceNativeExpressAdItem> list) {
                 advanceNativeExpress.show();
-                if (null == list || list.isEmpty()) {
-                    Log.d("DEMO", "NO AD RESULT");
-                } else {
-                    advanceNativeExpressAdItem = list.get(0);
-                    if (advanceNativeExpressAdItem == null) {
-                        Log.d("DEMO", "NO AD RESULT");
-                        return;
-                    }
-                    logAndToast(mActivity, "广告加载成功");
-
-                    //穿山甲需要设置dislike逻辑，要在选中回调里移除广告
-                    if (AdvanceConfig.SDK_ID_CSJ.equals(advanceNativeExpressAdItem.getSdkId())) {
-                        CsjNativeExpressAdItem csjNativeExpressAdItem = (CsjNativeExpressAdItem) advanceNativeExpressAdItem;
-                        csjNativeExpressAdItem.setDislikeCallback(mActivity, new TTAdDislike.DislikeInteractionCallback() {
-                            @Override
-                            public void onShow() {
-
-                            }
-
-                            @Override
-                            public void onSelected(int i, String s, boolean enforce) {
-                                if (adContainer != null)
-                                    adContainer.removeAllViews();
-                            }
-
-                            @Override
-                            public void onCancel() {
-
-                            }
-
-//                    @Override
-//                    public void onRefuse() {
-//
-//                    }
-                        });
-                    }
-
-                    //从实际执行结果中获取是否是广点通模板2.0类型广告
-                    isGdtExpress2 = AdvanceConfig.SDK_ID_GDT.equals(advanceNativeExpressAdItem.getSdkId()) && advanceNativeExpress.isGdtExpress2();
-
-                    //广点通模板2.0不可以在这里可以直接添加视图，否则无法展示，应该在onAdRenderSuccess中添加视图
-                    if (!isGdtExpress2) {
-                        adContainer.removeAllViews();
-                        adContainer.setVisibility(View.VISIBLE);
-                        adContainer.addView(advanceNativeExpressAdItem.getExpressAdView());
-                    }
-                    //render以后才会进行广告渲染， 广告可见才会产生曝光，否则将无法产生收益。
-                    advanceNativeExpressAdItem.render();
-                }
             }
 
             @Override
             public void onAdRenderSuccess(View view) {
                 logAndToast(mActivity, "广告渲染成功");
-
-                //需要对回调进行主线程切换，防止回调在非主线程导致崩溃
-                boolean isMainThread = Looper.myLooper() == Looper.getMainLooper();
-                if (isMainThread) {
-                    renderGdt2(adContainer);
-                } else {
-                    //如果是非主线程，需要强制切换到主线程来进行初始化
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            LogUtil.AdvanceLog("force to main thread run render");
-                            renderGdt2(adContainer);
-                        }
-                    });
-                }
             }
 
 
             @Override
             public void onAdClose(View view) {
-                //移除布局
-                adContainer.removeAllViews();
                 logAndToast(mActivity, "广告关闭");
             }
 
@@ -604,22 +533,6 @@ public class AdvanceAD {
         });
         //必须
         advanceNativeExpress.loadStrategy();
-    }
-
-    private void renderGdt2(ViewGroup adContainer) {
-        Log.d("NativeExpressActivity", "renderGdt2  adContainer = " + adContainer);
-
-        if (adContainer == null) {
-            return;
-        }
-        //广点通模板2.0 需要在RenderSuccess以后再加载视图
-        if (advanceNativeExpressAdItem != null && advanceNativeExpressAdItem.getSdkId().equals(AdvanceConfig.SDK_ID_GDT) && isGdtExpress2) {
-            adContainer.removeAllViews();
-            adContainer.setVisibility(View.VISIBLE);
-
-            // 广告可见才会产生曝光，否则将无法产生收益。
-            adContainer.addView(advanceNativeExpressAdItem.getExpressAdView());
-        }
     }
 
     /**

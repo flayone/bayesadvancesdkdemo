@@ -1,6 +1,7 @@
 package com.advance.advancesdkdemo;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.huawei.hms.ads.HwAds;
 
@@ -9,10 +10,14 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //初始化SDK
-        AdvanceAD.initAD(this);
-        // 初始化HUAWEI Ads SDK
-        HwAds.init(this);
+        boolean hasPri = getSharedPreferences("preference", Context.MODE_PRIVATE).getBoolean("agree_privacy", false);
+
+        if (hasPri){
+            //初始化聚合SDK
+            AdvanceAD.initAD(this);
+            //初始化HUAWEI Ads SDK，用于自定义SDK渠道
+            HwAds.init(this);
+        }
     }
 
 }

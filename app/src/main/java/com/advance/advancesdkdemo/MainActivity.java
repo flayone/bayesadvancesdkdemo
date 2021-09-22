@@ -2,6 +2,7 @@ package com.advance.advancesdkdemo;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -57,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
                 "百度 SDK 版本号： " + bdV + "\n" +
                 "快手 SDK 版本号： " + ksV + "\n"
         );
+
+        boolean hasPri = getSharedPreferences("preference", Context.MODE_PRIVATE).getBoolean("agree_privacy", false);
+
+        if (!hasPri){
+            UserPrivacyDialog dialog = new UserPrivacyDialog(this);
+            dialog.show();
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.M)
