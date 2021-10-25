@@ -16,7 +16,7 @@ public class BannerActivity extends AppCompatActivity {
 
         //初始化并加载banner广告
         ad = new AdvanceAD(this);
-        ad.loadBanner(rl);
+        ad.loadBanner(Constants.TestIds.bannerAdspotId,rl);
     }
 
 

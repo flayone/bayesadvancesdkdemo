@@ -42,7 +42,7 @@ public class SplashActivity extends Activity {
         ad.cusXiaoMi = cusXiaoMi;
         ad.cusHuaWei = cusHuaWei;
         //建议skipView传入null，代表使用SDK内部默认跳过按钮。如果需要自定义跳过按钮，skipView传入自定义跳过布局即可，注意：部分渠道不支持自定义，即使传了也不会生效。
-        ad.loadSplash(adContainer, logo, null, new AdvanceAD.SplashCallBack() {
+        ad.loadSplash(Constants.TestIds.splashAdspotId,adContainer, logo, null, new AdvanceAD.SplashCallBack() {
             @Override
             public void jumpMain() {
                 goToMainActivity();
@@ -62,7 +62,7 @@ public class SplashActivity extends Activity {
 
 
     /**
-     * 开屏页一定要禁止用户对返回按钮的控制，否则将可能导致用户手动退出了App而广告无法正常曝光和计费
+     * 开屏页禁止用户对返回按钮的控制，否则将可能导致用户手动退出了App而广告无法正常曝光和计费
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

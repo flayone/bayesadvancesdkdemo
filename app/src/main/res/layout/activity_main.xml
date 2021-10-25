@@ -100,6 +100,12 @@
 
         </LinearLayout>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:onClick="draw"
+            android:text="draw视频信息流" />
 
         <TextView
             android:layout_width="wrap_content"

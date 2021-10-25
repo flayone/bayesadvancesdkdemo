@@ -94,9 +94,9 @@ public class AdvanceAD {
      * @param skipView      跳过按钮，可以为空
      * @param callBack      跳转回调，在回调中进行跳转主页或其他操作
      */
-    public void loadSplash(final ViewGroup adContainer, final ViewGroup logoContainer, final TextView skipView, final SplashCallBack callBack) {
+    public void loadSplash(String id, final ViewGroup adContainer, final ViewGroup logoContainer, final TextView skipView, final SplashCallBack callBack) {
         //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
-        final AdvanceSplash advanceSplash = new AdvanceSplash(mActivity, Constants.TestIds.splashAdspotId, adContainer, skipView);
+        final AdvanceSplash advanceSplash = new AdvanceSplash(mActivity, id, adContainer, skipView);
         baseAD = advanceSplash;
         //注意：如果开屏页是fragment或者dialog实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        advanceSplash.setShowInSingleActivity(true);
@@ -202,8 +202,8 @@ public class AdvanceAD {
      *
      * @param adContainer banner广告的承载布局
      */
-    public void loadBanner(final ViewGroup adContainer) {
-        AdvanceBanner advanceBanner = new AdvanceBanner(mActivity, adContainer, Constants.TestIds.bannerAdspotId);
+    public void loadBanner(String id, final ViewGroup adContainer) {
+        AdvanceBanner advanceBanner = new AdvanceBanner(mActivity, adContainer, id);
         baseAD = advanceBanner;
         //设置穿山甲布局尺寸，宽度全屏，高度自适应
         advanceBanner.setCsjExpressViewAcceptedSize(ScreenUtil.px2dip(mActivity, ScreenUtil.getScreenWidth(mActivity)), 0);
@@ -251,9 +251,9 @@ public class AdvanceAD {
      * 加载并展示插屏广告。
      * 也可以选择性先提前加载，然后在合适的时机再调用展示方法
      */
-    public void loadInterstitial() {
+    public void loadInterstitial(String id) {
         //初始化
-        final AdvanceInterstitial advanceInterstitial = new AdvanceInterstitial(mActivity, Constants.TestIds.interstitialAdspotId);
+        final AdvanceInterstitial advanceInterstitial = new AdvanceInterstitial(mActivity, id);
         baseAD = advanceInterstitial;
         //注意：穿山甲是否为"新插屏广告"，默认为true
 //        advanceInterstitial.setCsjNew(false);
@@ -305,9 +305,9 @@ public class AdvanceAD {
      * 加载并展示激励视频广告。
      * 也可以选择性先提前加载，然后在合适的时机再调用展示方法
      */
-    public void loadReward() {
+    public void loadReward(String id) {
         //初始化，注意需要时再初始化，不要复用。
-        AdvanceRewardVideo advanceRewardVideo = new AdvanceRewardVideo(mActivity, Constants.TestIds.rewardAdspotId);
+        AdvanceRewardVideo advanceRewardVideo = new AdvanceRewardVideo(mActivity, id);
         baseAD = advanceRewardVideo;
         //按需必填，注意：如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,激励视频场景，只要设置的值大于0即可
         advanceRewardVideo.setCsjExpressSize(500, 500);
@@ -385,9 +385,9 @@ public class AdvanceAD {
      * 加载并展示全屏视频广告。
      * 也可以选择先提前加载，然后在合适的时机再调用展示方法
      */
-    public void loadFullVideo() {
+    public void loadFullVideo(String id) {
         //初始化
-        AdvanceFullScreenVideo advanceFullScreenVideo = new AdvanceFullScreenVideo(mActivity, Constants.TestIds.fullScreenVideoAdspotId);
+        AdvanceFullScreenVideo advanceFullScreenVideo = new AdvanceFullScreenVideo(mActivity, id);
         baseAD = advanceFullScreenVideo;
         //注意：如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,全屏视频场景，只要设置的值大于0即可
         advanceFullScreenVideo.setCsjExpressSize(500, 500);
@@ -534,6 +534,48 @@ public class AdvanceAD {
         //必须
         advanceNativeExpress.loadStrategy();
     }
+
+
+//    public AdvanceDraw advanceDraw;
+
+    /**
+     * 加载draw信息流广告
+     * @param id
+     * @param adContainer
+     */
+    public void loadDraw(String id, ViewGroup adContainer) {
+//        advanceDraw = new AdvanceDraw(mActivity, id);
+//        advanceDraw.setAdContainer(adContainer);
+//        advanceDraw.setAdListener(new AdvanceDrawListener() {
+//            @Override
+//            public void onAdLoaded() {
+//                if (advanceDraw != null) {
+//                    advanceDraw.show();
+//                }
+//            }
+//
+//            @Override
+//            public void onAdShow() {
+//
+//            }
+//
+//            @Override
+//            public void onAdClicked() {
+//
+//            }
+//
+//            @Override
+//            public void onAdFailed(AdvanceError advanceError) {
+//            }
+//
+//            @Override
+//            public void onSdkSelected(String id) {
+//
+//            }
+//        });
+//        advanceDraw.loadStrategy();
+    }
+
 
     /**
      * 销毁广告

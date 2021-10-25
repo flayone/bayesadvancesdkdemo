@@ -12,6 +12,7 @@ public class MyApplication extends Application {
 
         boolean hasPri = getSharedPreferences("preference", Context.MODE_PRIVATE).getBoolean("agree_privacy", false);
 
+        //建议当用户同意了隐私政策以后才调用SDK初始化
         if (hasPri){
             //初始化聚合SDK
             AdvanceAD.initAD(this);

@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         boolean hasPri = getSharedPreferences("preference", Context.MODE_PRIVATE).getBoolean("agree_privacy", false);
 
-        if (!hasPri){
+        if (!hasPri) {
             UserPrivacyDialog dialog = new UserPrivacyDialog(this);
             dialog.show();
         }
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onRewardVideo(View view) {
-        new AdvanceAD(this).loadReward();
+        new AdvanceAD(this).loadReward(Constants.TestIds.rewardAdspotId);
     }
 
     public void onNativeExpressRecyclerView(View view) {
@@ -109,11 +109,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onInterstitial(View view) {
-        new AdvanceAD(this).loadInterstitial();
+        new AdvanceAD(this).loadInterstitial(Constants.TestIds.interstitialAdspotId);
     }
 
     public void onFullVideo(View view) {
-        new AdvanceAD(this).loadFullVideo();
+        new AdvanceAD(this).loadFullVideo(Constants.TestIds.fullScreenVideoAdspotId);
     }
 
     public void cusAD(View view) {
@@ -130,5 +130,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SplashActivity.class);
         intent.putExtra("cusXM", true);
         startActivity(intent);
+    }
+
+    public void draw(View view) {
+        startActivity(new Intent(this, DrawActivity.class));
+
     }
 }
