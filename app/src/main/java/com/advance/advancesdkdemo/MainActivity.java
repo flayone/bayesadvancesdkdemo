@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.custom.nativ.NativeCustomizeActivity;
+import com.advance.advancesdkdemo.util.BaseCallBack;
+import com.advance.advancesdkdemo.util.UserPrivacyDialog;
 import com.baidu.mobads.sdk.api.AdSettings;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.kwad.sdk.api.KsAdSDK;
@@ -33,12 +35,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /**
-         * 注意！：由于工信部对设备权限等隐私权限要求愈加严格，强烈推荐APP提前申请好权限，且用户同意隐私政策后再加载广告
-         */
-        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
-            checkAndRequestPermission();
-        }
 
         fullVideo = findViewById(R.id.fullvideo_button);
         fullVideoCus = findViewById(R.id.cus_fullvideo_button);
@@ -51,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         String av = AdvanceConfig.AdvanceSdkVersion;
 
         TextView tv = findViewById(R.id.tv_version);
-        tv.setText("聚合 SDK 版本号： " + av + "\n" + "\n" +
+        tv.setText("Advance聚合 SDK 版本号： " + av + "\n" + "\n" +
                 "Mercury SDK 版本号： " + merV + "\n" +
                 "穿山甲 SDK 版本号： " + csjV + "\n" +
                 "广点通 SDK 版本号： " + gdtV + "\n" +
@@ -59,12 +55,25 @@ public class MainActivity extends AppCompatActivity {
                 "快手 SDK 版本号： " + ksV + "\n"
         );
 
-        boolean hasPri = getSharedPreferences("preference", Context.MODE_PRIVATE).getBoolean("agree_privacy", false);
-
+        boolean hasPri = getSharedPreferences(Constants.SP_NAME, Context.MODE_PRIVATE).getBoolean(Constants.SP_AGREE_PRIVACY, false);
+        /**
+         * 注意！：由于工信部对设备权限等隐私权限要求愈加严格，强烈推荐APP提前申请好权限，且用户同意隐私政策后再加载广告
+         */
         if (!hasPri) {
             UserPrivacyDialog dialog = new UserPrivacyDialog(this);
+            dialog.callBack = new BaseCallBack() {
+                @Override
+                public void call() {
+                    //一定要用户授权同意隐私协议后，再申领必要权限
+                    if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29) {
+                        checkAndRequestPermission();
+                    }
+                }
+            };
             dialog.show();
         }
+
+        MercuryAD.getOAID();
     }
 
     @TargetApi(Build.VERSION_CODES.M)

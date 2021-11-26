@@ -17,4 +17,8 @@ public class Constants {
         public static final String customNativeAdspotId = "10003120"; //原生自渲染
         public static final String drawAdspotId = "10005123"; //draw信息流
     }
+
+
+    public static final String SP_AGREE_PRIVACY = "agree_privacy";
+    public static final String SP_NAME = "preference";
 }

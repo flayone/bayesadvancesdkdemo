@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo;
+package com.advance.advancesdkdemo.util;
 
 import android.app.Activity;
 import android.content.Context;
