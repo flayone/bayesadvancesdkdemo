@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:onClick="onSplash"
-            android:text="开屏" />
+            android:text="开屏(splash)" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onBanner"
-                android:text="横幅" />
+                android:text="横幅(Banner)" />
 
             <Button
                 android:id="@+id/interstitial_button"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onInterstitial"
-                android:text="插屏" />
+                android:text="插屏(弹窗)" />
 
         </LinearLayout>
 

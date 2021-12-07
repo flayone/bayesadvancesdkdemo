@@ -14,7 +14,8 @@ public class Constants {
         public static final String rewardAdspotId = "10003100"; //激励视频
         public static final String interstitialAdspotId = "10003097"; //插屏
         public static final String fullScreenVideoAdspotId = "10003103"; //全屏视频
-        public static final String customNativeAdspotId = "10003120"; //原生自渲染
+//        public static final String customNativeAdspotId = "10003120"; //原生自渲染
+        public static final String customNativeAdspotId = "10003121"; //原生自渲染
         public static final String drawAdspotId = "10005123"; //draw信息流
     }
 

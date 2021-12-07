@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.advance.AdvanceBanner;
 import com.advance.AdvanceBannerListener;
 import com.advance.AdvanceBaseAdspot;
+import com.advance.AdvanceDraw;
+import com.advance.AdvanceDrawListener;
 import com.advance.AdvanceFullScreenItem;
 import com.advance.AdvanceFullScreenVideo;
 import com.advance.AdvanceFullScreenVideoListener;
@@ -205,7 +207,7 @@ public class AdvanceAD {
     public void loadBanner(String id, final ViewGroup adContainer) {
         AdvanceBanner advanceBanner = new AdvanceBanner(mActivity, adContainer, id);
         baseAD = advanceBanner;
-        //设置穿山甲布局尺寸，宽度全屏，高度自适应
+        //设置穿山甲布局尺寸，宽度全屏，高度传入0代表自适应；也可填入具体dp值，尺寸要和穿山甲后台中的"代码位尺寸"宽高比例一致，值单位为dp。
         advanceBanner.setCsjExpressViewAcceptedSize(ScreenUtil.px2dip(mActivity, ScreenUtil.getScreenWidth(mActivity)), 0);
         //推荐：核心事件监听回调
         advanceBanner.setAdListener(new AdvanceBannerListener() {
@@ -266,8 +268,8 @@ public class AdvanceAD {
 
                 // 大多数情况下可以直接展示
                 // 如果有业务需求，可以提前加载广告，保存广告对象，需要时再调用show
-                if (advanceInterstitial != null) {
-                    advanceInterstitial.show();
+                if (baseAD != null) {
+                    baseAD.show();
                 }
             }
 
@@ -307,21 +309,19 @@ public class AdvanceAD {
      */
     public void loadReward(String id) {
         //初始化，注意需要时再初始化，不要复用。
-        AdvanceRewardVideo advanceRewardVideo = new AdvanceRewardVideo(mActivity, id);
+        final AdvanceRewardVideo advanceRewardVideo = new AdvanceRewardVideo(mActivity, id);
         baseAD = advanceRewardVideo;
-        //按需必填，注意：如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,激励视频场景，只要设置的值大于0即可
-        advanceRewardVideo.setCsjExpressSize(500, 500);
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(new AdvanceRewardVideoListener() {
             @Override
             public void onAdLoaded(AdvanceRewardVideoItem advanceRewardVideoItem) {
                 logAndToast(mActivity, "广告加载成功");
 
-                // 如果有业务需求，可以提前加载广告，保存这里的advanceRewardVideoItem 对象，在需要的时候调用show进行展示
+                // 如果有业务需求，可以提前加载广告，在需要的时候调用show进行展示
                 // 为了方便理解，这里在收到广告后直接调用广告展示，有可能会出现一段时间的缓冲状态。
-                if (advanceRewardVideoItem != null) {
+                if (baseAD != null) {
                     //展示广告
-                    advanceRewardVideoItem.showAd();
+                    baseAD.show();
                 }
             }
 
@@ -389,18 +389,16 @@ public class AdvanceAD {
         //初始化
         AdvanceFullScreenVideo advanceFullScreenVideo = new AdvanceFullScreenVideo(mActivity, id);
         baseAD = advanceFullScreenVideo;
-        //注意：如果穿山甲版本号大于3.2.5.1，模板广告需要设置期望个性化模板广告的大小,单位dp,全屏视频场景，只要设置的值大于0即可
-        advanceFullScreenVideo.setCsjExpressSize(500, 500);
         //推荐：核心事件监听回调
         advanceFullScreenVideo.setAdListener(new AdvanceFullScreenVideoListener() {
             @Override
             public void onAdLoaded(AdvanceFullScreenItem advanceFullScreenItem) {
                 logAndToast(mActivity, "广告加载成功");
 
-                // 如果有业务需求，可以提前加载广告，保存这里的advanceFullScreenItem 对象，在需要的时候调用show进行展示
+                // 如果有业务需求，可以提前加载广告，在需要的时候调用show进行展示
                 // 为了方便理解，这里在收到广告后直接调用广告展示，有可能会出现一段时间的缓冲状态。
-                if (advanceFullScreenItem != null)
-                    advanceFullScreenItem.showAd();
+                if (baseAD != null)
+                    baseAD.show();
             }
 
             @Override
@@ -447,7 +445,6 @@ public class AdvanceAD {
         advanceFullScreenVideo.loadStrategy();
     }
 
-    boolean isGdtExpress2 = false;
     AdvanceNativeExpressAdItem advanceNativeExpressAdItem;
     boolean hasNativeShow = false;
     boolean isNativeLoading = false;
@@ -488,7 +485,9 @@ public class AdvanceAD {
         advanceNativeExpress.setAdListener(new AdvanceNativeExpressListener() {
             @Override
             public void onAdLoaded(List<AdvanceNativeExpressAdItem> list) {
-                advanceNativeExpress.show();
+                if (baseAD != null) {
+                    baseAD.show();
+                }
             }
 
             @Override
@@ -536,44 +535,49 @@ public class AdvanceAD {
     }
 
 
-//    public AdvanceDraw advanceDraw;
+    public AdvanceDraw advanceDraw;
 
     /**
      * 加载draw信息流广告
+     *
      * @param id
      * @param adContainer
      */
     public void loadDraw(String id, ViewGroup adContainer) {
-//        advanceDraw = new AdvanceDraw(mActivity, id);
-//        advanceDraw.setAdContainer(adContainer);
-//        advanceDraw.setAdListener(new AdvanceDrawListener() {
-//            @Override
-//            public void onAdLoaded() {
-//                if (advanceDraw != null) {
-//                    advanceDraw.show();
-//                }
-//            }
-//
-//            @Override
-//            public void onAdShow() {
-//
-//            }
-//
-//            @Override
-//            public void onAdClicked() {
-//
-//            }
-//
-//            @Override
-//            public void onAdFailed(AdvanceError advanceError) {
-//            }
-//
-//            @Override
-//            public void onSdkSelected(String id) {
-//
-//            }
-//        });
-//        advanceDraw.loadStrategy();
+        //初始化
+        advanceDraw = new AdvanceDraw(mActivity, id);
+        baseAD = advanceDraw;
+        //必须：设置广告承载布局
+        advanceDraw.setAdContainer(adContainer);
+        //推荐：监听核心事件
+        advanceDraw.setAdListener(new AdvanceDrawListener() {
+            @Override
+            public void onAdLoaded() {
+                if (advanceDraw != null) {
+                    advanceDraw.show();
+                }
+            }
+
+            @Override
+            public void onAdShow() {
+
+            }
+
+            @Override
+            public void onAdClicked() {
+
+            }
+
+            @Override
+            public void onAdFailed(AdvanceError advanceError) {
+            }
+
+            @Override
+            public void onSdkSelected(String id) {
+
+            }
+        });
+        advanceDraw.loadStrategy();
     }
 
 

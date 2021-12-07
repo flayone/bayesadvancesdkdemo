@@ -11,9 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.advance.AdvanceCustomizeAd;
+import com.advance.BaseParallelAdapter;
 import com.advance.advancesdkdemo.R;
 import com.advance.model.AdvanceError;
 import com.advance.model.SdkSupplier;
+import com.advance.supplier.gdt.GdtUtil;
 import com.advance.utils.AdvanceUtil;
 import com.advance.utils.LogUtil;
 import com.bumptech.glide.Glide;
@@ -27,6 +29,7 @@ import com.qq.e.ads.nativ.NativeUnifiedAD;
 import com.qq.e.ads.nativ.NativeUnifiedADData;
 import com.qq.e.ads.nativ.widget.NativeAdContainer;
 import com.qq.e.comm.constants.AdPatternType;
+import com.qq.e.comm.managers.GDTADManager;
 import com.qq.e.comm.util.AdError;
 
 import java.util.ArrayList;
@@ -53,7 +56,9 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
 
     public void loadAd() {
         try {
-            mAdManager = new NativeUnifiedAD(activity, AdvanceUtil.getGdtAccount(sdkSupplier.mediaid), sdkSupplier.adspotid, this);
+            GDTADManager.getInstance().initWith(activity, AdvanceUtil.getGdtAccount(sdkSupplier.mediaid));
+
+            mAdManager = new NativeUnifiedAD(activity, sdkSupplier.adspotid, this);
             mAdManager.setMaxVideoDuration(60);
             mAdManager.setDownAPPConfirmPolicy(DownAPPConfirmPolicy.NOConfirm);
             mAdManager.loadData(sdkSupplier.adCount);
@@ -90,7 +95,7 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
         }
         //这里一定要调用customizeAd 的事件方法
         if (null != customizeAd) {
-            customizeAd.adapterDidFailed(AdvanceError.parseErr(code,msg));
+            customizeAd.adapterDidFailed(AdvanceError.parseErr(code, msg));
         }
         LogUtil.AdvanceLog(code + msg);
     }
@@ -264,7 +269,7 @@ public class MyGdtNCAdapter implements NativeADUnifiedListener {
                         }
                         //这里一定要调用customizeAd 的事件方法
                         if (null != customizeAd) {
-                            customizeAd.adapterDidFailed(AdvanceError.parseErr(code,msg));
+                            customizeAd.adapterDidFailed(AdvanceError.parseErr(code, msg));
                         }
                         LogUtil.AdvanceLog(code + msg);
                     }

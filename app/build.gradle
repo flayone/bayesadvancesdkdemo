@@ -56,27 +56,27 @@ dependencies {
     }
 
     //引入Advance SDK
-    def advanceVersion = "3.5.3"
+    def advanceVersion = "3.5.4"
     //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle进行配置，如果依然无法引入，请联系我们使用本地aar引入。
     implementation "io.github.flayone:advance-core:${advanceVersion}"
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
-    implementation "io.github.flayone:advance-mry:${advanceVersion}_347"
-    //穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑(如果APP本地引入了平台SDK的aar，不希望使用带aar引入的advance渠道库，可以在最后面加上 _core 标识，这样就不会产生aar引入冲突了，但是请注意，非advance推荐版本可能会出现广告加载异常，一定要充分测试)
-    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4410"
-    implementation "io.github.flayone:advance-csj:${advanceVersion}_4001"
-    implementation "io.github.flayone:advance-bd:${advanceVersion}_915"
-    implementation "io.github.flayone:advance-ks:${advanceVersion}_3314"
+    implementation "io.github.flayone:advance-mry:${advanceVersion}_352"
+    //穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
+    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4431"
+    implementation "io.github.flayone:advance-csj:${advanceVersion}_4105"
+    implementation "io.github.flayone:advance-bd:${advanceVersion}_918"
+    implementation "io.github.flayone:advance-ks:${advanceVersion}_3318"
+
+    //如果存在穿山甲、优量汇等aar包冲突报错，不想删除包的话可以参考使用以下_core无广告aar引用依赖配置。
+    //为避免版本不同导致执行异常，推荐使用上方正常带广告aar的引入方式。
+//    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4431_core"
+//    implementation "io.github.flayone:advance-csj:${advanceVersion}_4105_core"
+//    implementation "io.github.flayone:advance-bd:${advanceVersion}_918_core"
+//    implementation "io.github.flayone:advance-ks:${advanceVersion}_3318_core"
 
     //小米广告引用
     implementation(name: "mimo-ad-sdk", ext: "aar")
     //华为广告引用
     implementation 'com.huawei.hms:ads-lite:13.4.46.300'
-
-
-    //以下为_core版本依赖配置参考，需搭配渠道aar一起策略才真正可以执行
-//    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4410_core"
-//    implementation "io.github.flayone:advance-csj:${advanceVersion}_4001_core"
-//    implementation "io.github.flayone:advance-bd:${advanceVersion}_915_core"
-//    implementation "io.github.flayone:advance-ks:${advanceVersion}_3314_core"
 
 }
