@@ -42,7 +42,7 @@ public class SplashActivity extends Activity {
         ad.cusXiaoMi = cusXiaoMi;
         ad.cusHuaWei = cusHuaWei;
         //建议skipView传入null，代表使用SDK内部默认跳过按钮。如果需要自定义跳过按钮，skipView传入自定义跳过布局即可，注意：部分渠道不支持自定义，即使传了也不会生效。
-        ad.loadSplash(Constants.TestIds.splashAdspotId,adContainer, logo, null, new AdvanceAD.SplashCallBack() {
+        ad.loadSplash(Constants.TestIds.splashAdspotId,adContainer, null, null, new AdvanceAD.SplashCallBack() {
             @Override
             public void jumpMain() {
                 goToMainActivity();

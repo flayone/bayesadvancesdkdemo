@@ -40,6 +40,9 @@ repositories {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //引入需要的aar文件
+    implementation fileTree(include: ['*.aar'], dir: 'libs')
+
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
@@ -49,33 +52,31 @@ dependencies {
 //    implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation(name: 'circleimageview-2.2.0', ext: 'aar')
 
     implementation("com.github.bumptech.glide:glide:4.8.0") {
         exclude group: "com.android.support"
     }
 
     //引入Advance SDK
-    def advanceVersion = "3.5.4"
-    //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle进行配置，如果依然无法引入，请联系我们使用本地aar引入。
+    def advanceVersion = "3.5.5"
+    //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
     implementation "io.github.flayone:advance-core:${advanceVersion}"
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
-    implementation "io.github.flayone:advance-mry:${advanceVersion}_352"
+    implementation "io.github.flayone:advance-mry:${advanceVersion}_354"
     //穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
-    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4431"
-    implementation "io.github.flayone:advance-csj:${advanceVersion}_4105"
-    implementation "io.github.flayone:advance-bd:${advanceVersion}_918"
-    implementation "io.github.flayone:advance-ks:${advanceVersion}_3318"
+    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4441"
+    implementation "io.github.flayone:advance-csj:${advanceVersion}_4301"
+    implementation "io.github.flayone:advance-bd:${advanceVersion}_919"
+    implementation "io.github.flayone:advance-ks:${advanceVersion}_3320"
+
 
     //如果存在穿山甲、优量汇等aar包冲突报错，不想删除包的话可以参考使用以下_core无广告aar引用依赖配置。
     //为避免版本不同导致执行异常，推荐使用上方正常带广告aar的引入方式。
-//    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4431_core"
-//    implementation "io.github.flayone:advance-csj:${advanceVersion}_4105_core"
-//    implementation "io.github.flayone:advance-bd:${advanceVersion}_918_core"
-//    implementation "io.github.flayone:advance-ks:${advanceVersion}_3318_core"
+//    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4441_core"
+//    implementation "io.github.flayone:advance-csj:${advanceVersion}_4301_core"
+//    implementation "io.github.flayone:advance-bd:${advanceVersion}_919_core"
+//    implementation "io.github.flayone:advance-ks:${advanceVersion}_3320_core"
 
-    //小米广告引用
-    implementation(name: "mimo-ad-sdk", ext: "aar")
     //华为广告引用
     implementation 'com.huawei.hms:ads-lite:13.4.46.300'
 

@@ -35,7 +35,7 @@
     <LinearLayout
         android:id="@+id/ll_asc_logo"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/splash_logo_height"
         android:background="@color/adv_white"
         android:gravity="center"
         android:orientation="vertical"

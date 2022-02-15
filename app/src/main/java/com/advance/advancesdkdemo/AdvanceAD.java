@@ -102,21 +102,6 @@ public class AdvanceAD {
         baseAD = advanceSplash;
         //注意：如果开屏页是fragment或者dialog实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        advanceSplash.setShowInSingleActivity(true);
-        //设置穿山甲素材尺寸跟随父布局大小
-        adContainer.post(new Runnable() {
-            @Override
-            public void run() {
-                advanceSplash.setCsjExpressViewAcceptedSize(adContainer.getWidth(), adContainer.getHeight());
-            }
-        });
-        if (cusXiaoMi) {
-            //此处自定义的渠道id值，需要联系我们获取。
-            advanceSplash.addCustomSupplier("小米SDK渠道id", new XiaoMiSplashAdapter(mActivity, advanceSplash));
-        }
-        if (cusHuaWei) {
-            advanceSplash.addCustomSupplier("华为SDK渠道id", new HuaWeiSplashAdapter(mActivity, advanceSplash));
-        }
-
         //必须：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(new AdvanceSplashListener() {
             /**
@@ -187,8 +172,34 @@ public class AdvanceAD {
                 logAndToast(mActivity, "倒计时结束，关闭广告");
             }
         });
-        //必须：请求广告
-        advanceSplash.loadStrategy();
+        //设置穿山甲素材尺寸跟随父布局大小
+        adContainer.post(new Runnable() {
+            @Override
+            public void run() {
+                int w = adContainer.getWidth();
+                int logoH = 0;
+                //如果放置了logo，这里要减去logo得高度，否则穿山甲的部分展示会被logo遮挡
+                if (logoContainer != null) {
+                    logoH = (int) mActivity.getResources().getDimension(R.dimen.splash_logo_height);
+                }
+                int h = adContainer.getHeight() - logoH;
+//                Log.d("[AdvanceAD][loadSplash]", "w = " + w + "， logoH = " + logoH + "， h = " + h + "， oriH = " + adContainer.getHeight());
+                //设置穿山甲的尺寸
+                advanceSplash.setCsjAcceptedSize(w, h);
+
+                if (cusXiaoMi) {
+                    //此处自定义的渠道id值，需要联系我们获取。
+                    advanceSplash.addCustomSupplier("小米SDK渠道id", new XiaoMiSplashAdapter(mActivity, advanceSplash));
+                }
+                if (cusHuaWei) {
+                    advanceSplash.addCustomSupplier("华为SDK渠道id", new HuaWeiSplashAdapter(mActivity, advanceSplash));
+                }
+
+//                Log.d("[AdvanceAD][loadSplash]", "start request");
+                //必须：请求广告
+                advanceSplash.loadStrategy();
+            }
+        });
     }
 
 
@@ -445,7 +456,6 @@ public class AdvanceAD {
         advanceFullScreenVideo.loadStrategy();
     }
 
-    AdvanceNativeExpressAdItem advanceNativeExpressAdItem;
     boolean hasNativeShow = false;
     boolean isNativeLoading = false;
 
@@ -459,11 +469,6 @@ public class AdvanceAD {
             LogUtil.d("loadNativeExpress hasNativeShow");
             return;
         }
-        if (advanceNativeExpressAdItem != null) {
-            if (adContainer.getChildCount() > 0 && adContainer.getChildAt(0) == advanceNativeExpressAdItem.getExpressAdView()) {
-                return;
-            }
-        }
         if (isNativeLoading) {
             LogUtil.d("loadNativeExpress isNativeLoading");
             return;
@@ -473,8 +478,6 @@ public class AdvanceAD {
         if (adContainer.getChildCount() > 0) {
             adContainer.removeAllViews();
         }
-
-        AdvanceBDManager.getInstance().nativeExpressContainer = adContainer;
 
         //初始化
         final AdvanceNativeExpress advanceNativeExpress = new AdvanceNativeExpress(mActivity, Constants.TestIds.nativeExpressAdspotId);
@@ -598,7 +601,7 @@ public class AdvanceAD {
      * @param msg     需要显示的内容
      */
     public void logAndToast(Context context, String msg) {
-        Log.d("[DemoUtil][logAndToast]", msg);
+        Log.d("[AdvanceAD][logAndToast]", msg);
         //如果不想弹出toast可以在此注释掉下面代码
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }

@@ -22,7 +22,7 @@
     <!--    建议配置上 android:hardwareAccelerated="true"  开启硬件加速，可以更好的支持视频播放   -->
     <application
         android:name="com.advance.advancesdkdemo.MyApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

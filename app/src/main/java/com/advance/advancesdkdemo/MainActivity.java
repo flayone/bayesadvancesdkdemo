@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
             dialog.show();
         }
 
-        MercuryAD.getOAID();
     }
 
     @TargetApi(Build.VERSION_CODES.M)
