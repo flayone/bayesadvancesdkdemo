@@ -27,6 +27,7 @@ import com.advance.AdvanceRewardVideo;
 import com.advance.AdvanceRewardVideoItem;
 import com.advance.AdvanceRewardVideoListener;
 import com.advance.AdvanceSDK;
+import com.advance.AdvanceSetting;
 import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
 import com.advance.RewardServerCallBackInf;
@@ -34,6 +35,7 @@ import com.advance.advancesdkdemo.custom.HuaWeiSplashAdapter;
 import com.advance.advancesdkdemo.custom.XiaoMiSplashAdapter;
 import com.advance.custom.AdvanceBaseCustomAdapter;
 import com.advance.model.AdvanceError;
+import com.advance.model.AdvanceLogLevel;
 import com.advance.supplier.baidu.AdvanceBDManager;
 import com.advance.utils.LogUtil;
 import com.advance.utils.ScreenUtil;
@@ -86,6 +88,8 @@ public class AdvanceAD {
         AdvanceSDK.initSDK(context, Constants.APP_ID, BuildConfig.DEBUG);
         //推荐配置：允许Mercury预缓存素材
         MercuryAD.needPreLoadMaterial(true);
+        //tanx配置优化项，当glide不兼容时必填
+        AdvanceSDK.setTanxImgLoader(new MyImageLoader());
     }
 
     /**
