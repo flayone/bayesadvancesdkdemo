@@ -61,7 +61,7 @@ dependencies {
 //    }
 
     //引入Advance SDK
-    def advanceVersion = "3.6.0"
+    def advanceVersion = "3.6.0.1"
     //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
     implementation "io.github.flayone:advance-core:${advanceVersion}"
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
@@ -72,8 +72,21 @@ dependencies {
     implementation "io.github.flayone:advance-bd:${advanceVersion}_919"
     implementation "io.github.flayone:advance-ks:${advanceVersion}_3320"
     //tanx广告SDK -- start
-    implementation "io.github.flayone:advance-tanx:${advanceVersion}_211"
-    implementation "io.github.flayone:advance-tanx-ext:${advanceVersion}_211"
+    implementation("io.github.flayone:advance-tanx:${advanceVersion}_212_core")
+    implementation(group: 'com.tanx', name: 'TanxCoreSDK', version: '2.1.2') {
+        //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
+        exclude group: 'com.github.bumptech.glide'
+        exclude group: 'com.squareup.okhttp3'
+        exclude group: 'com.alibaba'
+        exclude group: 'com.umeng.umsdk'
+    }
+    implementation(group: 'com.tanx', name: 'TanxUISDK', version: '2.1.2'){
+        //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
+        exclude group: 'com.github.bumptech.glide'
+        exclude group: 'com.squareup.okhttp3'
+        exclude group: 'com.alibaba'
+        exclude group: 'com.umeng.umsdk'
+    }
     //tanx广告SDK需要用到得公共库，如果版本不一致请一定要检查，确认广告执行正常
     implementation 'com.alibaba:fastjson:1.1.72.android'
     //使用高版本得glide 必须要进行自定义图片加载器，否则tanx会执行异常
