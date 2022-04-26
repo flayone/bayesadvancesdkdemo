@@ -33,7 +33,7 @@ public class SplashActivity extends Activity {
         cusXiaoMi = getIntent().getBooleanExtra("cusXM", false);
         cusHuaWei = getIntent().getBooleanExtra("cusHW", false);
 
-        AdvanceSDK.setCSJSplashButtonType(TTAdConstant.SPLASH_BUTTON_TYPE_DOWNLOAD_BAR);
+//        AdvanceSDK.setCSJSplashButtonType(TTAdConstant.SPLASH_BUTTON_TYPE_DOWNLOAD_BAR);
         /**
          * 加载并展示开屏广告
          */

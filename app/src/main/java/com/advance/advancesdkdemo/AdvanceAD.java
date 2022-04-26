@@ -27,7 +27,6 @@ import com.advance.AdvanceRewardVideo;
 import com.advance.AdvanceRewardVideoItem;
 import com.advance.AdvanceRewardVideoListener;
 import com.advance.AdvanceSDK;
-import com.advance.AdvanceSetting;
 import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
 import com.advance.RewardServerCallBackInf;
@@ -35,8 +34,6 @@ import com.advance.advancesdkdemo.custom.HuaWeiSplashAdapter;
 import com.advance.advancesdkdemo.custom.XiaoMiSplashAdapter;
 import com.advance.custom.AdvanceBaseCustomAdapter;
 import com.advance.model.AdvanceError;
-import com.advance.model.AdvanceLogLevel;
-import com.advance.supplier.baidu.AdvanceBDManager;
 import com.advance.utils.LogUtil;
 import com.advance.utils.ScreenUtil;
 import com.mercury.sdk.core.config.MercuryAD;
@@ -150,7 +147,7 @@ public class AdvanceAD {
 
                 //如果选择了自定义skipView，强烈建议：开屏页布局中按钮初始背景设置成透明背景，skipView只有在广告展示出来以后才将背景色进行填充，这样展现效果较佳
                 if (skipView != null)
-                    skipView.setBackgroundDrawable(ContextCompat.getDrawable(mActivity, R.drawable.background_circle));
+                    skipView.setBackgroundDrawable(ContextCompat.getDrawable(mActivity, R.drawable.adv_background_circle));
 
                 logAndToast(mActivity, "广告展示成功");
             }
@@ -184,7 +181,8 @@ public class AdvanceAD {
                 int logoH = 0;
                 //如果放置了logo，这里要减去logo得高度，否则穿山甲的部分展示会被logo遮挡
                 if (logoContainer != null) {
-                    logoH = (int) mActivity.getResources().getDimension(R.dimen.splash_logo_height);
+//                    logoH = (int) mActivity.getResources().getDimension(R.dimen.splash_logo_height);
+                    logoH = logoContainer.getHeight();
                 }
                 int h = adContainer.getHeight() - logoH;
 //                Log.d("[AdvanceAD][loadSplash]", "w = " + w + "， logoH = " + logoH + "， h = " + h + "， oriH = " + adContainer.getHeight());

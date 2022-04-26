@@ -60,27 +60,27 @@ dependencies {
 //        exclude group: "com.android.support"
 //    }
 
-    //引入Advance SDK
-    def advanceVersion = "3.6.0.1"
+    //引入Advance SDK -start
+    def advanceVersion = "3.6.1.1"
     //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
     implementation "io.github.flayone:advance-core:${advanceVersion}"
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
-    implementation "io.github.flayone:advance-mry:${advanceVersion}_354"
+    implementation "io.github.flayone:advance-mry:${advanceVersion}_356"
     //穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
-    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4441"
-    implementation "io.github.flayone:advance-csj:${advanceVersion}_4301"
-    implementation "io.github.flayone:advance-bd:${advanceVersion}_919"
-    implementation "io.github.flayone:advance-ks:${advanceVersion}_3320"
+    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4462"
+    implementation "io.github.flayone:advance-csj:${advanceVersion}_4402"
+    implementation "io.github.flayone:advance-bd:${advanceVersion}_9202"
+    implementation "io.github.flayone:advance-ks:${advanceVersion}_3323"
     //tanx广告SDK -- start
-    implementation("io.github.flayone:advance-tanx:${advanceVersion}_212_core")
-    implementation(group: 'com.tanx', name: 'TanxCoreSDK', version: '2.1.2') {
+    implementation("io.github.flayone:advance-tanx:${advanceVersion}_214")
+    implementation(group: 'com.tanx', name: 'TanxCoreSDK', version: '2.1.4') {
         //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
         exclude group: 'com.github.bumptech.glide'
         exclude group: 'com.squareup.okhttp3'
         exclude group: 'com.alibaba'
         exclude group: 'com.umeng.umsdk'
     }
-    implementation(group: 'com.tanx', name: 'TanxUISDK', version: '2.1.2'){
+    implementation(group: 'com.tanx', name: 'TanxUISDK', version: '2.1.4'){
         //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
         exclude group: 'com.github.bumptech.glide'
         exclude group: 'com.squareup.okhttp3'
@@ -97,11 +97,12 @@ dependencies {
 
     //如果存在穿山甲、优量汇等aar包冲突报错，不想删除包的话可以参考使用以下_core无广告aar引用依赖配置。
     //为避免版本不同导致执行异常，推荐使用上方正常带广告aar的引入方式。
-//    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4441_core"
-//    implementation "io.github.flayone:advance-csj:${advanceVersion}_4301_core"
-//    implementation "io.github.flayone:advance-bd:${advanceVersion}_919_core"
-//    implementation "io.github.flayone:advance-ks:${advanceVersion}_3320_core"
-//    implementation "io.github.flayone:advance-tanx:${advanceVersion}_211_core"
+//    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4462_core"
+//    implementation "io.github.flayone:advance-csj:${advanceVersion}_4402_core"
+//    implementation "io.github.flayone:advance-bd:${advanceVersion}_9202_core"
+//    implementation "io.github.flayone:advance-ks:${advanceVersion}_3323_core"
+
+    //引入Advance SDK -end
 
     //华为广告引用
     implementation 'com.huawei.hms:ads-lite:13.4.46.300'
