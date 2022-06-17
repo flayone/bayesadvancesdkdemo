@@ -3,6 +3,7 @@ package com.advance.advancesdkdemo;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.location.Location;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,8 @@ import com.advance.RewardServerCallBackInf;
 import com.advance.advancesdkdemo.custom.HuaWeiSplashAdapter;
 import com.advance.advancesdkdemo.custom.XiaoMiSplashAdapter;
 import com.advance.custom.AdvanceBaseCustomAdapter;
+import com.advance.itf.AdvancePrivacyController;
+import com.advance.itf.BaseEnsureListener;
 import com.advance.model.AdvanceError;
 import com.advance.utils.LogUtil;
 import com.advance.utils.ScreenUtil;
@@ -87,6 +90,84 @@ public class AdvanceAD {
         MercuryAD.needPreLoadMaterial(true);
         //tanx配置优化项，当glide不兼容时必填
         AdvanceSDK.setTanxImgLoader(new MyImageLoader());
+        //可选：根据自身需求控制隐私项
+        AdvanceSDK.setPrivacyController(new AdvancePrivacyController() {
+            @Override
+            public boolean isCanUseLocation() {
+                return super.isCanUseLocation();
+            }
+
+            @Override
+            public Location getLocation() {
+                return super.getLocation();
+            }
+
+            @Override
+            public boolean isCanUsePhoneState() {
+                return super.isCanUsePhoneState();
+            }
+
+            @Override
+            public String getDevImei() {
+                return super.getDevImei();
+            }
+
+            @Override
+            public String[] getImeis() {
+                return super.getImeis();
+            }
+
+            @Override
+            public String getDevAndroidID() {
+                return super.getDevAndroidID();
+            }
+
+            @Override
+            public String getDevMac() {
+                return super.getDevMac();
+            }
+
+            @Override
+            public boolean isCanUseWriteExternal() {
+                return super.isCanUseWriteExternal();
+            }
+
+            @Override
+            public boolean isCanUseWifiState() {
+                return super.isCanUseWifiState();
+            }
+
+            @Override
+            public boolean canUseOaid() {
+                return super.canUseOaid();
+            }
+
+            @Override
+            public boolean canUseMacAddress() {
+                return super.canUseMacAddress();
+            }
+
+            @Override
+            public boolean canUseNetworkState() {
+                return super.canUseNetworkState();
+            }
+
+            @Override
+            public String getDevOaid() {
+                return super.getDevOaid();
+            }
+
+            @Override
+            public boolean alist() {
+                return super.alist();
+            }
+
+            @Override
+            public List<String> getInstalledPackages() {
+                return super.getInstalledPackages();
+            }
+        });
+
     }
 
     /**
@@ -539,6 +620,128 @@ public class AdvanceAD {
         advanceNativeExpress.loadStrategy();
     }
 
+
+    AdvanceNativeExpressAdItem advanceNativeExpressAdItem;
+    AdvanceNativeExpress advanceNativeExpress;
+    /**
+     * 仅加载信息流广告，分步加载信息流方法
+     *
+     * @param id
+     */
+    public void loadNativeExpressOnly(String id, final BaseEnsureListener listener) {
+        if (hasNativeShow) {
+            LogUtil.d("loadNativeExpress hasNativeShow");
+            return;
+        }
+        if (advanceNativeExpressAdItem != null) {
+//            if (adContainer.getChildCount() > 0 && adContainer.getChildAt(0) == advanceNativeExpressAdItem.getExpressAdView()) {
+//                return;
+//            }
+        }
+        if (isNativeLoading) {
+            LogUtil.d("loadNativeExpress isNativeLoading");
+            return;
+        }
+        isNativeLoading = true;
+
+//        if (adContainer.getChildCount() > 0) {
+//            adContainer.removeAllViews();
+//        }
+
+//        AdvanceBDManager.getInstance().nativeExpressContainer = adContainer;
+
+        //初始化
+        advanceNativeExpress = new AdvanceNativeExpress(mActivity, id);
+        baseAD = advanceNativeExpress;
+        //设置模板尺寸宽高
+//        advanceNativeExpress.setExpressViewAcceptedSize(ScreenUtil.px2dip(mActivity, ScreenUtil.getScreenWidth(mActivity)), 500);
+        //必须：设置广告父布局
+        advanceNativeExpress.setAdContainer(null);
+        //推荐：核心事件监听回调
+        advanceNativeExpress.setAdListener(new AdvanceNativeExpressListener() {
+            @Override
+            public void onAdLoaded(java.util.List<AdvanceNativeExpressAdItem> list) {
+                if (list != null && list.size() > 0) {
+                    advanceNativeExpressAdItem = list.get(0);
+                }
+                if (listener != null) {
+                    listener.ensure();
+                }
+//                advanceNativeExpress.show();
+            }
+
+            @Override
+            public void onAdRenderSuccess(android.view.View view) {
+                logAndToast(mActivity, "广告渲染成功");
+            }
+
+
+            @Override
+            public void onAdClose(android.view.View view) {
+                logAndToast(mActivity, "广告关闭");
+            }
+
+            @Override
+            public void onAdShow(android.view.View view) {
+                hasNativeShow = true;
+                isNativeLoading = false;
+                logAndToast(mActivity, "广告展示");
+            }
+
+            @Override
+            public void onAdFailed(AdvanceError advanceError) {
+                isNativeLoading = false;
+                logAndToast(mActivity, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.msg);
+            }
+
+            @Override
+            public void onSdkSelected(String id) {
+                logAndToast(mActivity, "onSdkSelected = " + id);
+            }
+
+            @Override
+            public void onAdRenderFailed(android.view.View view) {
+                logAndToast(mActivity, "广告渲染失败");
+            }
+
+            @Override
+            public void onAdClicked(android.view.View view) {
+                logAndToast(mActivity, "广告点击");
+            }
+
+        });
+        //必须
+        advanceNativeExpress.loadStrategy();
+
+    }
+
+    public void showNativeExpress(ViewGroup adContainer) {
+        advanceNativeExpress.setAdContainer(adContainer);
+        if (adContainer == null) {
+            logAndToast(mActivity, "广告父布局为空");
+            return;
+        }
+        View adView = null;
+        if (advanceNativeExpressAdItem != null) {
+            adView = advanceNativeExpressAdItem.getExpressAdView();
+
+//            if (adContainer.getChildCount() > 0 && adContainer.getChildAt(0) == adView) {
+//                logAndToast(mActivity, "广告已在展示中");
+//                return;
+//            }
+        }
+
+        if (adContainer.getChildCount() > 0) {
+            adContainer.removeAllViews();
+        }
+        adContainer.setVisibility(View.VISIBLE);
+
+        if (adView != null) {
+            adContainer.addView(adView);
+        }
+        advanceNativeExpress.show();
+
+    }
 
     public AdvanceDraw advanceDraw;
 
