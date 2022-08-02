@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.advance.AdvanceSDK;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
+import com.mercury.sdk.core.config.MercuryAD;
+import com.mercury.sdk.core.splash.SplashShakeClickType;
 
 
 public class SplashActivity extends Activity {
@@ -29,6 +31,7 @@ public class SplashActivity extends Activity {
         skipView = findViewById(R.id.skip_view);
         logo = findViewById(R.id.ll_asc_logo);
 
+        MercuryAD.setSplashShakeClickController(SplashShakeClickType.ICON);
         //获取是否需要支持自定义SDK渠道
         cusXiaoMi = getIntent().getBooleanExtra("cusXM", false);
         cusHuaWei = getIntent().getBooleanExtra("cusHW", false);
