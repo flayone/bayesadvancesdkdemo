@@ -24,7 +24,7 @@ public class XiaoMiSplashAdapter extends AdvanceSplashCustomAdapter {
     }
 
     @Override
-    protected void paraLoadAd() {//并行加载广告
+    public void paraLoadAd() {//并行加载广告
         LogUtil.simple(TAG + "paraLoadAd");
 
         //假如支持并行加载，需要在此进行仅加载广告请求方法，在adReady()回调中处理广告展示逻辑。
@@ -40,7 +40,7 @@ public class XiaoMiSplashAdapter extends AdvanceSplashCustomAdapter {
 
 
     @Override
-    protected void adReady() {//广告就绪（不区分串、并行），可以进行addView等吊起广告展示的操作
+    public void adReady() {//广告就绪（不区分串、并行），可以进行addView等吊起广告展示的操作
         LogUtil.simple(TAG + "adReady");
 
     }
@@ -119,4 +119,8 @@ public class XiaoMiSplashAdapter extends AdvanceSplashCustomAdapter {
     }
 
 
+    @Override
+    public void show() {
+
+    }
 }

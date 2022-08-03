@@ -18,11 +18,11 @@ public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
 
     public HuaWeiSplashAdapter(Activity activity, SplashSetting splashSetting) {
         super(activity, splashSetting);
-        supportPara = false;
+//        supportPara = false;
     }
 
     @Override
-    protected void paraLoadAd() {
+    public void paraLoadAd() {
         LogUtil.simple(TAG + "paraLoadAd");
         loadAD();
     }
@@ -35,7 +35,7 @@ public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
 
 
     @Override
-    protected void adReady() {
+    public void adReady() {
         LogUtil.simple(TAG + "adReady");
 
 
@@ -105,10 +105,14 @@ public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
                 }
             }
         });
+
+    }
+
+
+    @Override
+    public void show() {
         if (splashView != null) {
             adContainer.addView(splashView);
         }
     }
-
-
 }
