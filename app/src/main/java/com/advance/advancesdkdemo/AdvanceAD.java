@@ -547,7 +547,7 @@ public class AdvanceAD {
      *
      * @param adContainer 广告的承载布局
      */
-    public void loadNativeExpress(final ViewGroup adContainer) {
+    public void loadNativeExpressAndShow(final ViewGroup adContainer) {
         if (hasNativeShow) {
             LogUtil.d("loadNativeExpress hasNativeShow");
             return;
@@ -623,51 +623,38 @@ public class AdvanceAD {
 
     AdvanceNativeExpressAdItem advanceNativeExpressAdItem;
     AdvanceNativeExpress advanceNativeExpress;
+    //分步加载的信息流判断信息
+    boolean hasSplitNativeShow = false;
+    boolean isSplitNativeLoading = false;
+
     /**
      * 仅加载信息流广告，分步加载信息流方法
      *
      * @param id
      */
-    public void loadNativeExpressOnly(String id, final BaseEnsureListener listener) {
-        if (hasNativeShow) {
-            LogUtil.d("loadNativeExpress hasNativeShow");
+    public void loadNativeExpressOnly(String id ,LoadCallBack callBack) {
+        if (hasSplitNativeShow) {
+            LogUtil.d("loadNativeExpress hasSplitNativeShow");
             return;
         }
-        if (advanceNativeExpressAdItem != null) {
-//            if (adContainer.getChildCount() > 0 && adContainer.getChildAt(0) == advanceNativeExpressAdItem.getExpressAdView()) {
-//                return;
-//            }
-        }
-        if (isNativeLoading) {
-            LogUtil.d("loadNativeExpress isNativeLoading");
+
+        if (isSplitNativeLoading) {
+            LogUtil.d("loadNativeExpress isSplitNativeLoading");
             return;
         }
-        isNativeLoading = true;
-
-//        if (adContainer.getChildCount() > 0) {
-//            adContainer.removeAllViews();
-//        }
-
-//        AdvanceBDManager.getInstance().nativeExpressContainer = adContainer;
+        isSplitNativeLoading = true;
 
         //初始化
         advanceNativeExpress = new AdvanceNativeExpress(mActivity, id);
         baseAD = advanceNativeExpress;
-        //设置模板尺寸宽高
-//        advanceNativeExpress.setExpressViewAcceptedSize(ScreenUtil.px2dip(mActivity, ScreenUtil.getScreenWidth(mActivity)), 500);
-        //必须：设置广告父布局
-        advanceNativeExpress.setAdContainer(null);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(new AdvanceNativeExpressListener() {
             @Override
             public void onAdLoaded(java.util.List<AdvanceNativeExpressAdItem> list) {
-                if (list != null && list.size() > 0) {
-                    advanceNativeExpressAdItem = list.get(0);
+                logAndToast(mActivity, "广告加载成功");
+                if (callBack!=null){
+                    callBack.adSuccess();
                 }
-                if (listener != null) {
-                    listener.ensure();
-                }
-//                advanceNativeExpress.show();
             }
 
             @Override
@@ -683,14 +670,14 @@ public class AdvanceAD {
 
             @Override
             public void onAdShow(android.view.View view) {
-                hasNativeShow = true;
-                isNativeLoading = false;
+                hasSplitNativeShow = true;
+                isSplitNativeLoading = false;
                 logAndToast(mActivity, "广告展示");
             }
 
             @Override
             public void onAdFailed(AdvanceError advanceError) {
-                isNativeLoading = false;
+                isSplitNativeLoading = false;
                 logAndToast(mActivity, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.msg);
             }
 
@@ -716,29 +703,9 @@ public class AdvanceAD {
     }
 
     public void showNativeExpress(ViewGroup adContainer) {
+        //必须 ，设置广告展示用布局页面
         advanceNativeExpress.setAdContainer(adContainer);
-        if (adContainer == null) {
-            logAndToast(mActivity, "广告父布局为空");
-            return;
-        }
-        View adView = null;
-        if (advanceNativeExpressAdItem != null) {
-            adView = advanceNativeExpressAdItem.getExpressAdView();
-
-//            if (adContainer.getChildCount() > 0 && adContainer.getChildAt(0) == adView) {
-//                logAndToast(mActivity, "广告已在展示中");
-//                return;
-//            }
-        }
-
-        if (adContainer.getChildCount() > 0) {
-            adContainer.removeAllViews();
-        }
-        adContainer.setVisibility(View.VISIBLE);
-
-        if (adView != null) {
-            adContainer.addView(adView);
-        }
+        //必须，展示广告
         advanceNativeExpress.show();
 
     }
@@ -786,6 +753,13 @@ public class AdvanceAD {
             }
         });
         advanceDraw.loadStrategy();
+    }
+
+    /**
+     * 广告加载回调
+     */
+    public interface LoadCallBack {
+        void adSuccess();
     }
 
 

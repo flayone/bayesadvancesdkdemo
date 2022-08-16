@@ -98,7 +98,7 @@ public class NativeExpressRecyclerViewActivity extends Activity {
             int type = getItemViewType(position);
             if (TYPE_AD == type) {
                 //核心步骤：如果是广告布局，执行广告加载
-                customViewHolder.ad.loadNativeExpress(customViewHolder.container);
+                customViewHolder.ad.loadNativeExpressAndShow(customViewHolder.container);
             } else {
                 customViewHolder.title.setText(mData.get(position).getTitle());
             }

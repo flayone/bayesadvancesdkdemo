@@ -72,14 +72,14 @@ dependencies {
     implementation "io.github.flayone:advance-gdt:${advanceVersion}_4482"
     implementation "io.github.flayone:advance-csj:${advanceVersion}_4607"
     implementation "io.github.flayone:advance-bd:${advanceVersion}_923"
-    implementation "io.github.flayone:advance-ks:${advanceVersion}_3327"
+    implementation "io.github.flayone:advance-ks:${advanceVersion}_3328"
 
 //    如果存在穿山甲、优量汇等aar包冲突报错，不想删除包的话可以参考使用以下_core无广告aar引用依赖配置。
 //    为避免版本不同导致执行异常，推荐使用上方正常带广告aar的引入方式。
 //    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4482_core"
 //    implementation "io.github.flayone:advance-csj:${advanceVersion}_4607_core"
 //    implementation "io.github.flayone:advance-bd:${advanceVersion}_923_core"
-//    implementation "io.github.flayone:advance-ks:${advanceVersion}_3327_core"
+//    implementation "io.github.flayone:advance-ks:${advanceVersion}_3328_core"
 
     //(可选)tanx广告SDK -- start --
     implementation("io.github.flayone:advance-tanx:${advanceVersion}_243")
@@ -91,7 +91,6 @@ dependencies {
         exclude group: 'com.squareup.okhttp3'
         exclude group: 'com.alibaba'
         exclude group: 'com.umeng.umsdk'
-        exclude group: 'android.support'
     }
     implementation(group: 'com.tanx', name: 'TanxUISDK', version: versionCode){
         //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
