@@ -35,7 +35,6 @@ import com.advance.advancesdkdemo.custom.HuaWeiSplashAdapter;
 import com.advance.advancesdkdemo.custom.XiaoMiSplashAdapter;
 import com.advance.custom.AdvanceBaseCustomAdapter;
 import com.advance.itf.AdvancePrivacyController;
-import com.advance.itf.BaseEnsureListener;
 import com.advance.model.AdvanceError;
 import com.advance.utils.LogUtil;
 import com.advance.utils.ScreenUtil;
@@ -182,7 +181,7 @@ public class AdvanceAD {
         //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
         final AdvanceSplash advanceSplash = new AdvanceSplash(mActivity, id, adContainer, skipView);
         baseAD = advanceSplash;
-        //注意：如果开屏页是fragment或者dialog实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
+        //注意！！：如果开屏页是fragment或者dialog实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        advanceSplash.setShowInSingleActivity(true);
         //必须：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(new AdvanceSplashListener() {
@@ -194,7 +193,6 @@ public class AdvanceAD {
                 //给sdkId赋值用来判断被策略选中的是哪个SDK
                 sdkId = id;
 
-                logAndToast(mActivity, "策略选中SDK id = " + id);
             }
 
             @Override
@@ -266,7 +264,6 @@ public class AdvanceAD {
                     logoH = logoContainer.getHeight();
                 }
                 int h = adContainer.getHeight() - logoH;
-//                Log.d("[AdvanceAD][loadSplash]", "w = " + w + "， logoH = " + logoH + "， h = " + h + "， oriH = " + adContainer.getHeight());
                 //设置穿山甲的尺寸
                 advanceSplash.setCsjAcceptedSize(w, h);
 
@@ -278,7 +275,6 @@ public class AdvanceAD {
                     advanceSplash.addCustomSupplier("华为SDK渠道id", new HuaWeiSplashAdapter(mActivity, advanceSplash));
                 }
 
-//                Log.d("[AdvanceAD][loadSplash]", "start request");
                 //必须：请求广告
                 advanceSplash.loadStrategy();
             }
@@ -301,8 +297,11 @@ public class AdvanceAD {
     public void loadBanner(String id, final ViewGroup adContainer) {
         AdvanceBanner advanceBanner = new AdvanceBanner(mActivity, adContainer, id);
         baseAD = advanceBanner;
+        //如果集成穿山甲，这里必须配置，具体尺寸要和穿山甲后台中的"代码位尺寸"宽高比例一致，值单位为dp，这里示例使用的广告位宽高比为640：100
+        int adWidth = ScreenUtil.px2dip(mActivity, ScreenUtil.getScreenWidth(mActivity));
+        int adHeight = (int) (((double) adWidth / (double) 640) * 100);
         //设置穿山甲布局尺寸，宽度全屏，高度传入0代表自适应；也可填入具体dp值，尺寸要和穿山甲后台中的"代码位尺寸"宽高比例一致，值单位为dp。
-        advanceBanner.setCsjExpressViewAcceptedSize(ScreenUtil.px2dip(mActivity, ScreenUtil.getScreenWidth(mActivity)), 0);
+        advanceBanner.setCsjExpressViewAcceptedSize(adWidth, adHeight);
         //推荐：核心事件监听回调
         advanceBanner.setAdListener(new AdvanceBannerListener() {
             @Override
@@ -324,7 +323,6 @@ public class AdvanceAD {
 
             @Override
             public void onSdkSelected(String id) {
-                logAndToast(mActivity, "策略选中SDK id = " + id);
             }
 
             @Override
@@ -385,7 +383,7 @@ public class AdvanceAD {
 
             @Override
             public void onSdkSelected(String id) {
-                logAndToast(mActivity, "onSdkSelected = " + id);
+                
             }
 
             @Override
@@ -432,7 +430,7 @@ public class AdvanceAD {
 
             @Override
             public void onSdkSelected(String id) {
-                logAndToast(mActivity, "onSdkSelected = " + id);
+                
             }
 
             @Override
@@ -528,7 +526,7 @@ public class AdvanceAD {
 
             @Override
             public void onSdkSelected(String id) {
-                logAndToast(mActivity, "onSdkSelected = " + id);
+                
             }
 
             @Override
@@ -602,7 +600,7 @@ public class AdvanceAD {
 
             @Override
             public void onSdkSelected(String id) {
-                logAndToast(mActivity, "onSdkSelected = " + id);
+                
             }
 
             @Override
@@ -621,7 +619,6 @@ public class AdvanceAD {
     }
 
 
-    AdvanceNativeExpressAdItem advanceNativeExpressAdItem;
     AdvanceNativeExpress advanceNativeExpress;
     //分步加载的信息流判断信息
     boolean hasSplitNativeShow = false;
@@ -632,7 +629,7 @@ public class AdvanceAD {
      *
      * @param id
      */
-    public void loadNativeExpressOnly(String id ,LoadCallBack callBack) {
+    public void loadNativeExpressOnly(String id, LoadCallBack callBack) {
         if (hasSplitNativeShow) {
             LogUtil.d("loadNativeExpress hasSplitNativeShow");
             return;
@@ -652,7 +649,7 @@ public class AdvanceAD {
             @Override
             public void onAdLoaded(java.util.List<AdvanceNativeExpressAdItem> list) {
                 logAndToast(mActivity, "广告加载成功");
-                if (callBack!=null){
+                if (callBack != null) {
                     callBack.adSuccess();
                 }
             }
@@ -683,7 +680,7 @@ public class AdvanceAD {
 
             @Override
             public void onSdkSelected(String id) {
-                logAndToast(mActivity, "onSdkSelected = " + id);
+                
             }
 
             @Override
