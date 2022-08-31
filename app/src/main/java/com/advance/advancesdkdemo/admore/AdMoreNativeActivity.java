@@ -1,31 +1,34 @@
-package com.advance.advancesdkdemo;
+package com.advance.advancesdkdemo.admore;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
 
+import com.advance.advancesdkdemo.AdvanceAD;
+import com.advance.advancesdkdemo.Constants;
+import com.advance.advancesdkdemo.R;
 import com.advance.advancesdkdemo.util.NormalItem;
+import com.bayescom.admore.core.AMError;
+import com.bayescom.admore.nativ.AdMoreNativeExpress;
+import com.bayescom.admore.nativ.AdMoreNativeExpressListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 在消息流中接入原生模板广告的示例
- */
+public class AdMoreNativeActivity extends AppCompatActivity {
 
-public class NativeExpressRecyclerViewActivity extends Activity {
-
-    private static final String TAG = NativeExpressRecyclerViewActivity.class.getSimpleName();
-    public static final int MAX_ITEMS = 50;
+    private static final String TAG = AdMoreNativeActivity.class.getSimpleName();
+    public static final int MAX_ITEMS = 80;
     public static int FIRST_AD_POSITION = 1; // 第一条广告的位置
-    public static int ITEMS_PER_AD = 10;     // 每间隔10个条目插入一条广告
+    public static int ITEMS_PER_AD = 15;     // 每间隔多少个条目插入一条广告
+    public static int maxAD = 3;//当前列表中最多加载多少个广告
 
     private RecyclerView mRecyclerView;
     private List<NormalItem> mNormalDataList = new ArrayList<>();
@@ -33,13 +36,14 @@ public class NativeExpressRecyclerViewActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_native_express_recycler_view);
+
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         //一定要加上该配置，防止item复用导致广告重复
         mRecyclerView.setItemViewCacheSize(500);
+
         initData();
     }
 
@@ -48,13 +52,60 @@ public class NativeExpressRecyclerViewActivity extends Activity {
             mNormalDataList.add(new NormalItem("No." + i + " Normal Data"));
         }
         //添加广告的数目，这里定义了3条广告。
-        int maxAD = 3;
         for (int i = 0; i < maxAD; i++) {
             int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
             if (position <= mNormalDataList.size()) {
                 //将广告的NormalItem定义为默认的空标题item。
                 //也可以不同item使用不同的广告位id作为广告标识，这样方便区分不同item的广告数据表现。
-                mNormalDataList.add(position, new NormalItem(""));
+                final NormalItem itemAD = new NormalItem("");
+                itemAD.adMoreNativeExpress = new AdMoreNativeExpress(this, Constants.TestIds.adMoreNativeAdspotId, new AdMoreNativeExpressListener() {
+                    @Override
+                    public void onClose() {
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onClose");
+                    }
+
+                    @Override
+                    public void onRenderSuccess() {
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onRenderSuccess");
+
+                    }
+
+                    @Override
+                    public void onRenderFailed() {
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onRenderFailed");
+
+
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onSuccess");
+
+//                        广告成功以后，开始展示广告
+//                        itemAD.adMoreNativeExpress.show();
+                    }
+
+                    @Override
+                    public void onShow() {
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onShow");
+
+
+                    }
+
+                    @Override
+                    public void onClick() {
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onClick");
+
+
+                    }
+
+                    @Override
+                    public void onFailed(AMError amError) {
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onFailed");
+
+                    }
+                });
+                mNormalDataList.add(position, itemAD);
             }
         }
 
@@ -63,7 +114,6 @@ public class NativeExpressRecyclerViewActivity extends Activity {
         mRecyclerView.setAdapter(mAdapter);
 
     }
-
 
     /**
      * RecyclerView的Adapter
@@ -99,8 +149,11 @@ public class NativeExpressRecyclerViewActivity extends Activity {
         public void onBindViewHolder(final CustomViewHolder customViewHolder, final int position) {
             int type = getItemViewType(position);
             if (TYPE_AD == type) {
-                //核心步骤：如果是广告布局，执行广告加载
-                customViewHolder.ad.loadNativeExpressAndShow(customViewHolder.container);
+                //广告核心步骤：设置广告展示用布局
+                mData.get(position).adMoreNativeExpress.setAdContainer(customViewHolder.container);
+                //开始加载广告
+                mData.get(position).adMoreNativeExpress.loadAndShow();
+
             } else {
                 customViewHolder.title.setText(mData.get(position).getTitle());
             }
@@ -109,22 +162,21 @@ public class NativeExpressRecyclerViewActivity extends Activity {
         @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             int layoutId = (viewType == TYPE_AD) ? R.layout.item_express_ad : R.layout.item_data;
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, null);
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, viewGroup, false);
             CustomViewHolder viewHolder = new CustomViewHolder(view);
-            //核心步骤：初始化处理广告类
-            viewHolder.ad = new AdvanceAD(mActivity);
             return viewHolder;
         }
 
         static class CustomViewHolder extends RecyclerView.ViewHolder {
             public TextView title;
+            public TextView test;
             public ViewGroup container; // 广告承载布局
-            public AdvanceAD ad; // 广告处理类
 
             public CustomViewHolder(View view) {
                 super(view);
                 title = view.findViewById(R.id.title);
                 container = view.findViewById(R.id.express_ad_container);
+                test = view.findViewById(R.id.tv_ad);
             }
         }
     }

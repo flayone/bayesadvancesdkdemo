@@ -13,10 +13,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
+import com.advance.advancesdkdemo.admore.AdMoreHome;
+import com.advance.advancesdkdemo.custom.CustomActivity;
 import com.advance.advancesdkdemo.custom.nativ.NativeCustomizeActivity;
 import com.advance.advancesdkdemo.util.BaseCallBack;
 import com.advance.advancesdkdemo.util.UserPrivacyDialog;
 import com.baidu.mobads.sdk.api.AdSettings;
+import com.bayescom.admore.core.AdMoreSDK;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.kwad.sdk.api.KsAdSDK;
 import com.mercury.sdk.core.config.MercuryAD;
@@ -28,7 +31,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     Button fullVideo;
-    Button fullVideoCus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         fullVideo = findViewById(R.id.fullvideo_button);
-        fullVideoCus = findViewById(R.id.cus_fullvideo_button);
 
         String csjV = TTAdSdk.getAdManager().getSDKVersion();
         String merV = MercuryAD.getVersion();
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         String bdV = AdSettings.getSDKVersion() + "";
         String ksV = KsAdSDK.getSDKVersion();
         String av = AdvanceConfig.AdvanceSdkVersion;
+        String amv = AdMoreSDK.getVersion();
 
         TextView tv = findViewById(R.id.tv_version);
         tv.setText("Advance聚合 SDK 版本号： " + av + "\n" + "\n" +
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 "广点通 SDK 版本号： " + gdtV + "\n" +
                 "百度 SDK 版本号： " + bdV + "\n" +
                 "快手 SDK 版本号： " + ksV + "\n"
+                + "\n" + "AdMore 版本号： "+amv
         );
 
         boolean hasPri = getSharedPreferences(Constants.SP_NAME, Context.MODE_PRIVATE).getBoolean(Constants.SP_AGREE_PRIVACY, false);
@@ -124,24 +127,17 @@ public class MainActivity extends AppCompatActivity {
         new AdvanceAD(this).loadFullVideo(Constants.TestIds.fullScreenVideoAdspotId);
     }
 
-    public void cusAD(View view) {
-        startActivity(new Intent(this, NativeCustomizeActivity.class));
-    }
-
-    public void cusHW(View view) {
-        Intent intent = new Intent(this, SplashActivity.class);
-        intent.putExtra("cusHW", true);
-        startActivity(intent);
-    }
-
-    public void cusXM(View view) {
-        Intent intent = new Intent(this, SplashActivity.class);
-        intent.putExtra("cusXM", true);
-        startActivity(intent);
-    }
 
     public void draw(View view) {
         startActivity(new Intent(this, DrawActivity.class));
 
+    }
+
+    public void goCus(View view) {
+        startActivity(new Intent(this, CustomActivity.class));
+    }
+
+    public void goAdMore(View view) {
+        startActivity(new Intent(this, AdMoreHome.class));
     }
 }

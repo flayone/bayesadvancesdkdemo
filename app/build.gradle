@@ -11,7 +11,8 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true    // true时，生成多个dex
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86", "x86_64", "arm64-v8a"  // 指定要ndk需要兼容的架构(这样其他依赖包里mips之类的so会被过滤掉)
+            abiFilters "armeabi", "armeabi-v7a", "x86", "x86_64", "arm64-v8a"
+            // 指定要ndk需要兼容的架构(这样其他依赖包里mips之类的so会被过滤掉)
         }
     }
     buildTypes {
@@ -35,7 +36,7 @@ android {
     }
 
     //添加
-    compileOptions{
+    compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -76,6 +77,9 @@ dependencies {
     implementation "io.github.flayone:advance-bd:${advanceVersion}_923"
     implementation "io.github.flayone:advance-ks:${advanceVersion}_3328"
 
+//    (bidding拓展)支持穿山甲bidding广告，和已有穿山甲渠道不冲突
+    implementation "io.github.flayone:admore:${advanceVersion}_1"
+
 //    如果存在穿山甲、优量汇等aar包冲突报错，不想删除包的话可以参考使用以下_core无广告aar引用依赖配置。
 //    为避免版本不同导致执行异常，推荐使用上方正常带广告aar的引入方式。
 //    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4482_core"
@@ -94,7 +98,7 @@ dependencies {
         exclude group: 'com.alibaba'
         exclude group: 'com.umeng.umsdk'
     }
-    implementation(group: 'com.tanx', name: 'TanxUISDK', version: versionCode){
+    implementation(group: 'com.tanx', name: 'TanxUISDK', version: versionCode) {
         //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
         exclude group: 'com.github.bumptech.glide'
         exclude group: 'com.squareup.okhttp3'
@@ -110,7 +114,6 @@ dependencies {
     //tanx广告SDK -- end --
 
     //引入Advance SDK --------end--------
-
 
 
     //华为广告引用
