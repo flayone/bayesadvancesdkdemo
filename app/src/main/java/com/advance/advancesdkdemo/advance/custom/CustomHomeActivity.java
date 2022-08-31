@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo.custom;
+package com.advance.advancesdkdemo.advance.custom;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,10 +7,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.advance.advancesdkdemo.R;
-import com.advance.advancesdkdemo.SplashActivity;
-import com.advance.advancesdkdemo.custom.nativ.NativeCustomizeActivity;
+import com.advance.advancesdkdemo.advance.SplashActivity;
+import com.advance.advancesdkdemo.advance.custom.nativ.NativeCustomizeActivity;
 
-public class CustomActivity extends Activity {
+public class CustomHomeActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

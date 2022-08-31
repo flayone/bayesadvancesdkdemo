@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo.custom;
+package com.advance.advancesdkdemo.advance.custom;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -11,12 +11,12 @@ import com.huawei.hms.ads.AdParam;
 import com.huawei.hms.ads.splash.SplashAdDisplayListener;
 import com.huawei.hms.ads.splash.SplashView;
 
-public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
+public class HuaWeiSplashCustomAdapter extends AdvanceSplashCustomAdapter {
     SplashView splashView;
     private boolean isCountingEnd = false;//用来辅助判断用户行为，用户是点击了跳过还是倒计时结束，false 回调dismiss的话代表是跳过，否则倒计时结束
     String TAG = "[HuaWeiSplashAdapter] ";
 
-    public HuaWeiSplashAdapter(Activity activity, SplashSetting splashSetting) {
+    public HuaWeiSplashCustomAdapter(Activity activity, SplashSetting splashSetting) {
         super(activity, splashSetting);
 //        supportPara = false;
     }

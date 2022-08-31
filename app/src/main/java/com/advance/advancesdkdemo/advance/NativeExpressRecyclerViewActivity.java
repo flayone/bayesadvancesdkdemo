@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo;
+package com.advance.advancesdkdemo.advance;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.advance.advancesdkdemo.R;
 import com.advance.advancesdkdemo.util.NormalItem;
 
 import java.util.ArrayList;

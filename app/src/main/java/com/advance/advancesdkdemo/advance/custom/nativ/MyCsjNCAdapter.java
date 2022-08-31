@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo.custom.nativ;
+package com.advance.advancesdkdemo.advance.custom.nativ;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -20,9 +20,7 @@ import com.advance.model.SdkSupplier;
 import com.advance.utils.AdvanceUtil;
 import com.bumptech.glide.Glide;
 import com.bytedance.sdk.openadsdk.AdSlot;
-import com.bytedance.sdk.openadsdk.FilterWord;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
-import com.bytedance.sdk.openadsdk.TTAdDislike;
 import com.bytedance.sdk.openadsdk.TTAdManager;
 import com.bytedance.sdk.openadsdk.TTAdNative;
 import com.bytedance.sdk.openadsdk.TTAdSdk;

@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo.custom.nativ;
+package com.advance.advancesdkdemo.advance.custom.nativ;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import com.advance.AdvanceCustomizeSupplierListener;
 import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
 import com.advance.model.AdvanceError;
-import com.advance.model.AdvanceSupplierID;
 import com.advance.model.SdkSupplier;
 
 public class NativeCustomizeActivity extends Activity {

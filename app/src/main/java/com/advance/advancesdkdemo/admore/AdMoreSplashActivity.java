@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.FrameLayout;
 
-import com.advance.advancesdkdemo.AdvanceAD;
+import com.advance.advancesdkdemo.advance.AdvanceAD;
 import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
-import com.advance.advancesdkdemo.SplashActivity;
-import com.advance.advancesdkdemo.SplashToMainActivity;
+import com.advance.advancesdkdemo.advance.SplashToMainActivity;
 import com.bayescom.admore.core.AMError;
 import com.bayescom.admore.splash.AdMoreSplash;
 import com.bayescom.admore.splash.AdMoreSplashListener;

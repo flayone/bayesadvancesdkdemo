@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo;
+package com.advance.advancesdkdemo.advance;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,8 +8,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.advance.AdvanceSDK;
-import com.bytedance.sdk.openadsdk.TTAdConstant;
+import com.advance.advancesdkdemo.Constants;
+import com.advance.advancesdkdemo.R;
 import com.mercury.sdk.core.config.MercuryAD;
 import com.mercury.sdk.core.splash.SplashShakeClickType;
 

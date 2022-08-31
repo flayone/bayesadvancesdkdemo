@@ -13,9 +13,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
-import com.advance.advancesdkdemo.admore.AdMoreHome;
-import com.advance.advancesdkdemo.custom.CustomActivity;
-import com.advance.advancesdkdemo.custom.nativ.NativeCustomizeActivity;
+import com.advance.advancesdkdemo.admore.AdMoreHomeActivity;
+import com.advance.advancesdkdemo.advance.AdvanceAD;
+import com.advance.advancesdkdemo.advance.BannerActivity;
+import com.advance.advancesdkdemo.advance.DrawActivity;
+import com.advance.advancesdkdemo.advance.NativeExpressActivity;
+import com.advance.advancesdkdemo.advance.NativeExpressRecyclerViewActivity;
+import com.advance.advancesdkdemo.advance.SplashActivity;
+import com.advance.advancesdkdemo.advance.custom.CustomHomeActivity;
 import com.advance.advancesdkdemo.util.BaseCallBack;
 import com.advance.advancesdkdemo.util.UserPrivacyDialog;
 import com.baidu.mobads.sdk.api.AdSettings;
@@ -134,10 +139,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goCus(View view) {
-        startActivity(new Intent(this, CustomActivity.class));
+        startActivity(new Intent(this, CustomHomeActivity.class));
     }
 
     public void goAdMore(View view) {
-        startActivity(new Intent(this, AdMoreHome.class));
+        startActivity(new Intent(this, AdMoreHomeActivity.class));
     }
 }

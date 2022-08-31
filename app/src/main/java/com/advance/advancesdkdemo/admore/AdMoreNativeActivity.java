@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.advance.advancesdkdemo.AdvanceAD;
+import com.advance.advancesdkdemo.advance.AdvanceAD;
 import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
 import com.advance.advancesdkdemo.util.NormalItem;

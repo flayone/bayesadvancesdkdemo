@@ -1,9 +1,10 @@
-package com.advance.advancesdkdemo;
+package com.advance.advancesdkdemo.advance;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.advance.advancesdkdemo.R;
 import com.advance.utils.AdvanceSplashPlusManager;
 
 public class SplashToMainActivity extends Activity {

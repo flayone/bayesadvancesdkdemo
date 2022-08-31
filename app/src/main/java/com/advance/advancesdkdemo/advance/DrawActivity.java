@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo;
+package com.advance.advancesdkdemo.advance;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,9 +23,11 @@ import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 
-import com.advance.advancesdkdemo.draw.FullScreenVideoView;
-import com.advance.advancesdkdemo.draw.OnViewPagerListener;
-import com.advance.advancesdkdemo.draw.ViewPagerLayoutManager;
+import com.advance.advancesdkdemo.Constants;
+import com.advance.advancesdkdemo.R;
+import com.advance.advancesdkdemo.advance.draw.FullScreenVideoView;
+import com.advance.advancesdkdemo.advance.draw.OnViewPagerListener;
+import com.advance.advancesdkdemo.advance.draw.ViewPagerLayoutManager;
 import com.advance.advancesdkdemo.util.UIUtils;
 
 import java.util.ArrayList;

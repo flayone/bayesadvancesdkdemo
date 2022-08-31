@@ -3,6 +3,7 @@ package com.advance.advancesdkdemo;
 import android.app.Application;
 import android.content.Context;
 
+import com.advance.advancesdkdemo.advance.AdvanceAD;
 import com.huawei.hms.ads.HwAds;
 
 public class MyApplication extends Application {

@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo;
+package com.advance.advancesdkdemo.advance;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;

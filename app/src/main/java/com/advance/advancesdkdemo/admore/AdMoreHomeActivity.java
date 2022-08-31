@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.advance.advancesdkdemo.R;
 
-public class AdMoreHome extends AppCompatActivity {
+public class AdMoreHomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,8 +1,11 @@
-package com.advance.advancesdkdemo;
+package com.advance.advancesdkdemo.advance;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
+
+import com.advance.advancesdkdemo.Constants;
+import com.advance.advancesdkdemo.R;
 
 public class BannerActivity extends AppCompatActivity {
     private AdvanceAD ad;

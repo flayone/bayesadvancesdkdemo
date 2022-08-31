@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo.draw;
+package com.advance.advancesdkdemo.advance.draw;
 
 import android.content.Context;
 import android.util.AttributeSet;

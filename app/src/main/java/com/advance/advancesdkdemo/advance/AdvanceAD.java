@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo;
+package com.advance.advancesdkdemo.advance;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,8 +31,11 @@ import com.advance.AdvanceSDK;
 import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
 import com.advance.RewardServerCallBackInf;
-import com.advance.advancesdkdemo.custom.HuaWeiSplashAdapter;
-import com.advance.advancesdkdemo.custom.XiaoMiSplashAdapter;
+import com.advance.advancesdkdemo.BuildConfig;
+import com.advance.advancesdkdemo.Constants;
+import com.advance.advancesdkdemo.R;
+import com.advance.advancesdkdemo.advance.custom.HuaWeiSplashCustomAdapter;
+import com.advance.advancesdkdemo.advance.custom.XiaoMiSplashCustomAdapter;
 import com.advance.custom.AdvanceBaseCustomAdapter;
 import com.advance.itf.AdvancePrivacyController;
 import com.advance.model.AdvanceError;
@@ -269,10 +272,10 @@ public class AdvanceAD {
 
                 if (cusXiaoMi) {
                     //此处自定义的渠道id值，需要联系我们获取。
-                    advanceSplash.addCustomSupplier("小米SDK渠道id", new XiaoMiSplashAdapter(mActivity, advanceSplash));
+                    advanceSplash.addCustomSupplier("小米SDK渠道id", new XiaoMiSplashCustomAdapter(mActivity, advanceSplash));
                 }
                 if (cusHuaWei) {
-                    advanceSplash.addCustomSupplier("华为SDK渠道id", new HuaWeiSplashAdapter(mActivity, advanceSplash));
+                    advanceSplash.addCustomSupplier("华为SDK渠道id", new HuaWeiSplashCustomAdapter(mActivity, advanceSplash));
                 }
 
                 //必须：请求广告

@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo.custom.nativ;
+package com.advance.advancesdkdemo.advance.custom.nativ;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
