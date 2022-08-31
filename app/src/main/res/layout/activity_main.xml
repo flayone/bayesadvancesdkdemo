@@ -59,6 +59,30 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/native_express_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onNativeExpress"
+                android:text="原生模板" />
+
+            <Button
+                android:id="@+id/native_express_recycler_view_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onNativeExpressRecyclerView"
+                android:text="原生模板信息流" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <Button
                 android:id="@+id/rewardvideo_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -75,30 +99,6 @@
                 android:text="全屏视频" />
         </LinearLayout>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/native_express_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onNativeExpress"
-                android:text="原生模板" />
-
-            <Button
-                android:id="@+id/native_express_recycler_view_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:onClick="onNativeExpressRecyclerView"
-                android:text="原生模板RecyclerView" />
-
-        </LinearLayout>
 
         <Button
             android:layout_width="match_parent"

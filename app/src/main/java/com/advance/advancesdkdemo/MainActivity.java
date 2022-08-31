@@ -28,7 +28,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     Button fullVideo;
-    Button fullVideoCus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         fullVideo = findViewById(R.id.fullvideo_button);
-        fullVideoCus = findViewById(R.id.cus_fullvideo_button);
 
         String csjV = TTAdSdk.getAdManager().getSDKVersion();
         String merV = MercuryAD.getVersion();
