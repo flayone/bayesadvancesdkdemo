@@ -34,8 +34,6 @@ import com.advance.RewardServerCallBackInf;
 import com.advance.advancesdkdemo.BuildConfig;
 import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
-import com.advance.advancesdkdemo.advance.custom.HuaWeiSplashCustomAdapter;
-import com.advance.advancesdkdemo.advance.custom.XiaoMiSplashCustomAdapter;
 import com.advance.custom.AdvanceBaseCustomAdapter;
 import com.advance.itf.AdvancePrivacyController;
 import com.advance.model.AdvanceError;
@@ -270,13 +268,6 @@ public class AdvanceAD {
                 //设置穿山甲的尺寸
                 advanceSplash.setCsjAcceptedSize(w, h);
 
-                if (cusXiaoMi) {
-                    //此处自定义的渠道id值，需要联系我们获取。
-                    advanceSplash.addCustomSupplier("小米SDK渠道id", new XiaoMiSplashCustomAdapter(mActivity, advanceSplash));
-                }
-                if (cusHuaWei) {
-                    advanceSplash.addCustomSupplier("华为SDK渠道id", new HuaWeiSplashCustomAdapter(mActivity, advanceSplash));
-                }
 
                 //必须：请求广告
                 advanceSplash.loadStrategy();
@@ -548,7 +539,7 @@ public class AdvanceAD {
      *
      * @param adContainer 广告的承载布局
      */
-    public void loadNativeExpressAndShow(final ViewGroup adContainer) {
+    public void loadNativeExpressAndShow(final ViewGroup adContainer, String nativeExpressAdspotId) {
         if (hasNativeShow) {
             LogUtil.d("loadNativeExpress hasNativeShow");
             return;
@@ -564,7 +555,7 @@ public class AdvanceAD {
         }
 
         //初始化
-        final AdvanceNativeExpress advanceNativeExpress = new AdvanceNativeExpress(mActivity, Constants.TestIds.nativeExpressAdspotId);
+        final AdvanceNativeExpress advanceNativeExpress = new AdvanceNativeExpress(mActivity, nativeExpressAdspotId);
         baseAD = advanceNativeExpress;
         //必须：设置广告父布局
         advanceNativeExpress.setAdContainer(adContainer);

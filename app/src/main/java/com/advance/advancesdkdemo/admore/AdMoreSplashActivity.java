@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import com.advance.advancesdkdemo.advance.AdvanceAD;
 import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
-import com.advance.advancesdkdemo.advance.SplashToMainActivity;
 import com.bayescom.admore.core.AMError;
 import com.bayescom.admore.splash.AdMoreSplash;
 import com.bayescom.admore.splash.AdMoreSplashListener;
@@ -39,7 +38,6 @@ public class AdMoreSplashActivity extends Activity {
 
             @Override
             public void jumpToMain() {
-                AdvanceAD.logAndToast(AdMoreSplashActivity.this, "jumpToMain");
 
                 goToMainActivity();
             }

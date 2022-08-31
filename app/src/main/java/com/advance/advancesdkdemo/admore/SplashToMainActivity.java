@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo.advance;
+package com.advance.advancesdkdemo.admore;
 
 import android.app.Activity;
 import android.os.Bundle;

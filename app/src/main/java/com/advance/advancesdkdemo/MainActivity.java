@@ -9,18 +9,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
-import com.advance.advancesdkdemo.admore.AdMoreHomeActivity;
-import com.advance.advancesdkdemo.advance.AdvanceAD;
-import com.advance.advancesdkdemo.advance.BannerActivity;
-import com.advance.advancesdkdemo.advance.DrawActivity;
-import com.advance.advancesdkdemo.advance.NativeExpressActivity;
-import com.advance.advancesdkdemo.advance.NativeExpressRecyclerViewActivity;
-import com.advance.advancesdkdemo.advance.SplashActivity;
-import com.advance.advancesdkdemo.advance.custom.CustomHomeActivity;
+import com.advance.advancesdkdemo.admore.AdMoreNativeActivity;
+import com.advance.advancesdkdemo.admore.AdMoreRewardActivity;
+import com.advance.advancesdkdemo.admore.AdMoreSplashActivity;
 import com.advance.advancesdkdemo.util.BaseCallBack;
 import com.advance.advancesdkdemo.util.UserPrivacyDialog;
 import com.baidu.mobads.sdk.api.AdSettings;
@@ -35,15 +29,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button fullVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        fullVideo = findViewById(R.id.fullvideo_button);
 
         String csjV = TTAdSdk.getAdManager().getSDKVersion();
         String merV = MercuryAD.getVersion();
@@ -54,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
         String amv = AdMoreSDK.getVersion();
 
         TextView tv = findViewById(R.id.tv_version);
-        tv.setText("Advance聚合 SDK 版本号： " + av + "\n" + "\n" +
+        tv.setText("AdMore 版本号： " + amv + "\n" + "Advance聚合 SDK 版本号： " + av + "\n" + "\n" +
                 "Mercury SDK 版本号： " + merV + "\n" +
                 "穿山甲 SDK 版本号： " + csjV + "\n" +
                 "广点通 SDK 版本号： " + gdtV + "\n" +
                 "百度 SDK 版本号： " + bdV + "\n" +
                 "快手 SDK 版本号： " + ksV + "\n"
-                + "\n" + "AdMore 版本号： "+amv
+
         );
 
         boolean hasPri = getSharedPreferences(Constants.SP_NAME, Context.MODE_PRIVATE).getBoolean(Constants.SP_AGREE_PRIVACY, false);
@@ -104,45 +94,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onBanner(View view) {
-        startActivity(new Intent(this, BannerActivity.class));
+    public void amSplash(View view) {
+        startActivity(new Intent(this, AdMoreSplashActivity.class));
     }
 
-    public void onSplash(View view) {
-        startActivity(new Intent(this, SplashActivity.class));
+    public void amNative(View view) {
+        startActivity(new Intent(this, AdMoreNativeActivity.class));
     }
 
-    public void onNativeExpress(View view) {
-        startActivity(new Intent(this, NativeExpressActivity.class));
+    public void amReward(View view) {
+        startActivity(new Intent(this, AdMoreRewardActivity.class));
     }
 
-    public void onRewardVideo(View view) {
-        new AdvanceAD(this).loadReward(Constants.TestIds.rewardAdspotId);
-    }
-
-    public void onNativeExpressRecyclerView(View view) {
-        startActivity(new Intent(this, NativeExpressRecyclerViewActivity.class));
-    }
-
-    public void onInterstitial(View view) {
-        new AdvanceAD(this).loadInterstitial(Constants.TestIds.interstitialAdspotId);
-    }
-
-    public void onFullVideo(View view) {
-        new AdvanceAD(this).loadFullVideo(Constants.TestIds.fullScreenVideoAdspotId);
-    }
-
-
-    public void draw(View view) {
-        startActivity(new Intent(this, DrawActivity.class));
-
-    }
-
-    public void goCus(View view) {
-        startActivity(new Intent(this, CustomHomeActivity.class));
-    }
-
-    public void goAdMore(View view) {
-        startActivity(new Intent(this, AdMoreHomeActivity.class));
-    }
 }

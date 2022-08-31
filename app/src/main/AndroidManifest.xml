@@ -27,9 +27,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity
-            android:name=".admore.AdMoreHomeActivity"
-            android:exported="true" />
+
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -43,24 +41,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".advance.NativeExpressRecyclerViewActivity" />
-        <activity android:name=".advance.NativeExpressActivity" />
-        <activity android:name=".advance.SplashActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity android:name=".advance.BannerActivity" />
-        <activity android:name=".advance.SplashToMainActivity" />
-        <activity android:name=".advance.custom.nativ.NativeCustomizeActivity" />
-        <activity android:name=".advance.DrawActivity" />
-        <activity android:name=".advance.custom.CustomHomeActivity" />
         <activity android:name=".admore.AdMoreSplashActivity" />
         <activity android:name=".admore.AdMoreNativeActivity" />
+        <activity android:name=".admore.SplashToMainActivity" />
+        <activity android:name=".admore.AdMoreRewardActivity" />
     </application>
 
 </manifest>

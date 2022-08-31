@@ -117,7 +117,4 @@ dependencies {
     //引入Advance SDK --------end--------
 
 
-    //华为广告引用
-    implementation 'com.huawei.hms:ads-lite:13.4.46.300'
-
 }

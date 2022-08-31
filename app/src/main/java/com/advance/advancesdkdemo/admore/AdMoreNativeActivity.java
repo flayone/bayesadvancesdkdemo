@@ -81,8 +81,6 @@ public class AdMoreNativeActivity extends AppCompatActivity {
                     public void onSuccess() {
                         AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onSuccess");
 
-//                        广告成功以后，开始展示广告
-//                        itemAD.adMoreNativeExpress.show();
                     }
 
                     @Override
@@ -101,7 +99,11 @@ public class AdMoreNativeActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailed(AMError amError) {
-                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onFailed");
+                        String eMsg = "";
+                        if (amError != null) {
+                            eMsg = amError.toString();
+                        }
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, "onFailed,eMsg = " + eMsg);
 
                     }
                 });
