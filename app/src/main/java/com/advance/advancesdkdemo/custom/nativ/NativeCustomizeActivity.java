@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import com.advance.AdvanceConfig;
 import com.advance.AdvanceCustomizeAd;
 import com.advance.AdvanceCustomizeSupplierListener;
+import com.advance.advancesdkdemo.AdvanceAD;
 import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
 import com.advance.model.AdvanceError;
@@ -31,7 +32,13 @@ public class NativeCustomizeActivity extends Activity {
         //必须：设置广告载体
         nativeCustomizeAd.setSupplierListener(new AdvanceCustomizeSupplierListener() {
             @Override
-            public void onSupplierFailed(AdvanceError advanceError)  {
+            public void onSupplierFailed(AdvanceError advanceError) {
+                String msg = "";
+                if (advanceError != null) {
+                    msg = advanceError.toString();
+                }
+                AdvanceAD.logAndToast(NativeCustomizeActivity.this, "err:" + msg);
+
                 //一般是策略无填充，或者所有策略均加载失败时回调
                 fl.removeAllViews();
             }

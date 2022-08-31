@@ -383,7 +383,7 @@ public class AdvanceAD {
 
             @Override
             public void onSdkSelected(String id) {
-                
+
             }
 
             @Override
@@ -430,7 +430,7 @@ public class AdvanceAD {
 
             @Override
             public void onSdkSelected(String id) {
-                
+
             }
 
             @Override
@@ -526,7 +526,7 @@ public class AdvanceAD {
 
             @Override
             public void onSdkSelected(String id) {
-                
+
             }
 
             @Override
@@ -600,7 +600,7 @@ public class AdvanceAD {
 
             @Override
             public void onSdkSelected(String id) {
-                
+
             }
 
             @Override
@@ -680,7 +680,7 @@ public class AdvanceAD {
 
             @Override
             public void onSdkSelected(String id) {
-                
+
             }
 
             @Override
@@ -776,9 +776,11 @@ public class AdvanceAD {
      * @param context 上下文
      * @param msg     需要显示的内容
      */
-    public void logAndToast(Context context, String msg) {
-        Log.d("[AdvanceAD][logAndToast]", msg);
-        //如果不想弹出toast可以在此注释掉下面代码
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    public static void logAndToast(Context context, String msg) {
+        if (BuildConfig.DEBUG) {
+            Log.d("[AdvanceAD][logAndToast]", msg);
+            //如果不想弹出toast可以在此注释掉下面代码
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        }
     }
 }
