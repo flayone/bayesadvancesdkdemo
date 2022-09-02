@@ -1,9 +1,3 @@
 <resources>
-    <string name="app_name">Advance</string>
-    <string name="title_mute_video">静音</string>
-    <string name="title_play_video">播放</string>
-    <string name="title_pause_video">暂停</string>
-    <string name="title_stop_video">停止</string>
-    <string name="title_activity_interstitial">InterstitialActivity</string>
-
+    <string name="app_name">AdMoreDemo</string>
 </resources>

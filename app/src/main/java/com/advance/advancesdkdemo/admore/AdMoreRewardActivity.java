@@ -3,6 +3,7 @@ package com.advance.advancesdkdemo.admore;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
@@ -17,6 +18,13 @@ public class AdMoreRewardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward_video);
 
+    }
+
+    public void onLoad(View view) {
+        loadReward();
+    }
+
+    private void loadReward() {
         AdMoreReward reward = new AdMoreReward(this, Constants.TestIds.adMoreRewardAdspotId, new AdMoreRewardListener() {
             @Override
             public void onVideoCached() {
@@ -77,4 +85,5 @@ public class AdMoreRewardActivity extends Activity {
         });
         reward.loadAndShow();
     }
+
 }

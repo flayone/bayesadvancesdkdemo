@@ -21,3 +21,4 @@
 #-renamesourcefileattribute SourceFile
 
  -keep class com.advance.** {*;}
+ -keep class com.bayescom.** {*;}

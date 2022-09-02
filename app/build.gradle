@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.advance.advancesdkdemo"
+        applicationId "com.advance.admore"
         minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
@@ -18,7 +18,7 @@ android {
     buildTypes {
         debug {
             debuggable true
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 //        dexOptions {
@@ -69,10 +69,10 @@ dependencies {
     def advanceVersion = "4.0.2"
     //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
     implementation "io.github.flayone:advance-core:${advanceVersion}"
+//    必须，admore引入
+    implementation "io.github.flayone:admore:${advanceVersion}_3"
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
     implementation "io.github.flayone:advance-mry:${advanceVersion}_364"
-    //必须，(admore bidding拓展)支持穿山甲bidding广告，和已有穿山甲渠道不冲突
-    implementation "io.github.flayone:admore:${advanceVersion}_2"
 
     //(可选)穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
     implementation "io.github.flayone:advance-gdt:${advanceVersion}_4482"

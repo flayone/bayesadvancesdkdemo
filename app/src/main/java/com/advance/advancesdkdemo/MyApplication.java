@@ -3,7 +3,11 @@ package com.advance.advancesdkdemo;
 import android.app.Application;
 import android.content.Context;
 
+import com.advance.AdvanceSetting;
 import com.advance.advancesdkdemo.advance.AdvanceAD;
+import com.advance.model.AdvanceLogLevel;
+import com.mercury.sdk.core.config.MercuryAD;
+import com.mercury.sdk.core.config.MercuryLogLevel;
 
 public class MyApplication extends Application {
 
@@ -31,8 +35,12 @@ public class MyApplication extends Application {
     }
 
     public void initSDK() {
-        //初始化聚合SDK
+        //admore不需要初始化，但advance SDK需要进行初始化才可以
         AdvanceAD.initAD(this);
+
+        AdvanceSetting.getInstance().isDev = true;
+        AdvanceSetting.getInstance().logLevel = AdvanceLogLevel.MAX;
+        MercuryAD.setLogLevel(MercuryLogLevel.MAX);
     }
 
 

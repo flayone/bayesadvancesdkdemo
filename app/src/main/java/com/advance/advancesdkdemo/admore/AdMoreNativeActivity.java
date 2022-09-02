@@ -2,6 +2,7 @@ package com.advance.advancesdkdemo.admore;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,14 +25,14 @@ import java.util.List;
 
 public class AdMoreNativeActivity extends AppCompatActivity {
 
-    private static final String TAG = AdMoreNativeActivity.class.getSimpleName();
     public static final int MAX_ITEMS = 80;
     public static int FIRST_AD_POSITION = 1; // 第一条广告的位置
     public static int ITEMS_PER_AD = 15;     // 每间隔多少个条目插入一条广告
-    public static int maxAD = 3;//当前列表中最多加载多少个广告
+    //需要加在的广告id信息，这里添加了三条，注意！！！id一定不要重复
+    private final String[] adIds = new String[]{Constants.TestIds.adMoreNativeAdspotId_1, Constants.TestIds.adMoreNativeAdspotId_2, Constants.TestIds.adMoreNativeAdspotId_3};
 
     private RecyclerView mRecyclerView;
-    private List<NormalItem> mNormalDataList = new ArrayList<>();
+    private final List<NormalItem> mNormalDataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +53,14 @@ public class AdMoreNativeActivity extends AppCompatActivity {
             mNormalDataList.add(new NormalItem("No." + i + " Normal Data"));
         }
         //添加广告的数目，这里定义了3条广告。
-        for (int i = 0; i < maxAD; i++) {
+        for (int i = 0; i < adIds.length; i++) {
             int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
             if (position <= mNormalDataList.size()) {
                 //将广告的NormalItem定义为默认的空标题item。
                 //也可以不同item使用不同的广告位id作为广告标识，这样方便区分不同item的广告数据表现。
                 final NormalItem itemAD = new NormalItem("");
-                itemAD.adMoreNativeExpress = new AdMoreNativeExpress(this, Constants.TestIds.adMoreNativeAdspotId, new AdMoreNativeExpressListener() {
+                //获取到广告id，进行初始化操作
+                itemAD.adMoreNativeExpress = new AdMoreNativeExpress(this, adIds[i], new AdMoreNativeExpressListener() {
                     @Override
                     public void onClose() {
                         AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onClose");
@@ -124,7 +126,7 @@ public class AdMoreNativeActivity extends AppCompatActivity {
 
         static final int TYPE_DATA = 0;
         static final int TYPE_AD = 1;
-        private List<NormalItem> mData;
+        private final List<NormalItem> mData;
         Activity mActivity;
 
         public CustomAdapter(Activity activity, List<NormalItem> list) {
@@ -148,7 +150,7 @@ public class AdMoreNativeActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(final CustomViewHolder customViewHolder, final int position) {
+        public void onBindViewHolder(@NonNull final CustomViewHolder customViewHolder, final int position) {
             int type = getItemViewType(position);
             if (TYPE_AD == type) {
                 //广告核心步骤：设置广告展示用布局
@@ -161,12 +163,12 @@ public class AdMoreNativeActivity extends AppCompatActivity {
             }
         }
 
+        @NonNull
         @Override
         public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             int layoutId = (viewType == TYPE_AD) ? R.layout.item_express_ad : R.layout.item_data;
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, viewGroup, false);
-            CustomViewHolder viewHolder = new CustomViewHolder(view);
-            return viewHolder;
+            return new CustomViewHolder(view);
         }
 
         static class CustomViewHolder extends RecyclerView.ViewHolder {

@@ -12,6 +12,8 @@ import com.advance.advancesdkdemo.R;
 import com.bayescom.admore.core.AMError;
 import com.bayescom.admore.splash.AdMoreSplash;
 import com.bayescom.admore.splash.AdMoreSplashListener;
+import com.mercury.sdk.core.config.LargeADCutType;
+import com.mercury.sdk.core.config.MercuryAD;
 
 public class AdMoreSplashActivity extends Activity {
     FrameLayout adContainer;
@@ -23,6 +25,8 @@ public class AdMoreSplashActivity extends Activity {
         setContentView(R.layout.activity_splash_custom_logo);
         adContainer = findViewById(R.id.splash_container);
 
+//        设置Mercury广告填满父布局展示模式
+//        MercuryAD.setLargeADCutType(LargeADCutType.FILL_PARENT);
         //初始化广告处理类
         AdMoreSplash splash = new AdMoreSplash(this, Constants.TestIds.adMoreSplashAdspotId, adContainer, new AdMoreSplashListener() {
             @Override
@@ -33,7 +37,6 @@ public class AdMoreSplashActivity extends Activity {
             @Override
             public void onAdTimeOver() {
                 AdvanceAD.logAndToast(AdMoreSplashActivity.this, "onAdTimeOver");
-
             }
 
             @Override
@@ -77,12 +80,11 @@ public class AdMoreSplashActivity extends Activity {
     }
 
 
-
     /**
      * 跳转到主页面
      */
     private void goToMainActivity() {
-        Intent intent = new Intent( this, SplashToMainActivity.class);
+        Intent intent = new Intent(this, SplashToMainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         this.finish();
