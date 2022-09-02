@@ -4,6 +4,7 @@ import com.bayescom.admore.nativ.AdMoreNativeExpress;
 
 public class NormalItem {
     public String title;
+    public String adId;
     public AdMoreNativeExpress adMoreNativeExpress;
 
     public NormalItem(String title) {

@@ -38,9 +38,6 @@ public class MyApplication extends Application {
         //admore不需要初始化，但advance SDK需要进行初始化才可以
         AdvanceAD.initAD(this);
 
-        AdvanceSetting.getInstance().isDev = true;
-        AdvanceSetting.getInstance().logLevel = AdvanceLogLevel.MAX;
-        MercuryAD.setLogLevel(MercuryLogLevel.MAX);
     }
 
 

@@ -59,6 +59,7 @@ public class AdMoreNativeActivity extends AppCompatActivity {
                 //将广告的NormalItem定义为默认的空标题item。
                 //也可以不同item使用不同的广告位id作为广告标识，这样方便区分不同item的广告数据表现。
                 final NormalItem itemAD = new NormalItem("");
+                itemAD.adId = adIds[i];
                 //获取到广告id，进行初始化操作
                 itemAD.adMoreNativeExpress = new AdMoreNativeExpress(this, adIds[i], new AdMoreNativeExpressListener() {
                     @Override
@@ -157,7 +158,7 @@ public class AdMoreNativeActivity extends AppCompatActivity {
                 mData.get(position).adMoreNativeExpress.setAdContainer(customViewHolder.container);
                 //开始加载广告
                 mData.get(position).adMoreNativeExpress.loadAndShow();
-
+                customViewHolder.intr.setText("广告位id：" + mData.get(position).adId);
             } else {
                 customViewHolder.title.setText(mData.get(position).getTitle());
             }
@@ -173,14 +174,14 @@ public class AdMoreNativeActivity extends AppCompatActivity {
 
         static class CustomViewHolder extends RecyclerView.ViewHolder {
             public TextView title;
-            public TextView test;
+            public TextView intr;
             public ViewGroup container; // 广告承载布局
 
             public CustomViewHolder(View view) {
                 super(view);
                 title = view.findViewById(R.id.title);
                 container = view.findViewById(R.id.express_ad_container);
-                test = view.findViewById(R.id.tv_ad);
+                intr = view.findViewById(R.id.tv_intr);
             }
         }
     }

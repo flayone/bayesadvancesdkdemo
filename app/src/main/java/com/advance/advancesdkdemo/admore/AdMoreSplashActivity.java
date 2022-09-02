@@ -26,7 +26,7 @@ public class AdMoreSplashActivity extends Activity {
         adContainer = findViewById(R.id.splash_container);
 
 //        设置Mercury广告填满父布局展示模式
-//        MercuryAD.setLargeADCutType(LargeADCutType.FILL_PARENT);
+        MercuryAD.setLargeADCutType(LargeADCutType.FILL_PARENT);
         //初始化广告处理类
         AdMoreSplash splash = new AdMoreSplash(this, Constants.TestIds.adMoreSplashAdspotId, adContainer, new AdMoreSplashListener() {
             @Override
