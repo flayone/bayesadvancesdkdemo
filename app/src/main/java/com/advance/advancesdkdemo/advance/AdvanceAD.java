@@ -2,43 +2,14 @@ package com.advance.advancesdkdemo.advance;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.location.Location;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.advance.AdvanceBanner;
-import com.advance.AdvanceBannerListener;
-import com.advance.AdvanceBaseAdspot;
-import com.advance.AdvanceDraw;
-import com.advance.AdvanceDrawListener;
-import com.advance.AdvanceFullScreenItem;
-import com.advance.AdvanceFullScreenVideo;
-import com.advance.AdvanceFullScreenVideoListener;
-import com.advance.AdvanceInterstitial;
-import com.advance.AdvanceInterstitialListener;
-import com.advance.AdvanceNativeExpress;
-import com.advance.AdvanceNativeExpressAdItem;
-import com.advance.AdvanceNativeExpressListener;
-import com.advance.AdvanceRewardVideo;
-import com.advance.AdvanceRewardVideoItem;
-import com.advance.AdvanceRewardVideoListener;
 import com.advance.AdvanceSDK;
-import com.advance.AdvanceSplash;
-import com.advance.AdvanceSplashListener;
-import com.advance.RewardServerCallBackInf;
 import com.advance.advancesdkdemo.BuildConfig;
 import com.advance.advancesdkdemo.Constants;
-import com.advance.advancesdkdemo.R;
-import com.advance.custom.AdvanceBaseCustomAdapter;
 import com.advance.itf.AdvancePrivacyController;
-import com.advance.model.AdvanceError;
-import com.advance.utils.LogUtil;
-import com.advance.utils.ScreenUtil;
 import com.mercury.sdk.core.config.MercuryAD;
 
 import java.util.List;
@@ -64,13 +35,7 @@ public class AdvanceAD {
      * @param context 上下文内容，一般是传入application的context
      */
     public static void initAD(Context context) {
-        //必要配置：初始化聚合SDK，三个参数依次为context上下文，appId媒体id，isDebug调试模式开关
-        AdvanceSDK.initSDK(context, Constants.APP_ID, BuildConfig.DEBUG);
-        //推荐配置：允许Mercury预缓存素材
-        MercuryAD.needPreLoadMaterial(true);
-        //tanx配置优化项，当glide不兼容时必填
-        AdvanceSDK.setTanxImgLoader(new MyImageLoader());
-        //可选：根据自身需求控制隐私项，设置为false时，SDK将不采集相应信息
+        //推荐：根据自身需求控制隐私项，设置为false时，SDK将不采集相应信息
         AdvanceSDK.setPrivacyController(new AdvancePrivacyController() {
             @Override
             public boolean isCanUseLocation() {
@@ -147,6 +112,13 @@ public class AdvanceAD {
                 return super.getInstalledPackages();
             }
         });
+
+        //必要配置：初始化聚合SDK，三个参数依次为context上下文，appId媒体id，isDebug调试模式开关
+        AdvanceSDK.initSDK(context, Constants.APP_ID, BuildConfig.DEBUG);
+        //推荐配置：允许Mercury预缓存素材
+        MercuryAD.needPreLoadMaterial(true);
+        //tanx配置优化项，当glide不兼容时必填
+        AdvanceSDK.setTanxImgLoader(new MyImageLoader());
 
     }
 

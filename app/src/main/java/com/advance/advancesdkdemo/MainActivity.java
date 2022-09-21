@@ -15,6 +15,7 @@ import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.admore.AdMoreNativeActivity;
 import com.advance.advancesdkdemo.admore.AdMoreRewardActivity;
 import com.advance.advancesdkdemo.admore.AdMoreSplashActivity;
+import com.advance.advancesdkdemo.advance.AdvanceAD;
 import com.advance.advancesdkdemo.util.BaseCallBack;
 import com.advance.advancesdkdemo.util.UserPrivacyDialog;
 import com.baidu.mobads.sdk.api.AdSettings;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         String amv = AdMoreSDK.getVersion();
 
         TextView tv = findViewById(R.id.tv_version);
-        tv.setText("AdMore 版本号： " + amv + "\n" + "Advance聚合 SDK 版本号： " + av + "\n" + "\n" +
+        tv.setText("Advance聚合 SDK 版本号： " + av + "\n" + "AdMore 版本号： " + amv + "\n" + "\n" +
                 "Mercury SDK 版本号： " + merV + "\n" +
                 "穿山甲 SDK 版本号： " + csjV + "\n" +
                 "广点通 SDK 版本号： " + gdtV + "\n" +

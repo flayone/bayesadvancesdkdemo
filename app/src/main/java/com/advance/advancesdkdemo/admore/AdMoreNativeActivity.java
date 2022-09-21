@@ -27,7 +27,7 @@ public class AdMoreNativeActivity extends AppCompatActivity {
 
     public static final int MAX_ITEMS = 80;
     public static int FIRST_AD_POSITION = 1; // 第一条广告的位置
-    public static int ITEMS_PER_AD = 15;     // 每间隔多少个条目插入一条广告
+    public static int ITEMS_PER_AD = 10;     // 每间隔多少个条目插入一条广告
     //需要加在的广告id信息，这里添加了三条，注意！！！id一定不要重复
     private final String[] adIds = new String[]{Constants.TestIds.adMoreNativeAdspotId_1, Constants.TestIds.adMoreNativeAdspotId_2, Constants.TestIds.adMoreNativeAdspotId_3};
 
@@ -64,38 +64,38 @@ public class AdMoreNativeActivity extends AppCompatActivity {
                 itemAD.adMoreNativeExpress = new AdMoreNativeExpress(this, adIds[i], new AdMoreNativeExpressListener() {
                     @Override
                     public void onClose() {
-                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onClose");
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, itemAD.adId+" onClose");
                     }
 
                     @Override
                     public void onRenderSuccess() {
-                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onRenderSuccess");
+//                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, itemAD.adId+" onRenderSuccess");
 
                     }
 
                     @Override
                     public void onRenderFailed() {
-                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onRenderFailed");
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, itemAD.adId+" onRenderFailed");
 
 
                     }
 
                     @Override
                     public void onSuccess() {
-                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onSuccess");
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, itemAD.adId+" onSuccess");
 
                     }
 
                     @Override
                     public void onShow() {
-                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onShow");
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, itemAD.adId+" onShow");
 
 
                     }
 
                     @Override
                     public void onClick() {
-                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, " onClick");
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, itemAD.adId+" onClick");
 
 
                     }
@@ -106,7 +106,7 @@ public class AdMoreNativeActivity extends AppCompatActivity {
                         if (amError != null) {
                             eMsg = amError.toString();
                         }
-                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, "onFailed,eMsg = " + eMsg);
+                        AdvanceAD.logAndToast(AdMoreNativeActivity.this, itemAD.adId+" onFailed,eMsg = " + eMsg);
 
                     }
                 });
