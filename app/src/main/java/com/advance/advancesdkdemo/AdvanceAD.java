@@ -83,12 +83,6 @@ public class AdvanceAD {
      * @param context 上下文内容，一般是传入application的context
      */
     public static void initAD(Context context) {
-        //必要配置：初始化聚合SDK，三个参数依次为context上下文，appId媒体id，isDebug调试模式开关
-        AdvanceSDK.initSDK(context, Constants.APP_ID, BuildConfig.DEBUG);
-        //推荐配置：允许Mercury预缓存素材
-        MercuryAD.needPreLoadMaterial(true);
-        //tanx配置优化项，当glide不兼容时必填
-        AdvanceSDK.setTanxImgLoader(new MyImageLoader());
         //可选：根据自身需求控制隐私项
         AdvanceSDK.setPrivacyController(new AdvancePrivacyController() {
             @Override
@@ -167,6 +161,12 @@ public class AdvanceAD {
             }
         });
 
+        //必要配置：初始化聚合SDK，三个参数依次为context上下文，appId媒体id，isDebug调试模式开关
+        AdvanceSDK.initSDK(context, Constants.APP_ID, BuildConfig.DEBUG);
+        //推荐配置：允许Mercury预缓存素材
+        MercuryAD.needPreLoadMaterial(true);
+        //接入tanx配置项，当glide不兼容时必填
+        AdvanceSDK.setTanxImgLoader(new MyImageLoader());
     }
 
     /**
