@@ -4,7 +4,6 @@
 
 AdMore是一款可以实现优量汇、快手、穿山甲、tanx、mercury进行header bidding竞价逻辑的广告bidding插件，使媒体接入bidding更加简单高效。
 
-[Demo示例下载，点此查看](http://www.bayescom.com/uploads/20220906/a9aaf7f23cedc4f9fe578614ef2a85bc.zip)
 
 **AdMore插件基于[Advance聚合SDK](http://www.bayescom.com/docsify/docs/#/advance/sdk/android/index)
 运行，使用AdMore之前请先确保已正确[引入Advance](http://www.bayescom.com/docsify/docs/#/advance/sdk/android/start)**
@@ -20,11 +19,11 @@ AdMore广告位支持情况
 gradle引入：
 
 ```
-    def advanceVersion = "4.0.2"
+    def advanceVersion = "4.1.0"
     //必须，Advance聚合SDK 引入
     implementation "io.github.flayone:advance-core:${advanceVersion}"
     //必须，admore插件 引入
-    implementation "io.github.flayone:admore:${advanceVersion}_3"
+    implementation "io.github.flayone:admore:${advanceVersion}_4"
     
     ……………… 其余ADN adapter引入，具体请参考Advance SDK引入部分
 ```
