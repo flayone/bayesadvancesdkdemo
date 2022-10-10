@@ -31,8 +31,6 @@ import com.advance.AdvanceSDK;
 import com.advance.AdvanceSplash;
 import com.advance.AdvanceSplashListener;
 import com.advance.RewardServerCallBackInf;
-import com.advance.advancesdkdemo.custom.HuaWeiSplashAdapter;
-import com.advance.advancesdkdemo.custom.XiaoMiSplashAdapter;
 import com.advance.custom.AdvanceBaseCustomAdapter;
 import com.advance.itf.AdvancePrivacyController;
 import com.advance.model.AdvanceError;
@@ -269,10 +267,10 @@ public class AdvanceAD {
 
                 if (cusXiaoMi) {
                     //此处自定义的渠道id值，需要联系我们获取。
-                    advanceSplash.addCustomSupplier("小米SDK渠道id", new XiaoMiSplashAdapter(mActivity, advanceSplash));
+                    advanceSplash.initAdapter("小米SDK渠道id", "XiaoMiSplashAdapter");
                 }
                 if (cusHuaWei) {
-                    advanceSplash.addCustomSupplier("华为SDK渠道id", new HuaWeiSplashAdapter(mActivity, advanceSplash));
+                    advanceSplash.initAdapter("华为SDK渠道id", "HuaWeiSplashAdapter");
                 }
 
                 //必须：请求广告

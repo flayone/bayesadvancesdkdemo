@@ -1,4 +1,4 @@
-package com.advance.advancesdkdemo.custom;
+package com.advance.supplier;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -11,14 +11,16 @@ import com.huawei.hms.ads.AdParam;
 import com.huawei.hms.ads.splash.SplashAdDisplayListener;
 import com.huawei.hms.ads.splash.SplashView;
 
+import java.lang.ref.SoftReference;
+
 public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
     SplashView splashView;
     private boolean isCountingEnd = false;//用来辅助判断用户行为，用户是点击了跳过还是倒计时结束，false 回调dismiss的话代表是跳过，否则倒计时结束
     String TAG = "[HuaWeiSplashAdapter] ";
 
-    public HuaWeiSplashAdapter(Activity activity, SplashSetting splashSetting) {
-        super(activity, splashSetting);
-//        supportPara = false;
+    public HuaWeiSplashAdapter(SoftReference<Activity> activity, SplashSetting splashSetting) {
+        super(activity.get(), splashSetting);
+        supportPara = false;
     }
 
     @Override
@@ -51,10 +53,11 @@ public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
         int orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         AdParam adParam = new AdParam.Builder().build();
         splashView = new SplashView(getADActivity());
+
         SplashAdDisplayListener adDisplayListener = new SplashAdDisplayListener() {
             @Override
             public void onAdShowed() {
-                //必须：广告显示时调用
+                // 广告显示时调用
                 handleShow();
 
                 try {
@@ -71,7 +74,7 @@ public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
 
             @Override
             public void onAdClick() {
-                //必须： 广告被点击时调用
+                // 广告被点击时调用
                 handleClick();
             }
         };
@@ -87,6 +90,8 @@ public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
+                LogUtil.simple(TAG + "hw onAdLoaded");
+
                 handleSucceed();
 
 
@@ -95,7 +100,7 @@ public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
             @Override
             public void onAdDismissed() {
                 super.onAdDismissed();
-                //必须：广告关闭事件回调，回调区分用户点击了跳过还是计时结束
+                //广告关闭事件回调，回调区分用户点击了跳过还是计时结束
                 if (splashSetting != null) {
                     if (isCountingEnd) {
                         splashSetting.adapterDidTimeOver();
@@ -105,14 +110,16 @@ public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
                 }
             }
         });
-
+        if (splashView != null) {
+            adContainer.addView(splashView);
+        }
     }
 
 
     @Override
     public void show() {
-        if (splashView != null) {
-            adContainer.addView(splashView);
-        }
+//        if (splashView != null) {
+//            adContainer.addView(splashView);
+//        }
     }
 }
