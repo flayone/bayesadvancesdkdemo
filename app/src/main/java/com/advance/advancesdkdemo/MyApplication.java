@@ -3,11 +3,7 @@ package com.advance.advancesdkdemo;
 import android.app.Application;
 import android.content.Context;
 
-import com.advance.AdvanceSetting;
 import com.advance.advancesdkdemo.advance.AdvanceAD;
-import com.advance.model.AdvanceLogLevel;
-import com.mercury.sdk.core.config.MercuryAD;
-import com.mercury.sdk.core.config.MercuryLogLevel;
 
 public class MyApplication extends Application {
 

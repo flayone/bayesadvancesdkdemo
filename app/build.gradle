@@ -66,11 +66,11 @@ dependencies {
 
 
     //引入Advance SDK --------start--------
-    def advanceVersion = "4.1.0"
+    def advanceVersion = "4.1.1"
     //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
     implementation "io.github.flayone:advance-core:${advanceVersion}"
 //    必须，admore引入
-    implementation "io.github.flayone:admore:${advanceVersion}_4"
+    implementation "io.github.flayone:admore:${advanceVersion}_6"
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
     implementation "io.github.flayone:advance-mry:${advanceVersion}_365"
 
