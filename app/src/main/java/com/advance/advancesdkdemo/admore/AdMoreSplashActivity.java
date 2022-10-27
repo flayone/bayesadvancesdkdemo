@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.widget.FrameLayout;
 
 import com.advance.advancesdkdemo.advance.AdvanceAD;
@@ -73,6 +74,8 @@ public class AdMoreSplashActivity extends Activity {
 
             }
         });
+//        设置logo，主要是
+        splash.getAdvanceSplash().setLogoImage(ContextCompat.getDrawable(this,R.mipmap.icon_logo));
         //注意！！：如果开屏页是fragment或者dialog盖在主页上的实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        splash.getAdvanceSplash().setShowInSingleActivity(true);
         //请求并展示开屏广告。
