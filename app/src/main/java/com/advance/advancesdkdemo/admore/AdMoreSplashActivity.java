@@ -2,18 +2,18 @@ package com.advance.advancesdkdemo.admore;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.widget.FrameLayout;
 
-import com.advance.advancesdkdemo.advance.AdvanceAD;
 import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
+import com.advance.advancesdkdemo.advance.AdvanceAD;
 import com.bayescom.admore.core.AMError;
 import com.bayescom.admore.splash.AdMoreSplash;
 import com.bayescom.admore.splash.AdMoreSplashListener;
-import com.mercury.sdk.core.config.LargeADCutType;
 import com.mercury.sdk.core.config.MercuryAD;
 
 public class AdMoreSplashActivity extends Activity {
@@ -26,8 +26,7 @@ public class AdMoreSplashActivity extends Activity {
         setContentView(R.layout.activity_splash_custom_logo);
         adContainer = findViewById(R.id.splash_container);
 
-//        设置Mercury广告填满父布局展示模式
-        MercuryAD.setLargeADCutType(LargeADCutType.FILL_PARENT);
+
         //初始化广告处理类
         AdMoreSplash splash = new AdMoreSplash(this, Constants.TestIds.adMoreSplashAdspotId, adContainer, new AdMoreSplashListener() {
             @Override
@@ -49,7 +48,6 @@ public class AdMoreSplashActivity extends Activity {
             @Override
             public void onSuccess() {
                 AdvanceAD.logAndToast(AdMoreSplashActivity.this, "onSuccess");
-
             }
 
             @Override
@@ -74,9 +72,11 @@ public class AdMoreSplashActivity extends Activity {
 
             }
         });
-//        设置logo，主要是
-        splash.getAdvanceSplash().setLogoImage(ContextCompat.getDrawable(this,R.mipmap.icon_logo));
-        //注意！！：如果开屏页是fragment或者dialog盖在主页上的实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
+//      设置Mercury背景色为白色
+        MercuryAD.setSplashBackgroundColor(Color.WHITE);
+//        建议：设置Mercury logo,非全屏广告会在底部展示logo，如果不设置logo会铺满展示
+        splash.getAdvanceSplash().setLogoImage(ContextCompat.getDrawable(this, R.mipmap.icon_logo));
+        //重要：注意！！：如果开屏页是fragment或者dialog盖在主页上的实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        splash.getAdvanceSplash().setShowInSingleActivity(true);
         //请求并展示开屏广告。
         splash.loadAndShow();
