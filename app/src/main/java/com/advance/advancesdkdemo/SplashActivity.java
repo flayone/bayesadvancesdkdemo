@@ -3,13 +3,12 @@ package com.advance.advancesdkdemo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.advance.AdvanceSDK;
-import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.mercury.sdk.core.config.MercuryAD;
 import com.mercury.sdk.core.splash.SplashShakeClickType;
 
@@ -44,8 +43,8 @@ public class SplashActivity extends Activity {
         //自定义参数传递
         ad.cusXiaoMi = cusXiaoMi;
         ad.cusHuaWei = cusHuaWei;
-        //建议skipView传入null，代表使用SDK内部默认跳过按钮。如果需要自定义跳过按钮，skipView传入自定义跳过布局即可，注意：部分渠道不支持自定义，即使传了也不会生效。
-        ad.loadSplash(Constants.TestIds.splashAdspotId,adContainer, null, null, new AdvanceAD.SplashCallBack() {
+        //建议传递logo信息给SDK，使展示效果更美观
+        ad.loadSplash(Constants.TestIds.splashAdspotId, adContainer, ContextCompat.getDrawable(this, R.mipmap.icon_example_logo), new AdvanceAD.SplashCallBack() {
             @Override
             public void jumpMain() {
                 goToMainActivity();

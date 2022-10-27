@@ -3,6 +3,7 @@ package com.advance.advancesdkdemo;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -38,6 +39,7 @@ import com.advance.itf.AdvancePrivacyController;
 import com.advance.model.AdvanceError;
 import com.advance.utils.LogUtil;
 import com.advance.utils.ScreenUtil;
+import com.mercury.sdk.core.config.LargeADCutType;
 import com.mercury.sdk.core.config.MercuryAD;
 
 import java.util.List;
@@ -173,16 +175,19 @@ public class AdvanceAD {
      * 加载开屏广告
      *
      * @param adContainer   广告承载布局，不可为空
-     * @param logoContainer 底部logo布局，可以为空
-     * @param skipView      跳过按钮，可以为空
+     * @param logoRes       底部logo图标，需要传递给mercury，不建议为空
      * @param callBack      跳转回调，在回调中进行跳转主页或其他操作
      */
-    public void loadSplash(String id, final ViewGroup adContainer, final ViewGroup logoContainer, final TextView skipView, final SplashCallBack callBack) {
+    public void loadSplash(String id, final ViewGroup adContainer, final Drawable logoRes, final SplashCallBack callBack) {
         //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
-        final AdvanceSplash advanceSplash = new AdvanceSplash(mActivity, id, adContainer, skipView);
+        final AdvanceSplash advanceSplash = new AdvanceSplash(mActivity, id, adContainer, null);
         baseAD = advanceSplash;
         //注意！！：如果开屏页是fragment或者dialog实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        advanceSplash.setShowInSingleActivity(true);
+//        设置Mercury展示开屏时的底色，不配置默认为透明。如果有占位图，建议配置此参数
+        MercuryAD.setSplashBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
+//        建议：设置给mercury SDK使用，自动根据素材大小情况，将logo图标展示在布局底部
+        advanceSplash.setLogoImage(logoRes);
         //必须：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(new AdvanceSplashListener() {
             /**
@@ -197,14 +202,6 @@ public class AdvanceAD {
 
             @Override
             public void onAdLoaded() {
-                if (logoContainer != null) {
-                    //穿山甲广告加载成功到展现时间很快，所以最好在这里进行logo布局的展示
-                    if ("3".equals(sdkId)) {
-                        logoContainer.setVisibility(View.VISIBLE);
-                    } else {
-                        logoContainer.setVisibility(View.GONE);
-                    }
-                }
 
                 logAndToast(mActivity, "广告加载成功");
             }
@@ -217,16 +214,7 @@ public class AdvanceAD {
 
             @Override
             public void onAdShow() {
-                //设置开屏父布局背景色为白色
-                if (adContainer != null)
-                    adContainer.setBackgroundColor(Color.WHITE);
-                //logo展示建议：广告展示的时候再展示logo，其他时刻都是展示的全屏的background图片
-                if (logoContainer != null)
-                    logoContainer.setVisibility(View.VISIBLE);
 
-                //如果选择了自定义skipView，强烈建议：开屏页布局中按钮初始背景设置成透明背景，skipView只有在广告展示出来以后才将背景色进行填充，这样展现效果较佳
-                if (skipView != null)
-                    skipView.setBackgroundDrawable(ContextCompat.getDrawable(mActivity, R.drawable.adv_background_circle));
 
                 logAndToast(mActivity, "广告展示成功");
             }
@@ -253,32 +241,28 @@ public class AdvanceAD {
             }
         });
         //设置穿山甲素材尺寸跟随父布局大小
-        adContainer.post(new Runnable() {
-            @Override
-            public void run() {
-                int w = adContainer.getWidth();
-                int logoH = 0;
-                //如果放置了logo，这里要减去logo得高度，否则穿山甲的部分展示会被logo遮挡
-                if (logoContainer != null) {
-//                    logoH = (int) mActivity.getResources().getDimension(R.dimen.splash_logo_height);
-                    logoH = logoContainer.getHeight();
-                }
-                int h = adContainer.getHeight() - logoH;
-                //设置穿山甲的尺寸
-                advanceSplash.setCsjAcceptedSize(w, h);
+        if (adContainer != null) {
 
-                if (cusXiaoMi) {
-                    //此处自定义的渠道id值，需要联系我们获取。
-                    advanceSplash.addCustomSupplier("小米SDK渠道id", new XiaoMiSplashAdapter(mActivity, advanceSplash));
+            adContainer.post(new Runnable() {
+                @Override
+                public void run() {
+                    int w = adContainer.getWidth();
+                    int h = adContainer.getHeight();
+                    //设置穿山甲的尺寸
+                    advanceSplash.setCsjAcceptedSize(w, h);
                 }
-                if (cusHuaWei) {
-                    advanceSplash.addCustomSupplier("华为SDK渠道id", new HuaWeiSplashAdapter(mActivity, advanceSplash));
-                }
+            });
+        }
 
-                //必须：请求广告
-                advanceSplash.loadStrategy();
-            }
-        });
+        if (cusXiaoMi) {
+            //此处自定义的渠道id值，需要联系我们获取。
+            advanceSplash.addCustomSupplier("小米SDK渠道id", new XiaoMiSplashAdapter(mActivity, advanceSplash));
+        }
+        if (cusHuaWei) {
+            advanceSplash.addCustomSupplier("华为SDK渠道id", new HuaWeiSplashAdapter(mActivity, advanceSplash));
+        }
+        //必须：请求广告
+        advanceSplash.loadStrategy();
     }
 
 
