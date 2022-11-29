@@ -39,8 +39,8 @@ import com.advance.itf.AdvancePrivacyController;
 import com.advance.model.AdvanceError;
 import com.advance.utils.LogUtil;
 import com.advance.utils.ScreenUtil;
-import com.mercury.sdk.core.config.LargeADCutType;
-import com.mercury.sdk.core.config.MercuryAD;
+//import com.mercury.sdk.core.config.LargeADCutType;
+//import com.mercury.sdk.core.config.MercuryAD;
 
 import java.util.List;
 
@@ -166,7 +166,7 @@ public class AdvanceAD {
         //必要配置：初始化聚合SDK，三个参数依次为context上下文，appId媒体id，isDebug调试模式开关
         AdvanceSDK.initSDK(context, Constants.APP_ID, BuildConfig.DEBUG);
         //推荐配置：允许Mercury预缓存素材
-        MercuryAD.needPreLoadMaterial(true);
+//        MercuryAD.needPreLoadMaterial(true);
         //接入tanx配置项，当glide不兼容时必填
         AdvanceSDK.setTanxImgLoader(new MyImageLoader());
     }
@@ -185,7 +185,7 @@ public class AdvanceAD {
         //注意！！：如果开屏页是fragment或者dialog实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        advanceSplash.setShowInSingleActivity(true);
 //        设置Mercury展示开屏时的底色，不配置默认为透明。如果有占位图，建议配置此参数
-        MercuryAD.setSplashBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
+//        MercuryAD.setSplashBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
 //        建议：设置给mercury SDK使用，自动根据素材大小情况，将logo图标展示在布局底部
         advanceSplash.setLogoImage(logoRes);
         //必须：设置开屏核心回调事件的监听器。
@@ -256,10 +256,10 @@ public class AdvanceAD {
 
         if (cusXiaoMi) {
             //此处自定义的渠道id值，需要联系我们获取。
-            advanceSplash.addCustomSupplier("小米SDK渠道id", new XiaoMiSplashAdapter(mActivity, advanceSplash));
+            advanceSplash.addCustomSupplier("小米SDK渠道id", XiaoMiSplashAdapter.class.getName());
         }
         if (cusHuaWei) {
-            advanceSplash.addCustomSupplier("华为SDK渠道id", new HuaWeiSplashAdapter(mActivity, advanceSplash));
+            advanceSplash.addCustomSupplier("华为SDK渠道id", HuaWeiSplashAdapter.class.getName());
         }
         //必须：请求广告
         advanceSplash.loadStrategy();

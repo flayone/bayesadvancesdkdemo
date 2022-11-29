@@ -1,63 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.mercury.sdk.core.widget.NativeAdContainer xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/native_ad_container"
+<?xml version="1.0" encoding="utf-8"?><!--<com.mercury.sdk.core.widget.NativeAdContainer xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:id="@+id/native_ad_container"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content">-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <!--        <include layout="@layout/include_nc_top_layout" />-->
 
-        <include layout="@layout/include_nc_top_layout" />
-
-        <TextView
-            android:id="@+id/tv_nc_ad_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="3dp"
-            android:ellipsize="end"
-            android:lineSpacingMultiplier="1"
-            android:maxLines="2"
-            android:singleLine="false"
-            android:text="劳力士服务中心，清洗保养，更换配件，9秒费用查询"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+    <!--        <TextView-->
+    <!--            android:id="@+id/tv_nc_ad_desc"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginLeft="10dp"-->
+    <!--            android:layout_marginTop="3dp"-->
+    <!--            android:layout_marginRight="10dp"-->
+    <!--            android:layout_marginBottom="3dp"-->
+    <!--            android:ellipsize="end"-->
+    <!--            android:lineSpacingMultiplier="1"-->
+    <!--            android:maxLines="2"-->
+    <!--            android:singleLine="false"-->
+    <!--            android:text="劳力士服务中心，清洗保养，更换配件，9秒费用查询"-->
+    <!--            android:textColor="@android:color/black"-->
+    <!--            android:textSize="18sp" />-->
 
 
-        <FrameLayout
-            android:id="@+id/custom_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <!--        <FrameLayout-->
+    <!--            android:id="@+id/custom_container"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content">-->
 
-            <!-- 原生广告的视频组件 -->
-            <com.mercury.sdk.core.widget.MediaView
-                android:id="@+id/media_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="#000" />
+    <!--            &lt;!&ndash; 原生广告的视频组件 &ndash;&gt;-->
+    <!--            <com.mercury.sdk.core.widget.MediaView-->
+    <!--                android:id="@+id/media_view"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_gravity="center"-->
+    <!--                android:background="#000" />-->
 
-            <include layout="@layout/include_nc_material" />
-            <TextView
-                android:id="@+id/tv_ad_source"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text=""
-                android:visibility="gone"
-                android:layout_gravity="end|bottom"
-                android:textSize="10sp"
-                android:background="@color/transGrayBg"/>
+    <!--            <include layout="@layout/include_nc_material" />-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_ad_source"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:paddingTop="2dp"-->
+    <!--                android:paddingBottom="2dp"-->
+    <!--                android:paddingLeft="5dp"-->
+    <!--                android:paddingRight="5dp"-->
+    <!--                android:text=""-->
+    <!--                android:visibility="gone"-->
+    <!--                android:layout_gravity="end|bottom"-->
+    <!--                android:textSize="10sp"-->
+    <!--                android:background="@color/transGrayBg"/>-->
 
-        </FrameLayout>
+    <!--        </FrameLayout>-->
 
-        <include layout="@layout/include_nc_creative_btn_layout" />
-    </LinearLayout>
-</com.mercury.sdk.core.widget.NativeAdContainer>
+    <!--        <include layout="@layout/include_nc_creative_btn_layout" />-->
+</LinearLayout><!--</com.mercury.sdk.core.widget.NativeAdContainer>-->

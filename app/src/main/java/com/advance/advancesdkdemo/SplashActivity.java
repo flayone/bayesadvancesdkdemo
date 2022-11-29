@@ -9,8 +9,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mercury.sdk.core.config.MercuryAD;
-import com.mercury.sdk.core.splash.SplashShakeClickType;
+//import com.mercury.sdk.core.config.MercuryAD;
+//import com.mercury.sdk.core.splash.SplashShakeClickType;
 
 
 public class SplashActivity extends Activity {
@@ -30,12 +30,11 @@ public class SplashActivity extends Activity {
         skipView = findViewById(R.id.skip_view);
         logo = findViewById(R.id.ll_asc_logo);
 
-        MercuryAD.setSplashShakeClickController(SplashShakeClickType.ICON);
+//        MercuryAD.setSplashShakeClickController(SplashShakeClickType.ICON);
         //获取是否需要支持自定义SDK渠道
         cusXiaoMi = getIntent().getBooleanExtra("cusXM", false);
         cusHuaWei = getIntent().getBooleanExtra("cusHW", false);
 
-//        AdvanceSDK.setCSJSplashButtonType(TTAdConstant.SPLASH_BUTTON_TYPE_DOWNLOAD_BAR);
         /**
          * 加载并展示开屏广告
          */
