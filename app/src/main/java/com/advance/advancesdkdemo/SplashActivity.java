@@ -3,19 +3,14 @@ package com.advance.advancesdkdemo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-//import com.mercury.sdk.core.config.MercuryAD;
-//import com.mercury.sdk.core.splash.SplashShakeClickType;
 
 
 public class SplashActivity extends Activity {
     TextView skipView;
-    LinearLayout logo;
     FrameLayout adContainer;
     private String TAG = "SplashActivity";
     AdvanceAD ad;
@@ -28,7 +23,6 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash_custom_logo);
         adContainer = findViewById(R.id.splash_container);
         skipView = findViewById(R.id.skip_view);
-        logo = findViewById(R.id.ll_asc_logo);
 
 //        MercuryAD.setSplashShakeClickController(SplashShakeClickType.ICON);
         //获取是否需要支持自定义SDK渠道
@@ -43,7 +37,7 @@ public class SplashActivity extends Activity {
         ad.cusXiaoMi = cusXiaoMi;
         ad.cusHuaWei = cusHuaWei;
         //建议传递logo信息给SDK，使展示效果更美观
-        ad.loadSplash(Constants.TestIds.splashAdspotId, adContainer, ContextCompat.getDrawable(this, R.mipmap.icon_example_logo), new AdvanceAD.SplashCallBack() {
+        ad.loadSplash(Constants.TestIds.splashAdspotId, adContainer,  new AdvanceAD.SplashCallBack() {
             @Override
             public void jumpMain() {
                 goToMainActivity();

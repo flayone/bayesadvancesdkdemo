@@ -54,7 +54,7 @@ public class NativeCustomizeActivity extends Activity {
                         new MyGdtNCAdapter(NativeCustomizeActivity.this, nativeCustomizeAd, selectedSupplier, fl).loadAd();
                         break;
                     case AdvanceConfig.SDK_ID_MERCURY:
-//                        new MyMercuryNCAdapter(NativeCustomizeActivity.this, nativeCustomizeAd, selectedSupplier, fl).loadAd();
+                        new MyMercuryNCAdapter(NativeCustomizeActivity.this, nativeCustomizeAd, selectedSupplier, fl).loadAd();
                         break;
                     default:
                         //不需要支持的渠道，建议选择重新调度策略

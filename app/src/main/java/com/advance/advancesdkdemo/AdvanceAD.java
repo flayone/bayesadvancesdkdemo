@@ -2,14 +2,10 @@ package com.advance.advancesdkdemo;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.advance.AdvanceBanner;
@@ -39,8 +35,7 @@ import com.advance.itf.AdvancePrivacyController;
 import com.advance.model.AdvanceError;
 import com.advance.utils.LogUtil;
 import com.advance.utils.ScreenUtil;
-//import com.mercury.sdk.core.config.LargeADCutType;
-//import com.mercury.sdk.core.config.MercuryAD;
+import com.mercury.sdk.core.config.MercuryAD;
 
 import java.util.List;
 
@@ -166,7 +161,7 @@ public class AdvanceAD {
         //必要配置：初始化聚合SDK，三个参数依次为context上下文，appId媒体id，isDebug调试模式开关
         AdvanceSDK.initSDK(context, Constants.APP_ID, BuildConfig.DEBUG);
         //推荐配置：允许Mercury预缓存素材
-//        MercuryAD.needPreLoadMaterial(true);
+        MercuryAD.needPreLoadMaterial(true);
         //接入tanx配置项，当glide不兼容时必填
         AdvanceSDK.setTanxImgLoader(new MyImageLoader());
     }
@@ -174,20 +169,17 @@ public class AdvanceAD {
     /**
      * 加载开屏广告
      *
-     * @param adContainer   广告承载布局，不可为空
-     * @param logoRes       底部logo图标，需要传递给mercury，不建议为空
-     * @param callBack      跳转回调，在回调中进行跳转主页或其他操作
+     * @param adContainer 广告承载布局，不可为空
+     * @param callBack    跳转回调，在回调中进行跳转主页或其他操作
      */
-    public void loadSplash(String id, final ViewGroup adContainer, final Drawable logoRes, final SplashCallBack callBack) {
+    public void loadSplash(String id, final ViewGroup adContainer, final SplashCallBack callBack) {
         //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
         final AdvanceSplash advanceSplash = new AdvanceSplash(mActivity, id, adContainer, null);
         baseAD = advanceSplash;
         //注意！！：如果开屏页是fragment或者dialog实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        advanceSplash.setShowInSingleActivity(true);
-//        设置Mercury展示开屏时的底色，不配置默认为透明。如果有占位图，建议配置此参数
-//        MercuryAD.setSplashBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
-//        建议：设置给mercury SDK使用，自动根据素材大小情况，将logo图标展示在布局底部
-        advanceSplash.setLogoImage(logoRes);
+//        建议：设置底部logo布局及高度值（单位px）
+        advanceSplash.setLogoLayout(R.layout.splash_logo_layout, mActivity.getResources().getDimensionPixelSize(R.dimen.logo_layout_height));
         //必须：设置开屏核心回调事件的监听器。
         advanceSplash.setAdListener(new AdvanceSplashListener() {
             /**
@@ -240,20 +232,6 @@ public class AdvanceAD {
                 logAndToast(mActivity, "倒计时结束，关闭广告");
             }
         });
-        //设置穿山甲素材尺寸跟随父布局大小
-        if (adContainer != null) {
-
-            adContainer.post(new Runnable() {
-                @Override
-                public void run() {
-                    int w = adContainer.getWidth();
-                    int h = adContainer.getHeight();
-                    //设置穿山甲的尺寸
-                    advanceSplash.setCsjAcceptedSize(w, h);
-                }
-            });
-        }
-
         if (cusXiaoMi) {
             //此处自定义的渠道id值，需要联系我们获取。
             advanceSplash.addCustomSupplier("小米SDK渠道id", XiaoMiSplashAdapter.class.getName());

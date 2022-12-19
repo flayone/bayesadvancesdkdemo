@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
+import com.alimm.tanx.ui.image.GifConfig;
 import com.alimm.tanx.ui.image.ILoader;
 import com.alimm.tanx.ui.image.ImageConfig;
 import com.alimm.tanx.ui.image.ImageConfig.ImageBitmapCallback;
@@ -39,5 +41,35 @@ public class MyImageLoader implements ILoader {
                     }
 
                 });
+    }
+    @Override
+    public void loadGif(GifConfig gifConfig, ImageConfig.GifCallback gifCallback) {
+        String error = "";
+        if (gifConfig != null && gifConfig.getGifView() != null) {
+            if (!TextUtils.isEmpty(gifConfig.getGifUrl())) {
+
+                Glide.with(gifConfig.getGifView().getContext())
+                        .load(gifConfig.getGifUrl())
+                        .into(gifConfig.getGifView());
+                if (gifCallback != null) {
+                    gifCallback.onSuccess();
+                }
+                return;
+            }
+            if (gifConfig.getGifRes() != -1) {
+                Glide.with(gifConfig.getGifView().getContext())
+                        .load(gifConfig.getGifRes())
+                        .into(gifConfig.getGifView());
+                if (gifCallback != null) {
+                    gifCallback.onSuccess();
+                }
+                return;
+            }
+        } else {
+            error = "imageView对象为空";
+        }
+        if (gifCallback != null) {
+            gifCallback.onFailure(error);
+        }
     }
 }

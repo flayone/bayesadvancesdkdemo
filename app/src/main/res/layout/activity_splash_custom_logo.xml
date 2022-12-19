@@ -31,20 +31,6 @@
 
     </FrameLayout>
 
-    <!--  自定义logo区域 -->
-    <LinearLayout
-        android:id="@+id/ll_asc_logo"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/splash_logo_height"
-        android:background="@color/adv_white"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/icon_example_logo" />
-    </LinearLayout>
 
 </LinearLayout>
