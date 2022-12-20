@@ -115,61 +115,6 @@ dependencies {
     //引入Advance SDK --------end--------
 
 
-//    //引入Advance SDK --------start--------
-//    def advanceVersion = "4.1.2"
-//    def extInf = "-SNAPSHOT"
-//    //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
-//    implementation "io.github.flayone:advance-core:${advanceVersion}${extInf}"
-//    //必须，admore插件 引入
-//    implementation "io.github.flayone:admore:${advanceVersion}_7${extInf}"
-//
-//    //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
-//    implementation "io.github.flayone:advance-mry:${advanceVersion}_367${extInf}"
-//    //(可选)穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
-//    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4492${extInf}"
-//    implementation "io.github.flayone:advance-csj:${advanceVersion}_4908${extInf}"
-//    implementation "io.github.flayone:advance-bd:${advanceVersion}_9241${extInf}"
-//    implementation "io.github.flayone:advance-ks:${advanceVersion}_3334${extInf}"
-//    //注意：接入快手需要同时引入以下support库，请确保添加
-//    implementation 'com.android.support:appcompat-v7:28.0.0'
-//    implementation 'com.android.support:recyclerview-v7:28.0.0'
-//
-//
-////    如果存在穿山甲、优量汇等aar包冲突报错，不想删除包的话可以参考使用以下_core无广告aar引用依赖配置。
-////    为避免版本不同导致执行异常，推荐使用上方正常带广告aar的引入方式。
-////    implementation "io.github.flayone:advance-gdt:${advanceVersion}_4482_core"
-////    implementation "io.github.flayone:advance-csj:${advanceVersion}_4607_core"
-////    implementation "io.github.flayone:advance-bd:${advanceVersion}_923_core"
-////    implementation "io.github.flayone:advance-ks:${advanceVersion}_3328_core"
-//
-//    //(可选)tanx广告SDK -- start --
-//    implementation("io.github.flayone:advance-tanx:${advanceVersion}_272${extInf}")
-//
-//    def versionCode = "2.7.2"
-//    implementation(group: 'com.tanx', name: 'TanxCoreSDK', version: versionCode) {
-//        //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
-//        exclude group: 'com.github.bumptech.glide'
-//        exclude group: 'com.squareup.okhttp3'
-//        exclude group: 'com.alibaba'
-//        exclude group: 'com.umeng.umsdk'
-//    }
-//    implementation(group: 'com.tanx', name: 'TanxUISDK', version: versionCode) {
-//        //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
-//        exclude group: 'com.github.bumptech.glide'
-//        exclude group: 'com.squareup.okhttp3'
-//        exclude group: 'com.alibaba'
-//        exclude group: 'com.umeng.umsdk'
-//    }
-//    //tanx广告SDK需要用到得公共库，如果版本不一致请一定要检查，确认广告执行正常
-//    implementation 'com.alibaba:fastjson:1.1.72.android'
-//    //使用高版本得glide 必须要进行自定义图片加载器，否则tanx会执行异常
-//    implementation 'com.github.bumptech.glide:glide:4.9.0'
-//    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-//    implementation("com.squareup.okhttp3:okhttp:4.9.3")
-//    //tanx广告SDK -- end --
-//
-//    //引入Advance SDK --------end--------
-
 
     //华为广告引用
     implementation 'com.huawei.hms:ads-lite:13.4.46.300'
