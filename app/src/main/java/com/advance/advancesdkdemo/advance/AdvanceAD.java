@@ -10,6 +10,7 @@ import com.advance.AdvanceSDK;
 import com.advance.advancesdkdemo.BuildConfig;
 import com.advance.advancesdkdemo.Constants;
 import com.advance.itf.AdvancePrivacyController;
+import com.bayescom.admore.core.AdMoreSDK;
 import com.mercury.sdk.core.config.MercuryAD;
 
 import java.util.List;
@@ -35,6 +36,8 @@ public class AdvanceAD {
      * @param context 上下文内容，一般是传入application的context
      */
     public static void initAD(Context context) {
+        //推荐设置：设置在gm后台导出的打底策略config
+        AdMoreSDK.setGMCustomLocalConfig(context,"site_config_5329994");
         //推荐：根据自身需求控制隐私项，设置为false时，SDK将不采集相应信息
         AdvanceSDK.setPrivacyController(new AdvancePrivacyController() {
             @Override

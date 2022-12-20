@@ -26,7 +26,6 @@ public class AdMoreSplashActivity extends Activity {
         setContentView(R.layout.activity_splash_custom_logo);
         adContainer = findViewById(R.id.splash_container);
 
-
         //初始化广告处理类
         AdMoreSplash splash = new AdMoreSplash(this, Constants.TestIds.adMoreSplashAdspotId, adContainer, new AdMoreSplashListener() {
             @Override
@@ -72,10 +71,8 @@ public class AdMoreSplashActivity extends Activity {
 
             }
         });
-//      设置Mercury背景色为白色
-        MercuryAD.setSplashBackgroundColor(Color.WHITE);
-//        建议：设置Mercury logo,非全屏广告会在底部展示logo，如果不设置logo会铺满展示
-        splash.getAdvanceSplash().setLogoImage(ContextCompat.getDrawable(this, R.mipmap.icon_logo));
+//      建议：设置底部logo布局及高度值（单位px），如不设置广告将会填满展示
+        splash.getAdvanceSplash().setLogoLayout(R.layout.splash_logo_layout, getResources().getDimensionPixelSize(R.dimen.logo_layout_height) );
         //重要：注意！！：如果开屏页是fragment或者dialog盖在主页上的实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        splash.getAdvanceSplash().setShowInSingleActivity(true);
         //请求并展示开屏广告。
