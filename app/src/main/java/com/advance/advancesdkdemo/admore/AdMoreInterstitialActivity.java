@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.advance.advancesdkdemo.Constants;
 import com.advance.advancesdkdemo.R;
 import com.advance.advancesdkdemo.advance.AdvanceAD;
 import com.bayescom.admore.core.AMError;
@@ -23,7 +24,7 @@ public class AdMoreInterstitialActivity extends Activity {
     }
 
     private void initAD() {
-        adMoreInterstitial = new AdMoreInterstitial(this, "10007288", new AdMoreInterstitialListener() {
+        adMoreInterstitial = new AdMoreInterstitial(this, Constants.TestIds.adMoreInterstitialAdspotId, new AdMoreInterstitialListener() {
             @Override
             public void onAdClose() {
                 AdvanceAD.logAndToast("onAdClose");
