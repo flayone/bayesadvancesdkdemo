@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.advance.AdvanceSDK;
 import com.advance.advancesdkdemo.BuildConfig;
 import com.advance.advancesdkdemo.Constants;
+import com.advance.advancesdkdemo.MyApplication;
 import com.advance.itf.AdvancePrivacyController;
 import com.bayescom.admore.core.AdMoreSDK;
 import com.mercury.sdk.core.config.MercuryAD;
@@ -137,5 +138,16 @@ public class AdvanceAD {
             //如果不想弹出toast可以在此注释掉下面代码
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * 统一处理打印日志，并且toast提示。
+     *
+     * @param msg     需要显示的内容
+     */
+    public static void logAndToast(String msg) {
+        Log.d("Advance SDK: [DemoUtil]", msg);
+        //如果不想弹出toast可以在此注释掉下面代码
+        Toast.makeText(MyApplication.getInstance().getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 }

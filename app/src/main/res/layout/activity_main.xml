@@ -38,6 +38,11 @@
             android:layout_height="wrap_content"
             android:onClick="amReward"
             android:text=" 激励视频" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="amInterstitial"
+            android:text=" 插全屏" />
 
         <TextView
             android:id="@+id/tv_version"

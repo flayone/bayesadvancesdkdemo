@@ -45,6 +45,7 @@
         <activity android:name=".admore.AdMoreNativeActivity" />
         <activity android:name=".admore.SplashToMainActivity" />
         <activity android:name=".admore.AdMoreRewardActivity" />
+        <activity android:name=".admore.AdMoreInterstitialActivity" />
     </application>
 
 </manifest>

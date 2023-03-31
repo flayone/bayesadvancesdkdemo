@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
+import com.advance.advancesdkdemo.admore.AdMoreInterstitialActivity;
 import com.advance.advancesdkdemo.admore.AdMoreNativeActivity;
 import com.advance.advancesdkdemo.admore.AdMoreRewardActivity;
 import com.advance.advancesdkdemo.admore.AdMoreSplashActivity;
@@ -107,4 +108,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, AdMoreRewardActivity.class));
     }
 
+    public void amInterstitial(View view) {
+        startActivity(new Intent(this, AdMoreInterstitialActivity.class));
+    }
 }

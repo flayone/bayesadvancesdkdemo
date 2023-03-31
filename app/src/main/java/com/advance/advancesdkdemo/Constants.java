@@ -13,6 +13,7 @@ public class Constants {
         public static final String adMoreNativeAdspotId_2 = "10006526"; //admore信息流2
         public static final String adMoreNativeAdspotId_3 = "10006527"; //admore信息流3
         public static final String adMoreRewardAdspotId = "10006506"; //admore激励视频
+        public static final String adMoreInterstitialAdspotId = "10007288"; //admore插屏广告
 
     }
 
