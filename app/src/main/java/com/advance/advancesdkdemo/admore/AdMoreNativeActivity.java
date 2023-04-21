@@ -110,6 +110,8 @@ public class AdMoreNativeActivity extends AppCompatActivity {
 
                     }
                 });
+//                itemAD.adMoreNativeExpress.getAdvanceNativeExpress().setExpressViewAcceptedSize()
+//                itemAD.adMoreNativeExpress.getAdvanceNativeExpress().setCsjImageAcceptedSize()
                 mNormalDataList.add(position, itemAD);
             }
         }

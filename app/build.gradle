@@ -72,7 +72,7 @@ dependencies {
 //    必须，admore引入
     implementation "io.github.flayone:admore:${advanceVersion}_10"
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
-    implementation "io.github.flayone:advance-mry:${advanceVersion}_376"
+    implementation "io.github.flayone:advance-mry:${advanceVersion}_380"
     //(可选)穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
     implementation "io.github.flayone:advance-gdt:${advanceVersion}_4510"
     implementation "io.github.flayone:advance-csj:${advanceVersion}_5102"
