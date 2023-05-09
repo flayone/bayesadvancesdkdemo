@@ -8,7 +8,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 
-
 public class SplashActivity extends Activity {
     TextView skipView;
     FrameLayout adContainer;
@@ -37,7 +36,7 @@ public class SplashActivity extends Activity {
         ad.cusXiaoMi = cusXiaoMi;
         ad.cusHuaWei = cusHuaWei;
         //建议传递logo信息给SDK，使展示效果更美观
-        ad.loadSplash(Constants.TestIds.splashAdspotId, adContainer,  new AdvanceAD.SplashCallBack() {
+        ad.loadSplash(Constants.TestIds.splashAdspotId, adContainer, new AdvanceAD.SplashCallBack() {
             @Override
             public void jumpMain() {
                 goToMainActivity();
