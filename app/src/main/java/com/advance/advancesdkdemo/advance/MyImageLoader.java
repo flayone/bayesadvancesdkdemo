@@ -6,10 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.alimm.tanx.ui.image.GifConfig;
-import com.alimm.tanx.ui.image.ILoader;
-import com.alimm.tanx.ui.image.ImageConfig;
-import com.alimm.tanx.ui.image.ImageConfig.ImageBitmapCallback;
+import com.alimm.tanx.core.image.util.GifConfig;
+import com.alimm.tanx.core.image.util.ILoader;
+import com.alimm.tanx.core.image.util.ImageConfig;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -19,7 +18,7 @@ import com.bumptech.glide.request.transition.Transition;
  */
 public class MyImageLoader implements ILoader {
     @Override
-    public void load(ImageConfig config, final ImageBitmapCallback callback) {
+    public void load(ImageConfig config, final ImageConfig.ImageBitmapCallback callback) {
 
         Glide.with(config.getContext())
                 .asBitmap()

@@ -18,7 +18,7 @@ import com.mercury.sdk.core.config.MercuryAD;
 
 public class AdMoreSplashActivity extends Activity {
     FrameLayout adContainer;
-
+    AdMoreSplash splash;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,19 +27,26 @@ public class AdMoreSplashActivity extends Activity {
         adContainer = findViewById(R.id.splash_container);
 
         //初始化广告处理类
-        AdMoreSplash splash = new AdMoreSplash(this, Constants.TestIds.adMoreSplashAdspotId, adContainer, new AdMoreSplashListener() {
-            @Override
-            public void onAdSkip() {
-                AdvanceAD.logAndToast(AdMoreSplashActivity.this, "onAdSkip");
-            }
-
-            @Override
-            public void onAdTimeOver() {
-                AdvanceAD.logAndToast(AdMoreSplashActivity.this, "onAdTimeOver");
-            }
+        splash = new AdMoreSplash(this, Constants.TestIds.adMoreSplashAdspotId, adContainer, new AdMoreSplashListener() {
+//            @Override
+//            public void onAdSkip() {
+//                AdvanceAD.logAndToast(AdMoreSplashActivity.this, "onAdSkip");
+//            }
+//
+//            @Override
+//            public void onAdTimeOver() {
+//            }
 
             @Override
             public void jumpToMain() {
+//                1; //广告执行失败，对应onAdFailed回调
+//                2; //用户点击了广告跳过，对应旧onAdSkip回调
+//                3; //广告倒计时结束，对应旧onAdTimeOver回调
+                int jumpType = 0;
+                if (splash != null) {
+                    jumpType = splash.getJumpType();
+                }
+                AdvanceAD.logAndToast(AdMoreSplashActivity.this, "jumpToMain,jumpType = " + jumpType);
 
                 goToMainActivity();
             }
@@ -72,7 +79,7 @@ public class AdMoreSplashActivity extends Activity {
             }
         });
 //      建议：设置底部logo布局及高度值（单位px），如不设置广告将会填满展示
-        splash.getAdvanceSplash().setLogoLayout(R.layout.splash_logo_layout, getResources().getDimensionPixelSize(R.dimen.logo_layout_height) );
+        splash.getAdvanceSplash().setLogoLayout(R.layout.splash_logo_layout, getResources().getDimensionPixelSize(R.dimen.logo_layout_height));
         //重要：注意！！：如果开屏页是fragment或者dialog盖在主页上的实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        splash.getAdvanceSplash().setShowInSingleActivity(true);
         //请求并展示开屏广告。
