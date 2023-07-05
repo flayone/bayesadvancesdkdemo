@@ -30,6 +30,7 @@ import com.advance.AdvanceSplashListener;
 import com.advance.RewardServerCallBackInf;
 import com.advance.advancesdkdemo.custom.HuaWeiSplashAdapter;
 import com.advance.advancesdkdemo.custom.XiaoMiSplashAdapter;
+import com.advance.advancesdkdemo.util.UIUtils;
 import com.advance.custom.AdvanceBaseCustomAdapter;
 import com.advance.itf.AdvancePrivacyController;
 import com.advance.model.AdvanceError;
@@ -200,6 +201,15 @@ public class AdvanceAD {
 
             @Override
             public void jumpToMain() {
+//                1; //广告执行失败，对应onAdFailed回调
+//                2; //用户点击了广告跳过，对应旧onAdSkip回调
+//                3; //广告倒计时结束，对应旧onAdTimeOver回调
+                int jumpType = 0;
+                if (advanceSplash != null) {
+                    jumpType = advanceSplash.getJumpType();
+                }
+                logAndToast(mActivity, "跳转首页,jumpType = " + jumpType);
+
                 if (callBack != null)
                     callBack.jumpMain();
             }
@@ -221,16 +231,6 @@ public class AdvanceAD {
                 logAndToast(mActivity, "广告点击");
             }
 
-
-            @Override
-            public void onAdSkip() {
-                logAndToast(mActivity, "跳过广告");
-            }
-
-            @Override
-            public void onAdTimeOver() {
-                logAndToast(mActivity, "倒计时结束，关闭广告");
-            }
         });
         if (cusXiaoMi) {
             //此处自定义的渠道id值，需要联系我们获取。
@@ -656,6 +656,9 @@ public class AdvanceAD {
             }
 
         });
+//        如果对展现尺寸不满意，可以通过设置此处的值来调整
+        int width = (int) UIUtils.getScreenWidthDp(mActivity);
+        advanceNativeExpress.setExpressViewAcceptedSize(width,0);
         //必须
         advanceNativeExpress.loadStrategy();
 
