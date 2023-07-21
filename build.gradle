@@ -5,6 +5,10 @@ buildscript {
         //advance相关引用的maven依赖根目录地址，需配置在最前面，防止依赖找不到
         maven { url 'https://s01.oss.sonatype.org/content/groups/public' }
         //maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        //GroMore SDK依赖
+        maven {
+            url "https://artifact.bytedance.com/repository/pangle"
+        }
         google()
         jcenter()
         // 配置HUAWEI Ads SDK的Maven仓地址
@@ -24,6 +28,10 @@ allprojects {
         //advance相关引用的maven依赖根目录地址，需配置在最前面，防止依赖找不到
         maven { url 'https://s01.oss.sonatype.org/content/groups/public' }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        //GroMore SDK依赖
+        maven {
+            url "https://artifact.bytedance.com/repository/pangle"
+        }
         google()
         // 配置HUAWEI Ads SDK的Maven仓地址
         maven { url 'https://developer.huawei.com/repo/' }

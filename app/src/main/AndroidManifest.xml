@@ -41,11 +41,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".admore.AdMoreSplashActivity" />
-        <activity android:name=".admore.AdMoreNativeActivity" />
+        <activity android:name=".admore.MYSplashActivity" />
         <activity android:name=".admore.SplashToMainActivity" />
-        <activity android:name=".admore.AdMoreRewardActivity" />
-        <activity android:name=".admore.AdMoreInterstitialActivity" />
     </application>
 
 </manifest>

@@ -32,7 +32,7 @@ public class UserPrivacyDialog extends Dialog {
                 if (callBack != null) {
                     callBack.call();
                 }
-                MyApplication.getInstance().initSDK();
+//                MyApplication.getInstance().initSDK();
 
                 dismiss();
             }
