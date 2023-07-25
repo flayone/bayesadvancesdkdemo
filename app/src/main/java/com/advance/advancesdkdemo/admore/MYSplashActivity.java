@@ -3,9 +3,15 @@ package com.advance.advancesdkdemo.admore;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.advance.advancesdkdemo.R;
 import com.advance.advancesdkdemo.advance.LogUtil;
@@ -18,14 +24,52 @@ import com.bytedance.msdk.api.v2.slot.GMAdSlotSplash;
 public class MYSplashActivity extends Activity {
     private static final String TAG = "MYSplashActivity";
     FrameLayout adContainer;
+    FrameLayout adRealContainer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_custom_logo);
         adContainer = findViewById(R.id.splash_container);
-        loadAD();
+        adRealContainer = adContainer;
+        adContainer.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadGM();
+            }
+        }, 200);
 
+    }
+
+    private void loadGM() {
+        RelativeLayout wrapC = new RelativeLayout(this);
+        adRealContainer = new FrameLayout(this);
+        int adHeight = adContainer.getHeight();
+//        if (oriH > 0) {
+            adHeight = adHeight - 300;
+//            if (adHeight > 0) {
+//                //赋值新的高度像素值
+////                csjAcceptedSizeHeight = adHeight;
+////                LogUtil.devDebug(TAG + "use new height ,csjAcceptedSizeHeight:" + csjAcceptedSizeHeight);
+//
+//                //赋值新的承载布局
+//                adRealContainer = new FrameLayout(this);
+//            } else {
+//                adHeight = ViewGroup.LayoutParams.MATCH_PARENT;
+//            }
+//        }
+        RelativeLayout.LayoutParams adLp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, adHeight);
+        wrapC.addView(adRealContainer, adLp);
+
+//                            添加广告布局至底部
+        RelativeLayout.LayoutParams logoLp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
+        logoLp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        View logoLayoutView =    LayoutInflater.from(this).inflate(R.layout.splash_logo_layout, null);
+        wrapC.addView(logoLayoutView, logoLp);
+
+        adContainer.addView(wrapC, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        loadAD();
     }
 
     private void loadAD() {
@@ -41,7 +85,7 @@ public class MYSplashActivity extends Activity {
             @Override
             public void onSplashAdLoadSuccess() {
                 LogUtil.high(TAG + "(GMSplashAdLoadCallback) onSplashAdLoadSuccess  splash ad success ");
-                mGMSplashAd.showAd(adContainer);
+                mGMSplashAd.showAd(adRealContainer);
             }
 
             // 注意：***** 开屏广告加载超时回调已废弃，统一走onSplashAdLoadFail，GroMore作为聚合不存在SplashTimeout情况。*****
@@ -90,7 +134,7 @@ public class MYSplashActivity extends Activity {
          */
         GMAdSlotSplash.Builder gmBuilder = new GMAdSlotSplash.Builder();
         //宽高默认设置全屏，根据广告承载布局实际大小进行重定义
-        gmBuilder.setImageAdSize(1080, 1920) // 单位px
+        gmBuilder.setImageAdSize(adRealContainer.getWidth(), adRealContainer.getHeight()) // 单位px
                 .setBidNotify(true)//开启bidding比价结果通知，默认值为false
                 .setSplashPreLoad(true)
                 .setSplashShakeButton(true); //开屏摇一摇开关，默认开启，目前只有gdt支持

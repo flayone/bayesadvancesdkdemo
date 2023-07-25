@@ -1,4 +1,4 @@
-package com.bayescon.admore.gm;
+package com.bayescom.admore.gm;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,7 @@ import com.bytedance.msdk.api.v2.ad.custom.GMCustomAdError;
 import com.bytedance.msdk.api.v2.ad.custom.bean.GMCustomServiceConfig;
 import com.bytedance.msdk.api.v2.ad.custom.splash.GMCustomSplashAdapter;
 import com.bytedance.msdk.api.v2.slot.GMAdSlotSplash;
+import com.mercury.sdk.core.config.MercuryAD;
 import com.mercury.sdk.core.model.ADClickJumpInf;
 import com.mercury.sdk.core.splash.MercurySplashData;
 import com.mercury.sdk.core.splash.MercurySplashRenderListener;
@@ -31,6 +32,8 @@ public class AdMoreCustomSplashAdapter extends GMCustomSplashAdapter {
     public void load(Context context, GMAdSlotSplash gmAdSlotSplash, GMCustomServiceConfig gmCustomServiceConfig) {
         try {
             mContext = context;
+            MercuryAD.setAppId("100171");
+            MercuryAD.setAppKey("e1d0d3aaf95d3f1980367e75bc41141d");
             splashAD = new SplashAD(context, gmCustomServiceConfig.getADNNetworkSlotId());
             splashAD.setRequestListener(new MercurySplashRequestListener() {
                 @Override
@@ -39,8 +42,8 @@ public class AdMoreCustomSplashAdapter extends GMCustomSplashAdapter {
 
                     if (isBidding()) {//bidding类型⼴告
                         double ecpm = splashAD.getEcpm(); //当⽆权限调⽤该接⼝时，SDK会返回-1
-                        if (ecpm < 0) {
-                            ecpm = 0;
+                        if (ecpm <= 0) {
+                            ecpm = 500;
                         }
                         Log.e(TAG, "ecpm:" + ecpm);
                         callLoadSuccess(ecpm); //bidding⼴告成功回调，回传竞价⼴告价格
