@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
-import com.advance.advancesdkdemo.custom.nativ.NativeCustomizeActivity;
 import com.advance.advancesdkdemo.util.BaseCallBack;
 import com.advance.advancesdkdemo.util.UserPrivacyDialog;
 import com.baidu.mobads.sdk.api.AdSettings;
@@ -122,9 +121,6 @@ public class MainActivity extends AppCompatActivity {
         new AdvanceAD(this).loadFullVideo(Constants.TestIds.fullScreenVideoAdspotId);
     }
 
-    public void cusAD(View view) {
-        startActivity(new Intent(this, NativeCustomizeActivity.class));
-    }
 
     public void cusHW(View view) {
         Intent intent = new Intent(this, SplashActivity.class);

@@ -58,7 +58,6 @@
         <activity android:name="com.advance.advancesdkdemo.BannerActivity" />
         <activity android:name=".SplashToMainActivity" />
 
-        <activity android:name=".custom.nativ.NativeCustomizeActivity" />
         <activity android:name=".DrawActivity" />
 
 
