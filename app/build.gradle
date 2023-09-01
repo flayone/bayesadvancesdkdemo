@@ -69,7 +69,7 @@ dependencies {
     //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
     implementation "io.github.bayescom:advance-core:${advanceVersion}_1"
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
-    implementation "io.github.bayescom:advance-mry:${advanceVersion}_401"
+    implementation "io.github.bayescom:advance-mry:${advanceVersion}_401_1"
     //(可选)穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
     implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4530"
     implementation "io.github.bayescom:advance-csj:${advanceVersion}_5416"
@@ -83,7 +83,7 @@ dependencies {
 //    如果存在穿山甲、优量汇等aar包冲突报错，不想删除包的话可以参考使用以下_core无广告aar引用依赖配置。
 //    为避免版本不同导致执行异常，推荐使用上方正常带广告aar的引入方式。
 //    implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4530_core"
-//    implementation "io.github.bayescom:advance-csj:${advanceVersion}_5102_core"
+//    implementation "io.github.bayescom:advance-csj:${advanceVersion}_5516_core"
 //    implementation "io.github.bayescom:advance-bd:${advanceVersion}_930_core"
 //    implementation "io.github.bayescom:advance-ks:${advanceVersion}_3344_core"
 
