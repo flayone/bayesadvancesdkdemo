@@ -14,9 +14,10 @@ import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.util.BaseCallBack;
+import com.advance.advancesdkdemo.util.DemoUtil;
 import com.advance.advancesdkdemo.util.UserPrivacyDialog;
 import com.baidu.mobads.sdk.api.AdSettings;
-import com.bytedance.sdk.openadsdk.TTAdSdk;
+import com.bykv.vk.openvk.TTVfSdk;
 import com.kwad.sdk.api.KsAdSDK;
 import com.mercury.sdk.core.config.MercuryAD;
 import com.qq.e.comm.managers.status.SDKStatus;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         fullVideo = findViewById(R.id.fullvideo_button);
 
-        String csjV = TTAdSdk.getAdManager().getSDKVersion();
+        String csjV = TTVfSdk.getVfManager().getSDKVersion();
         String merV = MercuryAD.getVersion();
         String gdtV = SDKStatus.getSDKVersion();
         String bdV = AdSettings.getSDKVersion() + "";
@@ -136,6 +137,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void draw(View view) {
         startActivity(new Intent(this, DrawActivity.class));
+    }
 
+    public void rfeed(View view) {
+        startActivity(new Intent(this, SelfRenderActivity.class));
     }
 }

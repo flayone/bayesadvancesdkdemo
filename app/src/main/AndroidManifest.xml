@@ -4,7 +4,7 @@
     package="com.advance.advancesdkdemo">
 
     <!-- 如果未引入快手，com.advance.supplier.ks可以不添加-->
-    <uses-sdk tools:overrideLibrary="com.bun.miitmdid,com.advance.supplier.ks,com.kwad.sdk,com.miui.zeus.mimo.sdk,com.advance.supplier.tanx,com.advance.supplier.tanxext,com.alimm.tanx.core,com.alimm.tanx.ui,com.tanx.onlyid,com.advance.supplier.csj,com.bayescom.admore,com.bytedance.sdk.openadsdk" />
+    <uses-sdk tools:overrideLibrary="com.bun.miitmdid,com.advance.supplier.ks,com.kwad.sdk,com.miui.zeus.mimo.sdk,com.advance.supplier.tanx,com.advance.supplier.tanxext,com.alimm.tanx.core,com.alimm.tanx.ui,com.tanx.onlyid,com.advance.supplier.csj,com.bayescom.admore,com.bytedance.sdk.openadsdk,com.bykv.vk.openvk" />
 
     <!-- 必须要有的权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -59,6 +59,8 @@
         <activity android:name=".SplashToMainActivity" />
 
         <activity android:name=".DrawActivity" />
+        <activity android:name=".DemoWebActivity" />
+        <activity android:name=".SelfRenderActivity" />
 
 
     </application>
