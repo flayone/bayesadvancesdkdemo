@@ -52,6 +52,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //小米SDK和圆形头像库的aar文件
     implementation fileTree(include: ['*.aar'], dir: 'libs')
+//    implementation fileTree(include: ['mimo-ad-sdk.aar'], dir: 'libs')
+//    implementation fileTree(include: ['circleimageview-2.2.0.aar'], dir: 'libs')
     // debugImplementation because LeakCanary should only run in debug builds.
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 

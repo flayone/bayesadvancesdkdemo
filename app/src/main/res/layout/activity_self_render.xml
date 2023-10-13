@@ -52,12 +52,13 @@
                 <FrameLayout
                     android:id="@+id/custom_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="240dp"
+                    >
 
                     <!-- 视频组件 -->
                     <com.advance.core.srender.widget.AdvRFVideoView
                         android:id="@+id/adv_video"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"

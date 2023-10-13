@@ -17,7 +17,7 @@ gradle引入代码：
 
     def advanceVersion = "4.3.0_rr2"
     //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
-    implementation "io.github.bayescom:advance-core:${advanceVersion}_1"
+    implementation "io.github.bayescom:advance-core:${advanceVersion}"
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
     implementation "io.github.bayescom:advance-mry:${advanceVersion}_402"
      //穿山甲特殊版本，不包含穿山甲aar

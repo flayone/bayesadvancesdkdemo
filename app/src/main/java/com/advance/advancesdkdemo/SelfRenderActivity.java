@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.advance.AdvanceConfig;
 import com.advance.AdvanceRenderFeed;
 import com.advance.advancesdkdemo.util.DemoUtil;
 import com.advance.core.srender.AdvanceRFADData;
@@ -139,6 +140,9 @@ public class SelfRenderActivity extends Activity {
 
     //绑定view信息给广告，并开始展示广告
     private void bindViewShow(AdvanceRFADData adData) {
+        //判断当前广告，是否为穿山甲平台的广告。其他平台的id可以通过 AdvanceConfig.SDK_ID_XX来判断
+        boolean isCsj = AdvanceConfig.SDK_ID_CSJ.equals(adData.getSdkSupplier().adnId);
+
         advRFRootView.setVisibility(View.VISIBLE);
         //进行广告图片、文字 及回调处理相关逻辑
         bindAdInf(adData);
