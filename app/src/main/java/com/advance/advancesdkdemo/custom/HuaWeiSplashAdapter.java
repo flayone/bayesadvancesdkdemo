@@ -50,7 +50,7 @@ public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
     private void loadAD() {
         int orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         AdParam adParam = new AdParam.Builder().build();
-        splashView = new SplashView(getADActivity());
+        splashView = new SplashView(getRealContext());
         SplashAdDisplayListener adDisplayListener = new SplashAdDisplayListener() {
             @Override
             public void onAdShowed() {

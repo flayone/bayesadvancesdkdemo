@@ -59,6 +59,29 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/rewardvideo_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onRewardVideo"
+                android:text="激励视频" />
+
+            <Button
+                android:id="@+id/fullvideo_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onFullVideo"
+                android:text="全屏视频" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <Button
                 android:id="@+id/native_express_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -76,29 +99,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/rewardvideo_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onRewardVideo"
-                android:text="激励视频" />
-
-            <Button
-                android:id="@+id/fullvideo_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onFullVideo"
-                android:text="全屏视频" />
-        </LinearLayout>
-
 
         <Button
             android:layout_width="match_parent"
@@ -106,6 +106,14 @@
             android:layout_marginTop="4dp"
             android:onClick="draw"
             android:text="draw视频信息流" />
+
+        <Button
+            android:id="@+id/btn_rf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="renderFeed"
+            android:text="自渲染信息流" />
+
 
         <TextView
             android:layout_width="wrap_content"
