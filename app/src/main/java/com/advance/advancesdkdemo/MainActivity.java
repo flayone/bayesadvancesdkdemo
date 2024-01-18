@@ -16,6 +16,7 @@ import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.custom.SelfRenderActivity;
 import com.advance.advancesdkdemo.util.BaseCallBack;
 import com.advance.advancesdkdemo.util.UserPrivacyDialog;
+import com.alimm.tanx.core.SdkConstant;
 import com.baidu.mobads.sdk.api.AdSettings;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.kwad.sdk.api.KsAdSDK;
@@ -50,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 "穿山甲 SDK 版本号： " + csjV + "\n" +
                 "广点通 SDK 版本号： " + gdtV + "\n" +
                 "百度 SDK 版本号： " + bdV + "\n" +
-                "快手 SDK 版本号： " + ksV + "\n"+
+                "快手 SDK 版本号： " + ksV + "\n" +
+                "tanx SDK 版本号：" + SdkConstant.getSdkVersion() + "\n" +
                 "TapTap SDK 版本号： " + com.tapsdk.tapad.BuildConfig.VERSION_NAME + "\n"
         );
 

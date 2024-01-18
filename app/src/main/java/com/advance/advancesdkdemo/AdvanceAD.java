@@ -256,11 +256,8 @@ public class AdvanceAD {
     public void loadBanner(String id, final ViewGroup adContainer) {
         AdvanceBanner advanceBanner = new AdvanceBanner(mActivity, adContainer, id);
         baseAD = advanceBanner;
-        //如果集成穿山甲，这里必须配置，具体尺寸要和穿山甲后台中的"代码位尺寸"宽高比例一致，值单位为dp，这里示例使用的广告位宽高比为640：100
-        int adWidth = BYDisplay.px2dp( BYDisplay.getScreenWPx());
-        int adHeight = (int) (((double) adWidth / (double) 640) * 100);
-        //设置穿山甲布局尺寸，宽度全屏，高度传入0代表自适应；也可填入具体dp值，尺寸要和穿山甲后台中的"代码位尺寸"宽高比例一致，值单位为dp。
-        advanceBanner.setCsjExpressViewAcceptedSize(adWidth, adHeight);
+//        //设置穿山甲布局尺寸，宽度全屏，高度传入0代表自适应；也可填入具体dp值，尺寸要和穿山甲后台中的"代码位尺寸"宽高比例一致，值单位为dp。
+//        advanceBanner.setCsjExpressViewAcceptedSize(adWidth, adHeight);
         //推荐：核心事件监听回调
         advanceBanner.setAdListener(new AdvanceBannerListener() {
             @Override
