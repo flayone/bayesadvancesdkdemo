@@ -9,6 +9,9 @@ buildscript {
         jcenter()
         // 配置HUAWEI Ads SDK的Maven仓地址
         maven { url 'https://developer.huawei.com/repo/' }
+        maven {
+            url 'https://artifact.bytedance.com/repository/pangle'
+        }
     }
 
     dependencies {
@@ -27,6 +30,9 @@ allprojects {
         google()
         // 配置HUAWEI Ads SDK的Maven仓地址
         maven { url 'https://developer.huawei.com/repo/' }
+        maven {
+            url 'https://artifact.bytedance.com/repository/pangle'
+        }
     }
 }
 

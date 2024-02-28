@@ -72,7 +72,9 @@ dependencies {
     implementation "io.github.bayescom:advance-mry:${advanceVersion}_417_3"
     //(可选)穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
     implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4530"
-    implementation "io.github.bayescom:advance-csj:${advanceVersion}_5416"
+    implementation "io.github.bayescom:advance-csj:${advanceVersion}_5914_core"
+    implementation 'com.pangle.cn:ads-sdk-pro:5.9.1.4'
+//    implementation "io.github.bayescom:advance-csj:${advanceVersion}_5416"
     implementation "io.github.bayescom:advance-bd:${advanceVersion}_930"
     implementation "io.github.bayescom:advance-ks:${advanceVersion}_3344"
     //注意：接入快手需要同时引入以下support库，请确保添加
