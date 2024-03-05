@@ -11,7 +11,7 @@ public class Constants {
         public static final String splashAdspotId = "10003083"; //开屏
         public static final String bannerAdspotId = "10003091"; //banner
         public static final String interstitialAdspotId = "10007786"; //插屏
-        public static final String nativeExpressAdspotId = "10003094"; //原生模板信息流
+        public static final String nativeExpressAdspotId = "10007784"; //原生模板信息流
         public static final String rewardAdspotId = "10003100"; //激励视频
         public static final String fullScreenVideoAdspotId = "10003103"; //全屏视频
         public static final String drawAdspotId = "10005123"; //draw信息流
