@@ -34,6 +34,8 @@ import com.advance.advancesdkdemo.util.UIUtils;
 import com.advance.custom.AdvanceBaseCustomAdapter;
 import com.advance.itf.AdvancePrivacyController;
 import com.advance.model.AdvanceError;
+import com.advance.supplier.tanx.AdvanceTanxSetting;
+import com.advance.supplier.tanx.TanxGlobalConfig;
 import com.advance.utils.LogUtil;
 import com.bayes.sdk.basic.device.BYDisplay;
 import com.mercury.sdk.core.config.MercuryAD;
@@ -163,7 +165,7 @@ public class AdvanceAD {
         //推荐配置：允许Mercury预缓存素材
         MercuryAD.needPreLoadMaterial(true);
         //接入tanx配置项，当glide不兼容时必填
-        AdvanceSDK.setTanxImgLoader(new MyImageLoader());
+//        TanxGlobalConfig.setImgLoader(new MyImageLoader());
     }
 
     /**
@@ -213,8 +215,6 @@ public class AdvanceAD {
 
             @Override
             public void onAdShow() {
-
-
                 logAndToast(mActivity, "广告展示成功");
             }
 
@@ -356,6 +356,9 @@ public class AdvanceAD {
      * 也可以选择性先提前加载，然后在合适的时机再调用展示方法
      */
     public void loadReward(String id) {
+        //注意：如果接入tanx，一定要先设置好mediaUID
+//        TanxGlobalConfig.setMediaUID("你的mediaUID");
+
         //初始化，注意需要时再初始化，不要复用。
         final AdvanceRewardVideo advanceRewardVideo = new AdvanceRewardVideo(mActivity, id);
         baseAD = advanceRewardVideo;
