@@ -363,7 +363,7 @@ public class AdvanceAD {
 //        TanxGlobalConfig.setMediaUID("你的mediaUID");
 
         //初始化，注意需要时再初始化，不要复用。
-        final AdvanceRewardVideo advanceRewardVideo = new AdvanceRewardVideo(mActivity, id);
+        final AdvanceRewardVideo advanceRewardVideo = new AdvanceRewardVideo(id);
         baseAD = advanceRewardVideo;
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(new AdvanceRewardVideoListener() {
@@ -373,9 +373,9 @@ public class AdvanceAD {
 
                 // 如果有业务需求，可以提前加载广告，在需要的时候调用show进行展示
                 // 为了方便理解，这里在收到广告后直接调用广告展示，有可能会出现一段时间的缓冲状态。
-                if (baseAD != null) {
+                if (advanceRewardVideo != null) {
                     //展示广告
-                    baseAD.show();
+                    advanceRewardVideo.show(mActivity);
                 }
             }
 

@@ -8,16 +8,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:textColor="@color/white"
+            android:text="模拟APP中其他元素信息"
+            android:textSize="30sp"
+            android:gravity="center"
             android:background="@color/black" />
 
         <com.advance.core.srender.widget.AdvRFRootView
             android:id="@+id/adv_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/white"
             android:visibility="visible">
 
             <LinearLayout
@@ -48,13 +52,14 @@
                 <FrameLayout
                     android:id="@+id/custom_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="240dp"
+                    >
 
                     <!-- 视频组件 -->
                     <com.advance.core.srender.widget.AdvRFVideoView
                         android:id="@+id/adv_video"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:scaleType="centerCrop" />
@@ -76,9 +81,13 @@
 
         </com.advance.core.srender.widget.AdvRFRootView>
 
-        <View
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:textColor="@color/white"
+            android:text="模拟APP中其他元素信息"
+            android:textSize="30sp"
+            android:gravity="center"
             android:background="@color/colorAccent" />
     </LinearLayout>
 

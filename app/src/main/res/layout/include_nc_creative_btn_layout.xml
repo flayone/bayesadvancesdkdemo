@@ -20,7 +20,7 @@
         android:layout_toLeftOf="@+id/btn_nc_creative"
         android:gravity="center_vertical"
         android:singleLine="true"
-        android:text="计策略，才真三国！"
+        android:text=""
         android:textSize="18sp" />
 
 
@@ -37,7 +37,7 @@
         android:layout_marginRight="8dp"
         android:background="@drawable/btn_bg_creative"
         android:gravity="center"
-        android:text="立即下载"
+        android:text=""
         android:textColor="#3399cc"
         android:textSize="14sp" />
 </RelativeLayout>

@@ -59,8 +59,8 @@
         <activity android:name=".SplashToMainActivity" />
 
         <activity android:name=".DrawActivity" />
-        <activity android:name=".custom.SelfRenderActivity" />
-        <activity android:name=".custom.DemoWebActivity" />
+        <activity android:name=".DemoWebActivity" />
+        <activity android:name=".SelfRenderActivity" />
 
 
     </application>
