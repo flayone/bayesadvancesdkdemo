@@ -176,7 +176,8 @@ public class AdvanceAD {
      */
     public void loadSplash(String id, final ViewGroup adContainer, final SplashCallBack callBack) {
         //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
-        final AdvanceSplash advanceSplash = new AdvanceSplash(mActivity, id, adContainer, null);
+//        final AdvanceSplash advanceSplash = new AdvanceSplash(mActivity, id, adContainer, null);
+        final AdvanceSplash advanceSplash = new AdvanceSplash(  id);
         baseAD = advanceSplash;
         //注意！！：如果开屏页是fragment或者dialog实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        advanceSplash.setShowInSingleActivity(true);
@@ -196,6 +197,8 @@ public class AdvanceAD {
             public void onAdLoaded() {
 
                 logAndToast(mActivity, "广告加载成功");
+
+                advanceSplash.show(adContainer);
             }
 
             @Override
@@ -237,7 +240,7 @@ public class AdvanceAD {
             advanceSplash.addCustomSupplier("华为SDK渠道id", HuaWeiSplashAdapter.class.getName());
         }
         //必须：请求广告
-        advanceSplash.loadStrategy();
+        advanceSplash.loadOnly();
     }
 
 

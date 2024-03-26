@@ -71,7 +71,8 @@ dependencies {
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
     implementation "io.github.bayescom:advance-mry:${advanceVersion}_421"
     //(可选)穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
-    implementation "io.github.bayescom:advance-csj:${advanceVersion}_5906"
+//    implementation "io.github.bayescom:advance-csj:${advanceVersion}_5906"
+    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_5912_1_core"
     implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4562"
     implementation "io.github.bayescom:advance-bd:${advanceVersion}_9332"
     implementation "io.github.bayescom:advance-ks:${advanceVersion}_3359"
@@ -89,7 +90,7 @@ dependencies {
 
     //(可选)tanx广告SDK -- start --
     //tanx-adapter
-    implementation("io.github.bayescom:advance-tanx:${advanceVersion}_330")
+    implementation("io.github.bayescom:advance-tanx:${advanceVersion}_330_1")
 
     //tanx-sdk
     def versionCode = "3.3.0"
