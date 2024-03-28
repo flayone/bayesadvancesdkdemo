@@ -10,9 +10,12 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true    // true时，生成多个dex
+//        ndk {
+//            abiFilters "armeabi", "armeabi-v7a", "x86", "x86_64", "arm64-v8a"
+//            // 指定要ndk需要兼容的架构(这样其他依赖包里mips之类的so会被过滤掉)
+//        }
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86", "x86_64", "arm64-v8a"
-            // 指定要ndk需要兼容的架构(这样其他依赖包里mips之类的so会被过滤掉)
+            abiFilters 'arm64-v8a', 'armeabi-v7a'
         }
     }
     buildTypes {
@@ -73,6 +76,9 @@ dependencies {
     //(可选)穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
 //    implementation "io.github.bayescom:advance-csj:${advanceVersion}_5906"
     implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_5912_1_core"
+
+//    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_5307_core"
+
     implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4562"
     implementation "io.github.bayescom:advance-bd:${advanceVersion}_9332"
     implementation "io.github.bayescom:advance-ks:${advanceVersion}_3359"
