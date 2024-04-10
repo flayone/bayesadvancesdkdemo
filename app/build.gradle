@@ -67,9 +67,9 @@ dependencies {
     //引入Advance SDK --------start--------
     def advanceVersion = "4.3.3"
     //必须，Advance聚合SDK 引入。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
-    implementation "io.github.bayescom:advance-core:${advanceVersion}"
+    implementation "io.github.bayescom:advance-core:${advanceVersion}_1"
     //必须，mercury SDK 引入 包含了广告aar以及渠道处理逻辑
-    implementation "io.github.bayescom:advance-mry:${advanceVersion}_421"
+    implementation "io.github.bayescom:advance-mry:${advanceVersion}_422_1"
     //(可选)穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
     implementation "io.github.bayescom:advance-csj:${advanceVersion}_5906"
     implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4562"
@@ -89,7 +89,7 @@ dependencies {
 
     //(可选)tanx广告SDK -- start --
     //tanx-adapter
-    implementation("io.github.bayescom:advance-tanx:${advanceVersion}_330")
+    implementation("io.github.bayescom:advance-tanx:${advanceVersion}_330_1")
 
     //tanx-sdk
     def versionCode = "3.3.0"
