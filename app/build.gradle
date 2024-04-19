@@ -73,13 +73,13 @@ dependencies {
     implementation "io.github.bayescom:advance-mry:${advanceVersion}_422"
 
     //穿山甲通用版本依赖（打包包含穿山甲aar）
-    //    implementation "io.github.bayescom:advance-csj:${advanceVersion}_5906"
+        implementation "io.github.bayescom:advance-csj:${advanceVersion}_5906"
     //穿山甲通用版本依赖（未含穿山甲aar）
     //    implementation "io.github.bayescom:advance-csj:${advanceVersion}_5906_core"
 //    【改包名版】穿山甲adapter依赖
-    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_5912_core"
+//    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_5912_core"
 //    【改包名版】穿山甲SDK
-    implementation fileTree(include: ['csj_sdk_5912-oppo.aar'], dir: 'libs')
+//    implementation fileTree(include: ['csj_sdk_5912-oppo.aar'], dir: 'libs')
 
 
     //(可选)广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑

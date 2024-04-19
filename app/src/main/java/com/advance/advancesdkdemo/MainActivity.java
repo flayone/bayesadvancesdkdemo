@@ -18,7 +18,7 @@ import com.advance.advancesdkdemo.util.BaseCallBack;
 import com.advance.advancesdkdemo.util.UserPrivacyDialog;
 import com.alimm.tanx.core.SdkConstant;
 import com.baidu.mobads.sdk.api.AdSettings;
-import com.bykv.vk.openvk.TTVfSdk;
+import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.kwad.sdk.api.KsAdSDK;
 import com.mercury.sdk.core.config.MercuryAD;
 import com.qq.e.comm.managers.status.SDKStatus;
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         fullVideo = findViewById(R.id.fullvideo_button);
 
-//        String csjV = TTAdSdk.getAdManager().getSDKVersion();
-        String csjop = TTVfSdk.getVfManager().getSDKVersion();
+        String csjV = TTAdSdk.getAdManager().getSDKVersion();
+//        String csjop = TTVfSdk.getVfManager().getSDKVersion();
         String merV = MercuryAD.getVersion();
         String gdtV = SDKStatus.getSDKVersion();
         String bdV = AdSettings.getSDKVersion() + "";
@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.tv_version);
         tv.setText("Advance聚合 SDK 版本号： " + av + "\n" + "\n" +
                 "Mercury SDK 版本号： " + merV + "\n" +
-//                "穿山甲 SDK 版本号： " + csjV + "\n" +
-                "穿山甲-op SDK 版本号： " + csjop + "\n" +
+                "穿山甲 SDK 版本号： " + csjV + "\n" +
+//                "穿山甲-op SDK 版本号： " + csjop + "\n" +
                 "广点通 SDK 版本号： " + gdtV + "\n" +
                 "百度 SDK 版本号： " + bdV + "\n" +
                 "快手 SDK 版本号： " + ksV + "\n" +
