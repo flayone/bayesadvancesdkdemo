@@ -72,8 +72,9 @@ dependencies {
     def advanceVersion = "5.1.1"
     //必须，Advance聚合SDK核心引入，包含了mercury变现SDK。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
     implementation "io.github.bayescom:advance-core:${advanceVersion}_427"
-    //穿山甲、广告aar以及渠道处理逻辑
+    //穿山甲渠道处理逻辑
     implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_5912_core"
+    //穿山甲特殊版本广告aar
     implementation fileTree(include: ['open_ad_sdk_5912.aar'], dir: 'libs')
 
     //(可选)广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
