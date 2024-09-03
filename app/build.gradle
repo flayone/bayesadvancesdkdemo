@@ -71,7 +71,7 @@ dependencies {
     //引入Advance SDK --------start--------
     def advanceVersion = "5.1.1"
     //必须，Advance聚合SDK核心引入，包含了mercury变现SDK。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
-    implementation "io.github.bayescom:advance-core:${advanceVersion}_429"
+    implementation "io.github.bayescom:advance-core:${advanceVersion}_430"
     //穿山甲渠道处理逻辑
     implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_5912_core"
     //穿山甲特殊版本广告aar
@@ -114,6 +114,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     //tanx广告SDK -- end --
 
+//    implementation 'io.github.bayescom:mercury-sdk:4.2.9'
 
     //(可选)tap广告SDK -- start --
     //taptap adapter引入，已包含taptap对应版本的aar文件
