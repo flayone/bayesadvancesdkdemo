@@ -14,11 +14,9 @@ import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.util.BaseCallBack;
-import com.advance.advancesdkdemo.util.DemoUtil;
 import com.advance.advancesdkdemo.util.UserPrivacyDialog;
 import com.baidu.mobads.sdk.api.AdSettings;
-//import com.bykv.vk.openvk.TTVfSdk;
-import com.bykv.vk.openvk.TTVfSdk;
+import com.vkyb.kv.kvnepo.TTVfSdk;
 import com.kwad.sdk.api.KsAdSDK;
 import com.mercury.sdk.core.config.MercuryAD;
 import com.qq.e.comm.managers.status.SDKStatus;

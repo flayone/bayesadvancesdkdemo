@@ -3,6 +3,7 @@ package com.advance.advancesdkdemo;
 import android.app.Application;
 import android.content.Context;
 
+import com.advance.advancesdkdemo.util.DemoUtil;
 import com.huawei.hms.ads.HwAds;
 
 public class MyApplication extends Application {
@@ -31,6 +32,8 @@ public class MyApplication extends Application {
     }
 
     public void initSDK() {
+        DemoUtil.initCsjOP(this);
+
         //初始化聚合SDK
         AdvanceAD.initAD(this);
         //初始化HUAWEI Ads SDK，仅用于自定义SDK渠道

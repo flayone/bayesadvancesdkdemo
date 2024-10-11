@@ -69,25 +69,25 @@ dependencies {
 
 
     //引入Advance SDK --------start--------
-    def advanceVersion = "5.1.1"
-    //必须，Advance聚合SDK核心引入，包含了mercury变现SDK。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
-    implementation "io.github.bayescom:advance-core:${advanceVersion}_430"
+    def advanceVersion = "5.1.2"
+    //必须，Advance聚合SDK核心引入，包含了mercury变现SDK v4.3.7
+    implementation "io.github.bayescom:advance-core:${advanceVersion}_437"
     //穿山甲渠道处理逻辑
-    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_5912_core"
+    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_6428_core"
     //穿山甲特殊版本广告aar
-    implementation fileTree(include: ['open_ad_sdk_5912.aar'], dir: 'libs')
+    implementation fileTree(include: ['open_ad_sdk_6428.aar'], dir: 'libs')
 
     //(可选)广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
-    implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4575"
+    implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4603"
+    implementation "io.github.bayescom:advance-ks:${advanceVersion}_3369"
     implementation "io.github.bayescom:advance-bd:${advanceVersion}_9352"
-    implementation "io.github.bayescom:advance-ks:${advanceVersion}_3363"
     //注意：接入快手需要同时引入以下support库，请确保添加
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
 
     //(可选)tanx广告SDK -- start --
     //tanx-adapter
-    implementation("io.github.bayescom:advance-tanx:${advanceVersion}_353_1")
+    implementation("io.github.bayescom:advance-tanx:${advanceVersion}_353")
 
     //tanx-sdk
     def versionCode = "3.5.3"
