@@ -11,7 +11,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true    // true时，生成多个dex
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86", "x86_64", "arm64-v8a"
+            abiFilters  "armeabi-v7a", "arm64-v8a"
             // 指定要ndk需要兼容的架构(这样其他依赖包里mips之类的so会被过滤掉)
         }
     }
@@ -68,14 +68,14 @@ dependencies {
     //引入Advance SDK --------start--------
     def advanceVersion = "5.1.2"
     //必须，Advance聚合SDK核心引入，包含了mercury变现SDK。如果gradle引入异常，请参考根目录gradle配置（确保maven依赖在最前面）然后重试
-    implementation "io.github.bayescom:advance-core:${advanceVersion}_433"
+    implementation "io.github.bayescom:advance-core:${advanceVersion}_437"
 
     //(可选)穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
-    implementation "io.github.bayescom:advance-csj:${advanceVersion}_6125"
-//    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_5912_core" //【改包名版】穿山甲adapter依赖
-    implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4575"
+    implementation "io.github.bayescom:advance-csj:${advanceVersion}_6415"
+//    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_6428" //【改包名版】穿山甲adapter依赖
+    implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4603"
     implementation "io.github.bayescom:advance-bd:${advanceVersion}_9352"
-    implementation "io.github.bayescom:advance-ks:${advanceVersion}_3363"
+    implementation "io.github.bayescom:advance-ks:${advanceVersion}_3369"
 
 //    如果存在穿山甲、优量汇等aar包冲突报错，不想删除包的话可以参考使用以下_core无广告aar引用依赖配置。
 //    为避免版本不同导致执行异常，推荐使用上方正常带广告aar的引入方式。
