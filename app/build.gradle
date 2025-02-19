@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.advance.advancesdkdemo"
         minSdkVersion 17
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -71,7 +71,7 @@ dependencies {
     implementation "io.github.bayescom:advance-core:${advanceVersion}_440"
 
     //(可选)穿山甲、广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
-    implementation "io.github.bayescom:advance-csj:${advanceVersion}_6415"
+    implementation "io.github.bayescom:advance-csj:${advanceVersion}_6415_1"
 //    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_6428" //【改包名版】穿山甲adapter依赖
     implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4603"
     implementation "io.github.bayescom:advance-bd:${advanceVersion}_9352"
