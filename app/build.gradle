@@ -70,8 +70,11 @@ dependencies {
 
     //引入Advance SDK --------start--------
     def advanceVersion = "5.1.2"
-    //必须，Advance聚合SDK核心引入，包含了mercury变现SDK v4.3.7
-    implementation "io.github.bayescom:advance-core:${advanceVersion}_437"
+    //必须，Advance聚合SDK核心引入，包含了mercury变现SDK
+    implementation fileTree(include: ['advance-core_5.1.2_441_1.aar'], dir: 'libs')
+    implementation fileTree(include: ['advance-oppo_5.1.2_700.aar'], dir: 'libs')
+
+//    implementation "io.github.bayescom:advance-core:${advanceVersion}_441"
     //穿山甲渠道处理逻辑
     implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_6428_core"
     //穿山甲特殊版本广告aar
