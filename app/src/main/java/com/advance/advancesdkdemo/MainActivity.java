@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,7 +18,8 @@ import com.advance.AdvanceConfig;
 import com.advance.advancesdkdemo.util.BaseCallBack;
 import com.advance.advancesdkdemo.util.UserPrivacyDialog;
 import com.baidu.mobads.sdk.api.AdSettings;
-import com.vkyb.kv.kvnepo.TTVfSdk;
+import com.bytedance.sdk.openadsdk.TTAdSdk;
+import com.heytap.msp.mobad.api.MobAdManager;
 import com.kwad.sdk.api.KsAdSDK;
 import com.mercury.sdk.core.config.MercuryAD;
 import com.qq.e.comm.managers.status.SDKStatus;
@@ -36,12 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
         fullVideo = findViewById(R.id.fullvideo_button);
 
-        String csjV = TTVfSdk.getVfManager().getSDKVersion();
+        String csjV = TTAdSdk.getAdManager().getSDKVersion();
         String merV = MercuryAD.getVersion();
         String gdtV = SDKStatus.getSDKVersion();
         String bdV = AdSettings.getSDKVersion() + "";
         String ksV = KsAdSDK.getSDKVersion();
         String av = AdvanceConfig.AdvanceSdkVersion;
+        String opv = MobAdManager.getInstance().getSdkVerName();
 
         TextView tv = findViewById(R.id.tv_version);
         tv.setText("Advance聚合 SDK 版本号： " + av + "\n" + "\n" +
@@ -50,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
                 "广点通 SDK 版本号： " + gdtV + "\n" +
                 "百度 SDK 版本号： " + bdV + "\n" +
                 "快手 SDK 版本号： " + ksV + "\n" +
-                "taptap sdk 版本号：：" + com.tapsdk.tapad.BuildConfig.VERSION_NAME
+                "taptap sdk 版本号：：" + com.tapsdk.tapad.BuildConfig.VERSION_NAME + "\n" +
+                "oppo sdk 版本号：：" + opv
 
         );
 
