@@ -1,6 +1,7 @@
 package com.advance.advancesdkdemo;
 
 public class Constants {
+    public static final String DEMO_TAG = "AdvanceDemo";
 
     //应用id（仅测试用，不可用来上线正式使用！）
     public static final String APP_ID = "100171";
