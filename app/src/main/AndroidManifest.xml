@@ -48,7 +48,8 @@
 
         <activity android:name="com.advance.advancesdkdemo.NativeExpressRecyclerViewActivity" />
         <activity android:name="com.advance.advancesdkdemo.NativeExpressActivity"/>
-        <activity android:name="com.advance.advancesdkdemo.SplashActivity">
+        <activity android:name="com.advance.advancesdkdemo.SplashActivity"
+            android:theme="@style/AppSplashTheme">
             <!--        <intent-filter>-->
             <!--        <action android:name="android.intent.action.MAIN" />-->
 
