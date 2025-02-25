@@ -73,10 +73,11 @@ dependencies {
     //必须，Advance聚合SDK核心引入，包含了mercury变现SDK
 
     implementation "io.github.bayescom:advance-core:${advanceVersion}_441_1"
-    //穿山甲渠道处理逻辑
+    //穿山甲渠道处理逻辑(oppo定制包)
 //    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_6428_core"
 //    //穿山甲特殊版本广告aar
 //    implementation fileTree(include: ['open_ad_sdk_6428.aar'], dir: 'libs')
+//    穿山甲渠道处理逻辑
     implementation "io.github.bayescom:advance-csj:${advanceVersion}_6415_1"
 
     //(可选)广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
