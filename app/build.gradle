@@ -3,8 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 30
     defaultConfig {
-//        applicationId "com.advance.advancesdkdemo"
-        applicationId "com.opos.mobaddemo" // oppo 测试
+        applicationId "com.advance.advancesdkdemo"
+//        applicationId "com.opos.mobaddemo" // oppo 测试
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -69,16 +69,16 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //引入Advance SDK --------start--------
-    def advanceVersion = "5.1.2"
+    def advanceVersion = "5.1.4"
     //必须，Advance聚合SDK核心引入，包含了mercury变现SDK
 
-    implementation "io.github.bayescom:advance-core:${advanceVersion}_442"
+    implementation "io.github.bayescom:advance-core:${advanceVersion}_450"
     //穿山甲渠道处理逻辑(oppo定制包)
 //    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_6428_core"
 //    //穿山甲特殊版本广告aar
 //    implementation fileTree(include: ['open_ad_sdk_6428.aar'], dir: 'libs')
 //    穿山甲渠道处理逻辑
-    implementation "io.github.bayescom:advance-csj:${advanceVersion}_6415_1"
+    implementation "io.github.bayescom:advance-csj:${advanceVersion}_6415"
 
     //(可选)广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
     implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4603"

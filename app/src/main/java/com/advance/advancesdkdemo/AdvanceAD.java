@@ -177,7 +177,7 @@ public class AdvanceAD {
     public void loadSplash(String id, final ViewGroup adContainer, final SplashCallBack callBack) {
         //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
 //        final AdvanceSplash advanceSplash = new AdvanceSplash(mActivity, id, adContainer, null);
-        final AdvanceSplash advanceSplash = new AdvanceSplash(  id);
+        final AdvanceSplash advanceSplash = new AdvanceSplash(id);
         baseAD = advanceSplash;
         //注意！！：如果开屏页是fragment或者dialog实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
 //        advanceSplash.setShowInSingleActivity(true);
@@ -365,12 +365,19 @@ public class AdvanceAD {
         //初始化，注意需要时再初始化，不要复用。
         final AdvanceRewardVideo advanceRewardVideo = new AdvanceRewardVideo(id);
         baseAD = advanceRewardVideo;
+
+        //服务端验证相关信息填写---start
+        advanceRewardVideo.setUserId("用户唯一标识，服务端验证必须");
+        advanceRewardVideo.setRewardName("激励名称，非必填，透传给广告SDK、app服务器使用");
+        advanceRewardVideo.setRewardCount(1); //激励数量，非必填，透传给广告SDK、app服务器使用
+        advanceRewardVideo.setExtraInfo("补充信息，服务端验证时，透传给app服务端");
+        //服务端验证相关信息填写---end
+
         //设置通用事件监听器
         advanceRewardVideo.setAdListener(new AdvanceRewardVideoListener() {
             @Override
             public void onAdLoaded(AdvanceRewardVideoItem advanceRewardVideoItem) {
                 logAndToast(mActivity, "广告加载成功");
-
                 // 如果有业务需求，可以提前加载广告，在需要的时候调用show进行展示
                 // 为了方便理解，这里在收到广告后直接调用广告展示，有可能会出现一段时间的缓冲状态。
                 if (advanceRewardVideo != null) {
@@ -658,7 +665,7 @@ public class AdvanceAD {
         });
 //        如果对展现尺寸不满意，可以通过设置此处的值来调整
         int width = (int) UIUtils.getScreenWidthDp(mActivity);
-        advanceNativeExpress.setExpressViewAcceptedSize(width,0);
+        advanceNativeExpress.setExpressViewAcceptedSize(width, 0);
         //必须
         advanceNativeExpress.loadStrategy();
 
