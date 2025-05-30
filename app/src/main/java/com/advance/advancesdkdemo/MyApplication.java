@@ -32,7 +32,7 @@ public class MyApplication extends Application {
     }
 
     public void initSDK() {
-//        DemoUtil.initCsjOP(this);
+        DemoUtil.initCsjOP(this);
 
         //初始化聚合SDK
         AdvanceAD.initAD(this);

@@ -368,8 +368,8 @@ public class AdvanceAD {
 
         //服务端验证相关信息填写---start
         advanceRewardVideo.setUserId("用户唯一标识，服务端验证必须");
-        advanceRewardVideo.setRewardName("激励名称，非必填，透传给广告SDK、app服务器使用");
-        advanceRewardVideo.setRewardCount(1); //激励数量，非必填，透传给广告SDK、app服务器使用
+//        advanceRewardVideo.setRewardName("激励名称，非必填，透传给广告SDK、app服务器使用");
+//        advanceRewardVideo.setRewardCount(1); //激励数量，非必填，透传给广告SDK、app服务器使用
         advanceRewardVideo.setExtraInfo("补充信息，服务端验证时，透传给app服务端");
         //服务端验证相关信息填写---end
 

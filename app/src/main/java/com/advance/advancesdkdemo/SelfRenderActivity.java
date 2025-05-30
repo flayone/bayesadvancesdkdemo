@@ -32,11 +32,11 @@ import com.advance.core.srender.widget.AdvRFLogoView;
 import com.advance.core.srender.widget.AdvRFRootView;
 import com.advance.core.srender.widget.AdvRFVideoView;
 import com.advance.model.AdvanceError;
-import com.advance.supplier.oppo.AdvanceRFADDataOppo;
+//import com.advance.supplier.oppo.AdvanceRFADDataOppo;
 import com.advance.utils.LogUtil;
 import com.bayes.sdk.basic.itf.BYAbsCallBack;
 import com.bumptech.glide.Glide;
-import com.heytap.msp.mobad.api.params.INativeComplianceListener;
+//import com.heytap.msp.mobad.api.params.INativeComplianceListener;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -355,62 +355,62 @@ public class SelfRenderActivity extends Activity {
                 mAppVersion.setText("版本号：" + downloadElement.getAppVersion());
                 mAppDeveloper.setText("开发者：" + downloadElement.getAppDeveloper());
 
-                boolean isOppo = adData instanceof AdvanceRFADDataOppo;
-                if (isOppo) {
-                    AdvanceRFADDataOppo oppoData = (AdvanceRFADDataOppo) adData;
-                    oppoData.bindToComplianceView(new LinkedList<View>() {
-                        {
-                            /*
-                             * 添加隐私声明交互view
-                             * */
-                            add(mAppPrivacy);
-                        }
-                    }, new INativeComplianceListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Log.d(Constants.DEMO_TAG, "privacy onclick = " + view);
-                        }
-
-                        @Override
-                        public void onClose() {
-                            Log.d(Constants.DEMO_TAG, "privacy onClose ");
-                        }
-                    }, new LinkedList<View>() {
-                        {
-                            /*
-                             * 添加权限声明交互view
-                             * */
-                            add(mAppPermission);
-                        }
-                    }, new INativeComplianceListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Log.d(Constants.DEMO_TAG, "permission onclick = " + view);
-                        }
-
-                        @Override
-                        public void onClose() {
-                            Log.d(Constants.DEMO_TAG, "permission onClose ");
-                        }
-                    }, new LinkedList<View>() {
-                        {
-                            /*
-                             * 添加应用介绍交互view
-                             * */
-                            add(mAppFunction);
-                        }
-                    }, new INativeComplianceListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Log.d(Constants.DEMO_TAG, "desc onclick = " + view);
-                        }
-
-                        @Override
-                        public void onClose() {
-                            Log.d(Constants.DEMO_TAG, "desc onClose ");
-                        }
-                    });
-                } else {
+//                boolean isOppo = adData instanceof AdvanceRFADDataOppo;
+//                if (isOppo) {
+//                    AdvanceRFADDataOppo oppoData = (AdvanceRFADDataOppo) adData;
+//                    oppoData.bindToComplianceView(new LinkedList<View>() {
+//                        {
+//                            /*
+//                             * 添加隐私声明交互view
+//                             * */
+//                            add(mAppPrivacy);
+//                        }
+//                    }, new INativeComplianceListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            Log.d(Constants.DEMO_TAG, "privacy onclick = " + view);
+//                        }
+//
+//                        @Override
+//                        public void onClose() {
+//                            Log.d(Constants.DEMO_TAG, "privacy onClose ");
+//                        }
+//                    }, new LinkedList<View>() {
+//                        {
+//                            /*
+//                             * 添加权限声明交互view
+//                             * */
+//                            add(mAppPermission);
+//                        }
+//                    }, new INativeComplianceListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            Log.d(Constants.DEMO_TAG, "permission onclick = " + view);
+//                        }
+//
+//                        @Override
+//                        public void onClose() {
+//                            Log.d(Constants.DEMO_TAG, "permission onClose ");
+//                        }
+//                    }, new LinkedList<View>() {
+//                        {
+//                            /*
+//                             * 添加应用介绍交互view
+//                             * */
+//                            add(mAppFunction);
+//                        }
+//                    }, new INativeComplianceListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            Log.d(Constants.DEMO_TAG, "desc onclick = " + view);
+//                        }
+//
+//                        @Override
+//                        public void onClose() {
+//                            Log.d(Constants.DEMO_TAG, "desc onClose ");
+//                        }
+//                    });
+//                } else {
                     String privacy = downloadElement.getPrivacyUrl();
                     if (TextUtils.isEmpty(privacy)) {
                         mAppPrivacy.setVisibility(View.GONE);
@@ -469,7 +469,7 @@ public class SelfRenderActivity extends Activity {
                         });
                     }
 
-                }
+//                }
             }
         } else {
             mCreativeButton.setText("查看详情");
