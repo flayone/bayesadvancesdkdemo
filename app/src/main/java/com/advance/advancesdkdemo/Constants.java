@@ -10,15 +10,29 @@ public class Constants {
     public static class TestIds {
         //以下测试id默认配置了穿山甲广告
         public static final String splashAdspotId = "10007771"; //开屏
-//        public static final String splashAdspotId = "10011814"; //oppo开屏，必须oppo手机 & oppo得Demo应用包名 & 横屏 才能刷到广告
         public static final String bannerAdspotId = "10007795"; //banner
         public static final String interstitialAdspotId = "10007796"; //插屏
         public static final String nativeExpressAdspotId = "10007794"; //原生模板信息流
         public static final String rewardAdspotId = "10007797"; //激励视频
-//        public static final String rewardAdspotId = "10011816"; //oppo激励视频
         public static final String fullScreenVideoAdspotId = "10007825"; //全屏视频
 
         public static final String drawAdspotId = "10005127"; //draw信息流 -快手
+
+
+        //        oppoSDK平台对应测试广告位id
+        // public static final String splashAdspotId = "10011814"; //oppo开屏，必须oppo手机 & oppo得Demo应用包名 & 横屏 才能刷到广告
+//        public static final String rewardAdspotId = "10011816"; //oppo激励视频
+
+
+//        百度平台对应测试广告位id
+//        public static final String splashAdspotId = "10007774";
+////        public static final String bannerAdspotId = "10007822";
+//        public static final String nativeExpressAdspotId = "10007821";
+//        public static final String rewardAdspotId = "10007824";
+//        public static final String interstitialAdspotId = "10007823";
+//        public static final String fullScreenVideoAdspotId = "10007828";
+//
+//        public static final String customNativeAdspotId = "10009945";
 
     }
 

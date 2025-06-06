@@ -1,5 +1,6 @@
 package com.advance.advancesdkdemo;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import androidx.annotation.NonNull;
@@ -70,5 +71,10 @@ public class MyImageLoader implements ILoader {
         if (gifCallback != null) {
             gifCallback.onFailure(error);
         }
+    }
+
+    @Override
+    public void preload(Context context, String s, DownloadCallback downloadCallback) {
+
     }
 }

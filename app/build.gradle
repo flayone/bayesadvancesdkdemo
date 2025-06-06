@@ -69,19 +69,18 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //引入Advance SDK --------start--------
-    def advanceVersion = "5.1.5"
+    def advanceVersion = "5.1.6"
     //必须，Advance聚合SDK核心引入，包含了mercury变现SDK
-
-    implementation "io.github.bayescom:advance-core:${advanceVersion}_450"
+    implementation "io.github.bayescom:advance-core:${advanceVersion}_451"
     //穿山甲渠道处理逻辑(oppo定制包)
-//    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_6428_core"
+//    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_6843_core"
 //    //穿山甲特殊版本广告aar
-//    implementation fileTree(include: ['open_ad_sdk_6428.aar'], dir: 'libs')
+//    implementation fileTree(include: ['open_ad_sdk_6843.aar'], dir: 'libs')
 //    穿山甲渠道处理逻辑
-    implementation "io.github.bayescom:advance-csj:${advanceVersion}_6817"
+    implementation "io.github.bayescom:advance-csj:${advanceVersion}_6840"
 
     //(可选)广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
-    implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4630"
+    implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4640"
     implementation "io.github.bayescom:advance-ks:${advanceVersion}_3376"
     implementation "io.github.bayescom:advance-bd:${advanceVersion}_9391"
     //注意：接入快手需要同时引入以下support库，请确保添加
@@ -105,7 +104,7 @@ dependencies {
     implementation("io.github.bayescom:advance-tanx:${advanceVersion}_3710")
 
     //tanx-sdk
-    def versionCode = "3.5.3"
+    def versionCode = "3.7.10"
     implementation(group: 'com.tanx', name: 'TanxCoreSDK', version: versionCode) {
         //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
         exclude group: 'com.github.bumptech.glide'
