@@ -10,6 +10,8 @@ import com.advance.utils.LogUtil;
 import com.miui.zeus.mimo.sdk.MimoSdk;
 import com.miui.zeus.mimo.sdk.SplashAd;
 
+import java.lang.ref.SoftReference;
+
 /**
  * 自定义小米开屏渠道
  */
@@ -18,7 +20,7 @@ public class XiaoMiSplashAdapter extends AdvanceSplashCustomAdapter {
     private boolean isCountingEnd = false;//用来辅助判断用户行为，用户是点击了跳过还是倒计时结束，false 回调dismiss的话代表是跳过，否则倒计时结束
     String TAG = "[XiaoMiSplashAdapter] ";
 
-    public XiaoMiSplashAdapter(Activity activity, SplashSetting splashSetting) {
+    public XiaoMiSplashAdapter(SoftReference<Activity> activity, SplashSetting splashSetting) {
         super(activity, splashSetting);
         supportPara = false;  //代表是否支持并行加载广告，因为小米不支持广告单独load，所以无法进行并行加载广告
     }
