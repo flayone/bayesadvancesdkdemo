@@ -2,15 +2,13 @@
 
 buildscript {
     repositories {
-        //advance相关引用的maven依赖根目录地址，需配置在最前面，防止依赖找不到
-        maven { url 'https://s01.oss.sonatype.org/content/groups/public' }
-        //maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         jcenter()
         // 配置HUAWEI Ads SDK的Maven仓地址
         maven { url 'https://developer.huawei.com/repo/' }
         maven { url 'https://jitpack.io' }
-
+        mavenCentral()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     }
 
     dependencies {
@@ -23,14 +21,12 @@ buildscript {
 
 allprojects {
     repositories {
-        //advance相关引用的maven依赖根目录地址，需配置在最前面，防止依赖找不到
-        maven { url 'https://s01.oss.sonatype.org/content/groups/public' }
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         // 配置HUAWEI Ads SDK的Maven仓地址
         maven { url 'https://developer.huawei.com/repo/' }
         maven { url 'https://jitpack.io' }
-
+        mavenCentral()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     }
 }
 
