@@ -11,7 +11,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:textColor="@color/white"
+            android:textColor="@color/adv_white"
             android:text="模拟APP中其他元素信息"
             android:textSize="30sp"
             android:gravity="center"
@@ -21,7 +21,7 @@
             android:id="@+id/adv_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/adv_white"
             android:visibility="visible">
 
             <LinearLayout
@@ -84,7 +84,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:textColor="@color/white"
+            android:textColor="@color/adv_white"
             android:text="模拟APP中其他元素信息"
             android:textSize="30sp"
             android:gravity="center"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.advance.advancesdkdemo">
 
-    <!-- 如果未引入快手，com.advance.supplier.ks可以不添加-->
+
     <uses-sdk tools:overrideLibrary="com.bun.miitmdid,com.advance.supplier.ks,com.kwad.sdk,
     com.miui.zeus.mimo.sdk,com.advance.supplier.tanx,com.advance.supplier.tanxext,com.alimm.tanx.core,
     com.alimm.tanx.ui,com.tanx.onlyid,com.advance.supplier.csj,com.bayescom.admore,com.bytedance.sdk.openadsdk,
@@ -66,6 +66,8 @@
         <activity android:name=".DrawActivity" />
         <activity android:name=".DemoWebActivity" />
         <activity android:name=".SelfRenderActivity" />
+        <activity android:name=".custom.SelfRenderActivity" />
+        <activity android:name=".custom.DemoWebActivity" />
 
 
     </application>

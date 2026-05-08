@@ -4,17 +4,12 @@ android {
     compileSdkVersion 31
     defaultConfig {
         applicationId "com.advance.advancesdkdemo"
-//        applicationId "com.opos.mobaddemo" // oppo 测试
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true    // true时，生成多个dex
-//        ndk {
-//            abiFilters "armeabi", "armeabi-v7a", "x86", "x86_64", "arm64-v8a"
-//            // 指定要ndk需要兼容的架构(这样其他依赖包里mips之类的so会被过滤掉)
-//        }
         ndk {
             abiFilters 'arm64-v8a', 'armeabi-v7a'
         }
@@ -25,10 +20,6 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-//        dexOptions {
-//            // release & debug is in project animators
-//            matchingFallbacks = ['release', 'debug']
-//        }
         release {
             debuggable true
             minifyEnabled false
@@ -54,11 +45,8 @@ repositories {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //小米SDK和圆形头像库的aar文件
+    //圆形头像库的aar文件
     implementation fileTree(include: ['circleimageview-2.2.0.aar'], dir: 'libs')
-    implementation fileTree(include: ['mimo-ad-sdk.aar'], dir: 'libs')
-    // debugImplementation because LeakCanary should only run in debug builds.
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
 //   一些公共库引用
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
@@ -73,136 +61,36 @@ dependencies {
 
 //----------------引入方式1：在线依赖，适合直接使用得开发者
 //1.1  必须引入部分： 首先引入聚合库，排除不需要的adapter库，此部分引入不包含广告aar文件，aar需单独引入。
-//    implementation('com.github.bayescom:Android_AdvanceSDK:5.2.3') {
-////        穿山甲有两个版本的SDK。对应了两个adapter，注意只能使用一个，通过下方exclude方法移除掉不需要的版本
-////        exclude module : 'advancecsj'
-//        exclude module: 'advancecsjoppo'
-//        exclude module: 'advanceoppo'
-//        exclude module: 'advancevivo'
-//    }
 
     //SDK版本号
-    def advanceVersion = '5.2.5.2'
+    def advanceVersion = '5.2.6.0'
     //必须引入，策略核心库
     implementation "com.github.bayescom.Android_AdvanceSDK:core:${advanceVersion}"
     //必须引入，基础库+Mercury广告变现sdk
     implementation "com.github.bayescom.Android_AdvanceSDK:mry:${advanceVersion}"
-    implementation "io.github.bayescom:mercury-sdk:4.6.8"
+    implementation "io.github.bayescom:mercury-sdk:4.7.1"
     //可选引入
-    implementation "com.github.bayescom.Android_AdvanceSDK:csj:${advanceVersion}"
-    implementation "com.github.bayescom.Android_AdvanceSDK:gdt:${advanceVersion}"
-    implementation "com.github.bayescom.Android_AdvanceSDK:ks:${advanceVersion}"
-    implementation "com.github.bayescom.Android_AdvanceSDK:bd:${advanceVersion}"
-    implementation "com.github.bayescom.Android_AdvanceSDK:tanx:${advanceVersion}"
-//    implementation "com.github.bayescom.Android_AdvanceSDK:honor:${advanceVersion}"
-    implementation "com.github.bayescom.Android_AdvanceSDK:oppo:${advanceVersion}"
-
-
-//    implementation 'com.github.bayescom:Android_AdvanceSDK:pgk005'
-//    implementation 'com.github.bayescom:Android_AdvanceSDK:mry:5.2.5'
-//    implementation 'com.github.bayescom:bd:5.2.5'
-
-//    implementation 'com.github.bayescom:Android_AdvanceSDK:advanceoppo:5.2.3'
+    implementation "com.github.bayescom.Android_AdvanceSDK:sigmob:${advanceVersion}"
 
 
 //1.2  可选引入部分，引入各个广告ADN得aar
-    //依次引入分别是：穿山甲、百度、快手、oppo、taptap、sigmob
     implementation fileTree(dir: 'libs', include: ["*.aar"])
-    //优量汇 sdk
-//    implementation "com.qq.e.union:union:4.640.1510"
-    implementation "com.qq.e.union:union:4.662.1532"
 
 
 //----------------引入方式1 end ----------------------------------------------------------------
 
 
-//    def advanceVersion = "5.1.6"
-//    //必须，Advance聚合SDK核心引入，包含了mercury变现SDK
-//    implementation "io.github.bayescom:advance-core:${advanceVersion}_451"
-//    //穿山甲渠道处理逻辑(oppo定制包)
-////    implementation "io.github.bayescom:advance-csj-oppo:${advanceVersion}_6843_core"
-////    //穿山甲特殊版本广告aar
-////    implementation fileTree(include: ['open_ad_sdk_6843.aar'], dir: 'libs')
-////    穿山甲渠道处理逻辑
-//    implementation "io.github.bayescom:advance-csj:${advanceVersion}_6840"
-//
-//    //(可选)广点通、百度、快手SDK 引入，包含了广告aar以及渠道处理逻辑
-//    implementation "io.github.bayescom:advance-gdt:${advanceVersion}_4640"
-//    implementation "io.github.bayescom:advance-ks:${advanceVersion}_3376"
-//    implementation "io.github.bayescom:advance-bd:${advanceVersion}_9391"
-    //注意：接入快手需要同时引入以下support库，请确保添加
+    //引入Advance SDK --------end--------
+//glide 图片加载
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
-    //(可选)oppo广告SDK -- start --
-//    implementation "io.github.bayescom:advance-oppo:${advanceVersion}_700"
 
-    //oppo额外需要的三方库---start
-    implementation 'org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.3.72'
-    implementation 'android.arch.persistence:db-framework:1.1.1'//410版本新增
-    implementation 'androidx.palette:palette:1.0.0'//490版本新增
-    implementation "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.8"
-    //oppo额外需要的三方库---end
-    //(可选)oppo广告SDK -- end --
+    //优量汇广告引用
+    api "com.qq.e.union:union:4.671.1541"
 
-
-    //(可选)tanx广告SDK -- start --
-    //tanx-adapter
-//    implementation("io.github.bayescom:advance-tanx:${advanceVersion}_3710")
-
-    //tanx-sdk
-    def versionCode = "3.7.10"
-//    implementation(group: 'com.tanx', name: 'TanxCoreSDK', version: versionCode)
-    implementation(group: 'com.tanx', name: 'TanxUISDK', version: versionCode)
-//            {
-//        //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
-//        exclude group: 'com.github.bumptech.glide'
-//        exclude group: 'com.squareup.okhttp3'
-//        exclude group: 'com.alibaba'
-//        exclude group: 'com.umeng.umsdk'
-//    }
-//    implementation(group: 'com.tanx', name: 'TanxUISDK', version: versionCode) {
-//        //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
-//        exclude group: 'com.github.bumptech.glide'
-//        exclude group: 'com.squareup.okhttp3'
-//        exclude group: 'com.alibaba'
-//        exclude group: 'com.umeng.umsdk'
-//    }
-
-    //tanx广告SDK需要用到得公共库，如果版本不一致请一定要检查，确认广告执行正常
-    implementation 'com.alibaba:fastjson:1.1.72.android'
-    //使用高版本得glide 必须要进行自定义图片加载器，否则tanx会执行异常
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
-    //tanx广告SDK -- end --
-
-//    implementation 'io.github.bayescom:mercury-sdk:4.2.9'
-
-    //(可选)tap广告SDK -- start --
-    //taptap adapter引入，已包含taptap对应版本的aar文件
-//    implementation("io.github.bayescom:advance-tap:${advanceVersion}_3.16.3.45")
-
-    //taptap sdk 需要用到的三方，注意查看APP自身是否有相关重复引入，避免产生冲突 --start
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.0.1'
-//    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
-    //建议使用此版本glide
-//    implementation "com.github.bumptech.glide:glide:4.9.0"
-
-//    implementation "com.android.support:appcompat-v7:28.0.0"
-    implementation 'androidx.annotation:annotation:1.0.0'
-//    implementation "com.android.support:support-v4:28.0.0"
-//    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    //taptap sdk 需要用到的三方库 --end
-
-    //(可选)tap广告SDK -- end --
-
-
-    //引入Advance SDK --------end--------
-
-
-    //华为广告引用
-    implementation 'com.huawei.hms:ads-lite:13.4.46.300'
 
 }

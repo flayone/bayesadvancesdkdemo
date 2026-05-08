@@ -6,10 +6,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.OrientationHelper;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +18,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.OrientationHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.advance.advancesdkdemo.draw.FullScreenVideoView;
 import com.advance.advancesdkdemo.draw.OnViewPagerListener;
 import com.advance.advancesdkdemo.draw.ViewPagerLayoutManager;
+import com.advance.advancesdkdemo.util.DemoManger;
 import com.advance.advancesdkdemo.util.UIUtils;
 
 import java.util.ArrayList;
@@ -246,13 +247,13 @@ public class DrawActivity extends Activity {
 
         @NonNull
         @Override
-        public DrawRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view_pager, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull DrawRecyclerAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             View view = new View(mContext);
             TestItem item = null;
             if (mDataList != null) {
@@ -269,7 +270,7 @@ public class DrawActivity extends Activity {
 
                 } else if (item.type == TYPE_AD_ITEM && item.ad != null) {
                     //请求并展示draw信息流广告
-                    item.ad.loadDraw(Constants.TestIds.drawAdspotId, holder.videoLayout);
+                    item.ad.loadDraw(DemoManger.getInstance().currentDemoIds.draw, holder.videoLayout);
                 }
             }
 

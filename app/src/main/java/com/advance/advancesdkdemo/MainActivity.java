@@ -1,66 +1,147 @@
 package com.advance.advancesdkdemo;
 
+import static com.advance.advancesdkdemo.util.DemoUtil.logAndToast;
+
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.advance.AdvanceConfig;
+import com.advance.AdvanceRewardVideo;
+import com.advance.AdvanceRewardVideoItem;
+import com.advance.AdvanceRewardVideoListener;
+import com.advance.RewardServerCallBackInf;
+import com.advance.advancesdkdemo.custom.SelfRenderActivity;
 import com.advance.advancesdkdemo.util.BaseCallBack;
+import com.advance.advancesdkdemo.util.DemoIds;
+import com.advance.advancesdkdemo.util.DemoManger;
 import com.advance.advancesdkdemo.util.UserPrivacyDialog;
-import com.alimm.tanx.core.SdkConstant;
-import com.baidu.mobads.sdk.api.AdSettings;
-import com.bytedance.sdk.openadsdk.TTAdSdk;
-import com.heytap.msp.mobad.api.MobAdManager;
-import com.kwad.sdk.api.KsAdSDK;
-import com.mercury.sdk.core.config.MercuryAD;
-import com.qq.e.comm.managers.status.SDKStatus;
+import com.advance.model.AdvanceError;
+import com.advance.utils.SupplierBridgeUtil;
+import com.bayes.sdk.basic.util.BYStringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
-    Button fullVideo;
+    Button fullVideo, banner, splash, interstitial, reward, nativeExpress, nativeExpressRV, nativeCustom, draw;
+    Spinner sdKSNew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        //获取按钮
         fullVideo = findViewById(R.id.fullvideo_button);
+        splash = findViewById(R.id.splash_button);
+        banner = findViewById(R.id.banner_button);
+        interstitial = findViewById(R.id.interstitial_button);
+        reward = findViewById(R.id.rewardvideo_button);
+        nativeExpress = findViewById(R.id.native_express_button);
+        nativeExpressRV = findViewById(R.id.native_express_recycler_view_button);
+        nativeExpress = findViewById(R.id.native_express_button);
+        nativeCustom = findViewById(R.id.btn_rf);
+        draw = findViewById(R.id.btn_draw);
 
-        String csjV = TTAdSdk.getAdManager().getSDKVersion();
-        String merV = MercuryAD.getVersion();
-        String gdtV = SDKStatus.getSDKVersion();
-        String bdV = AdSettings.getSDKVersion() + "";
-        String ksV = KsAdSDK.getSDKVersion();
+        TextView title = findViewById(R.id.tv_title);
+        title.setText("聚合demo(" + getPackageName() + ")");
+        TextView da = findViewById(R.id.tv_run_inf);
+
+        sdKSNew = findViewById(R.id.sp_sdk);
+        sdKSNew.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                String sdkName = (String) sdKSNew.getItemAtPosition(position);
+                updateIDInf(sdkName);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+        updateIDInf(sdKSNew.getSelectedItem().toString());
+
+
+        printVersion();
+
+        checkPermiss();
+
+    }
+
+    private void updateIDInf(String sdkName) {
+        //存储id信息
+        DemoIds ids = DemoIds.getDemoIds(sdkName);
+
+        DemoManger.getInstance().currentDemoIds = ids;
+//        显式展示出来
+        updateButtonAct(banner, ids.banner);
+        updateButtonAct(splash, ids.splash);
+        updateButtonAct(reward, ids.reward);
+        updateButtonAct(nativeExpress, ids.nativeExpress);
+        updateButtonAct(nativeExpressRV, ids.nativeExpress);
+        updateButtonAct(nativeCustom, ids.nativeCustom);
+        updateButtonAct(fullVideo, ids.fullscreen);
+        updateButtonAct(interstitial, ids.interstitial);
+        updateButtonAct(draw, ids.draw);
+
+    }
+
+    //判断该类型广告位是否可用，不可用需要将按钮禁用，可用将添加广告位id在描述后面
+    private boolean updateButtonAct(Button targetV, String id) {
+        boolean result = BYStringUtil.isNotEmpty(id);
+        String txt = targetV.getText().toString();
+        int index = txt.indexOf("(");
+        if (result) {
+            if (index <= 0) {
+                targetV.setText(txt + "(" + id + ")");
+            } else {
+                String typeTxt = txt.substring(0, index);
+                targetV.setText(typeTxt + "(" + id + ")");
+            }
+        } else {
+            if (index > 0) {
+                String typeTxt = txt.substring(0, index);
+                targetV.setText(typeTxt);
+            }
+        }
+        targetV.setEnabled(result);
+        return result;
+    }
+
+    private void printVersion() {
+
         String av = AdvanceConfig.AdvanceSdkVersion;
-        String opv = MobAdManager.getInstance().getSdkVerName();
 
         TextView tv = findViewById(R.id.tv_version);
         tv.setText("Advance聚合 SDK 版本号： " + av + "\n" + "\n" +
-                "Mercury SDK 版本号： " + merV + "\n" +
-                "穿山甲 SDK 版本号： " + csjV + "\n" +
-                "广点通 SDK 版本号： " + gdtV + "\n" +
-                "百度 SDK 版本号： " + bdV + "\n" +
-                "快手 SDK 版本号： " + ksV + "\n" +
-                "tanx SDK 版本号： " + SdkConstant.getSdkVersion() + "\n" +
-                "taptap sdk 版本号：：" + com.tapsdk.tapad.BuildConfig.VERSION_NAME + "\n" +
-                "oppo sdk 版本号：：" + opv
-
+                        "Mercury SDK 版本号： " + SupplierBridgeUtil.getSupVersion(AdvanceConfig.SDK_ID_MERCURY) + "\n" +
+                        "Sigmob SDK 版本号：" + SupplierBridgeUtil.getSupVersion(AdvanceConfig.SDK_ID_SIG) + "\n"
         );
 
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this, TestActivity.class));
+            }
+        });
+    }
+
+
+    private void checkPermiss() {
         boolean hasPri = getSharedPreferences(Constants.SP_NAME, Context.MODE_PRIVATE).getBoolean(Constants.SP_AGREE_PRIVACY, false);
         /**
          * 注意！：由于工信部对设备权限等隐私权限要求愈加严格，强烈推荐APP提前申请好权限，且用户同意隐私政策后再加载广告
@@ -78,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
             };
             dialog.show();
         }
-
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -114,8 +194,101 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, NativeExpressActivity.class));
     }
 
+    AdvanceRewardVideo advanceRewardVideo;
+    boolean hasRewardShow = false;
     public void onRewardVideo(View view) {
-        new AdvanceAD(this).loadReward(Constants.TestIds.rewardAdspotId);
+        advanceRewardVideo = new AdvanceRewardVideo(DemoManger.getInstance().currentDemoIds.reward);
+
+        //todo 服务端验证相关信息填写---start
+//        advanceRewardVideo.setUserId("用户唯一标识，服务端验证必须");
+//        advanceRewardVideo.setRewardName("激励名称，非必填，透传给广告SDK、app服务器使用");
+//        advanceRewardVideo.setRewardCount(1); //激励数量，非必填，透传给广告SDK、app服务器使用
+//        advanceRewardVideo.setExtraInfo("补充信息，服务端验证时，透传给app服务端");
+        //服务端验证相关信息填写---end
+
+        //设置通用事件监听器
+        advanceRewardVideo.setAdListener(new AdvanceRewardVideoListener() {
+            @Override
+            public void onAdLoaded(AdvanceRewardVideoItem advanceRewardVideoItem) {
+                logAndToast("广告加载成功");
+                hasRewardShow = false;
+            }
+
+
+            @Override
+            public void onAdShow() {
+                logAndToast("广告展示");
+                hasRewardShow = true;
+            }
+
+            @Override
+            public void onAdFailed(AdvanceError advanceError) {
+                logAndToast("广告加载失败 code=" + advanceError.code + " msg=" + advanceError.msg);
+            }
+
+            @Override
+            public void onSdkSelected(String id) {
+
+            }
+
+            @Override
+            public void onAdClicked() {
+                logAndToast("广告点击");
+            }
+
+
+            @Override
+            public void onVideoCached() {
+                logAndToast("广告缓存成功");
+            }
+
+            @Override
+            public void onVideoComplete() {
+                logAndToast("视频播放完毕");
+            }
+
+            @Override
+            public void onVideoSkip() {
+
+            }
+
+            @Override
+            public void onAdClose() {
+                logAndToast("广告关闭");
+            }
+
+            @Override
+            public void onAdReward() {
+                logAndToast("激励发放");
+            }
+
+            @Override
+            public void onRewardServerInf(RewardServerCallBackInf inf) {
+                //广点通和穿山甲支持回调服务端激励验证信息，详见RewardServerCallBackInf中字段信息
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        logAndToast("onRewardServerInf" + inf);
+                    }
+                }, 1200);
+            }
+        });
+        advanceRewardVideo.loadOnly();
+    }
+
+    public void onRewardShow(View view) {
+        if (hasRewardShow) {
+            logAndToast("激励已展示过");
+            return;
+        }
+        // 如果有业务需求，可以提前加载广告，在需要的时候调用show进行展示
+        // 为了方便理解，这里在收到广告后直接调用广告展示，有可能会出现一段时间的缓冲状态。
+        if (advanceRewardVideo != null && advanceRewardVideo.isValid()) {
+            //展示广告
+            advanceRewardVideo.show(this);
+        } else {
+            logAndToast("激励广告不存在或者已失效");
+        }
     }
 
     public void onNativeExpressRecyclerView(View view) {
@@ -123,31 +296,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onInterstitial(View view) {
-        new AdvanceAD(this).loadInterstitial(Constants.TestIds.interstitialAdspotId);
+        new AdvanceAD(this).loadInterstitial(DemoManger.getInstance().currentDemoIds.interstitial);
     }
 
     public void onFullVideo(View view) {
-        new AdvanceAD(this).loadFullVideo(Constants.TestIds.fullScreenVideoAdspotId);
+        new AdvanceAD(this).loadFullVideo(DemoManger.getInstance().currentDemoIds.fullscreen);
     }
 
-
-    public void cusHW(View view) {
-        Intent intent = new Intent(this, SplashActivity.class);
-        intent.putExtra("cusHW", true);
-        startActivity(intent);
-    }
-
-    public void cusXM(View view) {
-        Intent intent = new Intent(this, SplashActivity.class);
-        intent.putExtra("cusXM", true);
-        startActivity(intent);
-    }
 
     public void draw(View view) {
         startActivity(new Intent(this, DrawActivity.class));
     }
 
-    public void rfeed(View view) {
+
+    public void renderFeed(View view) {
         startActivity(new Intent(this, SelfRenderActivity.class));
     }
 }

@@ -1,15 +1,16 @@
 package com.advance.advancesdkdemo;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.advance.AdvanceBanner;
-import com.advance.AdvanceBannerListener;
 import com.advance.AdvanceBaseAdspot;
 import com.advance.AdvanceDraw;
 import com.advance.AdvanceDrawListener;
@@ -25,19 +26,12 @@ import com.advance.AdvanceRewardVideo;
 import com.advance.AdvanceRewardVideoItem;
 import com.advance.AdvanceRewardVideoListener;
 import com.advance.AdvanceSDK;
-import com.advance.AdvanceSplash;
-import com.advance.AdvanceSplashListener;
 import com.advance.RewardServerCallBackInf;
-import com.advance.advancesdkdemo.custom.HuaWeiSplashAdapter;
-import com.advance.advancesdkdemo.custom.XiaoMiSplashAdapter;
-import com.advance.advancesdkdemo.util.UIUtils;
-import com.advance.custom.AdvanceBaseCustomAdapter;
+import com.advance.advancesdkdemo.util.DemoManger;
 import com.advance.itf.AdvancePrivacyController;
 import com.advance.model.AdvanceError;
-import com.advance.supplier.tanx.AdvanceTanxSetting;
-import com.advance.supplier.tanx.TanxGlobalConfig;
 import com.advance.utils.LogUtil;
-import com.bayes.sdk.basic.device.BYDisplay;
+import com.bayes.sdk.basic.BYBasicSDK;
 import com.mercury.sdk.core.config.MercuryAD;
 
 import java.util.List;
@@ -49,10 +43,6 @@ public class AdvanceAD {
     AdvanceBaseAdspot baseAD;
     Activity mActivity;
 
-    //小米渠道是否需要添加为自定义渠道
-    public boolean cusXiaoMi = false;
-    //华为渠道是否需要添加为自定义渠道
-    public boolean cusHuaWei = false;
 
     /**
      * 初始化广告处理类
@@ -64,17 +54,6 @@ public class AdvanceAD {
     }
 
 
-    /**
-     * 添加自定义渠道，注意一定要在广告初始化以后再调用！
-     *
-     * @param sdkID   SDK渠道id。具体值需联系运营获取对应接入渠道的id。
-     * @param adapter 继承与基类adapter的自定义adapter
-     */
-    public void addCustomAdapter(String sdkID, AdvanceBaseCustomAdapter adapter) {
-        if (baseAD != null) {
-            baseAD.addCustomSupplier(sdkID, adapter);
-        }
-    }
 
     /**
      * 初始化advance sdk
@@ -82,6 +61,8 @@ public class AdvanceAD {
      * @param context 上下文内容，一般是传入application的context
      */
     public static void initAD(Context context) {
+        MercuryAD.enableJNICall(false);
+
         //可选：根据自身需求控制隐私项
         AdvanceSDK.setPrivacyController(new AdvancePrivacyController() {
             @Override
@@ -146,7 +127,8 @@ public class AdvanceAD {
 
             @Override
             public String getDevOaid() {
-                return super.getDevOaid();
+                return "ad1sfnlkanfa1233";
+//                return super.getDevOaid();
             }
 
             @Override
@@ -158,145 +140,22 @@ public class AdvanceAD {
             public List<String> getInstalledPackages() {
                 return super.getInstalledPackages();
             }
+
+            @Override
+            public String getSimOperator() {
+                return super.getSimOperator();
+            }
         });
+
 
         //必要配置：初始化聚合SDK，三个参数依次为context上下文，appId媒体id，isDebug调试模式开关
         AdvanceSDK.initSDK(context, Constants.APP_ID, BuildConfig.DEBUG);
-        //推荐配置：允许Mercury预缓存素材
-        MercuryAD.needPreLoadMaterial(true);
-        //接入tanx配置项，当glide不兼容时必填
-//        TanxGlobalConfig.setImgLoader(new MyImageLoader());
-    }
 
-    /**
-     * 加载开屏广告
-     *
-     * @param adContainer 广告承载布局，不可为空
-     * @param callBack    跳转回调，在回调中进行跳转主页或其他操作
-     */
-    public void loadSplash(String id, final ViewGroup adContainer, final SplashCallBack callBack) {
-        //开屏初始化；adspotId代表广告位id，adContainer为广告容器，skipView不需要自定义可以为null
-//        final AdvanceSplash advanceSplash = new AdvanceSplash(mActivity, id, adContainer, null);
-        final AdvanceSplash advanceSplash = new AdvanceSplash(id);
-        baseAD = advanceSplash;
-        //注意！！：如果开屏页是fragment或者dialog实现，这里需要置为true。不设置时默认值为false，代表开屏和首页为两个不同的activity
-//        advanceSplash.setShowInSingleActivity(true);
-//        建议：设置底部logo布局及高度值（单位px）
-        advanceSplash.setLogoLayout(R.layout.splash_logo_layout, mActivity.getResources().getDimensionPixelSize(R.dimen.logo_layout_height));
-        //必须：设置开屏核心回调事件的监听器。
-        advanceSplash.setAdListener(new AdvanceSplashListener() {
-            /**
-             * @param id 代表当前被选中的策略id，值为"1" 代表mercury策略 ，值为"2" 代表广点通策略， 值为"3" 代表穿山甲策略
-             */
-            @Override
-            public void onSdkSelected(String id) {
-
-            }
-
-            @Override
-            public void onAdLoaded() {
-
-                logAndToast(mActivity, "广告加载成功");
-
-                advanceSplash.show(adContainer);
-            }
-
-            @Override
-            public void jumpToMain() {
-//                1; //广告执行失败，对应onAdFailed回调
-//                2; //用户点击了广告跳过，对应旧onAdSkip回调
-//                3; //广告倒计时结束，对应旧onAdTimeOver回调
-                int jumpType = 0;
-                if (advanceSplash != null) {
-                    jumpType = advanceSplash.getJumpType();
-                }
-                logAndToast(mActivity, "跳转首页,jumpType = " + jumpType);
-
-                if (callBack != null)
-                    callBack.jumpMain();
-            }
-
-            @Override
-            public void onAdShow() {
-                logAndToast(mActivity, "广告展示成功");
-            }
-
-            @Override
-            public void onAdFailed(AdvanceError advanceError) {
-                logAndToast(mActivity, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.msg);
-            }
-
-            @Override
-            public void onAdClicked() {
-                logAndToast(mActivity, "广告点击");
-            }
-
-        });
-        if (cusXiaoMi) {
-            //此处自定义的渠道id值，需要联系我们获取。
-            advanceSplash.addCustomSupplier("小米SDK渠道id", XiaoMiSplashAdapter.class.getName());
-        }
-        if (cusHuaWei) {
-            advanceSplash.addCustomSupplier("华为SDK渠道id", HuaWeiSplashAdapter.class.getName());
-        }
-        //必须：请求广告
-        advanceSplash.loadOnly();
-    }
+//        AdvanceSDK.disableShake(true);
+//        开发者模式打印日志更丰富
+        BYBasicSDK.setDev(true);
 
 
-    /**
-     * 开屏跳转回调
-     */
-    public interface SplashCallBack {
-        void jumpMain();
-    }
-
-    /**
-     * 加载并展示banner广告
-     *
-     * @param adContainer banner广告的承载布局
-     */
-    public void loadBanner(String id, final ViewGroup adContainer) {
-        AdvanceBanner advanceBanner = new AdvanceBanner(mActivity, adContainer, id);
-        baseAD = advanceBanner;
-//        //设置穿山甲布局尺寸，宽度全屏，高度传入0代表自适应；也可填入具体dp值，尺寸要和穿山甲后台中的"代码位尺寸"宽高比例一致，值单位为dp。
-//        advanceBanner.setCsjExpressViewAcceptedSize(adWidth, adHeight);
-        //推荐：核心事件监听回调
-        advanceBanner.setAdListener(new AdvanceBannerListener() {
-            @Override
-            public void onDislike() {
-                logAndToast(mActivity, "广告关闭");
-
-                adContainer.removeAllViews();
-            }
-
-            @Override
-            public void onAdShow() {
-                logAndToast(mActivity, "广告展现");
-            }
-
-            @Override
-            public void onAdFailed(AdvanceError advanceError) {
-                logAndToast(mActivity, "广告加载失败 code=" + advanceError.code + " msg=" + advanceError.msg);
-            }
-
-            @Override
-            public void onSdkSelected(String id) {
-            }
-
-            @Override
-            public void onAdClicked() {
-                logAndToast(mActivity, "广告点击");
-            }
-
-
-            @Override
-            public void onAdLoaded() {
-                logAndToast(mActivity, "广告加载成功");
-            }
-
-        });
-        advanceBanner.loadStrategy();
     }
 
 
@@ -354,23 +213,24 @@ public class AdvanceAD {
 
     }
 
+    boolean hasRewardShow = false;
+
     /**
      * 加载并展示激励视频广告。
      * 也可以选择性先提前加载，然后在合适的时机再调用展示方法
      */
     public void loadReward(String id) {
-        //注意：如果接入tanx，一定要先设置好mediaUID
-//        TanxGlobalConfig.setMediaUID("你的mediaUID");
 
         //初始化，注意需要时再初始化，不要复用。
         final AdvanceRewardVideo advanceRewardVideo = new AdvanceRewardVideo(id);
         baseAD = advanceRewardVideo;
 
-        //服务端验证相关信息填写---start
-        advanceRewardVideo.setUserId("用户唯一标识，服务端验证必须");
-        advanceRewardVideo.setRewardName("激励名称，非必填，透传给广告SDK、app服务器使用");
-        advanceRewardVideo.setRewardCount(1); //激励数量，非必填，透传给广告SDK、app服务器使用
-        advanceRewardVideo.setExtraInfo("补充信息，服务端验证时，透传给app服务端");
+
+        //todo 服务端验证相关信息填写---start
+//        advanceRewardVideo.setUserId("用户唯一标识，服务端验证必须");
+//        advanceRewardVideo.setRewardName("激励名称，非必填，透传给广告SDK、app服务器使用");
+//        advanceRewardVideo.setRewardCount(1); //激励数量，非必填，透传给广告SDK、app服务器使用
+//        advanceRewardVideo.setExtraInfo("补充信息，服务端验证时，透传给app服务端");
         //服务端验证相关信息填写---end
 
         //设置通用事件监听器
@@ -378,9 +238,12 @@ public class AdvanceAD {
             @Override
             public void onAdLoaded(AdvanceRewardVideoItem advanceRewardVideoItem) {
                 logAndToast(mActivity, "广告加载成功");
+                if (hasRewardShow) {
+                    return;
+                }
                 // 如果有业务需求，可以提前加载广告，在需要的时候调用show进行展示
                 // 为了方便理解，这里在收到广告后直接调用广告展示，有可能会出现一段时间的缓冲状态。
-                if (advanceRewardVideo != null) {
+                if (advanceRewardVideo != null && advanceRewardVideo.isValid()) {
                     //展示广告
                     advanceRewardVideo.show(mActivity);
                 }
@@ -390,6 +253,7 @@ public class AdvanceAD {
             @Override
             public void onAdShow() {
                 logAndToast(mActivity, "广告展示");
+                hasRewardShow = true;
             }
 
             @Override
@@ -435,8 +299,13 @@ public class AdvanceAD {
 
             @Override
             public void onRewardServerInf(RewardServerCallBackInf inf) {
-                //广点通和穿山甲支持回调服务端激励验证信息，详见RewardServerCallBackInf中字段信息
-                logAndToast(mActivity, "onRewardServerInf" + inf);
+                //优量汇和穿山甲支持回调服务端激励验证信息，详见RewardServerCallBackInf中字段信息
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        logAndToast(mActivity, "onRewardServerInf" + inf);
+                    }
+                }, 1200);
             }
         });
         advanceRewardVideo.loadStrategy();
@@ -530,10 +399,12 @@ public class AdvanceAD {
         }
 
         //初始化
-        final AdvanceNativeExpress advanceNativeExpress = new AdvanceNativeExpress(mActivity, Constants.TestIds.nativeExpressAdspotId);
+        final AdvanceNativeExpress advanceNativeExpress = new AdvanceNativeExpress(mActivity, DemoManger.getInstance().currentDemoIds.nativeExpress);
         baseAD = advanceNativeExpress;
         //必须：设置广告父布局
         advanceNativeExpress.setAdContainer(adContainer);
+        //设置模板尺寸，单位dp
+        advanceNativeExpress.setExpressViewAcceptedSize(350,0);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(new AdvanceNativeExpressListener() {
             @Override
@@ -585,6 +456,8 @@ public class AdvanceAD {
         });
         //必须
         advanceNativeExpress.loadStrategy();
+        logAndToast(mActivity, "模板信息流广告请求中");
+
     }
 
 
@@ -613,10 +486,12 @@ public class AdvanceAD {
         //初始化
         advanceNativeExpress = new AdvanceNativeExpress(mActivity, id);
         baseAD = advanceNativeExpress;
+        //设置模板尺寸，单位dp
+        advanceNativeExpress.setExpressViewAcceptedSize(360,0);
         //推荐：核心事件监听回调
         advanceNativeExpress.setAdListener(new AdvanceNativeExpressListener() {
             @Override
-            public void onAdLoaded(java.util.List<AdvanceNativeExpressAdItem> list) {
+            public void onAdLoaded(List<AdvanceNativeExpressAdItem> list) {
                 logAndToast(mActivity, "广告加载成功");
                 if (callBack != null) {
                     callBack.adSuccess();
@@ -624,18 +499,18 @@ public class AdvanceAD {
             }
 
             @Override
-            public void onAdRenderSuccess(android.view.View view) {
+            public void onAdRenderSuccess(View view) {
                 logAndToast(mActivity, "广告渲染成功");
             }
 
 
             @Override
-            public void onAdClose(android.view.View view) {
+            public void onAdClose(View view) {
                 logAndToast(mActivity, "广告关闭");
             }
 
             @Override
-            public void onAdShow(android.view.View view) {
+            public void onAdShow(View view) {
                 hasSplitNativeShow = true;
                 isSplitNativeLoading = false;
                 logAndToast(mActivity, "广告展示");
@@ -653,19 +528,19 @@ public class AdvanceAD {
             }
 
             @Override
-            public void onAdRenderFailed(android.view.View view) {
+            public void onAdRenderFailed(View view) {
                 logAndToast(mActivity, "广告渲染失败");
             }
 
             @Override
-            public void onAdClicked(android.view.View view) {
+            public void onAdClicked(View view) {
                 logAndToast(mActivity, "广告点击");
             }
 
         });
-//        如果对展现尺寸不满意，可以通过设置此处的值来调整
-        int width = (int) UIUtils.getScreenWidthDp(mActivity);
-        advanceNativeExpress.setExpressViewAcceptedSize(width, 0);
+//        如果对展现尺寸不满意，可以通过设置此处的值来调整，注意不可设置超过广告容器或屏幕大小得尺寸
+//        int width = (int) UIUtils.getScreenWidthDp(mActivity);
+//        advanceNativeExpress.setExpressViewAcceptedSize(width, 0);
         //必须
         advanceNativeExpress.loadStrategy();
 

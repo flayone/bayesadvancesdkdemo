@@ -1,12 +1,14 @@
 package com.advance.advancesdkdemo;
 
+import android.app.Activity;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.advance.advancesdkdemo.util.DemoManger;
 
-public class NativeExpressActivity extends AppCompatActivity {
+
+public class NativeExpressActivity extends Activity {
     private FrameLayout container;
     AdvanceAD ad;
     boolean adSucc = false;
@@ -19,14 +21,14 @@ public class NativeExpressActivity extends AppCompatActivity {
 
 
         //加载模板信息流，传入承载布局，加载成功后直接展示。如需分步加载，请参考loadOnly 方法
-        new AdvanceAD(this).loadNativeExpressAndShow(container);
+//        new AdvanceAD(this).loadNativeExpressAndShow(container);
     }
 
     public void loadOnly(View view) {
         //每次加载要新建广告处理实例
         ad = new AdvanceAD(this);
         adSucc = false;
-        ad.loadNativeExpressOnly(Constants.TestIds.nativeExpressAdspotId, new AdvanceAD.LoadCallBack() {
+        ad.loadNativeExpressOnly(DemoManger.getInstance().currentDemoIds.nativeExpress, new AdvanceAD.LoadCallBack() {
             @Override
             public void adSuccess() {
                 adSucc = true;

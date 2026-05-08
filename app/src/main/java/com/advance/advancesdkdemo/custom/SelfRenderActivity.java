@@ -5,10 +5,7 @@ import static com.advance.advancesdkdemo.util.DemoUtil.logAndToast;
 
 import android.app.Activity;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -16,8 +13,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.advance.AdvanceRenderFeed;
+import com.advance.advancesdkdemo.AdvanceAD;
 import com.advance.advancesdkdemo.R;
+import com.advance.advancesdkdemo.util.DemoManger;
 import com.advance.advancesdkdemo.util.DemoUtil;
 import com.advance.core.srender.AdvanceRFADData;
 import com.advance.core.srender.AdvanceRFConstant;
@@ -40,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SelfRenderActivity extends Activity {
-    String TAG =   "[SelfRenderActivity] ";
+    String TAG = "[SelfRenderActivity] ";
 
     ImageView mIcon;
     ImageView mDislike;
@@ -113,12 +115,8 @@ public class SelfRenderActivity extends Activity {
 
     private void loadAD() {
 
-        String csjID = "10003120";
-        String ylhID = "10003121";
-        String mryID = "10003122";
-
         //广告初始化，传入聚合广告位id
-        advanceRenderFeed = new AdvanceRenderFeed(this, ylhID);
+        advanceRenderFeed = new AdvanceRenderFeed(this, DemoManger.getInstance().currentDemoIds.nativeCustom);
         //设置期望图片大小，单位px，主要是设置给穿山甲使用，不设置将使用默认值 640*320
         advanceRenderFeed.setCsjImgSize(1080, 720);
         //设置广告请求回调
@@ -155,24 +153,24 @@ public class SelfRenderActivity extends Activity {
         advanceRenderFeed.setRenderEventListener(new AdvanceRFEventListener() {
             @Override
             public void onAdShow(AdvanceRFADData adData) {
-                logAndToast(TAG + "onAdShow");
+                AdvanceAD.logAndToast(SelfRenderActivity.this, "onAdShow");
 
             }
 
             @Override
             public void onAdClicked(AdvanceRFADData adData) {
-                logAndToast(TAG + "onAdClicked");
+                AdvanceAD.logAndToast(SelfRenderActivity.this, "onAdClicked");
             }
 
             @Override
             public void onAdClose(AdvanceRFADData adData) {
-                logAndToast(TAG + "onAdClose");
+                AdvanceAD.logAndToast(SelfRenderActivity.this, "onAdClose");
 
             }
 
             @Override
             public void onAdErr(AdvanceRFADData adData, AdvanceError advanceError) {
-                logAndToast(TAG + "onAdErr" + " ,advanceError = " + advanceError);
+                AdvanceAD.logAndToast(SelfRenderActivity.this, "onAdErr" + " ,advanceError = " + advanceError);
 
             }
         });
@@ -183,14 +181,17 @@ public class SelfRenderActivity extends Activity {
         materialProvider.videoView = advRFVideoView;
         materialProvider.logoView = advRFLogoView;
         //必须，添加可响应点击事件的view
-        materialProvider.clickViews.add(advRFVideoView);
-        materialProvider.clickViews.add(mDescription);
+//        materialProvider.clickViews.add(advRFVideoView);
+//        materialProvider.clickViews.add(mDescription);
         materialProvider.clickViews.add(mCreativeButton);
-        materialProvider.clickViews.add(mImagePoster);
-        materialProvider.clickViews.add(mTitle);
-        materialProvider.clickViews.add(mIcon);
+//        materialProvider.clickViews.add(mImagePoster);
+//        materialProvider.clickViews.add(mTitle);
+//        materialProvider.clickViews.add(mIcon);
+
         //必须，关闭按钮
         materialProvider.disLikeView = mDislike;
+        //可选，创意按钮指定
+        materialProvider.creativeViews.add(mCreativeButton);
         //可选，设置下载监听，仅穿山甲支持
         materialProvider.downloadListener = new AdvanceRFDownloadListener() {
             @Override
@@ -225,7 +226,7 @@ public class SelfRenderActivity extends Activity {
         };
 
         if (adData.isVideo()) {
-            //可选，设置视频播放选项，仅对优量汇、mercury生效
+            //可选，设置视频播放选项，对优量汇、mercury、百度 生效
             AdvanceRFVideoOption videoOption = new AdvanceRFVideoOption();
             videoOption.isMute = true;
             videoOption.autoPlayNetStatus = AdvanceRFConstant.VIDEO_AUTO_PLAY_ALWAYS;
@@ -235,45 +236,44 @@ public class SelfRenderActivity extends Activity {
             materialProvider.videoEventListener = new AdvanceRFVideoEventListener() {
                 @Override
                 public void onReady(AdvanceRFADData data) {
-                    logAndToast(TAG + "onReady");
+                    AdvanceAD.logAndToast(SelfRenderActivity.this, "onReady");
 
 
                 }
 
                 @Override
                 public void onPlayStart(AdvanceRFADData data) {
-                    logAndToast(TAG + "onPlayStart");
+                    AdvanceAD.logAndToast(SelfRenderActivity.this, "onPlayStart");
 
                 }
 
                 @Override
                 public void onPlaying(AdvanceRFADData data, long current, long duration) {
-//                    logAndToast(TAG + "onPlaying");
-                    Log.d(TAG, "onPlaying ,current = " + current + ",  duration = " + duration);
+                    AdvanceAD.logAndToast(SelfRenderActivity.this, "onPlaying");
 
                 }
 
                 @Override
                 public void onPause(AdvanceRFADData data) {
-                    logAndToast(TAG + "onPause");
+                    AdvanceAD.logAndToast(SelfRenderActivity.this, "onPause");
 
                 }
 
                 @Override
                 public void onResume(AdvanceRFADData data) {
-                    logAndToast(TAG + "onResume");
+                    AdvanceAD.logAndToast(SelfRenderActivity.this, "onResume");
 
                 }
 
                 @Override
                 public void onComplete(AdvanceRFADData data) {
-                    logAndToast(TAG + "onComplete");
+                    AdvanceAD.logAndToast(SelfRenderActivity.this, "onComplete");
 
                 }
 
                 @Override
                 public void onError(AdvanceRFADData data, AdvanceError error) {
-                    logAndToast(TAG + "onError ,err = " + error);
+                    AdvanceAD.logAndToast(SelfRenderActivity.this, "onError ,err = " + error);
 
                 }
             };
@@ -332,6 +332,8 @@ public class SelfRenderActivity extends Activity {
         }
 
         if (adData.isDownloadAD()) {
+            //oppo自渲染2.0 仅支持通过bind方式进行连接类处理
+
             mCreativeButton.setText("立即下载");
             // 六要素 相关内容
             AdvanceRFDownloadElement downloadElement = adData.getDownloadElement();
@@ -398,13 +400,12 @@ public class SelfRenderActivity extends Activity {
                             }
                         }
                     });
-                }
 
+                }
             }
         } else {
             mCreativeButton.setText("查看详情");
         }
     }
-
 
 }
