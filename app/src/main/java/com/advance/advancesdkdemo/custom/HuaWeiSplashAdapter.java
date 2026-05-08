@@ -114,7 +114,7 @@ public class HuaWeiSplashAdapter extends AdvanceSplashCustomAdapter {
     @Override
     public void show() {
         if (splashView != null) {
-            adContainer.addView(splashView);
+            splashSetting.getAdContainer().addView(splashView);
         }
     }
 }

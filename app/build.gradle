@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.advance.advancesdkdemo"
 //        applicationId "com.opos.mobaddemo" // oppo 测试
@@ -73,19 +73,45 @@ dependencies {
 
 //----------------引入方式1：在线依赖，适合直接使用得开发者
 //1.1  必须引入部分： 首先引入聚合库，排除不需要的adapter库，此部分引入不包含广告aar文件，aar需单独引入。
-    implementation('com.github.bayescom:Android_AdvanceSDK:5.2.1') {
-//        穿山甲有两个版本的SDK。对应了两个adapter，注意只能使用一个，通过下方exclude方法移除掉不需要的版本
-//        exclude module : 'advancecsj'
-        exclude module: 'advancecsjoppo'
-    }
-    // 必须，Mercury SDK aar
-    implementation "io.github.bayescom:mercury-sdk:4.5.4"
+//    implementation('com.github.bayescom:Android_AdvanceSDK:5.2.3') {
+////        穿山甲有两个版本的SDK。对应了两个adapter，注意只能使用一个，通过下方exclude方法移除掉不需要的版本
+////        exclude module : 'advancecsj'
+//        exclude module: 'advancecsjoppo'
+//        exclude module: 'advanceoppo'
+//        exclude module: 'advancevivo'
+//    }
+
+    //SDK版本号
+    def advanceVersion = '5.2.5.2'
+    //必须引入，策略核心库
+    implementation "com.github.bayescom.Android_AdvanceSDK:core:${advanceVersion}"
+    //必须引入，基础库+Mercury广告变现sdk
+    implementation "com.github.bayescom.Android_AdvanceSDK:mry:${advanceVersion}"
+    implementation "io.github.bayescom:mercury-sdk:4.6.8"
+    //可选引入
+    implementation "com.github.bayescom.Android_AdvanceSDK:csj:${advanceVersion}"
+    implementation "com.github.bayescom.Android_AdvanceSDK:gdt:${advanceVersion}"
+    implementation "com.github.bayescom.Android_AdvanceSDK:ks:${advanceVersion}"
+    implementation "com.github.bayescom.Android_AdvanceSDK:bd:${advanceVersion}"
+    implementation "com.github.bayescom.Android_AdvanceSDK:tanx:${advanceVersion}"
+//    implementation "com.github.bayescom.Android_AdvanceSDK:honor:${advanceVersion}"
+    implementation "com.github.bayescom.Android_AdvanceSDK:oppo:${advanceVersion}"
+
+
+//    implementation 'com.github.bayescom:Android_AdvanceSDK:pgk005'
+//    implementation 'com.github.bayescom:Android_AdvanceSDK:mry:5.2.5'
+//    implementation 'com.github.bayescom:bd:5.2.5'
+
+//    implementation 'com.github.bayescom:Android_AdvanceSDK:advanceoppo:5.2.3'
+
 
 //1.2  可选引入部分，引入各个广告ADN得aar
     //依次引入分别是：穿山甲、百度、快手、oppo、taptap、sigmob
     implementation fileTree(dir: 'libs', include: ["*.aar"])
     //优量汇 sdk
 //    implementation "com.qq.e.union:union:4.640.1510"
+    implementation "com.qq.e.union:union:4.662.1532"
+
 
 //----------------引入方式1 end ----------------------------------------------------------------
 
@@ -126,20 +152,22 @@ dependencies {
 
     //tanx-sdk
     def versionCode = "3.7.10"
-    implementation(group: 'com.tanx', name: 'TanxCoreSDK', version: versionCode) {
-        //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
-        exclude group: 'com.github.bumptech.glide'
-        exclude group: 'com.squareup.okhttp3'
-        exclude group: 'com.alibaba'
-        exclude group: 'com.umeng.umsdk'
-    }
-    implementation(group: 'com.tanx', name: 'TanxUISDK', version: versionCode) {
-        //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
-        exclude group: 'com.github.bumptech.glide'
-        exclude group: 'com.squareup.okhttp3'
-        exclude group: 'com.alibaba'
-        exclude group: 'com.umeng.umsdk'
-    }
+//    implementation(group: 'com.tanx', name: 'TanxCoreSDK', version: versionCode)
+    implementation(group: 'com.tanx', name: 'TanxUISDK', version: versionCode)
+//            {
+//        //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
+//        exclude group: 'com.github.bumptech.glide'
+//        exclude group: 'com.squareup.okhttp3'
+//        exclude group: 'com.alibaba'
+//        exclude group: 'com.umeng.umsdk'
+//    }
+//    implementation(group: 'com.tanx', name: 'TanxUISDK', version: versionCode) {
+//        //去掉tanx内的第三方引用，避免产生冲突，APP接入时请注意此处配置
+//        exclude group: 'com.github.bumptech.glide'
+//        exclude group: 'com.squareup.okhttp3'
+//        exclude group: 'com.alibaba'
+//        exclude group: 'com.umeng.umsdk'
+//    }
 
     //tanx广告SDK需要用到得公共库，如果版本不一致请一定要检查，确认广告执行正常
     implementation 'com.alibaba:fastjson:1.1.72.android'

@@ -60,11 +60,11 @@ public class XiaoMiSplashAdapter extends AdvanceSplashCustomAdapter {
      */
     private void loadAndShow() {
         //注意要初始化SDK，此步骤也可以放在application中进行
-        MimoSdk.init(getRealActivity(adContainer));
+        MimoSdk.init(getRealActivity(splashSetting.getAdContainer()));
         //初始化小米开屏广告实例
         mSplashAd = new SplashAd();
         //执行广告展示方法，并在对应回调中执行对应生命周期回调
-        mSplashAd.loadAndShow(adContainer, getPosID(), new SplashAd.SplashAdListener() {
+        mSplashAd.loadAndShow(splashSetting.getAdContainer(), getPosID(), new SplashAd.SplashAdListener() {
             @Override
             public void onAdShow() {
                 //必须：广告展示回调
